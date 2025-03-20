@@ -1,0 +1,15 @@
+{
+    "invertiria": {
+        "title": "Invertiria",
+        "paragraph": "Invertiria is a real estate investment website",
+        "getStarted": "Get Started",
+        "learnMore": "Learn more"
+    },
+    "investment": {
+        "title": "Investment",
+        "paragraph": "Investment form",
+        "click_on_the_map": "Click on the map to select the location",
+        "results": "Results",
+        "here_are_the_results": "Here are the results of your investment:"
+    }
+}
