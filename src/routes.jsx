@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 // Paginas
 import { App } from './pages/App';
 import { Investment } from './pages/Investment';
-
+ 
 // Rutas de la aplicacion
 function AppRoutes() {
 
