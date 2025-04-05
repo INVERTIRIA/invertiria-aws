@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 // Paginas
 import { App } from './pages/App';
 import { Investment } from './pages/Investment';
+import { Test } from './pages/Test'
  
 // Rutas de la aplicacion
 function AppRoutes() {
@@ -21,6 +22,7 @@ function AppRoutes() {
         <Routes>
             <Route path="/" element={<App />} />
             <Route path="/investment" element={<Investment />} />
+            <Route path="/test" element={<Test />} />
         </Routes>
     )
 }

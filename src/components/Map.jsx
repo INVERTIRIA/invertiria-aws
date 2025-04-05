@@ -20,12 +20,6 @@ function Map() {
         // getLocation(initialPosition[0], initialPosition[1], setLocation);
     }, [])
 
-    // Función para actualizar las coordenadas
-    const changePosition = (position) => {
-        setPosition(position);
-        getLocation(position.lat, position.lng, setLocation)
-    };
-
     return (
         <div>
             <MapContainer center={initialPosition} zoom={6} style={{ height: '400px', width: '100%' }}>
@@ -58,7 +52,48 @@ function Map() {
                 <p className="mx-auto mt-3 max-w-xl text-l/8 text-pretty text-cyan-50">{t("investment.click_on_the_map")}</p>
             )}
         </div>
-    );
+    )
+
+    // Función para actualizar las coordenadas
+    function changePosition(position) {
+        setPosition(position);
+        getLocation(position.lat, position.lng)
+    }
+
+    // Funcion obtener la ubicación
+    async function getLocation(lat, lng) {
+        const url = `https://nominatim.openstreetmap.org/reverse?format=geocodejson&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`;
+        fetch(url, { headers: { 'User-Agent': 'testApp/0.1 (kevin@banderaonline.org)' } })
+            .then(response => response.json())
+            .then(data => {
+                // console.log(data);
+                setLocation(data.features[0].properties.geocoding);
+                getLocationLevels(data.features[0].properties.geocoding);
+            })
+            .catch(error => {
+                console.error(error);
+            })
+    }
+
+    // Funcion obtener los niveles de ubicación
+    function getLocationLevels(location) {
+        let levels = {};
+        levels.country = location.country;
+        levels.city = location.city || location.state;
+        levels.zone = location.district || location.locality || location.street || location.name
+        switch (levels.zone) {
+            case location.district:
+                levels.subzone = location.locality || location.street || location.name
+                break;
+            case location.locality:
+                levels.subzone = location.street || location.name
+                break;
+            default:
+                levels.subzone = null
+                break;
+        }
+        console.log("niveles: ", levels);
+    }
 }
 
 export { Map }
@@ -68,41 +103,4 @@ function LocationMarker({ onPositionChange }) {
     useMapEvents({
         click(e) { onPositionChange(e.latlng) }
     });
-}
-
-// FUNCIONES
-
-// Obtener la ubicación
-async function getLocation(lat, lng, setLocation) {
-    const url = `https://nominatim.openstreetmap.org/reverse?format=geocodejson&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`;
-    fetch(url, { headers: { 'User-Agent': 'testApp/0.1 (kevin@banderaonline.org)' } })
-        .then(response => response.json())
-        .then(data => {
-            // console.log(data);
-            setLocation(data.features[0].properties.geocoding);
-            getLocationLevels(data.features[0].properties.geocoding);
-        })
-        .catch(error => {
-            console.error(error);
-        })
-}
-
-// Obtener los niveles de ubicación
-function getLocationLevels(location) {
-    let levels = {};
-    levels.country = location.country;
-    levels.city = location.city || location.state;
-    levels.zone = location.district || location.locality || location.street || location.name
-    switch (levels.zone) {
-        case location.district:
-            levels.subzone = location.locality || location.street || location.name
-            break;
-        case location.locality:
-            levels.subzone = location.street || location.name
-            break;
-        default:
-            levels.subzone = null
-            break;
-    }
-    console.log("niveles: ", levels);
 }
