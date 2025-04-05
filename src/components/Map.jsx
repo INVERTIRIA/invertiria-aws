@@ -12,7 +12,8 @@ function Map() {
 
     const [position, setPosition] = useState(null);
     const [location, setLocation] = useState(null);
-    
+    const [locationLevels, setLocationLevels] = useState(null);
+
     // Obtener la ubicación actual
     useEffect(() => {
         // setPosition(initialPosition);
@@ -37,9 +38,9 @@ function Map() {
                 <LocationMarker onPositionChange={changePosition} />
 
                 {/* Muestra un marcador si hay coordenadas */}
-                {position && (
+                {position && location && (
                     <Marker position={position}>
-                        <Popup>{location}</Popup>
+                        <Popup>{location.label}</Popup>
                     </Marker>
                 )}
             </MapContainer>
@@ -47,7 +48,8 @@ function Map() {
             {/* Mostrar ubicacion */}
             {location ? (
                 <>
-                    <p className="mx-auto mt-3 max-w-xl text-l/8 text-pretty text-cyan-50">{location}</p>
+                    <p className="mx-auto mt-3 max-w-xl text-l/8 text-pretty text-cyan-50">{location.label}</p>
+                    {console.log(location)}
                     {/* <p className="mx-auto mt-6 max-w-xl text-lg/8 text-pretty text-cyan-50">
                         Latitud: {position.lat.toFixed(4)}, Longitud: {position.lng.toFixed(4)}
                     </p> */}
@@ -76,10 +78,31 @@ async function getLocation(lat, lng, setLocation) {
     fetch(url, { headers: { 'User-Agent': 'testApp/0.1 (kevin@banderaonline.org)' } })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
-            setLocation(data.features[0].properties.geocoding.label);
+            // console.log(data);
+            setLocation(data.features[0].properties.geocoding);
+            getLocationLevels(data.features[0].properties.geocoding);
         })
         .catch(error => {
             console.error(error);
         })
+}
+
+// Obtener los niveles de ubicación
+function getLocationLevels(location) {
+    let levels = {};
+    levels.country = location.country;
+    levels.city = location.city || location.state;
+    levels.zone = location.district || location.locality || location.street || location.name
+    switch (levels.zone) {
+        case location.district:
+            levels.subzone = location.locality || location.street || location.name
+            break;
+        case location.locality:
+            levels.subzone = location.street || location.name
+            break;
+        default:
+            levels.subzone = null
+            break;
+    }
+    console.log("niveles: ", levels);
 }
