@@ -20,6 +20,7 @@ function Map() {
 
     const [position, setPosition] = useState(null);
     const [location, setLocation] = useState(null);
+    const [message, setMessage] = useState("investment.click_on_the_map");
     const [locationLevels, setLocationLevels] = useState(null);
 
     // Obtener la ubicación actual
@@ -57,7 +58,7 @@ function Map() {
                     </p> */}
                 </>
             ) : (
-                <p className="mx-auto mt-3 max-w-xl text-l/8 text-pretty text-cyan-50">{t("investment.click_on_the_map")}</p>
+                <p className="mx-auto mt-3 max-w-xl text-l/8 text-pretty text-cyan-50">{t(message)}</p>
             )}
         </div>
     )
@@ -74,9 +75,15 @@ function Map() {
         fetch(url, { headers: { 'User-Agent': 'testApp/0.1 (kevin@banderaonline.org)' } })
             .then(response => response.json())
             .then(data => {
-                // console.log(data);
-                setLocation(data.features[0].properties.geocoding);
-                getLocationLevels(data.features[0].properties.geocoding);
+                // Solo Bogota o Medellin
+                if (data.features[0].properties.geocoding.city != "Bogotá" && data.features[0].properties.geocoding.city != "Medellín") {
+                    setPosition(null);
+                    setLocation(null);
+                    setMessage("investment.location_not_permitted")
+                } else {
+                    setLocation(data.features[0].properties.geocoding);
+                    getLocationLevels(data.features[0].properties.geocoding);
+                }
             })
             .catch(error => {
                 console.error(error);
