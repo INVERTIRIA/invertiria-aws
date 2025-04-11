@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+
+// Componentes
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 
 // Mapa

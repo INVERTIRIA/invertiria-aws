@@ -6,15 +6,15 @@ import { useEffect } from 'react';
 import { App } from './pages/App';
 import { Investment } from './pages/Investment';
 import { Test } from './pages/Test'
- 
+
 // Rutas de la aplicacion
 function AppRoutes() {
 
     const { i18n } = useTranslation();
-    
+
     // Obtener idioma
     useEffect(() => {
-        changeLanguage(i18n, localStorage.getItem('language') || 'es');
+        changeLanguage(localStorage.getItem('language') || 'es');
     }, [])
 
     // Retornar rutas
@@ -25,14 +25,12 @@ function AppRoutes() {
             <Route path="/test" element={<Test />} />
         </Routes>
     )
+
+    // Funcion cambiar idioma
+    function changeLanguage(language) {
+        i18n.changeLanguage(language)
+        localStorage.setItem('language', language)
+    }
 }
 
 export { AppRoutes }
-
-// FUNCIONES
-
-// Cambiar idioma
-function changeLanguage(i18n, language) {
-    i18n.changeLanguage(language)
-    localStorage.setItem('language', language)
-}
