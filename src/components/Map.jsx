@@ -3,6 +3,12 @@ import { useTranslation } from 'react-i18next';
 
 // Componentes
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
+import { Icon } from 'leaflet'
+
+const myIcon = new Icon({
+    iconUrl: '/assets/images/location-marker.svg',
+    iconSize: [38, 38]
+})
 
 // Mapa
 function Map() {
@@ -35,7 +41,7 @@ function Map() {
 
                 {/* Muestra un marcador si hay coordenadas */}
                 {position && location && (
-                    <Marker position={position}>
+                    <Marker position={position} icon={myIcon}>
                         <Popup>{location.label}</Popup>
                     </Marker>
                 )}
