@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 // Componentes
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { buttonVariants } from "@/components/ui/button"
+import { Link } from 'react-router';
 
 // Selector de idioma
 function LanguageSelector({ }) {
@@ -18,16 +19,18 @@ function LanguageSelector({ }) {
     }, [])
 
     return <DropdownMenu>
-        <DropdownMenuTrigger className={buttonVariants({ variant: "full_ghost" })}>
-            <img
-                src={`/assets/images/${localStorage.getItem('language')}.svg`}
-                width={24}
-                height={24}
-                className="rounded-full"
-                style={{ aspectRatio: "24/24", objectFit: "cover" }}
-            />
-            <span className="font-medium">{selectedLanguage}</span>
-            <ChevronDownIcon className="h-4 w-4" />
+        <DropdownMenuTrigger>
+            <Link className={buttonVariants({ variant: "full_ghost" })}>
+                <img
+                    src={`/assets/images/${localStorage.getItem('language')}.svg`}
+                    width={24}
+                    height={24}
+                    className="rounded-full"
+                    style={{ aspectRatio: "24/24", objectFit: "cover" }}
+                />
+                <span className="font-medium">{selectedLanguage}</span>
+                <ChevronDownIcon className="h-4 w-4" />
+            </Link>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
             <DropdownMenuLabel>{t("select_language")}</DropdownMenuLabel>
@@ -53,7 +56,7 @@ function LanguageSelector({ }) {
                 <span className="font-medium">English</span>
             </DropdownMenuItem>
         </DropdownMenuContent>
-    </DropdownMenu>
+    </DropdownMenu >
 
     // Funcion cambiar idioma
     function changeLanguage(language) {
