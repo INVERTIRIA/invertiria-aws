@@ -1,12 +1,30 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "../supabase";
+import { getMasks } from '/src/lib/masks'
+import { useTranslation } from 'react-i18next';
 
 // Pagina de pruebas
 function Test() {
 
+    const { t } = useTranslation();
+    const [masks, setMasks] = useState(null);
+
     useEffect(() => {
         getMatrizModelo();
     }, [])
+
+    useEffect(() => {
+        const fetchMasks = async () => {
+            try {
+                const masks = await getMasks(localStorage.getItem('language'), 'Argentina');
+                setMasks(masks);
+                console.log(masks);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchMasks();
+    }, [localStorage.getItem('language')]);
 
     return (
         <>
@@ -17,7 +35,7 @@ function Test() {
                     <div className="self-stretch p-6 md:p-16 bg-purple-50 rounded-2xl flex flex-col lg:flex-row justify-between items-start gap-6">
                         <div className="flex-1 flex flex-col justify-start items-start gap-2 md:gap-4 min-w-0">
                             <h2 className="w-full text-indigo-900 text-xl md:text-3xl font-custom font-semibold leading-7 md:leading-9">
-                                Start your 30-day free trial
+                                {masks?.find(mask => mask.clave_mascara === 'departamento')?.mascara || t("masks.departamento")}
                             </h2>
                             <p className="w-full text-violet-700 text-base md:text-xl font-normal leading-normal md:leading-loose">
                                 Join over 4,000+ startups already growing with Untitled.
