@@ -13,5 +13,8 @@
         "location_not_permitted": "Ubicación no permitida (solo Bogotá o Medellín)",
         "results": "Resultados",
         "here_are_the_results": "Aquí están los resultados de tu inversion:"
+    },
+    "masks": {
+        "departamento": "departamento"
     }
 }

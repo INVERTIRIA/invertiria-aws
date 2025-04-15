@@ -13,5 +13,8 @@
         "location_not_permitted": "Location not permitted (only Bogotá or Medellín)",
         "results": "Results",
         "here_are_the_results": "Here are the results of your investment:"
+    },
+    "masks": {
+        "departamento": "state"
     }
 }
