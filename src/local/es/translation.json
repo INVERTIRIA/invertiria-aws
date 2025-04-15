@@ -1,4 +1,5 @@
 {
+    "select_language": "Seleccionar idioma",
     "invertiria": {
         "title": "Invertiria",
         "paragraph": "Invertiria es una pagina web de inversiones inmobiliarias",
@@ -8,7 +9,8 @@
     "investment": {
         "title": "Inversion",
         "paragraph": "Formulario de inversion",
-        "click_on_the_map": "Haz clic en el mapa para seleccionar la ubicación",
+        "click_on_the_map": "Haz clic en el mapa para seleccionar la ubicación (Bogotá o Medellín)",
+        "location_not_permitted": "Ubicación no permitida (solo Bogotá o Medellín)",
         "results": "Resultados",
         "here_are_the_results": "Aquí están los resultados de tu inversion:"
     }

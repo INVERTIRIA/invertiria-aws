@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+
+// Componentes
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
+import { Icon } from 'leaflet'
+
+const myIcon = new Icon({
+    iconUrl: '/assets/images/location-marker.svg',
+    iconSize: [38, 38]
+})
 
 // Mapa
 function Map() {
@@ -12,6 +20,7 @@ function Map() {
 
     const [position, setPosition] = useState(null);
     const [location, setLocation] = useState(null);
+    const [message, setMessage] = useState("investment.click_on_the_map");
     const [locationLevels, setLocationLevels] = useState(null);
 
     // Obtener la ubicación actual
@@ -33,7 +42,7 @@ function Map() {
 
                 {/* Muestra un marcador si hay coordenadas */}
                 {position && location && (
-                    <Marker position={position}>
+                    <Marker position={position} icon={myIcon}>
                         <Popup>{location.label}</Popup>
                     </Marker>
                 )}
@@ -49,7 +58,7 @@ function Map() {
                     </p> */}
                 </>
             ) : (
-                <p className="mx-auto mt-3 max-w-xl text-l/8 text-pretty text-cyan-50">{t("investment.click_on_the_map")}</p>
+                <p className="mx-auto mt-3 max-w-xl text-l/8 text-pretty text-cyan-50">{t(message)}</p>
             )}
         </div>
     )
@@ -66,9 +75,15 @@ function Map() {
         fetch(url, { headers: { 'User-Agent': 'testApp/0.1 (kevin@banderaonline.org)' } })
             .then(response => response.json())
             .then(data => {
-                // console.log(data);
-                setLocation(data.features[0].properties.geocoding);
-                getLocationLevels(data.features[0].properties.geocoding);
+                // Solo Bogota o Medellin
+                if (data.features[0].properties.geocoding.city != "Bogotá" && data.features[0].properties.geocoding.city != "Medellín") {
+                    setPosition(null);
+                    setLocation(null);
+                    setMessage("investment.location_not_permitted")
+                } else {
+                    setLocation(data.features[0].properties.geocoding);
+                    getLocationLevels(data.features[0].properties.geocoding);
+                }
             })
             .catch(error => {
                 console.error(error);

@@ -1,5 +1,7 @@
-import { buttonVariants } from "@/components/ui/button"
 import { Link } from 'react-router';
+
+// Componentes
+import { buttonVariants } from "@/components/ui/button"
 
 // CTA Section
 function CTASection({title, paragraph, buttonText, buttonText2, buttonLink, buttonLink2}) {

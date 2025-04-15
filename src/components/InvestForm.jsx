@@ -1,3 +1,4 @@
+// Componentes
 import { Map } from "./Map";
 
 // Invest form

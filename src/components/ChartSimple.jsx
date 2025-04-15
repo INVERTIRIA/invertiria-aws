@@ -1,4 +1,6 @@
 import React from 'react';
+
+// Componentes
 import { LineChart, Legend, XAxis, YAxis, CartesianGrid, Tooltip, Line, ResponsiveContainer } from 'recharts';
 
 // Ejemplo de datos
