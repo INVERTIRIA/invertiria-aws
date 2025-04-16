@@ -32,7 +32,7 @@ function LanguageSelector({ }) {
                 <ChevronDownIcon className="h-4 w-4" />
             </Link>
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
+        <DropdownMenuContent >
             <DropdownMenuLabel>{t("select_language")}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => changeLanguage("es")} style={{ cursor: 'pointer' }}>

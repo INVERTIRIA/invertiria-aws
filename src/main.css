@@ -131,3 +131,7 @@
     font-style: normal;
   }
 }
+
+@theme {
+  --color-invertiria-1: #FC7300;
+}

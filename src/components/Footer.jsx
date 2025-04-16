@@ -1,13 +1,13 @@
 import { Link } from "react-router";
 
-// Header
+// Footer
 function Footer() {
     return (
-        <header className="bg-black">
+        <footer className="bg-invertiria-1">
             <nav className="mx-auto flex max-w-7xl justify-center p-6 lg:px-8">
-                <Link to="/" className="text-amber-50">Invertiria</Link>
+                <Link to="/" className="text-amber-50"><img src="/assets/images/logo-completo.png" className="h-8 w-auto" /></Link>
             </nav>
-        </header>
+        </footer>
     )
 }
 
