@@ -1,27 +1,40 @@
-import { createContext, useEffect, useContext } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { getAllMasks } from '/src/lib/masks';
 
 const GlobalContext = createContext();
 
 // Contexto global
 function GlobalProvider({ children }) {
 
-    const { i18n } = useTranslation();
+    const { i18n} = useTranslation();
+    const [masks, setMasks] = useState(null);
 
     useEffect(() => {
-        console.log('Idioma cambiado');
+        fetchMasks()
     }, [i18n.language]);
 
+    // Funcion obtener todas las mascaras
+    async function fetchMasks() {
+        try {
+            const masks = await getAllMasks(localStorage.getItem('language'), 'Argentina');
+            setMasks(masks);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    // Funcion obtener mascara especifica
+    function getMask(clave_mascara) {
+        const mask = masks.find(mask => mask.clave_mascara === clave_mascara);
+        return mask ? mask.mascara : null;
+    };
+
     return (
-        <GlobalContext.Provider value={{ GlobalContext }}>
+        <GlobalContext.Provider value={{ masks, getMask }}>
             {children}
         </GlobalContext.Provider>
     );
 }
 
-// Hook para acceder al contexto
-function useGlobalContext() {
-    return useContext(GlobalContext);
-}
-
-export { GlobalProvider, useGlobalContext };
+export { GlobalContext, GlobalProvider };

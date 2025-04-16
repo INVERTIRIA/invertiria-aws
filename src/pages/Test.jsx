@@ -1,30 +1,18 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { supabase } from "../supabase";
-import { getMasks } from '/src/lib/masks'
 import { useTranslation } from 'react-i18next';
+import { useContext } from 'react';
+import { GlobalContext } from '../contexts/GlobalContext';
 
 // Pagina de pruebas
 function Test() {
 
-    const { i18n, t } = useTranslation();
-    const [masks, setMasks] = useState(null);
+    const { t } = useTranslation();
+    const { masks, getMask } = useContext(GlobalContext);
 
     useEffect(() => {
         getMatrizModelo();
     }, [])
-
-    useEffect(() => {
-        const fetchMasks = async () => {
-            try {
-                const masks = await getMasks(localStorage.getItem('language'), 'Argentina');
-                setMasks(masks);
-                console.log(masks);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        fetchMasks();
-    }, [i18n.language]);
 
     return (
         <>
@@ -35,7 +23,7 @@ function Test() {
                     <div className="self-stretch p-6 md:p-16 bg-orange-50 rounded-2xl flex flex-col lg:flex-row justify-between items-start gap-6">
                         <div className="flex-1 flex flex-col justify-start items-start gap-2 md:gap-4 min-w-0">
                             <h2 className="w-full text-invertiria-1 text-xl md:text-3xl font-semibold leading-7 md:leading-9">
-                                {masks?.find(mask => mask.clave_mascara === 'departamento')?.mascara || t("masks.departamento")}
+                                {masks && getMask("departamento") || t("masks.departamento")}
                             </h2>
                             <p className="w-full text-invertiria-1 text-base md:text-xl font-normal leading-normal md:leading-loose">
                                 Join over 4,000+ startups already growing with Untitled.
@@ -59,7 +47,7 @@ function Test() {
         </>
     )
 
-    // Obtener matriz modelo
+    // Funcion obtener matriz modelo
     async function getMatrizModelo() {
         try {
             const { data, error } = await supabase.from("matriz_modelo").select();
