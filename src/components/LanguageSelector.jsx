@@ -33,9 +33,9 @@ function LanguageSelector({ }) {
             </Link>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-            <DropdownMenuLabel>{t("select_language")}</DropdownMenuLabel>
+            <DropdownMenuLabel className="text-invertiria-1">{t("select_language")}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => changeLanguage("es")} style={{ cursor: 'pointer' }}>
+            <DropdownMenuItem className="cursor-pointer" onClick={() => changeLanguage("es")}>
                 <img
                     src={`/assets/images/es.svg`}
                     width={24}
@@ -45,7 +45,7 @@ function LanguageSelector({ }) {
                 />
                 <span className="font-medium">Español</span>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => changeLanguage("en")} style={{ cursor: 'pointer' }}>
+            <DropdownMenuItem className="cursor-pointer" onClick={() => changeLanguage("en")}>
                 <img
                     src={`/assets/images/en.svg`}
                     width={24}
