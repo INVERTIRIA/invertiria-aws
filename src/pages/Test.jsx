@@ -5,8 +5,6 @@ import { useTranslation } from "react-i18next";
 
 // Pagina de pruebas
 function Test() {
-  console.log("test");
-
   const { t } = useTranslation();
   const [masks, setMasks] = useState(null);
 
