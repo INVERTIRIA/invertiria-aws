@@ -6,13 +6,13 @@ import { GlobalContext } from '../contexts/GlobalContext';
 
 // Pagina de pruebas
 function Test() {
-
+  
     const { t } = useTranslation();
     const { masks, getMask } = useContext(GlobalContext);
 
-    useEffect(() => {
-        getMatrizModelo();
-    }, [])
+  useEffect(() => {
+    getMatrizModelo();
+  }, []);
 
     return (
         <>
@@ -52,7 +52,9 @@ function Test() {
         } catch (error) {
             console.error("Error fetching matriz modelo:", error);
         }
+
     }
+  }
 }
 
-export { Test }
+export { Test };
