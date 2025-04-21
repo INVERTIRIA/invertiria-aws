@@ -16,9 +16,7 @@ function Test() {
 
     return (
         <>
-            <br />
-
-            <div className="self-stretch pb-6 md:pb-24 flex flex-col justify-center items-center overflow-hidden">
+            <div className="self-stretch pt-10 pb-6 md:pb-24 flex flex-col justify-center items-center overflow-hidden">
                 <div className="w-full max-w-[1280px] px-4 md:px-8 flex flex-col justify-start items-start gap-4 md:gap-8">
                     <div className="self-stretch p-6 md:p-16 bg-orange-50 rounded-2xl flex flex-col lg:flex-row justify-between items-start gap-6">
                         <div className="flex-1 flex flex-col justify-start items-start gap-2 md:gap-4 min-w-0">
@@ -40,10 +38,8 @@ function Test() {
                     </div>
                 </div>
             </div>
-
-            <br />
-            <br />
-            <br />
+            {/* Seccion vacia */}
+            <div className="p-55"></div>
         </>
     )
 
