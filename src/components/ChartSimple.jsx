@@ -25,7 +25,7 @@ function MyLineChart({ results, dataName }) {
     }
 
     return (
-        <div className='bg-black pb-10'>
+        <div className='bg-black pb-30'>
             <h1 className='text-center text-white text-4xl font-bold pb-5'>{dataName}</h1>
             <div className="w-full h-[50vh] flex justify-center items-center">
                 <ResponsiveContainer>
@@ -38,7 +38,7 @@ function MyLineChart({ results, dataName }) {
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Line type="monotone" dataKey={dataName} stroke="#00d8ff" />
+                        <Line type="monotone" dataKey={dataName} stroke="#FC7300" />
                     </LineChart>
                 </ResponsiveContainer>
             </div>

@@ -1,7 +1,7 @@
 import { supabase } from "../supabase";
 
 // Funcion obtener mascaras de texto
-export async function getMasks(language, country) {
+export async function getAllMasks(language, country) {
     try {
         const { data, error } = await supabase
             .from("mascaras_texto")
