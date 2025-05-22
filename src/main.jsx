@@ -1,24 +1,29 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router";
-import { AppRoutes } from './routes.jsx' // Rutas
-import { GlobalProvider } from './contexts/GlobalContext'; // Contexto
-import './main.css' // Estilos
-import './translations.js';  // Traducciones
+import { AppRoutes } from "./routes.jsx"; // Rutas
+import { GlobalProvider } from "./contexts/GlobalContext"; // Contexto
+import "./main.css"; // Estilos
+import "./translations.js"; // Traducciones
 
 // Componentes
-import { Header } from "./components/Header"
-import { Footer } from "./components/Footer"
+
+import { Toaster } from "sonner";
+import { AuthProvider } from "./contexts/AuthContext.jsx";
+import { LayoutVisibilityProvider } from "./contexts/LayoutVisibilityContext.jsx";
 
 // Renderizado de la aplicación
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <GlobalProvider>
-      <BrowserRouter>
-        <Header />
-        <AppRoutes />
-        <Footer />
-      </BrowserRouter>
-    </GlobalProvider>
+    <AuthProvider>
+      <GlobalProvider>
+        <BrowserRouter>
+          <LayoutVisibilityProvider>
+            <AppRoutes />
+            <Toaster richColors closeButton />
+          </LayoutVisibilityProvider>
+        </BrowserRouter>
+      </GlobalProvider>
+    </AuthProvider>
   </StrictMode>
-)
+);

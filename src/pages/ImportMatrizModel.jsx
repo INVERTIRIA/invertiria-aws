@@ -1,8 +1,8 @@
 import Papa from "papaparse";
-import { supabase } from "../api/auth";
 import { useState, useTransition } from "react";
 import { CloudUpload, FileSpreadsheet, Loader2, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { supabase } from "../supabase";
 
 const ImportMatrizModel = () => {
   const [preview, setPreview] = useState(null);
