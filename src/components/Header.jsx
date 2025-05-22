@@ -16,7 +16,7 @@ import {
   SheetTrigger,
 } from "./ui/sheet";
 import { useAuth } from "../contexts/AuthContext";
-import { Instagram, Linkedin, X, Youtube } from "@/components/icons";
+import { Instagram, Linkedin, X, Youtube } from "./icons";
 
 // Redes sociales
 const socials = [
