@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import { ArrowUpRightIcon } from "lucide-react";
 import { Container } from "../components/design/Container";
 import CarouselReviews from "../components/design/CarouselReviews";
-import FaqAccordion from "../components/FAQAccordion";
+import FaqAccordion from "../components/FaqAccordion";
 
 const features = [
   {
