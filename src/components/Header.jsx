@@ -1,22 +1,16 @@
-import { Link, useLocation } from "react-router";
+import { Link } from "react-router";
 import { useEffect, useState } from "react";
+import { useIsMobile } from "../hooks/use-mobile";
 import clsx from "clsx";
 
-import { MenuIcon } from "lucide-react";
+import { LogOut, MenuIcon, User } from "lucide-react";
 
 // Componentes
 import { Container } from "./design/Container";
 import { LanguageSelector } from "./LanguageSelector";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "./ui/sheet";
 import { useAuth } from "../contexts/AuthContext";
 import { Instagram, Linkedin, X, Youtube } from "./icons";
+import HamburgerMenu from "./design/HambuerguerMenu";
 
 // Redes sociales
 const socials = [
@@ -40,11 +34,10 @@ const socials = [
 
 // Header
 function Header() {
-  const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
-  const [openNavigation, setOpenNavigation] = useState(false);
+  const isMobile = useIsMobile(1023);
 
-  const { isAuthenticated, logout, user } = useAuth();
+  const { isAuthenticated, user, logout } = useAuth();
 
   // Throttle manual para scroll
   useEffect(() => {
@@ -62,10 +55,6 @@ function Header() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  useEffect(() => {
-    setOpenNavigation(false);
-  }, [location.pathname]);
 
   return (
     <header className="fixed top-0 z-50 w-full transition-[background,shadow] duration-300">
@@ -106,40 +95,45 @@ function Header() {
           <Link to="/">
             <img src="/assets/svg/logo.svg" className="h-8 w-auto " />
           </Link>
-          <nav className="hidden lg:flex">
-            <ul className="flex items-center gap-10 text-base font-poppins">
-              <li>
-                <Link className="text-black font-poppins hover:text-invertiria-1">
-                  Personas
-                </Link>
-              </li>
-              <li>
-                <Link className="text-black font-poppins hover:text-invertiria-1">
-                  Compañías
-                </Link>
-              </li>
-              <li>
-                <Link className="text-black font-poppins hover:text-invertiria-1">
-                  Inversionistas
-                </Link>
-              </li>
-              <li>
-                <Link className="text-black font-poppins hover:text-invertiria-1">
-                  Planes
-                </Link>
-              </li>
-            </ul>
-          </nav>
-          <div className="flex items-center text-base text-black">
+          {!isMobile && (
+            <nav className="hidden lg:flex">
+              <ul className="flex items-center gap-10 text-sm xl:text-base font-poppins">
+                <li>
+                  <Link className="text-black font-poppins hover:text-invertiria-1">
+                    Personas
+                  </Link>
+                </li>
+                <li>
+                  <Link className="text-black font-poppins hover:text-invertiria-1">
+                    Compañías
+                  </Link>
+                </li>
+                <li>
+                  <Link className="text-black font-poppins hover:text-invertiria-1">
+                    Inversionistas
+                  </Link>
+                </li>
+                <li>
+                  <Link className="text-black font-poppins hover:text-invertiria-1">
+                    Planes
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          )}
+          <div className="flex items-center text-sm xl:text-base text-black">
             {isAuthenticated ? (
-              <div className="flex items-center font-poppins gap-4">
-                <button onClick={logout}>Cerrar sesion</button>
+              <div className="flex items-center font-poppins gap-4 mr-2">
                 <Link
-                  className="hover:text-invertiria-1 font-poppins "
+                  className="hidden sm:flex hover:text-invertiria-1 font-poppins"
                   to={`/${user.user_metadata.role}/dashboard`}
                 >
-                  Dashboard
+                  Mi Perfil
                 </Link>
+                <LogOut
+                  className="stroke-black size-5 hover:stroke-invertiria-1 cursor-pointer"
+                  onClick={logout}
+                />
               </div>
             ) : (
               <div className="hidden sm:flex items-center text-black">
@@ -159,31 +153,10 @@ function Header() {
               </div>
             )}
             <LanguageSelector />
-            <div className="flex items-center lg:hidden bg-gray-100 rounded-md px-1 py-1 sm:ml-4">
-              <MenuIcon
-                className="stroke-black size-5"
-                onClick={() => setOpenNavigation(true)}
-              />
-            </div>
+            {isMobile && <HamburgerMenu />}
           </div>
         </div>
       </Container>
-      <div className="block h-0 lg:hidden">
-        <Sheet open={openNavigation} onOpenChange={setOpenNavigation}>
-          <SheetTrigger />
-          <SheetContent>
-            <SheetHeader>
-              <SheetTitle />
-              <SheetDescription />
-            </SheetHeader>
-            <div className="flex flex-col h-screen">
-              <nav className="text-center h-full pb-6">
-                <ul className="flex flex-col items-center gap-6"></ul>
-              </nav>
-            </div>
-          </SheetContent>
-        </Sheet>
-      </div>
     </header>
   );
 }

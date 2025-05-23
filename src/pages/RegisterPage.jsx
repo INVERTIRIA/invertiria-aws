@@ -17,7 +17,7 @@ const RegisterPage = () => {
   return (
     <>
       <PageTitle title="Register" />
-      <Container className={"w-full flex gap-14 items-center my-20 sm:my-40"}>
+      <Container classNameParent={"my-20"}>
         <RegisterUserForm />
       </Container>
     </>

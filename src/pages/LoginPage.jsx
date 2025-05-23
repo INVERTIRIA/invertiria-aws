@@ -40,7 +40,7 @@ export const LoginPage = () => {
   return (
     <>
       <PageTitle title="Login" />
-      <Container classNameParent={"mt-20"}>
+      <Container classNameParent={"my-20"}>
         <LoginForm />
       </Container>
     </>
