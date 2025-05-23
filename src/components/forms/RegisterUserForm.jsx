@@ -67,7 +67,7 @@ export const RegisterUserForm = () => {
   return (
     <div className="w-full flex items-center justify-center">
       <Form {...form}>
-        <div className="max-w-4xl flex items-center border border-invertiria-1 rounded-2xl overflow-hidden">
+        <div className="w-full max-w-4xl flex items-center border border-invertiria-1 rounded-2xl overflow-hidden">
           <form
             onSubmit={onSubmit}
             className="w-full flex flex-col gap-6 py-10 px-5 md:px-20"
@@ -123,7 +123,7 @@ export const RegisterUserForm = () => {
             </div>
           </form>
           <img
-            className="hidden sm:block w-72 h-[680px] rounded-tr-2xl rounded-br-2xl"
+            className="hidden sm:block w-80 h-[680px] rounded-tr-2xl rounded-br-2xl"
             src="assets/images/login.jpg"
           />
         </div>

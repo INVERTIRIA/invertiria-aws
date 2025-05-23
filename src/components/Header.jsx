@@ -123,9 +123,9 @@ function Header() {
           )}
           <div className="flex items-center text-sm xl:text-base text-black">
             {isAuthenticated ? (
-              <div className="flex items-center font-poppins gap-4 mr-2">
+              <div className="hidden sm:flex items-center font-poppins gap-4 mr-2">
                 <Link
-                  className="hidden sm:flex hover:text-invertiria-1 font-poppins"
+                  className="flex hover:text-invertiria-1 font-poppins"
                   to={`/${user.user_metadata.role}/dashboard`}
                 >
                   Mi Perfil
