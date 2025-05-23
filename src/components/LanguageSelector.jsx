@@ -36,7 +36,7 @@ function LanguageSelector() {
             className="rounded-full"
             style={{ aspectRatio: "24/24", objectFit: "cover" }}
           />
-          <span className="text-base font-normal text-black font-poppins hidden xs:block">
+          <span className="text-sm xl:text-base font-normal text-black font-poppins hidden xs:block">
             {selectedLanguage}
           </span>
           <ChevronDown className="h-4 w-4" color="black" />
