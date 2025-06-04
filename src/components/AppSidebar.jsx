@@ -20,16 +20,31 @@ import NavMain from "./NavMain";
 import NavUser from "./NavUser";
 import { Link } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { routes } from "../constants";
 
 const AppSidebar = ({ ...props }) => {
-  const { user } = useAuth();
+  const { user, hasPermissions } = useAuth();
   const [nav, setNav] = useState([]);
+  const effectRan = useRef(false);
 
   useEffect(() => {
-    if (user) {
-      setNav(routes[user.user_metadata.role]);
+    if (user && !effectRan.current) {
+      const items = routes[user.user_metadata.role];
+      const res = [];
+
+      // Validar si tiene permisos para cada página
+      items.forEach(async (item) => {
+        if (!item.validateModule) {
+          res.push(item);
+        } else if (item.validateModule) {
+          const isPermitted = await hasPermissions(item.validateModule);
+          if (isPermitted) res.push(item);
+        }
+      });
+
+      setNav(res);
+      effectRan.current = true;
     }
   }, [user]);
 

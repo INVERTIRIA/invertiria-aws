@@ -50,7 +50,7 @@ export const routes = {
     {
       title: "Mi perfil",
       url: "/user/dashboard",
-      icon: UsersRound,
+      icon: UserPen,
     },
     {
       title: "Mis inversiones",
@@ -67,12 +67,12 @@ export const routes = {
     {
       title: "Mi perfil",
       url: "/admin/dashboard",
-      icon: UsersRound,
+      icon: UserPen,
     },
     {
       title: "Usuarios",
       url: "/admin/users",
-      icon: UserPen,
+      icon: UsersRound,
     },
     {
       title: "Asesores",
@@ -94,12 +94,18 @@ export const routes = {
     {
       title: "Mi perfil",
       url: "/assistant/dashboard",
+      icon: UserPen,
+    },
+    {
+      title: "Usuarios",
+      url: "/admin/users",
       icon: UsersRound,
     },
     {
       title: "Asesores",
       url: "/assistant/advisors",
       icon: BriefcaseBusiness,
+      validateModule: "advisors",
     },
   ],
 };
