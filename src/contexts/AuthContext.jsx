@@ -1,4 +1,5 @@
 import { User } from "./UserContext";
+import { Admin } from "./AdminContext";
 import { toast } from "sonner";
 import { supabase } from "../supabase";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -29,6 +30,14 @@ export const AuthProvider = ({ children }) => {
       return null;
     }
     return new User(data, setErrorToast);
+  };
+
+  const createAdminInstance = (data) => {
+    if (!data) {
+      console.error("No data provided for User instance");
+      return null;
+    }
+    return new Admin(data, setErrorToast);
   };
 
   /* FUNCTIONS
@@ -92,8 +101,21 @@ export const AuthProvider = ({ children }) => {
       return;
     }
 
-    const res = await supabase.from("usuarios").select().single();
+    const res = await supabase
+      .from("usuarios")
+      .select()
+      .eq("usuario_id", user.id)
+      .single();
+
     return res.data;
+  };
+
+  const hasPermissions = async (module) => {
+    const { data } = await supabase.rpc("authorize", {
+      requested_permission: `${module}.get`,
+    });
+
+    return data;
   };
 
   /* HOOKS
@@ -154,10 +176,12 @@ export const AuthProvider = ({ children }) => {
         isAuthenticated,
         isLoading,
         register,
+        hasPermissions,
         login,
         logout,
         getInfo,
         createUserInstance,
+        createAdminInstance,
       }}
     >
       {children}

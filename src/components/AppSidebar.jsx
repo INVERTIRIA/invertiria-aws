@@ -19,36 +19,20 @@ import {
 import NavMain from "./NavMain";
 import NavUser from "./NavUser";
 import { Link } from "react-router";
-
-const navMain = [
-  {
-    title: "Home",
-    url: "/",
-    icon: House,
-  },
-  {
-    title: "Mi perfil",
-    url: "/user/dashboard",
-    icon: UsersRound,
-  },
-  {
-    title: "Mis inversiones",
-    url: "/user/investments",
-    icon: ChartColumnIncreasing,
-  },
-  {
-    title: "Acceso delegado",
-    url: "/user/delegado",
-    icon: Handshake,
-  },
-  {
-    title: "Cambiar de perfil",
-    url: "/user/change-profile",
-    icon: Repeat,
-  },
-];
+import { useAuth } from "../contexts/AuthContext";
+import { useEffect, useState } from "react";
+import { routes } from "../constants";
 
 const AppSidebar = ({ ...props }) => {
+  const { user } = useAuth();
+  const [nav, setNav] = useState([]);
+
+  useEffect(() => {
+    if (user) {
+      setNav(routes[user.user_metadata.role]);
+    }
+  }, [user]);
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -77,7 +61,7 @@ const AppSidebar = ({ ...props }) => {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={navMain} />
+        <NavMain items={nav} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />
