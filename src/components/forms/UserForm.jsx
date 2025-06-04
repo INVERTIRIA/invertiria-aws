@@ -190,8 +190,6 @@ const UserForm = ({ userInfo }) => {
   // Submit
   const onSubmit = form.handleSubmit((values) => {
     startTransition(async () => {
-      console.log(values);
-
       const res = await userIntance.update(values);
 
       if (!res) return;

@@ -19,36 +19,35 @@ import {
 import NavMain from "./NavMain";
 import NavUser from "./NavUser";
 import { Link } from "react-router";
-
-const navMain = [
-  {
-    title: "Home",
-    url: "/",
-    icon: House,
-  },
-  {
-    title: "Mi perfil",
-    url: "/user/dashboard",
-    icon: UsersRound,
-  },
-  {
-    title: "Mis inversiones",
-    url: "/user/investments",
-    icon: ChartColumnIncreasing,
-  },
-  {
-    title: "Acceso delegado",
-    url: "/user/delegado",
-    icon: Handshake,
-  },
-  {
-    title: "Cambiar de perfil",
-    url: "/user/change-profile",
-    icon: Repeat,
-  },
-];
+import { useAuth } from "../contexts/AuthContext";
+import { useEffect, useRef, useState } from "react";
+import { routes } from "../constants";
 
 const AppSidebar = ({ ...props }) => {
+  const { user, hasPermissions } = useAuth();
+  const [nav, setNav] = useState([]);
+  const effectRan = useRef(false);
+
+  useEffect(() => {
+    if (user && !effectRan.current) {
+      const items = routes[user.user_metadata.role];
+      const res = [];
+
+      // Validar si tiene permisos para cada página
+      items.forEach(async (item) => {
+        if (!item.validateModule) {
+          res.push(item);
+        } else if (item.validateModule) {
+          const isPermitted = await hasPermissions(item.validateModule);
+          if (isPermitted) res.push(item);
+        }
+      });
+
+      setNav(res);
+      effectRan.current = true;
+    }
+  }, [user]);
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -77,7 +76,7 @@ const AppSidebar = ({ ...props }) => {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={navMain} />
+        <NavMain items={nav} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />

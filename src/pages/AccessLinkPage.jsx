@@ -19,7 +19,9 @@ const AccessLinkPage = () => {
   const email = searchParams.get("email");
 
   useEffect(() => {
-    if (isAuthenticated) navigate(`/${user.user_metadata.role}/dashboard`);
+    if (isAuthenticated) {
+      navigate(`/${user.user_metadata.role}/dashboard`);
+    }
   }, [isAuthenticated, user]);
 
   const handleLogin = () => {
@@ -37,12 +39,10 @@ const AccessLinkPage = () => {
     <>
       <PageTitle title="Confirmar correo" />
       <Container
-        classNameParent={
-          "w-full flex gap-14 items-center my-10 bg-white h-[700px]"
-        }
+        classNameParent={"w-full flex gap-14 items-center bg-white h-[700px]"}
       >
         <div className="flex flex-col gap-10 text-black items-cente">
-          <h1 className="h1">Revisa tu email</h1>
+          <h1 className="h1 text-center">Revisa tu email</h1>
           <p className="font-poppins max-w-xl text-gray-900 font-light text-center">
             Hemos envidado un correo electrónico con un enlace de acceso
             temporal a <span className="font-poppins font-medium">{email}</span>
@@ -50,7 +50,7 @@ const AccessLinkPage = () => {
           <p className="font-poppins max-w-xl text-gray-900 font-light text-center">
             Este enlace solo se puede usar una vez y expira en una hora.
           </p>
-          <div className="flex items-center justify-center gap-1">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-1">
             <p className="font-poppins max-w-xl text-gray-900 font-light text-center">
               No te llego el enlace ?{" "}
             </p>

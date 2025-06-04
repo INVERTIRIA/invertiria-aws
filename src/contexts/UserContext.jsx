@@ -17,7 +17,7 @@ export class User {
         data: {
           first_name: toInsert.first_name,
           last_name: toInsert.last_name,
-          role: roles[toInsert.role] || "user", // Asegúrate de usar un valor válido: 'admin', 'user'
+          role: roles[toInsert.role] || "user", // Asegúrate de usar un valor válido: 'admin', 'user' y 'advisor
         },
         captchaToken,
       },

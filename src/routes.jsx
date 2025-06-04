@@ -3,10 +3,13 @@ import { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router";
 import useScrollBehavior from "./constants/functions/useScrollBehavior";
 import { useLayoutVisibility } from "./contexts/LayoutVisibilityContext";
+import ProtectedRoute from "./ProtectedRoute";
+import { roles } from "./constants";
 
 // Componentes
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
+import DashboardLayout from "./components/design/DashboardLayout";
 
 // Paginas
 import { App } from "./pages/App";
@@ -18,8 +21,9 @@ import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
 import AccessLinkPage from "./pages/AccessLinkPage";
 import UserPages from "./pages/users/index";
-import ProtectedRoute from "./ProtectedRoute";
-import { roles } from "./constants";
+import AdminPages from "./pages/admin/index";
+import HasPermissions from "./HasPermissions";
+import AuthorizationPage from "./pages/AuthorizationPage";
 
 // Rutas de la aplicacion
 function AppRoutes() {
@@ -34,7 +38,12 @@ function AppRoutes() {
   }, []);
 
   useEffect(() => {
-    const isUserRoute = location.pathname.startsWith("/user");
+    const isUserRoute =
+      location.pathname.startsWith("/authorization") ||
+      location.pathname.startsWith("/user") ||
+      location.pathname.startsWith("/admin") ||
+      location.pathname.startsWith("/assistant");
+
     setHideLayout(isUserRoute);
   }, [location.pathname, setHideLayout]);
 
@@ -51,8 +60,10 @@ function AppRoutes() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/access-link" element={<AccessLinkPage />} />
+          <Route path="/authorization" element={<AuthorizationPage />} />
+          {/* User */}
           <Route element={<ProtectedRoute roles={[roles.user]} />}>
-            <Route path="/user" element={<UserPages.Layout />}>
+            <Route path="/user" element={<DashboardLayout />}>
               <Route path="dashboard" element={<UserPages.DashboardPage />} />
               <Route
                 path="investments"
@@ -63,6 +74,24 @@ function AppRoutes() {
                   path="change-email"
                   element={<UserPages.ChangeEmailPage />}
                 />
+              </Route>
+            </Route>
+          </Route>
+          {/* Admin */}
+          <Route element={<ProtectedRoute roles={[roles.admin]} />}>
+            <Route path="/admin" element={<DashboardLayout />}>
+              <Route path="dashboard" element={<UserPages.DashboardPage />} />
+              <Route path="advisors" element={<AdminPages.AdvisorsPage />} />
+            </Route>
+          </Route>
+          {/* Assistant */}
+          <Route
+            element={<ProtectedRoute roles={[roles.admin, roles.assistant]} />}
+          >
+            <Route path="/assistant" element={<DashboardLayout />}>
+              <Route path="dashboard" element={<UserPages.DashboardPage />} />
+              <Route element={<HasPermissions roles={[roles.assistant]} />}>
+                <Route path="advisors" element={<AdminPages.AdvisorsPage />} />
               </Route>
             </Route>
           </Route>
