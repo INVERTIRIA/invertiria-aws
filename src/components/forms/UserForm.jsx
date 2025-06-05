@@ -259,7 +259,7 @@ const UserForm = ({ userInfo }) => {
                       Fecha de nacimiento <span className="text-black">*</span>
                     </FormLabel>
                     <Popover
-                      open={openPopovers["fecha_de_nacimiento"]}
+                      open={!!openPopovers["fecha_de_nacimiento"]}
                       onOpenChange={() => togglePopover("fecha_de_nacimiento")}
                     >
                       <PopoverTrigger asChild>
@@ -268,7 +268,7 @@ const UserForm = ({ userInfo }) => {
                             ref={buttonRef}
                             variant={"outline"}
                             className={cn(
-                              "w-full pl-3 text-left font-normal",
+                              "w-full pl-3 text-left font-normal text-base md:text-sm",
                               !field.value && "text-muted-foreground"
                             )}
                           >
@@ -334,7 +334,7 @@ const UserForm = ({ userInfo }) => {
                               variant={"outline"}
                               role="combobox"
                               className={cn(
-                                "w-full justify-between font-normal",
+                                "w-full justify-between font-normal text-base md:text-sm",
                                 !field.value && "text-muted-foreground"
                               )}
                             >
@@ -423,7 +423,7 @@ const UserForm = ({ userInfo }) => {
                               variant={"outline"}
                               role="combobox"
                               className={cn(
-                                "w-full justify-between font-normal",
+                                "w-full justify-between font-normal text-base md:text-sm",
                                 !field.value && "text-muted-foreground"
                               )}
                             >

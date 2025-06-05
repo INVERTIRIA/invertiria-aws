@@ -53,7 +53,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import usuariosData from "./usuarios_data.json";
+//import usuariosData from "./usuarios_data.json";
 
 const FilterSection = ({ table, options }) => {
   const [selectedFilter, setSelectedFilter] = useState({
@@ -62,8 +62,8 @@ const FilterSection = ({ table, options }) => {
   });
 
   return (
-    <div className="flex flex-col sm:flex-row py-4 gap-4">
-      <div className="w-[30%] flex items-center gap-2">
+    <div className="flex flex-col-reverse sm:flex-row py-4 gap-4">
+      <div className="w-full sm:w-[30%] flex items-center gap-2">
         <Input
           placeholder="Ingrese un valor..."
           value={table.getColumn(selectedFilter.field)?.getFilterValue() ?? ""}

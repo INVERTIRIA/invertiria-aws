@@ -15,8 +15,8 @@ import Skeleton from "./Skeleton";
 
 const DashboardLayout = () => {
   const { getInfo } = useAuth();
-  const { setHideLayout, pageTitle } = useLayoutVisibility();
   const [userInfo, setUserInfo] = useState();
+  const { setHideLayout, pageTitle } = useLayoutVisibility();
 
   useEffect(() => {
     setHideLayout(true); // Ocultar el Header y el Footer

@@ -41,7 +41,7 @@ const AccessLinkPage = () => {
       <Container
         classNameParent={"w-full flex gap-14 items-center bg-white h-[700px]"}
       >
-        <div className="flex flex-col gap-10 text-black items-cente">
+        <div className="flex flex-col gap-10 text-black items-center">
           <h1 className="h1 text-center">Revisa tu email</h1>
           <p className="font-poppins max-w-xl text-gray-900 font-light text-center">
             Hemos envidado un correo electrónico con un enlace de acceso

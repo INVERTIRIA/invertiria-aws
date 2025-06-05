@@ -14,11 +14,12 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  useSidebar,
 } from "./ui/sidebar";
 
 import NavMain from "./NavMain";
 import NavUser from "./NavUser";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
 import { useEffect, useRef, useState } from "react";
 import { routes } from "../constants";
@@ -27,6 +28,15 @@ const AppSidebar = ({ ...props }) => {
   const { user, hasPermissions } = useAuth();
   const [nav, setNav] = useState([]);
   const effectRan = useRef(false);
+
+  const location = useLocation();
+  const { setOpenMobile, openMobile, isMobile } = useSidebar();
+
+  useEffect(() => {
+    if (isMobile && openMobile) {
+      setOpenMobile(false);
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     if (user && !effectRan.current) {
