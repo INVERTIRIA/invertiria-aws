@@ -49,7 +49,7 @@ import { Portal } from "@radix-ui/react-popover";
 import { useAuth } from "../../../contexts/AuthContext";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 // Elements
@@ -350,34 +350,13 @@ const FormAdvisor = ({ setRefresh, onOpenChange }) => {
             />
           ))}
         </div>
-        <Button disabled={isSubmitting} type="submit" className="mt-6">
+        <Button disabled={isSubmitting} type="submit" className="w-full mt-6">
           {isSubmitting && <Loader2 className="mr-2 animate-spin" />}
           Crear asesor
         </Button>
       </form>
     </Form>
   );
-
-  /* return (
-    <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-      <DialogTrigger asChild>
-        <Button className="w-full 2xs:w-auto font-light" variant="theme">
-          <Plus className="size-5" strokeWidth={1.5} /> Agregar asesor
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-xl">
-        <DialogHeader>
-          <DialogTitle>Crear asesor</DialogTitle>
-          <DialogDescription>
-            Ingresa todos los datos para la creación del perfil del asesor
-          </DialogDescription>
-        </DialogHeader>
-        <div className="mt-4">
-          
-        </div>
-      </DialogContent>
-    </Dialog>
-  ); */
 };
 
 const CreateAdvisors = ({ setRefresh }) => {
@@ -392,17 +371,17 @@ const CreateAdvisors = ({ setRefresh }) => {
             <Plus className="size-5" strokeWidth={1.5} /> Agregar asesor
           </Button>
         </DrawerTrigger>
-        <DrawerContent>
-          <DrawerHeader className="text-left">
+        <DrawerContent className="flex max-h-[80vh] flex-col">
+          <DrawerHeader className="shrink-0 text-left">
             <DrawerTitle>Crear asesor</DrawerTitle>
             <DrawerDescription>
               Ingresa todos los datos para la creación del perfil del asesor
             </DrawerDescription>
           </DrawerHeader>
-          <div className="mt-4 px-4">
+          <div className="overflow-y-auto px-4 grow">
             <FormAdvisor setRefresh={setRefresh} onOpenChange={setOpen} />
           </div>
-          <DrawerFooter className="pt-2">
+          <DrawerFooter className="shrink-0 pt-2">
             <DrawerClose asChild>
               <Button variant="outline">Cancel</Button>
             </DrawerClose>
