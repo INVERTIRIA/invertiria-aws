@@ -14,7 +14,7 @@ const Permission = ({ promise }) => {
 const HasPermissions = () => {
   const location = useLocation();
   const { hasPermissions } = useAuth();
-  const pathname = location.pathname.split("/");
+  const pathname = location.pathname.split("/").filter(Boolean);
 
   return (
     <Suspense fallback={<Skeleton />}>
