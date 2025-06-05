@@ -9,6 +9,16 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import {
   Form,
   FormControl,
   FormField,
@@ -54,12 +64,13 @@ import { countries } from "../../../constants";
 import { cn } from "@/lib/utils";
 import { es } from "date-fns/locale";
 import { format, parseISO } from "date-fns";
+import { useIsMobile } from "../../../hooks/use-mobile";
 
-const CreateAdvisors = ({ setRefresh }) => {
+const FormAdvisor = ({ setRefresh, onOpenChange }) => {
   const [cities, setCities] = useState([]);
   const [isSubmitting, startTransition] = useTransition();
   const [openPopovers, setOpenPopovers] = useState({});
-  const [openDialog, setOpenDialog] = useState(false);
+  //const [openDialog, setOpenDialog] = useState(false);
 
   // Instancias
   const { createAdminInstance, createUserInstance } = useAuth();
@@ -162,11 +173,192 @@ const CreateAdvisors = ({ setRefresh }) => {
 
       form.reset(); // Limpiar el formulario
 
-      return setOpenDialog(false);
+      return onOpenChange(false);
     });
   });
 
   return (
+    <Form {...form}>
+      <form onSubmit={onSubmit}>
+        <div className="grid sm:grid-cols-2 gap-4">
+          {personalFields1.map((item) => (
+            <FormField
+              key={item.name}
+              control={form.control}
+              name={item.name}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {item.label} <span className="text-black">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={item.placeholder}
+                      type={item.type || "text"}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ))}
+          {/* Calendario */}
+          <FormField
+            control={form.control}
+            name="fecha_de_nacimiento"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Fecha de nacimiento <span className="text-black">*</span>
+                </FormLabel>
+                <Popover
+                  open={openPopovers["fecha_de_nacimiento"]}
+                  onOpenChange={() => {
+                    togglePopover("fecha_de_nacimiento");
+                  }}
+                >
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        type="button"
+                        variant={"outline"}
+                        className={cn(
+                          "w-full pl-3 text-left font-normal",
+                          !field.value && "text-muted-foreground"
+                        )}
+                      >
+                        {field.value ? (
+                          format(parseISO(field.value), "yyyy-MM-dd")
+                        ) : (
+                          <span>Elige una fecha</span>
+                        )}
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="z-50 p-0 flex items-center justify-center pointer-events-auto">
+                    <Calendar
+                      mode="single"
+                      selected={field.value ? parseISO(field.value) : undefined}
+                      //onSelect={field.onChange}
+                      onSelect={(date) => {
+                        const formattedDate = date
+                          ? format(date, "yyyy-MM-dd")
+                          : "";
+                        field.onChange(formattedDate); // Se almacena el string "yyyy-MM-dd"
+
+                        togglePopover("fecha_de_nacimiento");
+                      }}
+                      disabled={(date) =>
+                        date > new Date() || date < new Date("1900-01-01")
+                      }
+                      locale={es}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* Selects */}
+          {personalFields2.map((item) => (
+            <FormField
+              key={item.name}
+              control={form.control}
+              name={item.name}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {item.label} <span className="text-black">*</span>
+                  </FormLabel>
+                  <Popover
+                    open={!!openPopovers[item.name]}
+                    onOpenChange={() => {
+                      togglePopover(item.name);
+                    }}
+                  >
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          type="button"
+                          variant={"outline"}
+                          role="combobox"
+                          className={cn(
+                            "w-full justify-between font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value
+                            ? item.options.find(
+                                (option) => option.value === field.value
+                              )?.label
+                            : item.placeholder}
+                          <ChevronsUpDown className="opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <Portal>
+                      <PopoverContent
+                        className="p-0 z-[1000] pointer-events-auto [&_label]:pointer-events-none"
+                        align="start"
+                      >
+                        <Command>
+                          <CommandInput
+                            placeholder="Buscar..."
+                            className="h-9 relative z-[9999] pointer-events-auto [&_label]:pointer-events-none"
+                          />
+                          <CommandList>
+                            <CommandEmpty>
+                              No se encontraron registros.
+                            </CommandEmpty>
+                            <CommandGroup>
+                              {item.options.map((option) => (
+                                <CommandItem
+                                  value={option.label}
+                                  key={option.value}
+                                  onSelect={() => {
+                                    form.setValue(item.name, option.value);
+                                    if (item.onChange)
+                                      item.onChange(option.value);
+
+                                    // Cerrar el Popover al seleccionar
+                                    closePopover(item.name);
+                                  }}
+                                >
+                                  {option.label}
+                                  <Check
+                                    className={cn(
+                                      "ml-auto",
+                                      option.value === field.value
+                                        ? "opacity-100"
+                                        : "opacity-0"
+                                    )}
+                                  />
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Portal>
+                  </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ))}
+        </div>
+        <Button disabled={isSubmitting} type="submit" className="mt-6">
+          {isSubmitting && <Loader2 className="mr-2 animate-spin" />}
+          Crear asesor
+        </Button>
+      </form>
+    </Form>
+  );
+
+  /* return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       <DialogTrigger asChild>
         <Button className="w-full 2xs:w-auto font-light" variant="theme">
@@ -181,192 +373,61 @@ const CreateAdvisors = ({ setRefresh }) => {
           </DialogDescription>
         </DialogHeader>
         <div className="mt-4">
-          <Form {...form}>
-            <form onSubmit={onSubmit}>
-              <div className="grid sm:grid-cols-2 gap-4">
-                {personalFields1.map((item) => (
-                  <FormField
-                    key={item.name}
-                    control={form.control}
-                    name={item.name}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>
-                          {item.label} <span className="text-black">*</span>
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder={item.placeholder}
-                            type={item.type || "text"}
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                ))}
-                {/* Calendario */}
-                <FormField
-                  control={form.control}
-                  name="fecha_de_nacimiento"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Fecha de nacimiento{" "}
-                        <span className="text-black">*</span>
-                      </FormLabel>
-                      <Popover
-                        open={openPopovers["fecha_de_nacimiento"]}
-                        onOpenChange={() => {
-                          togglePopover("fecha_de_nacimiento");
-                        }}
-                      >
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              type="button"
-                              variant={"outline"}
-                              className={cn(
-                                "w-full pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              {field.value ? (
-                                format(parseISO(field.value), "yyyy-MM-dd")
-                              ) : (
-                                <span>Elige una fecha</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="z-50 p-0 flex items-center justify-center pointer-events-auto">
-                          <Calendar
-                            mode="single"
-                            selected={
-                              field.value ? parseISO(field.value) : undefined
-                            }
-                            //onSelect={field.onChange}
-                            onSelect={(date) => {
-                              const formattedDate = date
-                                ? format(date, "yyyy-MM-dd")
-                                : "";
-                              field.onChange(formattedDate); // Se almacena el string "yyyy-MM-dd"
+          
+        </div>
+      </DialogContent>
+    </Dialog>
+  ); */
+};
 
-                              togglePopover("fecha_de_nacimiento");
-                            }}
-                            disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
-                            locale={es}
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                {/* Selects */}
-                {personalFields2.map((item) => (
-                  <FormField
-                    key={item.name}
-                    control={form.control}
-                    name={item.name}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>
-                          {item.label} <span className="text-black">*</span>
-                        </FormLabel>
-                        <Popover
-                          open={!!openPopovers[item.name]}
-                          onOpenChange={() => {
-                            togglePopover(item.name);
-                          }}
-                        >
-                          <PopoverTrigger asChild>
-                            <FormControl>
-                              <Button
-                                type="button"
-                                variant={"outline"}
-                                role="combobox"
-                                className={cn(
-                                  "w-full justify-between font-normal",
-                                  !field.value && "text-muted-foreground"
-                                )}
-                              >
-                                {field.value
-                                  ? item.options.find(
-                                      (option) => option.value === field.value
-                                    )?.label
-                                  : item.placeholder}
-                                <ChevronsUpDown className="opacity-50" />
-                              </Button>
-                            </FormControl>
-                          </PopoverTrigger>
-                          <Portal>
-                            <PopoverContent
-                              className="p-0 z-[1000] pointer-events-auto [&_label]:pointer-events-none"
-                              align="start"
-                            >
-                              <Command>
-                                <CommandInput
-                                  placeholder="Buscar..."
-                                  className="h-9 relative z-[9999] pointer-events-auto [&_label]:pointer-events-none"
-                                />
-                                <CommandList>
-                                  <CommandEmpty>
-                                    No se encontraron registros.
-                                  </CommandEmpty>
-                                  <CommandGroup>
-                                    {item.options.map((option) => (
-                                      <CommandItem
-                                        value={option.label}
-                                        key={option.value}
-                                        onSelect={() => {
-                                          form.setValue(
-                                            item.name,
-                                            option.value
-                                          );
-                                          if (item.onChange)
-                                            item.onChange(option.value);
+const CreateAdvisors = ({ setRefresh }) => {
+  const [open, setOpen] = useState(false);
+  const isMobile = useIsMobile();
 
-                                          // Cerrar el Popover al seleccionar
-                                          closePopover(item.name);
-                                        }}
-                                      >
-                                        {option.label}
-                                        <Check
-                                          className={cn(
-                                            "ml-auto",
-                                            option.value === field.value
-                                              ? "opacity-100"
-                                              : "opacity-0"
-                                          )}
-                                        />
-                                      </CommandItem>
-                                    ))}
-                                  </CommandGroup>
-                                </CommandList>
-                              </Command>
-                            </PopoverContent>
-                          </Portal>
-                        </Popover>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                ))}
-              </div>
-              <DialogFooter className="mt-6">
-                <Button disabled={isSubmitting} type="submit">
-                  {isSubmitting && <Loader2 className="mr-2 animate-spin" />}
-                  Crear asesor
-                </Button>
-              </DialogFooter>
-            </form>
-          </Form>
+  if (isMobile) {
+    return (
+      <Drawer open={open} onOpenChange={setOpen}>
+        <DrawerTrigger asChild>
+          <Button className="w-full 2xs:w-auto font-light" variant="theme">
+            <Plus className="size-5" strokeWidth={1.5} /> Agregar asesor
+          </Button>
+        </DrawerTrigger>
+        <DrawerContent>
+          <DrawerHeader className="text-left">
+            <DrawerTitle>Crear asesor</DrawerTitle>
+            <DrawerDescription>
+              Ingresa todos los datos para la creación del perfil del asesor
+            </DrawerDescription>
+          </DrawerHeader>
+          <div className="mt-4 px-4">
+            <FormAdvisor setRefresh={setRefresh} onOpenChange={setOpen} />
+          </div>
+          <DrawerFooter className="pt-2">
+            <DrawerClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DrawerClose>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+    );
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button className="w-full 2xs:w-auto font-light" variant="theme">
+          <Plus className="size-5" strokeWidth={1.5} /> Agregar asesor
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-xl">
+        <DialogHeader>
+          <DialogTitle>Crear asesor</DialogTitle>
+          <DialogDescription>
+            Ingresa todos los datos para la creación del perfil del asesor
+          </DialogDescription>
+        </DialogHeader>
+        <div className="mt-4">
+          <FormAdvisor setRefresh={setRefresh} onOpenChange={setOpen} />
         </div>
       </DialogContent>
     </Dialog>
