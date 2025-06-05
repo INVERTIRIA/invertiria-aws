@@ -1,5 +1,6 @@
 import {
   BriefcaseBusiness,
+  Building2,
   ChartColumnIncreasing,
   House,
   Repeat,
@@ -73,6 +74,11 @@ export const routes = {
       title: "Usuarios",
       url: "/admin/users",
       icon: UsersRound,
+    },
+    {
+      title: "Empresas",
+      url: "/admin/companies",
+      icon: Building2,
     },
     {
       title: "Asesores",

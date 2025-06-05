@@ -7,7 +7,8 @@ export class Admin extends BaseModel {
     super(data, setErrorToast);
   }
 
-  // Advisors
+  /* Advisors
+  ___________________________________________________ */
   async getAdvisors(role) {
     const additionalQuery =
       role === roles.company ? "" : ", empresa:empresas(name)";
@@ -26,5 +27,16 @@ export class Admin extends BaseModel {
     });
 
     return this.handleSupabaseFunctionResponse(res);
+  }
+
+  /* Companies
+  ___________________________________________________ */
+  async getCompanies() {
+    return await supabase
+      .from("empresas")
+      .select(
+        "*, usuarios(nombre, apellidos, email, ciudad, fecha_de_nacimiento)"
+      )
+      .then((res) => res.data);
   }
 }

@@ -31,7 +31,9 @@ import {
 } from "../ui/form";
 
 // Datos
-import { countries, investorOptions } from "../../constants";
+import { investorOptions } from "../../constants";
+import countriesData from "../../constants/paises.json";
+
 import { userSchema } from "@/constants/schema/user";
 import { useAuth } from "../../contexts/AuthContext";
 import { toast } from "sonner";
@@ -53,9 +55,10 @@ const UserForm = ({ userInfo }) => {
     defaultValues: {
       first_name: userInfo?.nombre || "",
       last_name: userInfo?.apellidos || "",
+      telefono: userInfo?.telefono?.toString() || "",
       fecha_de_nacimiento: userInfo?.fecha_de_nacimiento || "",
       direccion: userInfo?.direccion || "",
-      pais_id: userInfo?.pais_id?.toString() || "",
+      pais_id: userInfo?.pais_id || "",
       ciudad: userInfo?.ciudad || "",
       genero: userInfo?.genero || "",
       perfil: userInfo?.perfil || "",
@@ -102,6 +105,12 @@ const UserForm = ({ userInfo }) => {
       placeholder: "Ingrese su apellido",
     },
     {
+      name: "telefono",
+      label: "Teléfono",
+      placeholder: "Ingrese su telefono",
+      type: "number",
+    },
+    {
       name: "direccion",
       label: "Dirección",
       placeholder: "Ingrese su dirección",
@@ -113,7 +122,7 @@ const UserForm = ({ userInfo }) => {
       name: "pais_id",
       label: "País",
       placeholder: "Seleccione su país",
-      options: countries,
+      options: countriesData,
       onChange: getCities,
     },
     {
@@ -259,7 +268,7 @@ const UserForm = ({ userInfo }) => {
                       Fecha de nacimiento <span className="text-black">*</span>
                     </FormLabel>
                     <Popover
-                      open={openPopovers["fecha_de_nacimiento"]}
+                      open={!!openPopovers["fecha_de_nacimiento"]}
                       onOpenChange={() => togglePopover("fecha_de_nacimiento")}
                     >
                       <PopoverTrigger asChild>
@@ -268,7 +277,7 @@ const UserForm = ({ userInfo }) => {
                             ref={buttonRef}
                             variant={"outline"}
                             className={cn(
-                              "w-full pl-3 text-left font-normal",
+                              "w-full pl-3 text-left font-normal text-base md:text-sm",
                               !field.value && "text-muted-foreground"
                             )}
                           >
@@ -334,7 +343,7 @@ const UserForm = ({ userInfo }) => {
                               variant={"outline"}
                               role="combobox"
                               className={cn(
-                                "w-full justify-between font-normal",
+                                "w-full justify-between font-normal text-base md:text-sm",
                                 !field.value && "text-muted-foreground"
                               )}
                             >
@@ -423,7 +432,7 @@ const UserForm = ({ userInfo }) => {
                               variant={"outline"}
                               role="combobox"
                               className={cn(
-                                "w-full justify-between font-normal",
+                                "w-full justify-between font-normal text-base md:text-sm",
                                 !field.value && "text-muted-foreground"
                               )}
                             >

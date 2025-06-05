@@ -81,6 +81,7 @@ function AppRoutes() {
           <Route element={<ProtectedRoute roles={[roles.admin]} />}>
             <Route path="/admin" element={<DashboardLayout />}>
               <Route path="dashboard" element={<UserPages.DashboardPage />} />
+              <Route path="companies" element={<AdminPages.CompaniesPage />} />
               <Route path="advisors" element={<AdminPages.AdvisorsPage />} />
             </Route>
           </Route>
