@@ -8,10 +8,18 @@ const LayoutVisibilityContext = createContext({
 export const LayoutVisibilityProvider = ({ children }) => {
   const [hideLayout, setHideLayout] = useState(false);
   const [pageTitle, setPageTitle] = useState("");
+  const [isModalOpen, setModalOpen] = useState(false);
 
   return (
     <LayoutVisibilityContext.Provider
-      value={{ hideLayout, setHideLayout, pageTitle, setPageTitle }}
+      value={{
+        hideLayout,
+        setHideLayout,
+        pageTitle,
+        setPageTitle,
+        isModalOpen,
+        setModalOpen,
+      }}
     >
       {children}
     </LayoutVisibilityContext.Provider>
