@@ -1,23 +1,29 @@
+// Hooks
+import { toast } from "sonner";
+import { useForm } from "react-hook-form";
+import { useState, useTransition } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+// Constants
+import countriesData from "../../../../constants/paises.json";
+import { companySchema } from "../../../../constants/schema/admin";
+import { cn } from "@/lib/utils";
+import { es } from "date-fns/locale";
+import { format, parseISO } from "date-fns";
+
+// Contexts
+import { useAuth } from "../../../../contexts/AuthContext";
+
 // Components
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
+
 import {
   Form,
   FormControl,
@@ -25,7 +31,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../../components/ui/form";
+} from "@/components/ui/form";
+
 import {
   Command,
   CommandEmpty,
@@ -33,39 +40,17 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "../../../components/ui/command";
-import { Input } from "../../../components/ui/input";
-import { Button } from "../../../components/ui/button";
-import { advisorSchema } from "../../../constants/schema/admin";
-import { Calendar } from "../../../components/ui/calendar";
+} from "@/components/ui/command";
 
-// Hooks
-import { useAuth } from "../../../contexts/AuthContext";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useState, useTransition } from "react";
-import { toast } from "sonner";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { CalendarIcon, Check, ChevronsUpDown, Loader2 } from "lucide-react";
 
-// Elements
-import {
-  CalendarIcon,
-  Check,
-  ChevronsUpDown,
-  Loader2,
-  Plus,
-} from "lucide-react";
-//import { countries } from "../../../constants";
-import countriesData from "../../../constants/paises.json";
-import { cn } from "@/lib/utils";
-import { es } from "date-fns/locale";
-import { format, parseISO } from "date-fns";
-import { useIsMobile } from "../../../hooks/use-mobile";
-
-const FormAdvisor = ({ setRefresh, onOpenChange }) => {
+const CompanyForm = ({ onOpenChange, onSuccess }) => {
   const [cities, setCities] = useState([]);
   const [isSubmitting, startTransition] = useTransition();
   const [openPopovers, setOpenPopovers] = useState({});
-  //const [openDialog, setOpenDialog] = useState(false);
 
   // Instancias
   const { createAdminInstance, createUserInstance } = useAuth();
@@ -74,10 +59,12 @@ const FormAdvisor = ({ setRefresh, onOpenChange }) => {
 
   // Form
   const form = useForm({
-    resolver: zodResolver(advisorSchema),
+    resolver: zodResolver(companySchema),
     defaultValues: {
       first_name: "",
       last_name: "",
+      telefono: "",
+      company_name: "",
       email: "",
       fecha_de_nacimiento: "",
       direccion: "",
@@ -112,28 +99,33 @@ const FormAdvisor = ({ setRefresh, onOpenChange }) => {
     {
       name: "first_name",
       label: "Nombre",
-      placeholder: "Ingrese su nombre",
+      placeholder: "Ingrese el nombre",
     },
     {
       name: "last_name",
       label: "Apellidos",
-      placeholder: "Ingrese su apellido",
+      placeholder: "Ingrese los apellidos",
+    },
+    {
+      name: "company_name",
+      label: "Nombre de la empresa",
+      placeholder: "Ingrese el nombre de la empresa",
     },
     {
       name: "email",
       label: "Email",
-      placeholder: "Ingrese su email",
+      placeholder: "Ingrese el email",
     },
     {
       name: "telefono",
       label: "Teléfono",
-      placeholder: "Ingrese su teléfono",
+      placeholder: "Ingrese el teléfono",
       type: "number",
     },
     {
       name: "direccion",
       label: "Dirección",
-      placeholder: "Ingrese su dirección",
+      placeholder: "Ingrese la dirección",
     },
   ];
 
@@ -141,20 +133,20 @@ const FormAdvisor = ({ setRefresh, onOpenChange }) => {
     {
       name: "pais_id",
       label: "País",
-      placeholder: "Seleccione su país",
+      placeholder: "Seleccione el país",
       options: countriesData,
       onChange: getCities,
     },
     {
       name: "ciudad",
       label: "Ciudad",
-      placeholder: "Seleccione su ciudad",
+      placeholder: "Seleccione la ciudad",
       options: cities,
     },
     {
       name: "genero",
       label: "Género",
-      placeholder: "Seleccione su género",
+      placeholder: "Seleccione el género",
       options: [
         { value: "Masculino", label: "Masculino" },
         { value: "Femenino", label: "Femenino" },
@@ -165,15 +157,14 @@ const FormAdvisor = ({ setRefresh, onOpenChange }) => {
   // Submit
   const onSubmit = form.handleSubmit((values) => {
     startTransition(async () => {
-      const { status } = await adminInstance.createAdvisor(values);
+      const { status } = await adminInstance.createCompany(values);
 
       if (status) {
-        setRefresh(true);
-        toast.success("Asesor creado con exito");
+        toast.success("Empresa creada con exito");
+        await onSuccess(); // Actualizar la tabla
       }
 
       form.reset(); // Limpiar el formulario
-
       return onOpenChange(false);
     });
   });
@@ -347,65 +338,11 @@ const FormAdvisor = ({ setRefresh, onOpenChange }) => {
         </div>
         <Button disabled={isSubmitting} type="submit" className="w-full mt-6">
           {isSubmitting && <Loader2 className="mr-2 animate-spin" />}
-          Crear asesor
+          Crear empresa
         </Button>
       </form>
     </Form>
   );
 };
 
-const CreateAdvisors = ({ setRefresh }) => {
-  const [open, setOpen] = useState(false);
-  const isMobile = useIsMobile();
-
-  if (isMobile) {
-    return (
-      <Drawer open={open} onOpenChange={setOpen}>
-        <DrawerTrigger asChild>
-          <Button className="w-full 2xs:w-auto font-light" variant="theme">
-            <Plus className="size-5" strokeWidth={1.5} /> Agregar asesor
-          </Button>
-        </DrawerTrigger>
-        <DrawerContent className="flex max-h-[80vh] flex-col">
-          <DrawerHeader className="shrink-0 text-left">
-            <DrawerTitle>Crear asesor</DrawerTitle>
-            <DrawerDescription>
-              Ingresa todos los datos para la creación del perfil del asesor
-            </DrawerDescription>
-          </DrawerHeader>
-          <div className="overflow-y-auto px-4 grow">
-            <FormAdvisor setRefresh={setRefresh} onOpenChange={setOpen} />
-          </div>
-          <DrawerFooter className="shrink-0 pt-2">
-            <DrawerClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DrawerClose>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
-    );
-  }
-
-  return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button className="w-full 2xs:w-auto font-light" variant="theme">
-          <Plus className="size-5" strokeWidth={1.5} /> Agregar asesor
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-xl">
-        <DialogHeader>
-          <DialogTitle>Crear asesor</DialogTitle>
-          <DialogDescription>
-            Ingresa todos los datos para la creación del perfil del asesor
-          </DialogDescription>
-        </DialogHeader>
-        <div className="mt-4">
-          <FormAdvisor setRefresh={setRefresh} onOpenChange={setOpen} />
-        </div>
-      </DialogContent>
-    </Dialog>
-  );
-};
-
-export default CreateAdvisors;
+export default CompanyForm;

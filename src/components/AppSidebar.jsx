@@ -14,11 +14,12 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  useSidebar,
 } from "./ui/sidebar";
 
 import NavMain from "./NavMain";
 import NavUser from "./NavUser";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
 import { useEffect, useRef, useState } from "react";
 import { routes } from "../constants";
@@ -27,6 +28,15 @@ const AppSidebar = ({ ...props }) => {
   const { user, hasPermissions } = useAuth();
   const [nav, setNav] = useState([]);
   const effectRan = useRef(false);
+
+  const location = useLocation();
+  const { setOpenMobile, openMobile, isMobile } = useSidebar();
+
+  useEffect(() => {
+    if (isMobile && openMobile) {
+      setOpenMobile(false);
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     if (user && !effectRan.current) {
@@ -59,11 +69,7 @@ const AppSidebar = ({ ...props }) => {
                 className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
               >
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <img
-                    src="/assets/images/logo.png"
-                    alt=""
-                    className="size-6 "
-                  />
+                  <img src="/assets/svg/logo-2.svg" alt="" className="size-5" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">

@@ -19,6 +19,8 @@ const ProtectedRoute = ({ roles }) => {
   if (roles && !roles.includes(user.user_metadata.role))
     return <Navigate to="/authorization" replace />;
 
+  if (!user.user_metadata.is_active) return <Navigate to="/inactive" replace />;
+
   return <Outlet />;
 };
 

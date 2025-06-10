@@ -1,5 +1,6 @@
 import {
   BriefcaseBusiness,
+  Building2,
   ChartColumnIncreasing,
   House,
   Repeat,
@@ -75,6 +76,11 @@ export const routes = {
       icon: UsersRound,
     },
     {
+      title: "Empresas",
+      url: "/admin/companies",
+      icon: Building2,
+    },
+    {
       title: "Asesores",
       url: "/admin/advisors",
       icon: BriefcaseBusiness,
@@ -98,7 +104,7 @@ export const routes = {
     },
     {
       title: "Usuarios",
-      url: "/admin/users",
+      url: "/assistant/users",
       icon: UsersRound,
     },
     {
@@ -106,6 +112,29 @@ export const routes = {
       url: "/assistant/advisors",
       icon: BriefcaseBusiness,
       validateModule: "advisors",
+    },
+    {
+      title: "Empresas",
+      url: "/assistant/companies",
+      icon: Building2,
+      validateModule: "companies",
+    },
+  ],
+  company: [
+    {
+      title: "Home",
+      url: "/",
+      icon: House,
+    },
+    {
+      title: "Mi perfil",
+      url: "/company/dashboard",
+      icon: UserPen,
+    },
+    {
+      title: "Asesores",
+      url: "/company/advisors",
+      icon: BriefcaseBusiness,
     },
   ],
 };

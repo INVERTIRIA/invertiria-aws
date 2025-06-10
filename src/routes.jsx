@@ -24,6 +24,7 @@ import UserPages from "./pages/users/index";
 import AdminPages from "./pages/admin/index";
 import HasPermissions from "./HasPermissions";
 import AuthorizationPage from "./pages/AuthorizationPage";
+import InactiveUserPage from "./pages/InactiveUserPage";
 
 // Rutas de la aplicacion
 function AppRoutes() {
@@ -42,7 +43,8 @@ function AppRoutes() {
       location.pathname.startsWith("/authorization") ||
       location.pathname.startsWith("/user") ||
       location.pathname.startsWith("/admin") ||
-      location.pathname.startsWith("/assistant");
+      location.pathname.startsWith("/assistant") ||
+      location.pathname.startsWith("/company");
 
     setHideLayout(isUserRoute);
   }, [location.pathname, setHideLayout]);
@@ -56,6 +58,7 @@ function AppRoutes() {
           <Route path="/" element={<HomePage />} />
           <Route path="/investment" element={<Investment />} />
           <Route path="/test" element={<Test />} />
+          <Route path="/inactive" element={<InactiveUserPage />} />
           <Route path="/import" element={<ImportMatrizModel />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
@@ -81,7 +84,9 @@ function AppRoutes() {
           <Route element={<ProtectedRoute roles={[roles.admin]} />}>
             <Route path="/admin" element={<DashboardLayout />}>
               <Route path="dashboard" element={<UserPages.DashboardPage />} />
+              <Route path="companies" element={<AdminPages.CompaniesPage />} />
               <Route path="advisors" element={<AdminPages.AdvisorsPage />} />
+              <Route path="users" element={<AdminPages.UsersPage />} />
             </Route>
           </Route>
           {/* Assistant */}
@@ -89,10 +94,22 @@ function AppRoutes() {
             element={<ProtectedRoute roles={[roles.admin, roles.assistant]} />}
           >
             <Route path="/assistant" element={<DashboardLayout />}>
+              <Route path="users" element={<AdminPages.UsersPage />} />
               <Route path="dashboard" element={<UserPages.DashboardPage />} />
               <Route element={<HasPermissions roles={[roles.assistant]} />}>
                 <Route path="advisors" element={<AdminPages.AdvisorsPage />} />
+                <Route
+                  path="companies"
+                  element={<AdminPages.CompaniesPage />}
+                />
               </Route>
+            </Route>
+          </Route>
+          {/* Company */}
+          <Route element={<ProtectedRoute roles={[roles.company]} />}>
+            <Route path="/company" element={<DashboardLayout />}>
+              <Route path="dashboard" element={<UserPages.DashboardPage />} />
+              <Route path="advisors" element={<AdminPages.AdvisorsPage />} />
             </Route>
           </Route>
         </Routes>

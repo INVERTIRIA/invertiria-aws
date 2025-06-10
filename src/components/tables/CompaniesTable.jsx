@@ -49,12 +49,10 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { useAuth } from "../../contexts/AuthContext";
-
 const FilterSection = ({ table, options }) => {
   const [selectedFilter, setSelectedFilter] = useState({
-    label: "Email",
-    field: "email",
+    label: "Empresa",
+    field: "empresa",
   });
 
   return (
@@ -143,9 +141,8 @@ const FilterSection = ({ table, options }) => {
   );
 };
 
-const AdvisorsTable = ({ records }) => {
+const CompaniesTable = ({ records }) => {
   // Hooks table
-  const { user } = useAuth();
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
@@ -178,6 +175,14 @@ const AdvisorsTable = ({ records }) => {
       ),
       enableSorting: false,
       enableHiding: false,
+    },
+    {
+      accessorFn: (row) => row.name,
+      id: "empresa",
+      header: "Empresa",
+      cell: ({ row }) => (
+        <div className="capitalize font-light">{row.original.name}</div>
+      ),
     },
     {
       accessorFn: (row) => row.usuarios.nombre,
@@ -221,16 +226,6 @@ const AdvisorsTable = ({ records }) => {
       cell: ({ row }) => (
         <div className="lowercase font-light">
           {row.original.usuarios.email}
-        </div>
-      ),
-    },
-    {
-      accessorFn: (row) => row.empresa.name,
-      id: "empresa",
-      header: "Empresa",
-      cell: ({ row }) => (
-        <div className="capitalize font-light">
-          {row.original.empresa?.name}
         </div>
       ),
     },
@@ -298,10 +293,7 @@ const AdvisorsTable = ({ records }) => {
   // Table
   const table = useReactTable({
     data: records,
-    columns:
-      user?.user_metadata.role === "company"
-        ? columns.filter((column) => column.id !== "empresa")
-        : columns,
+    columns: columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onPaginationChange: setPagination,
@@ -364,14 +356,7 @@ const AdvisorsTable = ({ records }) => {
           </Button>
         </div>
       ) : (
-        <FilterSection
-          table={table}
-          options={
-            user?.user_metadata.role === "admin"
-              ? filterOptions
-              : filterOptions.filter((option) => option.field !== "empresa")
-          }
-        />
+        <FilterSection table={table} options={filterOptions} />
       )}
       <div className="rounded-md border">
         <Table>
@@ -416,7 +401,7 @@ const AdvisorsTable = ({ records }) => {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  No hay resultados.
                 </TableCell>
               </TableRow>
             )}
@@ -425,13 +410,13 @@ const AdvisorsTable = ({ records }) => {
       </div>
       <div className="mt-4 flex items-center justify-between px-4">
         <div className="text-muted-foreground hidden flex-1 text-sm lg:flex">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
+          {table.getFilteredSelectedRowModel().rows.length} de{" "}
+          {table.getFilteredRowModel().rows.length} fila(s) seleccionadas.
         </div>
         <div className="flex w-full items-center gap-8 lg:w-fit">
           <div className="hidden items-center gap-2 lg:flex">
             <Label htmlFor="rows-per-page" className="text-sm font-medium">
-              Rows per page
+              Filas por página
             </Label>
             <Select
               value={`${table.getState().pagination.pageSize}`}
@@ -454,7 +439,7 @@ const AdvisorsTable = ({ records }) => {
             </Select>
           </div>
           <div className="flex w-fit items-center justify-center text-sm font-medium">
-            Page {table.getState().pagination.pageIndex + 1} of{" "}
+            Página {table.getState().pagination.pageIndex + 1} de{" "}
             {table.getPageCount()}
           </div>
           <div className="ml-auto flex items-center gap-2 lg:ml-0">
@@ -504,4 +489,4 @@ const AdvisorsTable = ({ records }) => {
   );
 };
 
-export default AdvisorsTable;
+export default CompaniesTable;
