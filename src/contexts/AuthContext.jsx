@@ -118,6 +118,37 @@ export const AuthProvider = ({ children }) => {
     return data;
   };
 
+  const uploadFiles = async (fileName, fileData, bucketName, onStartUpload) => {
+    if (!fileData) {
+      setErrorToast("No file selected");
+      return;
+    }
+
+    // Ejecutar el callback al iniciar la subida de la imagen
+    if (onStartUpload) onStartUpload(fileData.name, true);
+
+    const res = await supabase.storage
+      .from(bucketName)
+      .upload(fileName, fileData, {
+        upsert: true,
+        cacheControl: "3600",
+      });
+
+    if (res.error) {
+      setErrorToast(res.error.message);
+      return false;
+    }
+
+    const { data } = supabase.storage
+      .from(bucketName)
+      .getPublicUrl(res.data.path);
+
+    if (onStartUpload) onStartUpload(fileData.name, false);
+
+    const updatedUrl = `${data.publicUrl}?t=${Date.now()}`;
+    return updatedUrl;
+  };
+
   /* HOOKS
   _________________________________________ */
 
@@ -141,6 +172,7 @@ export const AuthProvider = ({ children }) => {
               user_metadata: {
                 ...session.user.user_metadata,
                 role: localStorage.getItem("role") || decoded.user_role,
+                is_active: decoded.is_active,
               },
             });
             setIsAuthenticated(true);
@@ -182,6 +214,7 @@ export const AuthProvider = ({ children }) => {
         getInfo,
         createUserInstance,
         createAdminInstance,
+        uploadFiles,
       }}
     >
       {children}

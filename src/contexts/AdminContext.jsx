@@ -9,6 +9,18 @@ export class Admin extends BaseModel {
 
   /* Advisors
   ___________________________________________________ */
+  async getUsers() {
+    const { data, error } = await supabase.rpc("get_users");
+
+    if (error) {
+      this.setErrorToast(error.message);
+    }
+
+    return data ? data.map((item) => item.result) : [];
+  }
+
+  /* Advisors
+  ___________________________________________________ */
   async getAdvisors(role) {
     const additionalQuery =
       role === roles.company ? "" : ", empresa:empresas(name)";
@@ -38,5 +50,13 @@ export class Admin extends BaseModel {
         "*, usuarios(nombre, apellidos, email, ciudad, fecha_de_nacimiento)"
       )
       .then((res) => res.data);
+  }
+
+  async createCompany(data) {
+    const res = await supabase.functions.invoke("createCompany", {
+      body: JSON.stringify(data),
+    });
+
+    return this.handleSupabaseFunctionResponse(res);
   }
 }

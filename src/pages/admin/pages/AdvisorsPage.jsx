@@ -1,14 +1,14 @@
 import PageTitle from "@/components/design/PageTitle";
 import { Button } from "@/components/ui/button";
-import { CloudDownload, Plus } from "lucide-react";
-import CreateAdvisors from "../components/CreateAdvisors";
+import { CloudDownload } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../contexts/AuthContext";
 import AdvisorsTable from "../../../components/tables/AdvisorsTable";
+import AddRecordModal from "../../../components/design/AddRecordModal";
+import AdvisorForm from "../components/forms/AdvisorForm";
 
 const AdvisorsPage = () => {
   // Hooks
-  const [refresh, setRefresh] = useState(false);
   const [records, setRecords] = useState([]);
   const effectRan = useRef(false);
 
@@ -20,12 +20,6 @@ const AdvisorsPage = () => {
     const res = await adminInstance.getAdvisors(user.user_metadata.role);
     setRecords(res);
   };
-
-  useEffect(() => {
-    if (refresh) {
-      fetchRecords();
-    }
-  }, [refresh]);
 
   // Hacer que el useEffect solo se ejecute una vez
   useEffect(() => {
@@ -47,7 +41,12 @@ const AdvisorsPage = () => {
           <Button className="w-full 2xs:w-auto font-light">
             <CloudDownload className="size-5" strokeWidth={1.5} /> Descargar CSV
           </Button>
-          <CreateAdvisors setRefresh={setRefresh} />
+          <AddRecordModal
+            title="Crear asesor"
+            description="Ingresa todos los datos para la creación del perfil del asesor"
+          >
+            <AdvisorForm onSuccess={fetchRecords} />
+          </AddRecordModal>
         </div>
       </div>
       <AdvisorsTable records={records} />

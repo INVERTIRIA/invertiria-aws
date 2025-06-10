@@ -1,6 +1,16 @@
 import { z } from "zod";
 import { investorOptions } from "..";
 
+const MAX_FILE_SIZE = {
+  img_perfil: 5000000,
+};
+const ACCEPTED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+];
+
 // Functions
 const customEnum = (values, message) =>
   z.string().refine((val) => values.includes(val), {
@@ -41,6 +51,17 @@ export const userSchema = z.object({
   genero: z.enum(["Masculino", "Femenino"], {
     required_error: "El género es requerido",
   }),
+  img_perfil: z
+    .any()
+    .optional()
+    .refine(
+      (file) => !file || file?.size <= MAX_FILE_SIZE.img_perfil,
+      `El tamaño máximo de la imagen es 5MB.`
+    )
+    .refine(
+      (file) => !file || ACCEPTED_IMAGE_TYPES.includes(file?.type),
+      "Sólo se admiten los formatos .jpg, .jpeg, .png y .webp."
+    ),
   perfil: customEnum(
     investorOptions.profile.map((item) => item.value),
     "Seleccione un perfil válido del listado"

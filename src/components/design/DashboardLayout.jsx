@@ -10,19 +10,22 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
 } from "../ui/breadcrumb";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import Skeleton from "./Skeleton";
 
 const DashboardLayout = () => {
   const { getInfo } = useAuth();
   const [userInfo, setUserInfo] = useState();
   const { setHideLayout, pageTitle } = useLayoutVisibility();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setHideLayout(true); // Ocultar el Header y el Footer
 
     const fecthUserInfo = async () => {
       const res = await getInfo();
+
+      if (!res.activo) return navigate("/inactive", { replace: true });
 
       setUserInfo(res);
     };

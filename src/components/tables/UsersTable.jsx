@@ -7,8 +7,10 @@ import {
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
+  ChevronsUpDown,
   CirclePlus,
   CloudDownload,
+  Loader2,
   Trash,
 } from "lucide-react";
 
@@ -48,8 +50,8 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-
-import { useAuth } from "../../contexts/AuthContext";
+import { supabase } from "../../supabase";
+import { toast } from "sonner";
 
 const FilterSection = ({ table, options }) => {
   const [selectedFilter, setSelectedFilter] = useState({
@@ -143,9 +145,8 @@ const FilterSection = ({ table, options }) => {
   );
 };
 
-const AdvisorsTable = ({ records }) => {
+const UsersTable = ({ records, onSuccess }) => {
   // Hooks table
-  const { user } = useAuth();
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
@@ -154,6 +155,9 @@ const AdvisorsTable = ({ records }) => {
     pageIndex: 0,
     pageSize: 10,
   });
+
+  //Hooks
+  const [isChangeState, setIsChangeState] = useState(false);
 
   // Columns
   const columns = [
@@ -180,34 +184,33 @@ const AdvisorsTable = ({ records }) => {
       enableHiding: false,
     },
     {
-      accessorFn: (row) => row.usuarios.nombre,
+      accessorFn: (row) => row.usuario.nombre,
       id: "nombre",
       header: "Nombre",
       cell: ({ row }) => (
         <div className="capitalize font-light">
-          {row.original.usuarios.nombre}
+          {row.original.usuario.nombre}
         </div>
       ),
     },
     {
-      accessorFn: (row) => row.usuarios.apellidos,
+      accessorFn: (row) => row.usuario.apellidos,
       id: "apellidos",
       header: "Apellidos",
       cell: ({ row }) => (
         <div className="capitalize font-light">
-          {row.original.usuarios.apellidos}
+          {row.original.usuario.apellidos}
         </div>
       ),
     },
     {
-      accessorFn: (row) => row.usuarios.email,
+      accessorFn: (row) => row.usuario.email,
       id: "email",
       header: ({ column }) => {
         return (
           <Button
             variant="ghost"
             className="!px-0"
-            //onClick={() => column.toggleSorting()}
             onClick={() => {
               console.log(column.getIsSorted());
               column.toggleSorting(column.getIsSorted() === "asc");
@@ -219,19 +222,51 @@ const AdvisorsTable = ({ records }) => {
         );
       },
       cell: ({ row }) => (
-        <div className="lowercase font-light">
-          {row.original.usuarios.email}
+        <div className="lowercase font-light">{row.original.usuario.email}</div>
+      ),
+    },
+    {
+      accessorKey: "telefono",
+      header: "Télefono",
+      cell: ({ row }) => {
+        return (
+          <div className="font-light">{row.original.usuario.telefono}</div>
+        );
+      },
+    },
+    {
+      accessorFn: (row) => row.usuario.activo,
+      id: "activo",
+      header: "Estado",
+      cell: ({ row }) => (
+        <div className="w-fit flex font-light items-center gap-1 capitalize  px-2 py-1 ring ring-gray-300 rounded-md">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="8"
+            height="8"
+            viewBox="0 0 8 8"
+            fill="none"
+          >
+            <circle
+              cx="4"
+              cy="4"
+              r="3"
+              className={cn(
+                row.original.usuario.activo
+                  ? " fill-green-600"
+                  : " fill-red-600"
+              )}
+            />
+          </svg>
+          {row.original.usuario.activo ? "Activo" : "Inactivo"}
         </div>
       ),
     },
     {
-      accessorFn: (row) => row.empresa.name,
-      id: "empresa",
-      header: "Empresa",
+      accessorKey: "role",
+      header: "Rol",
       cell: ({ row }) => (
-        <div className="capitalize font-light">
-          {row.original.empresa?.name}
-        </div>
+        <div className="capitalize font-light">{row.getValue("role")}</div>
       ),
     },
     {
@@ -240,28 +275,38 @@ const AdvisorsTable = ({ records }) => {
       cell: ({ row }) => {
         return (
           <div className="font-light">
-            {row.original.usuarios.fecha_de_nacimiento}
+            {row.original.usuario.fecha_de_nacimiento}
           </div>
         );
       },
+    },
+    {
+      accessorKey: "pais",
+      header: "País",
+      cell: ({ row }) => (
+        <div className="capitalize font-light">{row.getValue("pais")}</div>
+      ),
     },
     {
       accessorKey: "cidudad",
       header: "Ciudad",
       cell: ({ row }) => (
         <div className="capitalize font-light">
-          {row.original.usuarios.ciudad}
+          {row.original.usuario.ciudad}
         </div>
       ),
     },
     {
-      accessorKey: "created_at",
+      accessorFn: (row) => row.usuario.created_at,
+      id: "created_at",
       header: ({ column }) => {
         return (
           <Button
             className="!px-0"
             variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            onClick={() => {
+              column.toggleSorting(column.getIsSorted() === "asc");
+            }}
           >
             Fecha de creación
             <ArrowUpDown />
@@ -269,14 +314,13 @@ const AdvisorsTable = ({ records }) => {
         );
       },
       cell: ({ row }) => {
-        const createdAt = new Date(row.getValue("created_at")).toLocaleString(
-          "es-GB",
-          {
-            day: "2-digit",
-            month: "short", // Short month (Jan, Feb, Mar, etc.)
-            year: "numeric",
-          }
-        );
+        const createdAt = new Date(
+          row.original.usuario.created_at
+        ).toLocaleString("es-GB", {
+          day: "2-digit",
+          month: "short", // Short month (Jan, Feb, Mar, etc.)
+          year: "numeric",
+        });
 
         return <div className="font-light">{createdAt}</div>;
       },
@@ -298,10 +342,7 @@ const AdvisorsTable = ({ records }) => {
   // Table
   const table = useReactTable({
     data: records,
-    columns:
-      user?.user_metadata.role === "company"
-        ? columns.filter((column) => column.id !== "empresa")
-        : columns,
+    columns: columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onPaginationChange: setPagination,
@@ -325,6 +366,29 @@ const AdvisorsTable = ({ records }) => {
     console.log(rows);
   };
 
+  const changeStates = async (rows, state) => {
+    setIsChangeState(true);
+
+    const { data: hasPermission } = await supabase.rpc("authorize", {
+      requested_permission: "users.update",
+    });
+
+    if (!hasPermission) {
+      toast.error("No tienes permiso para realizar esta accion");
+      table.toggleAllPageRowsSelected(false);
+      setIsChangeState(false);
+      return;
+    }
+
+    await supabase.from("usuarios").update({ activo: state }).in("id", rows);
+
+    table.toggleAllPageRowsSelected(false);
+    await onSuccess();
+    setIsChangeState(false);
+
+    toast.success("Estado(s) cambiado con exito");
+  };
+
   // Varibles
   const filterOptions = [
     {
@@ -339,39 +403,66 @@ const AdvisorsTable = ({ records }) => {
       field: "apellidos",
       label: "Apellidos",
     },
-    {
-      field: "empresa",
-      label: "Empresa",
-    },
   ];
 
   return (
     <div>
       {table.getFilteredSelectedRowModel().rows.length > 0 ? (
-        <div className="flex items-center py-4">
+        <div className="flex items-center gap-2 py-4">
           <Button
             variant="outline"
             onClick={() => {
               handlerSelectedRows(
                 table
                   .getFilteredSelectedRowModel()
-                  .rows.map((row) => row.original.id)
+                  .rows.map((row) => row.original)
               );
             }}
           >
             <CloudDownload className="h-4 w-4" />
             Export {table.getFilteredSelectedRowModel().rows.length} selected
           </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="theme" disabled={isChangeState}>
+                Cambiar estado{" "}
+                {!isChangeState ? (
+                  <ChevronsUpDown className="size-4" />
+                ) : (
+                  <Loader2 className="size-4 animate-spin" />
+                )}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-[155px]" align="start">
+              <DropdownMenuItem
+                onSelect={() =>
+                  changeStates(
+                    table
+                      .getFilteredSelectedRowModel()
+                      .rows.map((row) => row.original.usuario.id),
+                    true
+                  )
+                }
+              >
+                Activa
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onSelect={() =>
+                  changeStates(
+                    table
+                      .getFilteredSelectedRowModel()
+                      .rows.map((row) => row.original.usuario.id),
+                    false
+                  )
+                }
+              >
+                Inactivar
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       ) : (
-        <FilterSection
-          table={table}
-          options={
-            user?.user_metadata.role === "admin"
-              ? filterOptions
-              : filterOptions.filter((option) => option.field !== "empresa")
-          }
-        />
+        <FilterSection table={table} options={filterOptions} />
       )}
       <div className="rounded-md border">
         <Table>
@@ -416,7 +507,7 @@ const AdvisorsTable = ({ records }) => {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  No hay resultados.
                 </TableCell>
               </TableRow>
             )}
@@ -425,13 +516,13 @@ const AdvisorsTable = ({ records }) => {
       </div>
       <div className="mt-4 flex items-center justify-between px-4">
         <div className="text-muted-foreground hidden flex-1 text-sm lg:flex">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
+          {table.getFilteredSelectedRowModel().rows.length} de{" "}
+          {table.getFilteredRowModel().rows.length} fila(s) seleccionadas.
         </div>
         <div className="flex w-full items-center gap-8 lg:w-fit">
           <div className="hidden items-center gap-2 lg:flex">
             <Label htmlFor="rows-per-page" className="text-sm font-medium">
-              Rows per page
+              Filas por página
             </Label>
             <Select
               value={`${table.getState().pagination.pageSize}`}
@@ -454,7 +545,7 @@ const AdvisorsTable = ({ records }) => {
             </Select>
           </div>
           <div className="flex w-fit items-center justify-center text-sm font-medium">
-            Page {table.getState().pagination.pageIndex + 1} of{" "}
+            Página {table.getState().pagination.pageIndex + 1} de{" "}
             {table.getPageCount()}
           </div>
           <div className="ml-auto flex items-center gap-2 lg:ml-0">
@@ -504,4 +595,4 @@ const AdvisorsTable = ({ records }) => {
   );
 };
 
-export default AdvisorsTable;
+export default UsersTable;

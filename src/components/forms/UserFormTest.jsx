@@ -37,19 +37,16 @@ import countriesData from "../../constants/paises.json";
 import { userSchema } from "@/constants/schema/user";
 import { useAuth } from "../../contexts/AuthContext";
 import { toast } from "sonner";
-import UploadFiles from "../UploadFiles";
 
 // Main
-const UserForm = ({ userInfo, setUserInfo }) => {
-  // Hooks
+const UserFormTest = ({ userInfo }) => {
   const [isSubmitting, startTransition] = useTransition();
-  const [openPopovers, setOpenPopovers] = useState({});
   const [cities, setCities] = useState([]);
+  const [openPopovers, setOpenPopovers] = useState({});
   const [buttonWidth, setButtonWidth] = useState(0);
   const buttonRef = useRef(null);
-  const uploadFilesRef = useRef(null);
 
-  const { createUserInstance, setUser, uploadFiles } = useAuth();
+  const { createUserInstance, setUser } = useAuth();
   const userIntance = createUserInstance(userInfo);
 
   // Form
@@ -64,7 +61,6 @@ const UserForm = ({ userInfo, setUserInfo }) => {
       pais_id: userInfo?.pais_id || "",
       ciudad: userInfo?.ciudad || "",
       genero: userInfo?.genero || "",
-      img_perfil: userInfo?.img_perfil || "",
       perfil: userInfo?.perfil || "",
       objetivo: userInfo?.objetivo || "",
       plazo_de_inversion: userInfo?.plazo_de_inversion || "",
@@ -201,43 +197,9 @@ const UserForm = ({ userInfo, setUserInfo }) => {
   ];
 
   // Submit
-
-  const handleFileUpload = async (file, ref, fileName) => {
-    // Iniciar la simulación de carga
-    ref.current?.startSimulateUpload();
-
-    const resImage = await uploadFiles(
-      `${userInfo.usuario_id}/${fileName}`,
-      file,
-      "users"
-    );
-
-    // Completar la barra al 100%
-    ref.current?.completeSimulateUpload();
-
-    return resImage;
-  };
-
   const onSubmit = form.handleSubmit((values) => {
     startTransition(async () => {
-      const { img_perfil, ...toUpdate } = values;
-
-      // Subir los archivos
-      let imageUrl = userInfo?.img_perfil;
-
-      if (img_perfil instanceof File) {
-        imageUrl = await handleFileUpload(
-          img_perfil,
-          uploadFilesRef,
-          "profile_picture"
-        );
-        if (!imageUrl) return;
-      }
-
-      const res = await userIntance.update({
-        ...toUpdate,
-        img_perfil: imageUrl,
-      });
+      const res = await userIntance.update(values);
 
       if (!res) return;
 
@@ -252,8 +214,6 @@ const UserForm = ({ userInfo, setUserInfo }) => {
       }));
 
       toast.success("Información actualizada con exito");
-
-      setUserInfo(res);
     });
   });
 
@@ -270,19 +230,11 @@ const UserForm = ({ userInfo, setUserInfo }) => {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={onSubmit}
-        className="mt-10 md:pb-10 lg:mt-20 lg:px-10 w-full flex flex-col gap-6"
-      >
-        {/* Información personal */}
-        <div className="grid lg:grid-cols-3 gap-x-2 gap-y-6">
-          <div className="flex flex-col">
-            <p className="font-semibold">Información personal</p>
-            <p className="text-sm text-gray-900">
-              Actualiza tu foto y tus datos personales
-            </p>
-          </div>
-          <div className="md:col-span-2 bg-sidebar rounded-lg shadow-sm ring-1 ring-zinc-200 p-4 md:p-8">
+      <form onSubmit={onSubmit} className="w-full flex flex-col gap-6">
+        <div className="grid lg:grid-cols-2 gap-4 text-black">
+          {/* Información personal */}
+          <div className="rounded-lg shadow-sm ring-1 ring-zinc-200 p-4">
+            <h2 className="font-semibold mb-5">Información personal</h2>
             <div className="grid sm:grid-cols-2 gap-4">
               {personalFields1.map((item) => (
                 <FormField
@@ -296,7 +248,6 @@ const UserForm = ({ userInfo, setUserInfo }) => {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="bg-white"
                           placeholder={item.placeholder}
                           type={item.type || "text"}
                           {...field}
@@ -454,40 +405,11 @@ const UserForm = ({ userInfo, setUserInfo }) => {
                   )}
                 />
               ))}
-              {/* Upload files */}
-              <FormField
-                name="img_perfil"
-                control={form.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <span className="text-sm font-medium leading-none select-none">
-                      Foto de perfil *
-                    </span>
-                    <FormControl>
-                      <UploadFiles
-                        id="img_perfil"
-                        onChange={field.onChange}
-                        ref={uploadFilesRef}
-                        description="WEBP, PNG, JPG o JPEG (Recomendado: 460×460px)"
-                        acceptedFileTypes={[".jpeg", ".jpg", ".png", ".webp"]}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
             </div>
           </div>
-        </div>
-        {/* Información de inversión */}
-        <div className="mt-10 grid lg:grid-cols-3 gap-x-2 gap-y-6">
-          <div className="flex flex-col">
-            <p className="font-semibold">Información de inversionista</p>
-            <p className="text-sm text-gray-900">
-              Actualiza tus datos como inversionista.
-            </p>
-          </div>
-          <div className="md:col-span-2 bg-sidebar/50 rounded-lg shadow-sm ring-1 ring-zinc-200 p-4 md:p-8">
+          {/* Información de inversión */}
+          <div className="rounded-lg shadow-sm ring-1 ring-zinc-200 p-4">
+            <h2 className="font-semibold mb-5">Información de inversión</h2>
             <div className="grid sm:grid-cols-2 gap-4">
               {/* Selects */}
               {invesmentsFields1.map((item) => (
@@ -585,7 +507,6 @@ const UserForm = ({ userInfo, setUserInfo }) => {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className="bg-white"
                           placeholder={item.placeholder}
                           type={item.type || "text"}
                           {...field}
@@ -599,20 +520,15 @@ const UserForm = ({ userInfo, setUserInfo }) => {
             </div>
           </div>
         </div>
-        {userInfo && (
-          <Button
-            variant={"theme"}
-            disabled={isSubmitting}
-            type="submit"
-            className="w-fit ml-auto"
-          >
+        <div className="col-span-2">
+          <Button disabled={isSubmitting} type="submit" className="w-fit">
             {isSubmitting && <Loader2 className="mr-2 animate-spin" />}
             Guardar cambios
           </Button>
-        )}
+        </div>
       </form>
     </Form>
   );
 };
 
-export default UserForm;
+export default UserFormTest;
