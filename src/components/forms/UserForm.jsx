@@ -466,6 +466,7 @@ const UserForm = ({ userInfo, setUserInfo }) => {
                     <FormControl>
                       <UploadFiles
                         id="img_perfil"
+                        fieldTitle="Haga clic o arrastre para cargar."
                         onChange={field.onChange}
                         ref={uploadFilesRef}
                         description="WEBP, PNG, JPG o JPEG (Recomendado: 460×460px)"

@@ -25,6 +25,7 @@ import AdminPages from "./pages/admin/index";
 import HasPermissions from "./HasPermissions";
 import AuthorizationPage from "./pages/AuthorizationPage";
 import InactiveUserPage from "./pages/InactiveUserPage";
+import Charts from "./pages/Charts";
 
 // Rutas de la aplicacion
 function AppRoutes() {
@@ -58,6 +59,7 @@ function AppRoutes() {
           <Route path="/" element={<HomePage />} />
           <Route path="/investment" element={<Investment />} />
           <Route path="/test" element={<Test />} />
+          <Route path="/charts" element={<Charts />} />
           <Route path="/inactive" element={<InactiveUserPage />} />
           <Route path="/import" element={<ImportMatrizModel />} />
           <Route path="/register" element={<RegisterPage />} />

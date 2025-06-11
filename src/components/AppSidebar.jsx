@@ -24,7 +24,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useEffect, useRef, useState } from "react";
 import { routes } from "../constants";
 
-const AppSidebar = ({ ...props }) => {
+const AppSidebar = ({ userInfo, ...props }) => {
   const { user, hasPermissions } = useAuth();
   const [nav, setNav] = useState([]);
   const effectRan = useRef(false);
@@ -85,7 +85,7 @@ const AppSidebar = ({ ...props }) => {
         <NavMain items={nav} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser />
+        <NavUser userInfo={userInfo} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

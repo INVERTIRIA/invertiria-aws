@@ -13,3 +13,10 @@ export function decodeJWT(token) {
   const decodedPayload = JSON.parse(atob(padded));
   return decodedPayload;
 }
+
+export function parsePrice(price) {
+  return new Intl.NumberFormat("es-CO", {
+    style: "currency",
+    currency: "COP",
+  }).format(price);
+}
