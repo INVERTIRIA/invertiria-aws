@@ -49,8 +49,26 @@ const ThermometerChart = ({ price, minPrice, maxPrice, location }) => {
         ></div>
 
         {/* Texto del precio */}
-        <span
-          className="leading-none"
+        {/* <div className="flex flex-col gap-1">
+          <span
+            className="leading-none"
+            style={{
+              position: "absolute",
+              left: "95px",
+              bottom: `${indicatorPosition}%`,
+              fontSize: "14px",
+              fontWeight: "bold",
+              color: "black",
+              //rotate: "-90deg",
+            }}
+          >
+            {parsePrice(price)}
+            <br />
+            <span className="text-[11px] font-normal">Valor Compra m²</span>
+          </span>          
+        </div> */}
+        <div
+          className="w-24 flex flex-col"
           style={{
             position: "absolute",
             left: "95px",
@@ -61,8 +79,9 @@ const ThermometerChart = ({ price, minPrice, maxPrice, location }) => {
             //rotate: "-90deg",
           }}
         >
-          {parsePrice(price)}
-        </span>
+          <span className="text-[11px] font-normal">Valor Compra m²</span>
+          <span className="leading-none">{parsePrice(price)}</span>{" "}
+        </div>
       </div>
       <span className="text-sm font-semibold">{parsePrice(minPrice)}</span>
     </div>
@@ -113,8 +132,9 @@ const Timeline = () => {
 
 const Charts = () => {
   return (
-    <Container classNameParent={"my-20"} className="flex flex-col  gap-20">
-      <h1 className="text-4xl font-bold">Precio por m2</h1>
+    <Container classNameParent={"my-20"} className="flex flex-col gap-20">
+      <h1 className="text-4xl font-bold">Valor de compra</h1>
+      <h2 className="-mt-20 text-2xl font-bold text-gray-500">Precio de m²</h2>
       <div className="flex items-center gap-20">
         {/* Recomendación */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
