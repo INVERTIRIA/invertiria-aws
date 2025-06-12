@@ -43,20 +43,20 @@ const AccessLinkPage = () => {
       >
         <div className="flex flex-col gap-10 text-black items-center">
           <h1 className="h1 text-center">Revisa tu email</h1>
-          <p className="font-poppins max-w-xl text-gray-900 font-light text-center">
+          <p className="max-w-xl text-gray-900 font-light text-center">
             Hemos envidado un correo electrónico con un enlace de acceso
-            temporal a <span className="font-poppins font-medium">{email}</span>
+            temporal a <span className="font-medium">{email}</span>
           </p>
-          <p className="font-poppins max-w-xl text-gray-900 font-light text-center">
+          <p className="max-w-xl text-gray-900 font-light text-center">
             Este enlace solo se puede usar una vez y expira en una hora.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-1">
-            <p className="font-poppins max-w-xl text-gray-900 font-light text-center">
+            <p className="max-w-xl text-gray-900 font-light text-center">
               No te llego el enlace ?{" "}
             </p>
             <button
               onClick={handleLogin}
-              className="font-poppins font-medium text-invertiria-1"
+              className="font-medium text-invertiria-1"
             >
               Click para enviar un nuevo enlace
             </button>

@@ -70,7 +70,7 @@ function Footer() {
       >
         <div className="flex flex-col gap-5 items-center sm:items-start">
           <h2 className="text-invertiria-2 md:text-xl font-medium">Síguenos</h2>
-          <p className="text-white text-xs max-w-44 font-light font-poppins text-center sm:text-left">
+          <p className="text-white text-xs max-w-44 font-light text-center sm:text-left">
             El futuro de tus inversiones comienza aquí.
           </p>
           <div className="flex items-center gap-3">
@@ -85,7 +85,7 @@ function Footer() {
           <h2 className="text-invertiria-2 md:text-xl font-medium">Explora</h2>
           {explore.map((item) => (
             <Link
-              className="text-neutral-300 text-xs font-poppins font-light"
+              className="text-neutral-300 text-xs font-light"
               key={item.name}
               to={item.link}
             >
@@ -97,7 +97,7 @@ function Footer() {
           <h2 className="text-invertiria-2 md:text-xl font-medium">Ayuda</h2>
           {help.map((item) => (
             <Link
-              className="text-neutral-300 text-xs font-poppins font-light"
+              className="text-neutral-300 text-xs font-light"
               key={item.name}
               to={item.link}
             >
@@ -109,7 +109,7 @@ function Footer() {
           <h2 className="text-invertiria-2 md:text-xl font-medium">
             Informes Clave en tu Inbox
           </h2>
-          <p className="text-white text-xs font-light font-poppins text-center sm:text-left">
+          <p className="text-white text-xs font-light text-center sm:text-left">
             Descubre tendencias y consejos exclusivos para potenciar tus
             inversiones.
           </p>
@@ -117,7 +117,7 @@ function Footer() {
             <input
               type="email"
               placeholder="Ingresa tu correo"
-              className="ml-3 w-[80%] bg-transparent text-white text-xs font-light font-poppins outline-none"
+              className="ml-3 w-[80%] bg-transparent text-white text-xs font-light outline-none"
             />
             <div className="p-1 rounded-full bg-invertiria-2 group hover:bg-white cursor-pointer">
               <ArrowRightIcon

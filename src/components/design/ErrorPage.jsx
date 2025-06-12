@@ -42,7 +42,7 @@ const ErrorPage = ({ errorCode, title, description }) => {
           strokeWidth={1}
           className="text-white size-5 group-hover:stroke-invertiria-2"
         />
-        <span className="group-hover:text-invertiria-2 font-poppins text-sm text-white">
+        <span className="group-hover:text-invertiria-2 text-sm text-white">
           Volver al Inicio
         </span>
       </Link>

@@ -108,14 +108,14 @@ const HomePage = () => {
       >
         <div className="lg:w-1/2 flex flex-col gap-10">
           <h1 className="h1">Potencia tus Inversiones con</h1>
-          <p className="font-poppins sm:text-xl max-w-xl">
+          <p className="sm:text-xl max-w-xl">
             Con inteligencia artificial y análisis avanzados,{" "}
             <br className="hidden sm:block" />
             toma decisiones informadas y maximiza tu rentabilidad.
           </p>
           <div className="w-full flex flex-col md:flex-row gap-4 items-center justify-between max-w-2xl">
             <Link className="w-full group bg-invertiria-2 border border-invertiria-2 py-2.5 px-5 rounded-[30px] flex justify-center items-center gap-2.5 hover:bg-white">
-              <span className="group-hover:text-invertiria-2 font-poppins uppercase text-sm text-white">
+              <span className="group-hover:text-invertiria-2 uppercase text-sm text-white">
                 Analiza tu Próxima Inversión
               </span>
               <ArrowUpRightIcon
@@ -124,7 +124,7 @@ const HomePage = () => {
               />
             </Link>
             <Link className="w-full border border-black py-3 px-5 rounded-[30px] flex justify-center items-center gap-2.5">
-              <span className="font-poppins uppercase text-sm">
+              <span className="uppercase text-sm">
                 MIRA UNA INVERSION DE EJEMPLO
               </span>
             </Link>
@@ -236,7 +236,7 @@ const HomePage = () => {
               Automatizamos procesos para invertir fácil y rápido.
             </p>
             <Link className="xl:w-fit group bg-invertiria-2 border border-invertiria-2 py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-white">
-              <span className="group-hover:text-invertiria-2 font-poppins uppercase text-sm text-white">
+              <span className="group-hover:text-invertiria-2 uppercase text-sm text-white">
                 VER MÁS
               </span>
               <ArrowUpRightIcon
@@ -275,7 +275,7 @@ const HomePage = () => {
                 <span className="text-invertiria-2">fue tan Simple</span>
               </h2>
               <Link className="w-full sm:w-1/2 lg:w-fit group bg-invertiria-2 border border-invertiria-2 py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-white">
-                <span className="group-hover:text-invertiria-2 font-poppins uppercase text-sm text-white">
+                <span className="group-hover:text-invertiria-2 uppercase text-sm text-white">
                   EMPIEZA AHORA
                 </span>
                 <ArrowUpRightIcon
@@ -359,7 +359,7 @@ const HomePage = () => {
               Elige el nivel ideal para ti
             </p>
             <Link className="w-full sm:w-1/2 lg:w-fit group bg-invertiria-2 border border-invertiria-2 py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-white">
-              <span className="group-hover:text-invertiria-2 font-poppins uppercase text-sm text-white">
+              <span className="group-hover:text-invertiria-2 uppercase text-sm text-white">
                 EMPIEZA AHORA
               </span>
               <ArrowUpRightIcon
@@ -374,7 +374,7 @@ const HomePage = () => {
                 <h4 className="text-invertiria-2 text-2xl md:text-3xl font-semibold">
                   Paquetes de tokens
                 </h4>
-                <p className="font-poppins text-zinc-950 md:text-xl">
+                <p className="text-zinc-950 md:text-xl">
                   compra un paquete de tokens a medida que lo necesites
                 </p>
               </div>
@@ -389,7 +389,7 @@ const HomePage = () => {
                 <h4 className="text-invertiria-2 text-2xl md:text-3xl font-semibold">
                   Paga por suscripción
                 </h4>
-                <p className="font-poppins text-zinc-950 md:text-xl">
+                <p className="text-zinc-950 md:text-xl">
                   Suscripción mensual que añade tokens a tu cuenta cada mes.
                 </p>
               </div>
@@ -414,7 +414,7 @@ const HomePage = () => {
           <h2 className="h2 max-w-none lg:text-left">
             Casos de éxito que hablan
           </h2>
-          <p className="font-poppins text-zinc-700 md:text-xl">
+          <p className="text-zinc-700 md:text-xl">
             Historias reales que demuestran cómo el análisis preciso y
             decisiones estratégicas pueden marcar la diferencia en los
             resultados financieros.
@@ -433,7 +433,7 @@ const HomePage = () => {
             </h2>
             <div className="flex flex-col md:flex-row items-center gap-4">
               <Link className="w-full sm:w-1/2 lg:w-fit group bg-invertiria-2 border border-invertiria-2 py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-transparent">
-                <span className="group-hover:text-invertiria-2 font-poppins uppercase text-sm text-white">
+                <span className="group-hover:text-invertiria-2 uppercase text-sm text-white">
                   PRUÉBALO GRATIS
                 </span>
                 <ArrowUpRightIcon
@@ -442,7 +442,7 @@ const HomePage = () => {
                 />
               </Link>
               <Link className="w-full sm:w-1/2 lg:w-fit group bg-transparent border border-white py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-invertiria-2 hover:border-invertiria-2">
-                <span className="font-poppins uppercase text-sm text-white">
+                <span className="uppercase text-sm text-white">
                   CONSULTA CON UN EXPERTO
                 </span>
                 <ArrowUpRightIcon

@@ -67,10 +67,8 @@ function Header() {
         )}
       >
         <div className="flex flex-col xs:flex-row gap-y-4 items-center justify-between text-xs">
-          <span className="font-poppins">
-            Simulador Inteligente para Bienes Raíces
-          </span>
-          <div className="flex items-center font-poppins">
+          <span className="">Simulador Inteligente para Bienes Raíces</span>
+          <div className="flex items-center">
             <Link className="hover:text-invertiria-1" to="/">
               Soporte
             </Link>
@@ -97,24 +95,24 @@ function Header() {
           </Link>
           {!isMobile && (
             <nav className="hidden lg:flex">
-              <ul className="flex items-center gap-10 text-sm xl:text-base font-poppins">
+              <ul className="flex items-center gap-10 text-sm xl:text-base ">
                 <li>
-                  <Link className="text-black font-poppins hover:text-invertiria-1">
+                  <Link className="text-black hover:text-invertiria-1">
                     Personas
                   </Link>
                 </li>
                 <li>
-                  <Link className="text-black font-poppins hover:text-invertiria-1">
+                  <Link className="text-black hover:text-invertiria-1">
                     Compañías
                   </Link>
                 </li>
                 <li>
-                  <Link className="text-black font-poppins hover:text-invertiria-1">
+                  <Link className="text-black hover:text-invertiria-1">
                     Inversionistas
                   </Link>
                 </li>
                 <li>
-                  <Link className="text-black font-poppins hover:text-invertiria-1">
+                  <Link className="text-black hover:text-invertiria-1">
                     Planes
                   </Link>
                 </li>
@@ -123,9 +121,9 @@ function Header() {
           )}
           <div className="flex items-center text-sm xl:text-base text-black">
             {isAuthenticated ? (
-              <div className="hidden sm:flex items-center font-poppins gap-4 mr-2">
+              <div className="hidden sm:flex items-center  gap-4 mr-2">
                 <Link
-                  className="flex hover:text-invertiria-1 font-poppins"
+                  className="flex hover:text-invertiria-1 "
                   to={`/${user.user_metadata.role}/dashboard`}
                 >
                   Mi Perfil
@@ -137,17 +135,11 @@ function Header() {
               </div>
             ) : (
               <div className="hidden sm:flex items-center text-black">
-                <Link
-                  className="hover:text-invertiria-1 font-poppins "
-                  to="/login"
-                >
+                <Link className="hover:text-invertiria-" to="/login">
                   Login
                 </Link>
                 <div className="w-0.5 h-5 bg-invertiria-1 mx-4" />
-                <Link
-                  className="hover:text-invertiria-1 font-poppins mr-4"
-                  to="/register"
-                >
+                <Link className="hover:text-invertiria-1 mr-4" to="/register">
                   Sign in
                 </Link>
               </div>

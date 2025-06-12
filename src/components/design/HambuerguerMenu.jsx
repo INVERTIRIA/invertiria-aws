@@ -38,29 +38,29 @@ const HamburgerMenu = () => {
         <div className="flex flex-col h-screen px-6">
           {/* Menu */}
           <div className="flex flex-col gap-4">
-            <span className="text-xs font-poppins text-invertiria-2">Menú</span>
+            <span className="text-xs text-invertiria-2">Menú</span>
             <nav className="">
-              <ul className="flex flex-col gap-8 text-sm xl:text-base font-poppins">
+              <ul className="flex flex-col gap-8 text-sm xl:text-base">
                 <li>
-                  <Link className="flex items-center justify-between text-black font-poppins hover:text-invertiria-1">
+                  <Link className="flex items-center justify-between text-black hover:text-invertiria-1">
                     Personas
                     <ChevronRight className="size-5" />
                   </Link>
                 </li>
                 <li>
-                  <Link className="flex items-center justify-between text-black font-poppins hover:text-invertiria-1">
+                  <Link className="flex items-center justify-between text-black hover:text-invertiria-1">
                     Compañías
                     <ChevronRight className="size-5" />
                   </Link>
                 </li>
                 <li>
-                  <Link className="flex items-center justify-between text-black font-poppins hover:text-invertiria-1">
+                  <Link className="flex items-center justify-between text-black hover:text-invertiria-1">
                     Inversionistas
                     <ChevronRight className="size-5" />
                   </Link>
                 </li>
                 <li>
-                  <Link className="flex items-center justify-between text-black font-poppins hover:text-invertiria-1">
+                  <Link className="flex items-center justify-between text-black hover:text-invertiria-1">
                     Planes
                     <ChevronRight className="size-5" />
                   </Link>
@@ -70,31 +70,29 @@ const HamburgerMenu = () => {
           </div>
           {/* Menu */}
           <div className="mt-12 flex flex-col gap-4">
-            <span className="text-xs font-poppins text-invertiria-2">
-              Cuenta
-            </span>
+            <span className="text-xs text-invertiria-2">Cuenta</span>
             {isAuthenticated ? (
               <>
                 <nav className="">
-                  <ul className="flex flex-col gap-8 text-sm xl:text-base font-poppins">
+                  <ul className="flex flex-col gap-8 text-sm xl:text-base">
                     <li>
                       <Link
                         to={`/${user.user_metadata.role}/dashboard`}
-                        className="text-sm flex items-center justify-between text-black font-poppins hover:text-invertiria-1"
+                        className="text-sm flex items-center justify-between text-black hover:text-invertiria-1"
                       >
                         Mi perfil
                         <ChevronRight className="size-5" />
                       </Link>
                     </li>
                     <li>
-                      <Link className="text-sm flex items-center justify-between text-black font-poppins hover:text-invertiria-1">
+                      <Link className="text-sm flex items-center justify-between text-black hover:text-invertiria-1">
                         Mis inversiones
                         <ChevronRight className="size-5" />
                       </Link>
                     </li>
                     <li>
                       <Button
-                        className="w-full bg-invertiria-2 font-normal font-poppins"
+                        className="w-full bg-invertiria-2 font-normal"
                         onClick={() => {
                           logout();
                           setOpenNavigation(false);
@@ -108,15 +106,15 @@ const HamburgerMenu = () => {
               </>
             ) : (
               <>
-                <div className="flex flex-col gap-8 text-sm xl:text-base font-poppins">
+                <div className="flex flex-col gap-8 text-sm xl:text-base">
                   <Link
                     to={"/login"}
-                    className="px-3 py-2 bg-invertiria-2 rounded-md flex items-center justify-center text-white font-poppins hover:text-invertiria-1"
+                    className="px-3 py-2 bg-invertiria-2 rounded-md flex items-center justify-center text-white hover:text-invertiria-1"
                   >
                     Iniciar sesión
                   </Link>
                 </div>
-                <div className="flex flex-col 2xs:flex-row items-center justify-center gap-1 text-xs font-poppins">
+                <div className="flex flex-col 2xs:flex-row items-center justify-center gap-1 text-xs">
                   <span>¿Eres un usuario nuevo?</span>
                   <Link
                     to={"/register"}
@@ -128,25 +126,6 @@ const HamburgerMenu = () => {
               </>
             )}
           </div>
-          {/* {!isAuthenticated && (
-            <div className="mt-12 flex flex-col gap-4">
-              <span className="text-xs font-poppins text-invertiria-2">
-                Cuenta
-              </span>
-            </div>
-          )} */}
-          {/* Cerrar sesión */}
-          {/* {isAuthenticated && (
-            <Button
-              className="mt-auto mb-10"
-              onClick={() => {
-                logout();
-                setOpenNavigation(false);
-              }}
-            >
-              Cerrar sesión
-            </Button>
-          )} */}
         </div>
       </SheetContent>
     </Sheet>
