@@ -459,7 +459,7 @@ const UserForm = ({ userInfo, setUserInfo }) => {
                 name="img_perfil"
                 control={form.control}
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="col-span-2 xl:col-span-1">
                     <span className="text-sm font-medium leading-none select-none">
                       Foto de perfil *
                     </span>
