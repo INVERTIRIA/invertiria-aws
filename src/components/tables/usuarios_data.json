@@ -1,0 +1,342 @@
+[
+  {
+    "id": "57ae0bd0-b90f-4fc4-a0bb-70bfae1be4fc",
+    "usuario_id": "36f48413-3864-4b65-86ea-9e6ff44f7010",
+    "empresa_id": null,
+    "created_at": "2025-05-29T19:02:00+00:00",
+    "created_by": "f67260e6-ba7e-4fe7-9a2d-eaa567b40690",
+    "usuarios": {
+      "email": "ana1@test.com",
+      "ciudad": "Bucaramanga",
+      "nombre": "Ana",
+      "apellidos": "L\u00f3pez Castro",
+      "fecha_de_nacimiento": "2004-01-18"
+    },
+    "empresa": {
+      "name": "Empresa 1"
+    }
+  },
+  {
+    "id": "19661d4a-4ec4-4639-985c-d8ce498f6f7b",
+    "usuario_id": "f3506f11-5656-4c43-8f0d-a1382d674360",
+    "empresa_id": null,
+    "created_at": "2025-05-13T17:35:00+00:00",
+    "created_by": "f67260e6-ba7e-4fe7-9a2d-eaa567b40690",
+    "usuarios": {
+      "email": "carlos2@test.com",
+      "ciudad": "Cartagena",
+      "nombre": "Carlos",
+      "apellidos": "Molina Mart\u00ednez",
+      "fecha_de_nacimiento": "2004-11-25"
+    },
+    "empresa": {
+      "name": "Empresa 2"
+    }
+  },
+  {
+    "id": "7d3e1fa2-b741-4815-a857-b8ce734a1846",
+    "usuario_id": "ec1bcb27-8b18-4243-bb58-2f193a7484f8",
+    "empresa_id": null,
+    "created_at": "2025-05-26T01:24:00+00:00",
+    "created_by": "f67260e6-ba7e-4fe7-9a2d-eaa567b40690",
+    "usuarios": {
+      "email": "laura3@test.com",
+      "ciudad": "Armenia",
+      "nombre": "Laura",
+      "apellidos": "Ram\u00edrez Castro",
+      "fecha_de_nacimiento": "1998-01-30"
+    },
+    "empresa": {
+      "name": "Empresa 3"
+    }
+  },
+  {
+    "id": "bdcdf5a8-d3c5-46d6-ad26-b829fa6ae332",
+    "usuario_id": "61b42a4d-cdf0-4b2f-9faa-b535eb01086e",
+    "empresa_id": null,
+    "created_at": "2025-05-14T22:03:00+00:00",
+    "created_by": "f67260e6-ba7e-4fe7-9a2d-eaa567b40690",
+    "usuarios": {
+      "email": "mar\u00eda4@test.com",
+      "ciudad": "Barranquilla",
+      "nombre": "Mar\u00eda",
+      "apellidos": "Vega L\u00f3pez",
+      "fecha_de_nacimiento": "2000-08-09"
+    },
+    "empresa": {
+      "name": "Empresa 4"
+    }
+  },
+  {
+    "id": "6824f300-fb8f-4abb-8d04-c32bf5afa9f7",
+    "usuario_id": "d91e2357-c146-4eb8-bdbe-501d6ff0fd03",
+    "empresa_id": null,
+    "created_at": "2025-05-30T11:07:00+00:00",
+    "created_by": "f67260e6-ba7e-4fe7-9a2d-eaa567b40690",
+    "usuarios": {
+      "email": "jos\u00e95@test.com",
+      "ciudad": "Barranquilla",
+      "nombre": "Jos\u00e9",
+      "apellidos": "Gonz\u00e1lez P\u00e9rez",
+      "fecha_de_nacimiento": "2014-08-22"
+    },
+    "empresa": {
+      "name": "Empresa 1"
+    }
+  },
+  {
+    "id": "2eb9915c-6401-4468-8420-eb3b3d997bee",
+    "usuario_id": "8c787712-339d-41d7-8372-d17bc70f22e6",
+    "empresa_id": null,
+    "created_at": "2025-05-13T08:16:00+00:00",
+    "created_by": "f67260e6-ba7e-4fe7-9a2d-eaa567b40690",
+    "usuarios": {
+      "email": "juli\u00e1n6@test.com",
+      "ciudad": "Santa Marta",
+      "nombre": "Juli\u00e1n",
+      "apellidos": "Ortiz Moreno",
+      "fecha_de_nacimiento": "2008-06-26"
+    },
+    "empresa": {
+      "name": "Empresa 4"
+    }
+  },
+  {
+    "id": "0073687e-888d-4477-9f96-0ba2515378cb",
+    "usuario_id": "5582410d-8344-4345-b8a0-461d62aba84b",
+    "empresa_id": null,
+    "created_at": "2025-05-22T15:37:00+00:00",
+    "created_by": "f67260e6-ba7e-4fe7-9a2d-eaa567b40690",
+    "usuarios": {
+      "email": "camila7@test.com",
+      "ciudad": "Santa Marta",
+      "nombre": "Camila",
+      "apellidos": "Molina Castro",
+      "fecha_de_nacimiento": "2016-10-28"
+    },
+    "empresa": {
+      "name": "Empresa 1"
+    }
+  },
+  {
+    "id": "d13403e8-e0d0-467f-b57d-4310eb84e4b8",
+    "usuario_id": "525afd7f-71fb-4bd3-8a81-adbeae320e0f",
+    "empresa_id": null,
+    "created_at": "2025-05-05T07:12:00+00:00",
+    "created_by": "f67260e6-ba7e-4fe7-9a2d-eaa567b40690",
+    "usuarios": {
+      "email": "diego8@test.com",
+      "ciudad": "Barranquilla",
+      "nombre": "Diego",
+      "apellidos": "Torres L\u00f3pez",
+      "fecha_de_nacimiento": "1997-12-08"
+    },
+    "empresa": {
+      "name": "Empresa 4"
+    }
+  },
+  {
+    "id": "c9509906-f97b-479c-9a35-97a505db5c64",
+    "usuario_id": "dc027af7-1f89-4ccb-9bc8-cdb74874bdde",
+    "empresa_id": null,
+    "created_at": "2025-05-12T13:23:00+00:00",
+    "created_by": "f67260e6-ba7e-4fe7-9a2d-eaa567b40690",
+    "usuarios": {
+      "email": "natalia9@test.com",
+      "ciudad": "Santa Marta",
+      "nombre": "Natalia",
+      "apellidos": "Molina Vega",
+      "fecha_de_nacimiento": "2019-06-04"
+    },
+    "empresa": {
+      "name": "Empresa 2"
+    }
+  },
+  {
+    "id": "90126248-0b27-4939-8f75-8fdd6392b1e9",
+    "usuario_id": "14e7de37-87c9-4fde-813f-26ea93139a74",
+    "empresa_id": null,
+    "created_at": "2025-05-16T09:48:00+00:00",
+    "created_by": "f67260e6-ba7e-4fe7-9a2d-eaa567b40690",
+    "usuarios": {
+      "email": "esteban10@test.com",
+      "ciudad": "Bogot\u00e1",
+      "nombre": "Esteban",
+      "apellidos": "Su\u00e1rez Vega",
+      "fecha_de_nacimiento": "2003-09-06"
+    },
+    "empresa": {
+      "name": "Empresa 1"
+    }
+  },
+  {
+    "id": "49f221f1-43ad-4a62-869b-d1f88750ea63",
+    "usuario_id": "f89ff519-2a03-4b83-a1c6-4ba65c3a6171",
+    "empresa_id": null,
+    "created_at": "2025-05-17T23:10:00+00:00",
+    "created_by": "f67260e6-ba7e-4fe7-9a2d-eaa567b40690",
+    "usuarios": {
+      "email": "luisa11@test.com",
+      "ciudad": "Cartagena",
+      "nombre": "Luisa",
+      "apellidos": "Gonz\u00e1lez D\u00edaz",
+      "fecha_de_nacimiento": "2014-08-01"
+    },
+    "empresa": {
+      "name": "Empresa 1"
+    }
+  },
+  {
+    "id": "9cf47ae0-1883-4289-829f-e013b2fb93e6",
+    "usuario_id": "6c34e118-168e-4285-97b3-ab1a9cdda1fb",
+    "empresa_id": null,
+    "created_at": "2025-05-11T02:02:00+00:00",
+    "created_by": "f67260e6-ba7e-4fe7-9a2d-eaa567b40690",
+    "usuarios": {
+      "email": "andr\u00e9s12@test.com",
+      "ciudad": "Cali",
+      "nombre": "Andr\u00e9s",
+      "apellidos": "Mej\u00eda D\u00edaz",
+      "fecha_de_nacimiento": "2005-07-21"
+    },
+    "empresa": {
+      "name": "Empresa 1"
+    }
+  },
+  {
+    "id": "f5e78289-5c60-4ecc-9081-bd5e33d935d1",
+    "usuario_id": "89f7172e-9e97-4d79-b045-4cfda29f7a88",
+    "empresa_id": null,
+    "created_at": "2025-05-02T08:24:00+00:00",
+    "created_by": "f67260e6-ba7e-4fe7-9a2d-eaa567b40690",
+    "usuarios": {
+      "email": "valentina13@test.com",
+      "ciudad": "Bucaramanga",
+      "nombre": "Valentina",
+      "apellidos": "S\u00e1nchez P\u00e9rez",
+      "fecha_de_nacimiento": "2015-11-27"
+    },
+    "empresa": {
+      "name": "Empresa 5"
+    }
+  },
+  {
+    "id": "2a8248e6-c684-495b-96d8-594992522b3e",
+    "usuario_id": "3bdd23bc-7624-4ca7-a961-651bc3e4ad39",
+    "empresa_id": null,
+    "created_at": "2025-05-25T10:05:00+00:00",
+    "created_by": "f67260e6-ba7e-4fe7-9a2d-eaa567b40690",
+    "usuarios": {
+      "email": "pedro14@test.com",
+      "ciudad": "Bucaramanga",
+      "nombre": "Pedro",
+      "apellidos": "L\u00f3pez Torres",
+      "fecha_de_nacimiento": "2016-04-15"
+    },
+    "empresa": {
+      "name": "Empresa 6"
+    }
+  },
+  {
+    "id": "71fa5530-6336-4f68-a325-0968cc2c705f",
+    "usuario_id": "a882afff-37d8-4f8a-9111-94c9d11aa9e1",
+    "empresa_id": null,
+    "created_at": "2025-05-08T09:10:00+00:00",
+    "created_by": "f67260e6-ba7e-4fe7-9a2d-eaa567b40690",
+    "usuarios": {
+      "email": "daniela15@test.com",
+      "ciudad": "Bogot\u00e1",
+      "nombre": "Daniela",
+      "apellidos": "Ruiz Mart\u00ednez",
+      "fecha_de_nacimiento": "2000-07-01"
+    },
+    "empresa": {
+      "name": "Empresa 5"
+    }
+  },
+  {
+    "id": "2f84478f-5f05-4c7e-b122-3d2ed1a12026",
+    "usuario_id": "846d9660-52cb-40a5-aefd-172679c76f60",
+    "empresa_id": null,
+    "created_at": "2025-05-07T22:31:00+00:00",
+    "created_by": "f67260e6-ba7e-4fe7-9a2d-eaa567b40690",
+    "usuarios": {
+      "email": "santiago16@test.com",
+      "ciudad": "Manizales",
+      "nombre": "Santiago",
+      "apellidos": "Torres D\u00edaz",
+      "fecha_de_nacimiento": "2015-12-06"
+    },
+    "empresa": {
+      "name": "Empresa 3"
+    }
+  },
+  {
+    "id": "dc500d0e-4900-4ecb-985c-7da8f263725b",
+    "usuario_id": "40032d9c-7b2a-46eb-89fc-8e6af2c9bc83",
+    "empresa_id": null,
+    "created_at": "2025-05-22T11:36:00+00:00",
+    "created_by": "f67260e6-ba7e-4fe7-9a2d-eaa567b40690",
+    "usuarios": {
+      "email": "sara17@test.com",
+      "ciudad": "Pereira",
+      "nombre": "Sara",
+      "apellidos": "D\u00edaz Su\u00e1rez",
+      "fecha_de_nacimiento": "2012-03-01"
+    },
+    "empresa": {
+      "name": "Empresa 4"
+    }
+  },
+  {
+    "id": "b966a912-bdd5-40b6-956d-25acedc167bd",
+    "usuario_id": "8391ca73-7e96-41dd-9823-b5168242b1f8",
+    "empresa_id": null,
+    "created_at": "2025-05-20T22:23:00+00:00",
+    "created_by": "f67260e6-ba7e-4fe7-9a2d-eaa567b40690",
+    "usuarios": {
+      "email": "juan18@test.com",
+      "ciudad": "Armenia",
+      "nombre": "Juan",
+      "apellidos": "D\u00edaz P\u00e9rez",
+      "fecha_de_nacimiento": "2000-10-22"
+    },
+    "empresa": {
+      "name": "Empresa 5"
+    }
+  },
+  {
+    "id": "c4fd0777-11b6-4826-8f88-8ed9f72e37bc",
+    "usuario_id": "b62c3217-a1a1-4ff5-b6b4-27e21019ce38",
+    "empresa_id": null,
+    "created_at": "2025-05-20T22:11:00+00:00",
+    "created_by": "f67260e6-ba7e-4fe7-9a2d-eaa567b40690",
+    "usuarios": {
+      "email": "fernanda19@test.com",
+      "ciudad": "Bucaramanga",
+      "nombre": "Fernanda",
+      "apellidos": "Gonz\u00e1lez Le\u00f3n",
+      "fecha_de_nacimiento": "2004-06-29"
+    },
+    "empresa": {
+      "name": "Empresa 6"
+    }
+  },
+  {
+    "id": "e0f8b2a4-bb45-47ae-9582-c060d759575b",
+    "usuario_id": "75d61ca6-1c9e-4d23-8ad9-2320aae69b48",
+    "empresa_id": null,
+    "created_at": "2025-05-03T14:45:00+00:00",
+    "created_by": "f67260e6-ba7e-4fe7-9a2d-eaa567b40690",
+    "usuarios": {
+      "email": "felipe20@test.com",
+      "ciudad": "Santa Marta",
+      "nombre": "Felipe",
+      "apellidos": "Su\u00e1rez Bravo",
+      "fecha_de_nacimiento": "2016-01-20"
+    },
+    "empresa": {
+      "name": "Empresa 1"
+    }
+  }
+]
