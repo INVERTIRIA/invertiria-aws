@@ -173,3 +173,8 @@
   /* Fuentes */  
   --font-poppins: "Poppins", sans-serif;
 }
+
+.custom-brush rect:first-child {
+  rx: 4;
+  ry: 4;
+}
