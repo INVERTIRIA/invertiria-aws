@@ -239,7 +239,8 @@ const Charts = () => {
           />
         </div>
       </div>
-      <br />
+      <h1 className="text-4xl font-bold">Tiempo de compra</h1>
+      <h2 className="-mt-20 text-2xl font-bold text-gray-500">Precio del inmueble</h2>
       <TiempoDeCompra />
     </Container>
   );
