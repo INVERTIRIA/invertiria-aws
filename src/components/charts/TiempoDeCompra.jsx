@@ -119,6 +119,7 @@ const data = [
 
 // Grafica
 function TiempoDeCompra({ results }) {
+  
   // Punto personalizado
   const CustomizedDot = (props) => {
     const { cx, cy, stroke, payload, value } = props;
