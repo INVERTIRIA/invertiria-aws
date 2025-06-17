@@ -12,7 +12,6 @@ import {
   Brush,
 } from "recharts";
 import { parsePrice } from "../../constants/functions";
-import { Card, CardContent } from "../ui/card";
 
 // Data para la grafica
 const data = [

@@ -14,7 +14,6 @@ import { Lightbulb, Sparkles } from "lucide-react";
 import { Container } from "../components/design/Container";
 import { parsePrice } from "../constants/functions";
 import { TiempoDeCompra } from "../components/charts/TiempoDeCompra";
-import TiempoDeCompra2 from "../components/charts/TiempoDeCompra2";
 
 const ThermometerChart = ({ price, minPrice, maxPrice, location }) => {
   const indicatorPosition = ((price - minPrice) / (maxPrice - minPrice)) * 100;
@@ -246,7 +245,6 @@ const Charts = () => {
       </h2>
       <TiempoDeCompra />
       <br />
-      <TiempoDeCompra2 />
     </Container>
   );
 };
