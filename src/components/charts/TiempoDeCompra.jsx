@@ -45,7 +45,7 @@ function TiempoDeCompra({ results }) {
         <ComposedChart data={data} margin={{ top: 0, right: 80, left: 80, bottom: 0, }}>
           <CartesianGrid strokeDasharray="3" vertical={false} />
           <XAxis dataKey="mes" />
-          <YAxis domain={[580719993, 710719993]} ticks={[
+          <YAxis domain={[580719993, 630719993]} ticks={[
             580719993,
             600719993,
             620719993,
@@ -54,20 +54,20 @@ function TiempoDeCompra({ results }) {
             680719993,
             700719993
           ]}>
-            <Label value="Precio del inmueble (millones de pesos)" offset={-60} style={{ textAnchor: "middle" }} position="insideLeft" angle= "-90" />
+            <Label value="Precio del inmueble (millones de pesos)" offset={-60} style={{ textAnchor: "middle" }} position="insideLeft" angle="-90" />
           </YAxis>
           <Area
             dataKey="Varianza"
             stroke="none"
-            fill="#cccccc"
+            fill="#80b2ff"
             connectNulls
             dot={false}
             activeDot={true}
           />
           <Tooltip />
-          <Line dataKey="Precio del inmueble" strokeWidth={2} stroke="#FC7300" connectNulls dot={<CustomizedDot />} />
+          <Line dataKey="Precio del inmueble" strokeWidth={1.5} stroke="#FB3D03" connectNulls dot={<CustomizedDot />} />
           <Legend wrapperStyle={{ top: -40 }} />
-          <Brush dataKey="mes" stroke="#FC7300" y={520} />
+          <Brush dataKey="mes" stroke="#FB3D03" />
         </ComposedChart>
       </ResponsiveContainer>
     </div>
