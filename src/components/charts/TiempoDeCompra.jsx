@@ -1,4 +1,4 @@
-import { Legend, XAxis, YAxis, CartesianGrid, Tooltip, Line, ResponsiveContainer, ComposedChart, Area, Brush } from 'recharts';
+import { Legend, Label, XAxis, YAxis, CartesianGrid, Tooltip, Line, ResponsiveContainer, ComposedChart, Area, Brush } from 'recharts';
 
 // Data para la grafica
 const data = [
@@ -42,8 +42,8 @@ function TiempoDeCompra({ results }) {
   return (
     <div className="w-[100%] h-[60vh] lg:w-[60%]">
       <ResponsiveContainer>
-        <ComposedChart data={data} margin={{ top: 0, right: 80, left: 40, bottom: 0, }}>
-          <CartesianGrid strokeDasharray="3 3" />
+        <ComposedChart data={data} margin={{ top: 0, right: 80, left: 80, bottom: 0, }}>
+          <CartesianGrid strokeDasharray="3" vertical={false} />
           <XAxis dataKey="mes" />
           <YAxis domain={[580719993, 710719993]} ticks={[
             580719993,
@@ -53,7 +53,9 @@ function TiempoDeCompra({ results }) {
             660719993,
             680719993,
             700719993
-          ]} />
+          ]}>
+            <Label value="Precio del inmueble (millones de pesos)" offset={-60} style={{ textAnchor: "middle" }} position="insideLeft" angle= "-90" />
+          </YAxis>
           <Area
             dataKey="Varianza"
             stroke="none"
@@ -63,7 +65,7 @@ function TiempoDeCompra({ results }) {
             activeDot={true}
           />
           <Tooltip />
-          <Line dataKey="Precio del inmueble" stroke="#FC7300" connectNulls dot={<CustomizedDot />} />
+          <Line dataKey="Precio del inmueble" strokeWidth={2} stroke="#FC7300" connectNulls dot={<CustomizedDot />} />
           <Legend wrapperStyle={{ top: -40 }} />
           <Brush dataKey="mes" stroke="#FC7300" y={520} />
         </ComposedChart>
