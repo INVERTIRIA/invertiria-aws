@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Legend,
   Label,
@@ -119,7 +120,10 @@ const data = [
 
 // Grafica
 function TiempoDeCompra({ results }) {
-  
+
+  // const [brushIndex, setBrushIndex] = useState({ startIndex: 0, endIndex: 11 });
+  // const [YAxisDomain, setYAxisDomain] = useState([data[0].Varianza, data[11].Varianza]);
+
   // Punto personalizado
   const CustomizedDot = (props) => {
     const { cx, cy, stroke, payload, value } = props;
@@ -147,7 +151,6 @@ function TiempoDeCompra({ results }) {
         <ComposedChart
           data={data}
           margin={{ top: 0, right: 80, left: 80, bottom: 0 }}
-          className=""
         >
           <CartesianGrid className="opacity-50" vertical={false} />
           <XAxis
@@ -157,16 +160,16 @@ function TiempoDeCompra({ results }) {
             axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
           />
           <YAxis
-            domain={[580719993, 710719993]}
-            ticks={[
-              600719993, 620719993, 640719993, 660719993, 680719993, 700719993,
-            ]}
+            domain={[data[0].Varianza, 'auto']}
+            // ticks={[
+            //   600719993, 620719993, 640719993, 660719993, 680719993
+            // ]}
             tickFormatter={(value) => parsePrice(value)}
             tickLine={false}
             axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
           >
             <Label
-              value="Precio del inmueble (millones de pesos)"
+              value="Precio del inmueble"
               offset={-60}
               style={{ textAnchor: "middle" }}
               position="insideLeft"
@@ -197,6 +200,17 @@ function TiempoDeCompra({ results }) {
             endIndex={11}
             height={30}
             className="custom-brush"
+            // onChange={(range) => {
+            //   setBrushIndex({
+            //     startIndex: range.startIndex,
+            //     endIndex: range.endIndex,
+            //   });
+
+            //   // setYAxisDomain([
+            //   //   data[range.startIndex].Varianza,
+            //   //   data[range.endIndex].Varianza,
+            //   // ]);
+            // }}
           />
         </ComposedChart>
       </ResponsiveContainer>
