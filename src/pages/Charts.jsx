@@ -3,6 +3,7 @@ import { Container } from "../components/design/Container";
 import { TiempoDeCompra } from "../components/charts/TiempoDeCompra";
 import { ValorDeCompra } from "../components/charts/ValorDeCompra";
 import { RecomendacionesCompra } from "../components/charts/RecomendacionesCompra";
+import { TiempoDeVenta } from "../components/charts/TiempoDeVenta";
 
 const Charts = () => {
   return (
@@ -220,7 +221,9 @@ const Charts = () => {
       <h1 className="text-4xl font-bold">Tiempo de venta</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Valorización del inmueble</h2>
 
-
+      <div className="flex items-center gap-20">
+        <TiempoDeVenta />
+      </div>
 
       <br />
     </Container>
