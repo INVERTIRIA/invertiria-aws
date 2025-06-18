@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Legend,
   Label,
@@ -121,9 +120,6 @@ const data = [
 // Grafica
 function TiempoDeCompra({ results }) {
 
-  // const [brushIndex, setBrushIndex] = useState({ startIndex: 0, endIndex: 11 });
-  // const [YAxisDomain, setYAxisDomain] = useState([data[0].Varianza, data[11].Varianza]);
-
   // Punto personalizado
   const CustomizedDot = (props) => {
     const { cx, cy, stroke, payload, value } = props;
@@ -161,9 +157,6 @@ function TiempoDeCompra({ results }) {
           />
           <YAxis
             domain={[data[0].Varianza, 'auto']}
-            // ticks={[
-            //   600719993, 620719993, 640719993, 660719993, 680719993
-            // ]}
             tickFormatter={(value) => parsePrice(value)}
             tickLine={false}
             axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
@@ -200,17 +193,6 @@ function TiempoDeCompra({ results }) {
             endIndex={11}
             height={30}
             className="custom-brush"
-            // onChange={(range) => {
-            //   setBrushIndex({
-            //     startIndex: range.startIndex,
-            //     endIndex: range.endIndex,
-            //   });
-
-            //   // setYAxisDomain([
-            //   //   data[range.startIndex].Varianza,
-            //   //   data[range.endIndex].Varianza,
-            //   // ]);
-            // }}
           />
         </ComposedChart>
       </ResponsiveContainer>
