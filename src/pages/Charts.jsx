@@ -2,6 +2,7 @@ import { Lightbulb } from "lucide-react";
 import { Container } from "../components/design/Container";
 import { TiempoDeCompra } from "../components/charts/TiempoDeCompra";
 import { ValorDeCompra } from "../components/charts/ValorDeCompra";
+import { RecomendacionesCompra } from "../components/charts/RecomendacionesCompra";
 
 const Charts = () => {
   return (
@@ -126,8 +127,8 @@ const Charts = () => {
       {/* Titulo grafica */}
       <h1 className="text-4xl font-bold">Tiempo de compra</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Precio del inmueble</h2>
-      <div className="flex items-center gap-20">
 
+      <div className="flex items-center gap-20">
         {/* Grafica */}
         <TiempoDeCompra />
 
@@ -186,9 +187,10 @@ const Charts = () => {
       {/* Titulo grafica */}
       <h1 className="text-4xl font-bold">Recomendaciones</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Dinamica de valorización</h2>
-      <div className="flex items-center gap-20"></div>
 
-      
+      <div className="flex items-center gap-20">
+        <RecomendacionesCompra />
+      </div>
 
       <br />
     </Container>
