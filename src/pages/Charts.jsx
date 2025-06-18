@@ -6,10 +6,18 @@ import { ValorDeCompra } from "../components/charts/ValorDeCompra";
 const Charts = () => {
   return (
     <Container classNameParent={"my-20"} className="flex flex-col gap-20">
+
+      {/* Titulo */}
+      <div className="w-full flex flex-col items-center text-center gap-9">
+        <h2 className="h2 !max-w-none">Análisis de Inversión</h2>
+      </div>
+
+      {/* Titulo grafica */}
       <h1 className="text-4xl font-bold">Valor de compra</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Precio de m²</h2>
+
       <div className="flex items-center gap-20">
-        {/* Recomendación */}
+        {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
             Analizando la primera gráfica, donde se representa el valor del
@@ -47,7 +55,7 @@ const Charts = () => {
             />
           </div>
         </div>
-        {/* Recomendación */}
+        {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
             En la segunda gráfica, que muestra el valor del metro cuadrado en
@@ -111,11 +119,77 @@ const Charts = () => {
           />
         </div>
       </div>
+
+      {/* Divisor */}
+      <div className="w-full h-0.5 bg-orange-500" />
+
+      {/* Titulo grafica */}
       <h1 className="text-4xl font-bold">Tiempo de compra</h1>
-      <h2 className="-mt-20 text-2xl font-bold text-gray-500">
-        Precio del inmueble
-      </h2>
-      <TiempoDeCompra />
+      <h2 className="-mt-20 text-2xl font-bold text-gray-500">Precio del inmueble</h2>
+      <div className="flex items-center gap-20">
+
+        {/* Grafica */}
+        <TiempoDeCompra />
+
+        {/* Analisis */}
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
+          <p className="z-10 text-gray-800 text-sm font-medium leading-6">
+            La gráfica del precio del inmueble durante 240 meses muestra una tendencia de valorización clara y sostenida. Desde el inicio, el precio se ha incrementado mes a mes, lo que refleja un mercado inmobiliario en crecimiento. Al analizar la varianza máxima y mínima, se observa que el precio del inmueble se mantiene dentro de estos rangos, lo que sugiere una estabilidad en su valorización. En cada mes, el crecimiento constante media alrededor de un incremento mensual, destacando un potencial de inversión en bienes raíces que sorprende e inspira confianza.
+            <br></br><br></br>
+            Particularmente, en los últimos meses del análisis, aunque se presentan variaciones en el precio de compra real con respecto a los valores propuestos, la tendencia general sigue en ascenso. No se ha evidenciado ninguna caída sustancial en el precio, lo que es un indicador positivo para los futuros inversionistas. Las diferencias entre la varianza mínima y máxima sugieren que el mercado se mueve de manera controlada, permitiendo así que los inversionistas tengan un buen pie en la seguridad de su inversión.
+          </p>
+          <div className="ml-auto flex gap-2 items-center">
+            <p className="text-sm font-medium">Generado por IA</p>
+            <img
+              src="/assets/images/stars-2.webp"
+              alt=""
+              className="size-10 rounded-full"
+            />
+          </div>
+        </div>
+      </div>
+      {/* Conclusión */}
+      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-radial-[at_5%_90%] from-orange-700 to-orange-400">
+        <div className="flex gap-2 items-center">
+          <img
+            src="/assets/images/juan-ia.jpeg"
+            alt=""
+            className="size-12 object-cover rounded-full"
+          />
+          <p className="font-medium text-white">Juan Londoño</p>
+        </div>
+        <p className="z-10 text-white text-sm">
+          La conclusión es clara: el bien inmueble analizado presenta un comportamiento robusto y consistente en términos de valorización, lo que lo convierte en una excelente opción de inversión. Para aquellos que buscan alcanzar el bienestar financiero, contar con este tipo de activos como parte de su portafolio es fundamental.
+        </p>
+        <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
+          <div className="flex gap-1 items-center">
+            <Lightbulb className="size-5 text-yellow-600 fill-amber-300" />
+            <span className="text-gray-900 font-semibold">Consejo</span>
+          </div>
+          <p className="text-gray-900 text-sm">
+            Siempre evalúa el momento de la compra, haz tu investigación y asegúrate de adquirir propiedades en fases iniciales de sus proyectos. Así, maximizarás tu potencial de valorización y asegurarás un retorno atractivo. Recuerda que el verdadero negocio se hace en el momento de la compra, no en la venta.
+          </p>
+        </div>
+        <div className="ml-auto flex gap-2 items-center">
+          <p className="text-sm  font-medium text-white">Generado por IA</p>
+          <img
+            src="/assets/images/stars.webp"
+            alt=""
+            className="size-10 rounded-full"
+          />
+        </div>
+      </div>
+
+      {/* Divisor */}
+      <div className="w-full h-0.5 bg-orange-500" />
+
+      {/* Titulo grafica */}
+      <h1 className="text-4xl font-bold">Recomendaciones</h1>
+      <h2 className="-mt-20 text-2xl font-bold text-gray-500">Dinamica de valorización</h2>
+      <div className="flex items-center gap-20"></div>
+
+      
+
       <br />
     </Container>
   );
