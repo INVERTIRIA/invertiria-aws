@@ -4,6 +4,7 @@ import { TiempoDeCompra } from "../components/charts/TiempoDeCompra";
 import { ValorDeCompra } from "../components/charts/ValorDeCompra";
 import { RecomendacionesCompra } from "../components/charts/RecomendacionesCompra";
 import { TiempoDeVenta } from "../components/charts/TiempoDeVenta";
+import { IndicadorDeRentabiliad } from "../components/charts/IndicadorDeRentabiliad";
 
 const Charts = () => {
   return (
@@ -281,9 +282,17 @@ const Charts = () => {
       <h1 className="text-4xl font-bold">Indicadores de rentabilidad</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">En tiempo de venta</h2>
 
-      {/* Grafica */}
-
-
+      {/* Graficas */}
+      <div className="flex flex-col gap-10">
+        <div className="flex items-center">
+          <IndicadorDeRentabiliad />
+          <IndicadorDeRentabiliad />
+        </div>
+        <div className="flex items-center">
+          <IndicadorDeRentabiliad />
+          <IndicadorDeRentabiliad />
+        </div>
+      </div>
       <br />
     </Container>
   );
