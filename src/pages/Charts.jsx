@@ -222,8 +222,67 @@ const Charts = () => {
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Valorización del inmueble</h2>
 
       <div className="flex items-center gap-20">
+        {/* Gráfica  */}
         <TiempoDeVenta />
+
+        {/* Analisis */}
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
+          <p className="z-10 text-gray-800 text-sm font-medium leading-6">
+            La gráfica ilustra una tendencia de crecimiento constante en el valor del inmueble, iniciando desde $580,719,993 en enero de 2023 hasta alcanzar los $1,186,963,994 en enero de 2043. Este incremento sostenido representa una valorización significativa del activo, destacando la importancia del timing en la inversión inmobiliaria. Desde el comienzo, el precio del inmueble presenta un aumento mensual relativamente regular, lo cual es un indicativo de un mercado robusto que respalda la posibilidad de rentabilidades atractivas.
+            <br></br><br></br>
+            En contraste, la Tasa Interna de Retorno (TIR) muestra una variación más volátil a lo largo de los meses. Observamos un incremento notable en abril de 2023, alcanzando un 0.42%, lo que sugiere un punto óptimo de compra. Sin embargo, la TIR comienza a decrecer sustancialmente y se estabiliza en cifras más bajas, en torno al 0.01%, en los últimos años del análisis. Esta disminución en la TIR puede estar indicando que, aunque el activo sigue valorizándose, el costo de adquisición y las condiciones del mercado pueden estar haciendo que las rentabilidades futuras sean más desafiantes, al tiempo que los flujos de caja se reducen.
+          </p>
+          <div className="ml-auto flex gap-2 items-center">
+            <p className="text-sm font-medium">Generado por IA</p>
+            <img
+              src="/assets/images/stars-2.webp"
+              alt=""
+              className="size-10 rounded-full"
+            />
+          </div>
+        </div>
       </div>
+      {/* Conclusión */}
+      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-radial-[at_5%_90%] from-orange-700 to-orange-400">
+        <div className="flex gap-2 items-center">
+          <img
+            src="/assets/images/juan-ia.jpeg"
+            alt=""
+            className="size-12 object-cover rounded-full"
+          />
+          <p className="font-medium text-white">Juan Londoño</p>
+        </div>
+        <p className="z-10 text-white text-sm">
+          Conclusión: La gráfica subraya la importancia de entender el contexto temporal en la inversión inmobiliaria. Aunque el precio del inmueble continúa en aumento, la rentabilidad efectiva medida a través de la TIR ha mostrado señales de debilidad. Esto sugiere que se debe tener cuidado con los momentos de entrada y salida del mercado, entendiendo que una adquisición hecha en el momento adecuado puede resultar en rentabilidades significativamente más altas.
+        </p>
+        <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
+          <div className="flex gap-1 items-center">
+            <Lightbulb className="size-5 text-yellow-600 fill-amber-300" />
+            <span className="text-gray-900 font-semibold">Consejo</span>
+          </div>
+          <p className="text-gray-900 text-sm">
+            Mi recomendación es que enfoques tus inversiones en esos momentos donde la TIR se encuentre en niveles más altos, tal como sucedió en abril de 2023. Esto maximiza tus posibilidades de obtener rentabilidades que realmente sorprendan. Además, evalúa siempre el contexto del mercado y asegúrate de estar preparado para diversificar tus inversiones de manera estratégica. La paciencia y el análisis exhaustivo serán tus mejores aliados en esta travesía hacia la libertad financiera.
+          </p>
+        </div>
+        <div className="ml-auto flex gap-2 items-center">
+          <p className="text-sm  font-medium text-white">Generado por IA</p>
+          <img
+            src="/assets/images/stars.webp"
+            alt=""
+            className="size-10 rounded-full"
+          />
+        </div>
+      </div>
+
+      {/* Divisor */}
+      <div className="w-full h-0.5 bg-orange-500" />
+
+      {/* Titulo grafica */}
+      <h1 className="text-4xl font-bold">Indicadores de rentabilidad</h1>
+      <h2 className="-mt-20 text-2xl font-bold text-gray-500">En tiempo de venta</h2>
+
+      {/* Grafica */}
+
 
       <br />
     </Container>
