@@ -10,7 +10,7 @@ const Charts = () => {
 
       {/* Titulo */}
       <div className="w-full flex flex-col items-center text-center gap-9">
-        <h2 className="h2 !max-w-none">Análisis de Inversión</h2>
+        <h2 className="h2 !max-w-none">Análisis de la compra</h2>
       </div>
 
       {/* Titulo grafica */}
@@ -191,6 +191,36 @@ const Charts = () => {
       <div className="flex items-center gap-20">
         <RecomendacionesCompra />
       </div>
+      <br />
+
+      {/* Titulo */}
+      <div className="w-full flex flex-col items-center text-center gap-9">
+        <h2 className="h2 !max-w-none">Análisis de la venta</h2>
+      </div>
+
+      {/* Titulo grafica */}
+      <h1 className="text-4xl font-bold">Valor de venta</h1>
+      <h2 className="-mt-20 text-2xl font-bold text-gray-500">Precio del inmueble</h2>
+
+      {/* Gráfica  */}
+      <div className="w-full flex flex-col gap-20 justify-center -mt-10">
+        <div className="w-full flex items-center gap-40">
+          <ValorDeCompra
+            price={860000}
+            minPrice={760000}
+            maxPrice={920000}
+          />
+        </div>
+      </div>
+
+      {/* Divisor */}
+      <div className="w-full h-0.5 bg-orange-500" />
+
+      {/* Titulo grafica */}
+      <h1 className="text-4xl font-bold">Tiempo de venta</h1>
+      <h2 className="-mt-20 text-2xl font-bold text-gray-500">Valorización del inmueble</h2>
+
+
 
       <br />
     </Container>
