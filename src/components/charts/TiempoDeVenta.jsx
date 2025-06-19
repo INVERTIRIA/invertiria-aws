@@ -8,7 +8,6 @@ import {
   Line,
   ResponsiveContainer,
   ComposedChart,
-  Area,
   Brush,
 } from "recharts";
 import { parsePrice } from "../../constants/functions";
@@ -17,127 +16,108 @@ import { parsePrice } from "../../constants/functions";
 const data = [
   {
     mes: "01/2023",
-    Varianza: [580719993, 580719993],
     "Precio del inmueble": 580719993,
+    "TIR mensual": 1,
   },
   {
     mes: "02/2023",
-    Varianza: [588350711, 592445488],
     "Precio del inmueble": 590401637,
+    "TIR mensual": 1,
   },
   {
     mes: "03/2023",
-    Varianza: [597913393, 602079400],
     "Precio del inmueble": 600000000,
+    "TIR mensual": 1,
   },
   {
     mes: "04/2023",
-    Varianza: [606348642, 612545519],
     "Precio del inmueble": 609454917,
+    "TIR mensual": 42,
   },
   {
     mes: "05/2023",
-    Varianza: [617734599, 619796458],
     "Precio del inmueble": 618766386,
+    "TIR mensual": 19,
   },
   {
     mes: "06/2023",
-    Varianza: [626913616, 628953550],
     "Precio del inmueble": 627934410,
+    "TIR mensual": 34,
   },
   {
     mes: "07/2023",
-    Varianza: [636958986, 636958986],
     "Precio del inmueble": 636958986,
+    "TIR mensual": 33,
   },
   {
     mes: "08/2023",
-    Varianza: [644813035, 646865569],
     "Precio del inmueble": 645840116,
+    "TIR mensual": 30,
   },
   {
     mes: "09/2023",
-    Varianza: [653563718, 655590314],
     "Precio del inmueble": 654577799,
+    "TIR mensual": 11,
   },
   {
     mes: "10/2023",
-    Varianza: [662878598, 662878598],
     "Precio del inmueble": 662878598,
+    "TIR mensual": 14,
   },
   {
     mes: "11/2023",
-    Varianza: [669826659, 671700748],
     "Precio del inmueble": 670764357,
+    "TIR mensual": 14,
   },
   {
     mes: "12/2023",
-    Varianza: [677355128, 679155335],
     "Precio del inmueble": 678255828,
+    "TIR mensual": 13,
   },
   {
     mes: "01/2024",
-    Varianza: [684163343, 685831946],
     "Precio del inmueble": 684998152,
+    "TIR mensual": 12,
   },
   {
     mes: "02/2024",
-    Varianza: [688084036, 694035690],
     "Precio del inmueble": 691066243,
+    "TIR mensual": 11,
   },
   {
     mes: "03/2024",
-    Varianza: [695840108, 697214265],
     "Precio del inmueble": 696527525,
+    "TIR mensual": 10,
   },
   {
     mes: "04/2024",
-    Varianza: [698968474, 703908219],
     "Precio del inmueble": 701442680,
+    "TIR mensual": 9,
   },
   {
     mes: "05/2024",
-    Varianza: [704737082, 706993754],
     "Precio del inmueble": 705866318,
+    "TIR mensual": 9,
   },
   {
     mes: "06/2024",
-    Varianza: [708336817, 711430687],
     "Precio del inmueble": 709885434,
+    "TIR mensual": 8,
   },
   {
     mes: "07/2024",
-    Varianza: [711772906, 715806450],
     "Precio del inmueble": 713792519,
+    "TIR mensual": 7,
   },
   {
     mes: "08/2024",
-    Varianza: [717100370, 718074446],
     "Precio del inmueble": 717587573,
+    "TIR mensual": 7,
   },
 ];
 
 // Grafica
-function TiempoDeCompra({ results }) {
-
-  // Punto personalizado
-  const CustomizedDot = (props) => {
-    const { cx, cy, stroke, payload, value } = props;
-    if (payload.mes === "03/2023") {
-      return (
-        <svg
-          x={cx - 10}
-          y={cy - 10}
-          width={20}
-          height={20}
-          viewBox="0 0 120 120"
-          fill="#FB3D03"
-        >
-          <circle cx="60" cy="60" r="50" />
-        </svg>
-      );
-    }
-  };
+function TiempoDeVenta({ results }) {
 
   return (
     <div className="w-[100%] h-[50vh] lg:w-[60%]">
@@ -156,7 +136,8 @@ function TiempoDeCompra({ results }) {
             axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
           />
           <YAxis
-            domain={['dataMin', 'auto']}
+            yAxisId="left"
+            domain={[data[0].Varianza, 'auto']}
             tickFormatter={(value) => parsePrice(value)}
             tickLine={false}
             axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
@@ -169,21 +150,38 @@ function TiempoDeCompra({ results }) {
               angle="-90"
             />
           </YAxis>
-          <Area
-            dataKey="Varianza"
-            stroke="none"
-            fill="#80b2ff"
-            connectNulls
-            dot={false}
-            activeDot={true}
-          />
+          <YAxis
+            yAxisId="right"
+            orientation="right"
+            tickFormatter={(value) => value + "%"}
+            tickLine={false}
+            axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
+          >
+            <Label
+              value="TIR (%)"
+              style={{ textAnchor: "middle" }}
+              position="insideRight"
+              angle="-90"
+            />
+          </YAxis>
           <Tooltip />
           <Line
+            yAxisId="left"
             dataKey="Precio del inmueble"
             strokeWidth={1.5}
             stroke="#FB3D03"
             connectNulls
-            dot={<CustomizedDot />}
+            dot={false}
+            type="monotone"
+          />
+          <Line
+            yAxisId="right"
+            dataKey="TIR mensual"
+            strokeWidth={1.5}
+            stroke="#000000"
+            connectNulls
+            dot={false}
+            type="monotone"
           />
           <Legend wrapperStyle={{ top: -40 }} />
           <Brush
@@ -200,4 +198,4 @@ function TiempoDeCompra({ results }) {
   );
 }
 
-export { TiempoDeCompra };
+export { TiempoDeVenta };
