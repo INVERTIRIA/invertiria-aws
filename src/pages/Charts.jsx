@@ -284,15 +284,52 @@ const Charts = () => {
 
       {/* Graficas */}
       <div className="flex flex-col gap-10">
-        <div className="flex items-center">
-          <IndicadorDeRentabiliad />
-          <IndicadorDeRentabiliad />
+        <div className="flex items-center gap-5">
+          {/* TIR */}
+          <div className="justify-items-center">
+            <IndicadorDeRentabiliad value={20} />
+            <h1 className="text-2xl font-bold">TIR</h1>
+          </div>
+          {/* Utilidad */}
+          <div className="justify-items-center">
+            <IndicadorDeRentabiliad value={30} />
+            <h1 className="text-2xl font-bold">Utilidad</h1>
+          </div>
         </div>
-        <div className="flex items-center">
-          <IndicadorDeRentabiliad />
-          <IndicadorDeRentabiliad />
+        <div className="flex items-center gap-5">
+          {/* ROI */}
+          <div className="justify-items-center">
+            <IndicadorDeRentabiliad value={40} />
+            <h1 className="text-2xl font-bold">ROI</h1>
+          </div>
+          {/* Cap Rate */}
+          <div className="justify-items-center">
+            <IndicadorDeRentabiliad value={60} />
+            <h1 className="text-2xl font-bold">Cap Rate</h1>
+          </div>
         </div>
       </div>
+
+      {/* Titulo */}
+      <div className="w-full flex flex-col items-center text-center gap-9">
+        <h2 className="h2 !max-w-none">Financiamiento</h2>
+      </div>
+
+      {/* Titulo grafica */}
+      <h1 className="text-4xl font-bold">Apalancamiento</h1>
+      <h2 className="-mt-20 text-2xl font-bold text-gray-500">Viabilidad</h2>
+
+      {/* Graficas */}
+      <div className="flex flex-col gap-10">
+        <div className="flex items-center gap-5">
+          {/* Apalancamiento */}
+          <div className="justify-items-center">
+            <IndicadorDeRentabiliad value={80} />
+            <h1 className="text-2xl font-bold">Apalancamiento</h1>
+          </div>
+        </div>
+      </div>
+
       <br />
     </Container>
   );

@@ -2,13 +2,12 @@ import { PieChart, Pie, Cell } from 'recharts';
 
 const RADIAN = Math.PI / 180;
 const data = [
-  { name: 'A', value: 80 },
+  { name: 'MAX', value: 100 },
 ];
 const cx = 100;
 const cy = 100;
 const iR = 50;
 const oR = 100;
-const value = 50;
 
 const needle = (value, data, cx, cy, iR, oR, color) => {
   let total = 0;
@@ -35,9 +34,9 @@ const needle = (value, data, cx, cy, iR, oR, color) => {
   ];
 };
 
-function IndicadorDeRentabiliad() {
+function IndicadorDeRentabiliad({ value }) {
   return (
-    <PieChart width={250} height={150}>
+    <PieChart width={220} height={120}>
 
       <defs>
         <linearGradient id="gradienteVelocimetro" x1="0%" y1="0%" x2="100%" y2="0%">

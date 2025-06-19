@@ -156,7 +156,7 @@ function TiempoDeCompra({ results }) {
             axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
           />
           <YAxis
-            domain={[data[0].Varianza, 'auto']}
+            domain={['dataMin', 'auto']}
             tickFormatter={(value) => parsePrice(value)}
             tickLine={false}
             axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
