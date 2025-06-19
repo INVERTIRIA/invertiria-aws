@@ -205,8 +205,55 @@ const Charts = () => {
       <h1 className="text-4xl font-bold">Recomendaciones</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Dinamica de valorización</h2>
 
-      <div className="flex items-center gap-20">
+      <div className="flex xl:flex-row flex-col items-center gap-10">
+        {/* Grafica */}
         <RecomendacionesCompra />
+
+        {/* Analisis */}
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
+          <p className="z-10 text-gray-800 text-sm font-medium leading-6">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+          <div className="ml-auto flex gap-2 items-center">
+            <p className="text-sm font-medium">Generado por IA</p>
+            <img
+              src="/assets/images/stars-2.webp"
+              alt=""
+              className="size-10 rounded-full"
+            />
+          </div>
+        </div>
+      </div>
+      {/* Conclusión */}
+      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-radial-[at_5%_90%] from-orange-700 to-orange-400">
+        <div className="flex gap-2 items-center">
+          <img
+            src="/assets/images/juan-ia.jpeg"
+            alt=""
+            className="size-12 object-cover rounded-full"
+          />
+          <p className="font-medium text-white">Juan Londoño</p>
+        </div>
+        <p className="z-10 text-white text-sm">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
+          <div className="flex gap-1 items-center">
+            <Lightbulb className="size-5 text-yellow-600 fill-amber-300" />
+            <span className="text-gray-900 font-semibold">Consejo</span>
+          </div>
+          <p className="text-gray-900 text-sm">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+        </div>
+        <div className="ml-auto flex gap-2 items-center">
+          <p className="text-sm  font-medium text-white">Generado por IA</p>
+          <img
+            src="/assets/images/stars.webp"
+            alt=""
+            className="size-10 rounded-full"
+          />
+        </div>
       </div>
       <br />
 
