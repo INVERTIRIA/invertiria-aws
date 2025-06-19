@@ -4,10 +4,10 @@ const RADIAN = Math.PI / 180;
 const data = [
   { name: 'MAX', value: 100 },
 ];
-const cx = 100;
-const cy = 100;
+const cx = 90;
+const cy = 90;
 const iR = 50;
-const oR = 100;
+const oR = 90;
 
 const needle = (value, data, cx, cy, iR, oR, color) => {
   let total = 0;
@@ -36,7 +36,7 @@ const needle = (value, data, cx, cy, iR, oR, color) => {
 
 function IndicadorDeRentabiliad({ value }) {
   return (
-    <PieChart width={220} height={120}>
+    <PieChart width={200} height={120}>
 
       <defs>
         <linearGradient id="gradienteVelocimetro" x1="0%" y1="0%" x2="100%" y2="0%">

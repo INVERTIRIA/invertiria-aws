@@ -34,7 +34,7 @@ const Charts = () => {
       <h1 className="text-4xl font-bold">Valor de compra</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Precio de m²</h2>
 
-      <div className="flex items-center gap-20">
+      <div className="flex xl:flex-row flex-col items-center xl:gap-20 gap-10">
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
@@ -58,7 +58,7 @@ const Charts = () => {
         </div>
         {/* Gráficas */}
         <div className="w-full flex flex-col gap-20 justify-center">
-          <div className="w-full flex items-center gap-40">
+          <div className="w-full flex items-center xl:gap-40 gap-30">
             <ValorDeCompra
               price={860000}
               minPrice={760000}
@@ -145,7 +145,7 @@ const Charts = () => {
       <h1 className="text-4xl font-bold">Tiempo de compra</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Precio del inmueble</h2>
 
-      <div className="flex items-center gap-20">
+      <div className="flex xl:flex-row flex-col items-center gap-10">
         {/* Grafica */}
         <TiempoDeCompra />
 
@@ -237,7 +237,7 @@ const Charts = () => {
       <h1 className="text-4xl font-bold">Tiempo de venta</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Valorización del inmueble</h2>
 
-      <div className="flex items-center gap-20">
+      <div className="flex xl:flex-row flex-col items-center gap-10">
         {/* Gráfica  */}
         <TiempoDeVenta />
 
@@ -299,7 +299,7 @@ const Charts = () => {
 
       {/* Graficas */}
       <div className="flex flex-col gap-10">
-        <div className="flex items-center gap-5">
+        <div className="flex items-center xl:gap-5 gap-0">
           {/* TIR */}
           <div className="justify-items-center">
             <IndicadorDeRentabiliad value={20} />
@@ -311,7 +311,7 @@ const Charts = () => {
             <h1 className="text-2xl font-bold">Utilidad</h1>
           </div>
         </div>
-        <div className="flex items-center gap-5">
+        <div className="flex items-center xl:gap-5 gap-0">
           {/* ROI */}
           <div className="justify-items-center">
             <IndicadorDeRentabiliad value={40} />
@@ -345,6 +345,9 @@ const Charts = () => {
         </div>
       </div>
 
+      {/* Divisor */}
+      <div className="w-full h-0.5 bg-orange-500" />
+
       {/* Titulo grafica */}
       <h1 className="text-4xl font-bold">Costo financiero</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Pago mensual</h2>
@@ -360,6 +363,9 @@ const Charts = () => {
         </div>
       </div>
 
+      {/* Divisor */}
+      <div className="w-full h-0.5 bg-orange-500" />
+
       {/* Titulo grafica */}
       <h1 className="text-4xl font-bold">Capacidad de endeudamiento</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Según perfil</h2>
@@ -370,6 +376,33 @@ const Charts = () => {
           <Endeudamiento price={6000000} />
         </div>
       </div>
+
+      {/* Titulo */}
+      <div className="w-full flex flex-col items-center text-center gap-9">
+        <h2 className="h2 !max-w-none">Flujo de caja</h2>
+      </div>
+
+      {/* Titulo grafica */}
+      <h1 className="text-4xl font-bold">Flujo de caja mensual</h1>
+      <h2 className="-mt-20 text-2xl font-bold text-gray-500">Según perfil</h2>
+
+      {/* Titulo */}
+      <div className="w-full flex flex-col items-center text-center gap-9">
+        <h2 className="h2 !max-w-none">Rentabilidad</h2>
+      </div>
+
+      {/* Titulo grafica */}
+      <h1 className="text-4xl font-bold">Indicadores de rentabilidad</h1>
+      <h2 className="-mt-20 text-2xl font-bold text-gray-500">KPIs</h2>
+
+      {/* Titulo */}
+      <div className="w-full flex flex-col items-center text-center gap-9">
+        <h2 className="h2 !max-w-none">Recomendaciones</h2>
+      </div>
+
+      {/* Titulo grafica */}
+      <h1 className="text-4xl font-bold">Recomendación</h1>
+      <h2 className="-mt-20 text-2xl font-bold text-gray-500">Tiempo de venta</h2>
 
       <br />
     </Container>
