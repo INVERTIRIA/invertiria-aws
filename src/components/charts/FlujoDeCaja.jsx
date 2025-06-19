@@ -17,123 +17,123 @@ import { parsePrice } from "../../constants/functions";
 const data = [
   {
     mes: "01/2023",
-    "Flujo neto": 580719993,
-    "Ingresos": 580719993,
-    "Egresos": 580719993,
+    "Flujo neto": 4000000,
+    "Ingresos": 9000000,
+    "Egresos": 5000000,
   },
   {
     mes: "02/2023",
-    "Flujo neto": 590401637,
-    "Ingresos": 580719993,
-    "Egresos": 580719993,
+    "Flujo neto": 6000000,
+    "Ingresos": 9000000,
+    "Egresos": 3000000,
   },
   {
     mes: "03/2023",
-    "Flujo neto": 600000000,
-    "Ingresos": 580719993,
-    "Egresos": 580719993,
+    "Flujo neto": 4000000,
+    "Ingresos": 10000000,
+    "Egresos": 6000000,
   },
   {
     mes: "04/2023",
-    "Flujo neto": 609454917,
-    "Ingresos": 580719993,
-    "Egresos": 580719993,
+    "Flujo neto": 1000000,
+    "Ingresos": 9000000,
+    "Egresos": 8000000,
   },
   {
     mes: "05/2023",
-    "Flujo neto": 618766386,
-    "Ingresos": 580719993,
-    "Egresos": 580719993,
+    "Flujo neto": 2000000,
+    "Ingresos": 9000000,
+    "Egresos": 7000000,
   },
   {
     mes: "06/2023",
-    "Flujo neto": 627934410,
-    "Ingresos": 580719993,
-    "Egresos": 580719993,
+    "Flujo neto": 3000000,
+    "Ingresos": 7000000,
+    "Egresos": 4000000,
   },
   {
     mes: "07/2023",
-    "Flujo neto": 636958986,
-    "Ingresos": 580719993,
-    "Egresos": 580719993,
+    "Flujo neto": 4000000,
+    "Ingresos": 8000000,
+    "Egresos": 4000000,
   },
   {
     mes: "08/2023",
-    "Flujo neto": 645840116,
-    "Ingresos": 580719993,
-    "Egresos": 580719993,
+    "Flujo neto": 4000000,
+    "Ingresos": 7000000,
+    "Egresos": 3000000,
   },
   {
     mes: "09/2023",
-    "Flujo neto": 654577799,
-    "Ingresos": 580719993,
-    "Egresos": 580719993,
+    "Flujo neto": 6000000,
+    "Ingresos": 8000000,
+    "Egresos": 2000000,
   },
   {
     mes: "10/2023",
-    "Flujo neto": 662878598,
-    "Ingresos": 580719993,
-    "Egresos": 580719993,
+    "Flujo neto": 2000000,
+    "Ingresos": 9000000,
+    "Egresos": 7000000,
   },
   {
     mes: "11/2023",
-    "Flujo neto": 670764357,
-    "Ingresos": 580719993,
-    "Egresos": 580719993,
+    "Flujo neto": 4000000,
+    "Ingresos": 5000000,
+    "Egresos": 1000000,
   },
   {
     mes: "12/2023",
-    "Flujo neto": 678255828,
-    "Ingresos": 580719993,
-    "Egresos": 580719993,
+    "Flujo neto": 9000000,
+    "Ingresos": 9000000,
+    "Egresos": 9000000,
   },
   {
     mes: "01/2024",
-    "Flujo neto": 684998152,
-    "Ingresos": 580719993,
-    "Egresos": 580719993,
+    "Flujo neto": 9000000,
+    "Ingresos": 9000000,
+    "Egresos": 9000000,
   },
   {
     mes: "02/2024",
-    "Flujo neto": 691066243,
-    "Ingresos": 580719993,
-    "Egresos": 580719993,
+    "Flujo neto": 9000000,
+    "Ingresos": 9000000,
+    "Egresos": 9000000,
   },
   {
     mes: "03/2024",
-    "Flujo neto": 696527525,
-    "Ingresos": 580719993,
-    "Egresos": 580719993,
+    "Flujo neto": 9000000,
+    "Ingresos": 9000000,
+    "Egresos": 9000000,
   },
   {
     mes: "04/2024",
-    "Flujo neto": 701442680,
-    "Ingresos": 580719993,
-    "Egresos": 580719993,
+    "Flujo neto": 9000000,
+    "Ingresos": 9000000,
+    "Egresos": 9000000,
   },
   {
     mes: "05/2024",
-    "Flujo neto": 705866318,
-    "Ingresos": 580719993,
-    "Egresos": 580719993,
+    "Flujo neto": 9000000,
+    "Ingresos": 9000000,
+    "Egresos": 9000000,
   },
   {
     mes: "06/2024",
-    "Flujo neto": 709885434,
-    "Ingresos": 580719993,
-    "Egresos": 580719993,
+    "Flujo neto": 9000000,
+    "Ingresos": 9000000,
+    "Egresos": 9000000,
   },
   {
     mes: "07/2024",
-    "Flujo neto": 713792519,
-    "Ingresos": 580719993,
-    "Egresos": 580719993,
+    "Flujo neto": 9000000,
+    "Ingresos": 9000000,
+    "Egresos": 9000000,
   },
   {
     mes: "08/2024",
-    "Flujo neto": 717587573,
-    "Ingresos": 580719993,
-    "Egresos": 580719993,
+    "Flujo neto": 9000000,
+    "Ingresos": 9000000,
+    "Egresos": 9000000,
   },
 ];
 
@@ -172,15 +172,15 @@ function FlujoDeCaja({ results }) {
             />
           </YAxis>
           <Tooltip />
-          <Bar dataKey="Ingresos" yAxisId="left" stackId="a" fill="#FB3D03" />
-          <Bar dataKey="Egresos" yAxisId="left" stackId="a" fill="#FC7300" />
+          <Bar dataKey="Egresos" yAxisId="left" stackId="a" fill="#FB3D03" />
+          <Bar dataKey="Ingresos" yAxisId="left" stackId="a" fill="#fc8f00" />
           <Line
             yAxisId="left"
             dataKey="Flujo neto"
             strokeWidth={1.5}
             stroke="#000000"
             connectNulls
-            dot={true}
+            dot={{ stroke: 'black', fill: 'black', strokeWidth: 1 }}
           />
           <Legend wrapperStyle={{ top: -40 }} />
           <Brush
