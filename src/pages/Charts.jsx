@@ -5,10 +5,25 @@ import { ValorDeCompra } from "../components/charts/ValorDeCompra";
 import { RecomendacionesCompra } from "../components/charts/RecomendacionesCompra";
 import { TiempoDeVenta } from "../components/charts/TiempoDeVenta";
 import { IndicadorDeRentabiliad } from "../components/charts/IndicadorDeRentabiliad";
+import { ValorDeVenta } from "../components/charts/ValorDeVenta";
+import { LineaDeTiempo } from "../components/charts/LineaDeTiempo";
+import { Endeudamiento } from "../components/charts/Endeudamiento";
 
 const Charts = () => {
   return (
     <Container classNameParent={"my-20"} className="flex flex-col gap-20">
+
+      {/* Titulo */}
+      <div className="w-full flex flex-col items-center text-center gap-9">
+        <h2 className="h2 !max-w-none">Análisis de inversión</h2>
+      </div>
+
+      {/* Titulo grafica */}
+      <h1 className="text-4xl font-bold">Tiempos del proyecto</h1>
+      <h2 className="-mt-20 text-2xl font-bold text-gray-500">Linea de tiempo</h2>
+
+      <LineaDeTiempo />
+      <br />
 
       {/* Titulo */}
       <div className="w-full flex flex-col items-center text-center gap-9">
@@ -207,7 +222,7 @@ const Charts = () => {
       {/* Gráfica  */}
       <div className="w-full flex flex-col gap-20 justify-center -mt-10">
         <div className="w-full flex items-center gap-40">
-          <ValorDeCompra
+          <ValorDeVenta
             price={860000}
             minPrice={760000}
             maxPrice={920000}
@@ -319,7 +334,7 @@ const Charts = () => {
       <h1 className="text-4xl font-bold">Apalancamiento</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Viabilidad</h2>
 
-      {/* Graficas */}
+      {/* Grafica */}
       <div className="flex flex-col gap-10">
         <div className="flex items-center gap-5">
           {/* Apalancamiento */}
@@ -327,6 +342,32 @@ const Charts = () => {
             <IndicadorDeRentabiliad value={80} />
             <h1 className="text-2xl font-bold">Apalancamiento</h1>
           </div>
+        </div>
+      </div>
+
+      {/* Titulo grafica */}
+      <h1 className="text-4xl font-bold">Costo financiero</h1>
+      <h2 className="-mt-20 text-2xl font-bold text-gray-500">Pago mensual</h2>
+
+      {/* Grafica */}
+      <div className="flex flex-col gap-10">
+        <div className="flex items-center gap-5">
+          {/* Costo financiero */}
+          <div className="justify-items-center">
+            <IndicadorDeRentabiliad value={50} />
+            <h1 className="text-2xl font-bold">Tasa de interés</h1>
+          </div>
+        </div>
+      </div>
+
+      {/* Titulo grafica */}
+      <h1 className="text-4xl font-bold">Capacidad de endeudamiento</h1>
+      <h2 className="-mt-20 text-2xl font-bold text-gray-500">Según perfil</h2>
+
+      {/* Grafica */}
+      <div className="flex flex-col gap-10 pl-30">
+        <div className="flex items-center gap-5">
+          <Endeudamiento price={6000000} />
         </div>
       </div>
 

@@ -1,12 +1,10 @@
 import { parsePrice } from "../../constants/functions";
 
-function ValorDeCompra({ price, minPrice, maxPrice, location }) {
+function Endeudamiento({ price, minPrice, maxPrice }) {
   const indicatorPosition = ((price - minPrice) / (maxPrice - minPrice)) * 100;
 
   return (
     <div className="flex flex-col gap-1 items-center">
-      <p className="mb-10 font-semibold text-xl">{location}</p>
-      <span className="text-sm font-semibold">{parsePrice(maxPrice)}</span>
       <div
         style={{
           width: "80px",
@@ -17,6 +15,7 @@ function ValorDeCompra({ price, minPrice, maxPrice, location }) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          rotate: "90deg",
         }}
       >
         {/* Indicador de precio actual */}
@@ -34,23 +33,24 @@ function ValorDeCompra({ price, minPrice, maxPrice, location }) {
         ></div>
 
         <div
-          className="w-24 flex flex-col"
+          className="w-24 flex flex-col -m-5 items-center"
           style={{
             position: "absolute",
             left: "95px",
+            top: "150px",
             bottom: `${indicatorPosition}%`,
             fontSize: "14px",
             fontWeight: "bold",
             color: "black",
+            rotate: "-90deg",
           }}
         >
-          <span className="text-[11px] font-normal">Valor Compra m²</span>
-          <span className="leading-none">{parsePrice(price)}</span>{" "}
+          <span className="leading-none">{parsePrice(price)}</span>
+          <span className="text-[11px] font-normal">Capacidad</span>
         </div>
       </div>
-      <span className="text-sm font-semibold">{parsePrice(minPrice)}</span>
     </div>
   );
 };
 
-export { ValorDeCompra };
+export { Endeudamiento };

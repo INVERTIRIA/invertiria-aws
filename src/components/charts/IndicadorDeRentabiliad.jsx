@@ -42,7 +42,7 @@ function IndicadorDeRentabiliad({ value }) {
         <linearGradient id="gradienteVelocimetro" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stopColor="#f00000" />
           <stop offset="50%" stopColor="#fff200" />
-          <stop offset="100%" stopColor="#00d40b" />
+          <stop offset="100%" stopColor="#00ab09" />
         </linearGradient>
       </defs>
 
