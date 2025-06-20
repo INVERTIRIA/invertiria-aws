@@ -11,7 +11,7 @@ import {
   YAxis,
 } from "recharts";
 import { parsePrice } from "../../constants/functions";
-import { IndicadorDeRentabiliad } from "./IndicadorDeRentabiliad";
+import { IndicadorDeRentabilidad } from "./IndicadorDeRentabilidad";
 import { Slider } from "@/components/ui/slider";
 import { useState } from "react";
 
@@ -516,25 +516,25 @@ const IndicadoresDeRentabilidad = () => {
             {/* TIR */}
             <div className="justify-items-center">
               <h3 className="text-2xl font-bold">{kpi.tirMensual}%</h3>
-              <IndicadorDeRentabiliad value={kpi.tirMensual} />
+              <IndicadorDeRentabilidad value={kpi.tirMensual} />
               <h3 className="text-2xl font-bold">TIR</h3>
             </div>
             {/* Utilidad */}
             <div className="justify-items-center">
               <h3 className="text-2xl font-bold">{parsePrice(kpi.utilidad)}</h3>
-              <IndicadorDeRentabiliad value={30} />
+              <IndicadorDeRentabilidad value={30} />
               <h3 className="text-2xl font-bold">Utilidad</h3>
             </div>
             {/* ROI */}
             <div className="justify-items-center">
               <h3 className="text-2xl font-bold">{kpi.roiMensual}%</h3>
-              <IndicadorDeRentabiliad value={kpi.roiMensual} />
+              <IndicadorDeRentabilidad value={kpi.roiMensual} />
               <h3 className="text-2xl font-bold">ROI</h3>
             </div>
             {/* Cap Rate */}
             <div className="justify-items-center">
               <h3 className="text-2xl font-bold">0%</h3>
-              <IndicadorDeRentabiliad value={60} />
+              <IndicadorDeRentabilidad value={60} />
               <h3 className="text-2xl font-bold">Cap Rate</h3>
             </div>
           </div>

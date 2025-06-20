@@ -32,7 +32,7 @@ const needle = (value, data, cx, cy, iR, oR, color) => {
   ];
 };
 
-function IndicadorDeRentabilidad({ value, limit, colorInverted=false }) {
+function IndicadorDeRentabilidad({ value, limit=100, colorInverted=false }) {
   
   const gradientId = useId();  
   const data = [
