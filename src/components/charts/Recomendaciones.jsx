@@ -9,6 +9,8 @@ import {
   Tooltip,
   XAxis,
   YAxis,
+  ReferenceLine,
+  Area,
 } from "recharts";
 import { parsePrice } from "../../constants/functions";
 
@@ -275,6 +277,10 @@ const dataUtilidad = [
   { mes: "11/2024", Utilidad: 75727484 },
 ];
 
+const mesVentaSeleccionado = "08/2023";
+const mesMayorTir = "05/2023";
+const mesMayorUtilidad = "11/2023";
+
 const Recomendaciones = () => {
   return (
     <div className="w-full flex flex-col md:flex-row gap-12">
@@ -312,6 +318,24 @@ const Recomendaciones = () => {
                   />
                 </YAxis>
                 <Tooltip />
+                <ReferenceLine x={mesMayorTir}
+                  stroke="orange"
+                  strokeWidth={60}
+                  isFront={false}
+                  style={{ opacity: 0.5 }} 
+                />
+                <ReferenceLine x={mesMayorUtilidad}
+                  stroke="green"
+                  strokeWidth={60}
+                  isFront={false}
+                  style={{ opacity: 0.5 }} 
+                />
+                <ReferenceLine x={mesVentaSeleccionado}
+                  label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
+                  stroke="red"
+                  strokeWidth={2}
+                  isFront={false}
+                />
                 <Line
                   dataKey="ROI mensual"
                   strokeWidth={1.5}
@@ -374,6 +398,24 @@ const Recomendaciones = () => {
                   />
                 </YAxis>
                 <Tooltip />
+                <ReferenceLine x={mesMayorTir}
+                  stroke="orange"
+                  strokeWidth={60}
+                  isFront={false}
+                  style={{ opacity: 0.5 }} 
+                />
+                <ReferenceLine x={mesMayorUtilidad}
+                  stroke="green"
+                  strokeWidth={60}
+                  isFront={false}
+                  style={{ opacity: 0.5 }} 
+                />
+                <ReferenceLine x={mesVentaSeleccionado}
+                  label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
+                  stroke="red"
+                  strokeWidth={2}
+                  isFront={true}
+                />
                 <Line
                   dataKey="TIR mensual"
                   strokeWidth={1.5}
@@ -430,6 +472,24 @@ const Recomendaciones = () => {
                   />
                 </YAxis>
                 <Tooltip />
+                <ReferenceLine x={mesMayorTir}
+                  stroke="orange"
+                  strokeWidth={60}
+                  isFront={false}
+                  style={{ opacity: 0.5 }} 
+                />
+                <ReferenceLine x={mesMayorUtilidad}
+                  stroke="green"
+                  strokeWidth={60}
+                  isFront={false}
+                  style={{ opacity: 0.5 }} 
+                />
+                <ReferenceLine x={mesVentaSeleccionado}
+                  label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
+                  stroke="red"
+                  strokeWidth={2}
+                  isFront={true}
+                />
                 <Line
                   dataKey="Utilidad"
                   strokeWidth={1.5}
