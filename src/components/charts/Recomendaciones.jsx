@@ -10,9 +10,9 @@ import {
   XAxis,
   YAxis,
   ReferenceLine,
-  Area,
 } from "recharts";
 import { parsePrice } from "../../constants/functions";
+import { useState } from "react";
 
 // data para la grafica
 const dataTIR = [
@@ -282,6 +282,14 @@ const mesMayorTir = "05/2023";
 const mesMayorUtilidad = "11/2023";
 
 const Recomendaciones = () => {
+  const [startIndexBrush, setStartIndexBrush] = useState(0);
+  const [endIndexBrush, setEndIndexBrush] = useState(11);
+
+  const handleBrushOnchange = (e) => {
+    setStartIndexBrush(e.startIndex);
+    setEndIndexBrush(e.endIndex);
+  };
+
   return (
     <div className="w-full flex flex-col md:flex-row gap-12">
       <div className="flex flex-col gap-4 w-[70%]">
@@ -319,16 +327,18 @@ const Recomendaciones = () => {
                 </YAxis>
                 <Tooltip />
                 <ReferenceLine x={mesMayorTir}
+                  label={{ value: 'Mayor TIR', style: { fill: 'black' }, angle: -90, position: 'center' }}
                   stroke="orange"
                   strokeWidth={60}
                   isFront={false}
-                  style={{ opacity: 0.5 }} 
+                  style={{ opacity: 0.5 }}
                 />
                 <ReferenceLine x={mesMayorUtilidad}
+                  label={{ value: 'Mayor utilidad', style: { fill: 'black' }, angle: -90, position: 'center' }}
                   stroke="green"
                   strokeWidth={60}
                   isFront={false}
-                  style={{ opacity: 0.5 }} 
+                  style={{ opacity: 0.5 }}
                 />
                 <ReferenceLine x={mesVentaSeleccionado}
                   label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
@@ -356,10 +366,11 @@ const Recomendaciones = () => {
                 <Brush
                   dataKey="mes"
                   stroke="#FB3D03"
-                  startIndex={0}
-                  endIndex={11}
+                  startIndex={startIndexBrush}
+                  endIndex={endIndexBrush}
                   height={30}
                   className="custom-brush"
+                  onChange={handleBrushOnchange}
                 />
               </ComposedChart>
             </ResponsiveContainer>
@@ -373,7 +384,7 @@ const Recomendaciones = () => {
             <ResponsiveContainer
               className={" flex aspect-video justify-center text-xs"}
             >
-              <ComposedChart data={dataTIR} syncId="syncId">
+              <ComposedChart data={dataTIR.slice(startIndexBrush, endIndexBrush + 1)} syncId="syncId">
                 <CartesianGrid
                   className="opacity-50"
                   vertical={false}
@@ -399,16 +410,18 @@ const Recomendaciones = () => {
                 </YAxis>
                 <Tooltip />
                 <ReferenceLine x={mesMayorTir}
+                  label={{ value: 'Mayor TIR', style: { fill: 'black' }, angle: -90, position: 'center' }}
                   stroke="orange"
                   strokeWidth={60}
                   isFront={false}
-                  style={{ opacity: 0.5 }} 
+                  style={{ opacity: 0.5 }}
                 />
                 <ReferenceLine x={mesMayorUtilidad}
+                  label={{ value: 'Mayor utilidad', style: { fill: 'black' }, angle: -90, position: 'center' }}
                   stroke="green"
                   strokeWidth={60}
                   isFront={false}
-                  style={{ opacity: 0.5 }} 
+                  style={{ opacity: 0.5 }}
                 />
                 <ReferenceLine x={mesVentaSeleccionado}
                   label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
@@ -446,7 +459,7 @@ const Recomendaciones = () => {
               className={"w-full flex aspect-video justify-center text-xs"}
             >
               <ComposedChart
-                data={dataUtilidad}
+                data={dataUtilidad.slice(startIndexBrush, endIndexBrush + 1)}
                 margin={{ top: 10, right: 10, left: 80, bottom: 0 }}
                 syncId="syncId"
               >
@@ -473,16 +486,18 @@ const Recomendaciones = () => {
                 </YAxis>
                 <Tooltip />
                 <ReferenceLine x={mesMayorTir}
+                  label={{ value: 'Mayor TIR', style: { fill: 'black' }, angle: -90, position: 'center' }}
                   stroke="orange"
                   strokeWidth={60}
                   isFront={false}
-                  style={{ opacity: 0.5 }} 
+                  style={{ opacity: 0.5 }}
                 />
                 <ReferenceLine x={mesMayorUtilidad}
+                  label={{ value: 'Mayor utilidad', style: { fill: 'black' }, angle: -90, position: 'center' }}
                   stroke="green"
                   strokeWidth={60}
                   isFront={false}
-                  style={{ opacity: 0.5 }} 
+                  style={{ opacity: 0.5 }}
                 />
                 <ReferenceLine x={mesVentaSeleccionado}
                   label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
