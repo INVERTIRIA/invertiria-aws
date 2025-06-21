@@ -10,6 +10,7 @@ import { LineaDeTiempo } from "../components/charts/LineaDeTiempo";
 import { Endeudamiento } from "../components/charts/Endeudamiento";
 import { FlujoDeCaja } from "../components/charts/FlujoDeCaja";
 import IndicadoresDeRentabilidad from "../components/charts/IndicadoresDeRentabilidad";
+import Recomendaciones from "../components/charts/Recomendaciones";
 
 const Charts = () => {
   return (
@@ -299,10 +300,57 @@ const Charts = () => {
         Precio del inmueble
       </h2>
 
-      {/* Gráfica  */}
-      <div className="w-full flex flex-col gap-20 justify-center -mt-10">
-        <div className="w-full flex items-center gap-40">
+      <div className="w-full flex xl:flex-row flex-col gap-10 xl:gap-60 items-center -mt-10">
+
+        {/* Gráfica  */}
+        <div className="xl:ml-0 -ml-30">
           <ValorDeVenta price={860000} minPrice={760000} maxPrice={920000} />
+        </div>
+
+        {/* Analisis */}
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
+          <p className="z-10 text-gray-800 text-sm font-medium leading-6">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+          <div className="ml-auto flex gap-2 items-center">
+            <p className="text-sm font-medium">Generado por IA</p>
+            <img
+              src="/assets/images/stars-2.webp"
+              alt=""
+              className="size-10 rounded-full"
+            />
+          </div>
+        </div>
+      </div>
+      {/* Conclusión */}
+      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-radial-[at_5%_90%] from-orange-700 to-orange-400">
+        <div className="flex gap-2 items-center">
+          <img
+            src="/assets/images/juan-ia.jpeg"
+            alt=""
+            className="size-12 object-cover rounded-full"
+          />
+          <p className="font-medium text-white">Juan Londoño</p>
+        </div>
+        <p className="z-10 text-white text-sm">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
+          <div className="flex gap-1 items-center">
+            <Lightbulb className="size-5 text-yellow-600 fill-amber-300" />
+            <span className="text-gray-900 font-semibold">Consejo</span>
+          </div>
+          <p className="text-gray-900 text-sm">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+        </div>
+        <div className="ml-auto flex gap-2 items-center">
+          <p className="text-sm  font-medium text-white">Generado por IA</p>
+          <img
+            src="/assets/images/stars.webp"
+            alt=""
+            className="size-10 rounded-full"
+          />
         </div>
       </div>
 
@@ -408,31 +456,79 @@ const Charts = () => {
         En tiempo de venta
       </h2>
 
-      {/* Graficas */}
-      <div className="flex flex-col gap-10">
-        <div className="flex items-center xl:gap-5 gap-0">
-          {/* TIR */}
-          <div className="justify-items-center">
-            <IndicadorDeRentabilidad value={25} limit={100} />
-            <h1 className="text-2xl font-bold">TIR</h1>
+      <div className="flex flex-col xl:flex-row items-center xl:gap-20 gap-10">
+        {/* Graficas */}
+        <div className="flex flex-col gap-10">
+          <div className="flex items-center xl:gap-5 gap-0">
+            {/* TIR */}
+            <div className="justify-items-center">
+              <IndicadorDeRentabilidad value={25} limit={100} />
+              <h1 className="text-2xl font-bold">TIR</h1>
+            </div>
+            {/* Utilidad */}
+            <div className="justify-items-center">
+              <IndicadorDeRentabilidad value={30} limit={100} />
+              <h1 className="text-2xl font-bold">Utilidad</h1>
+            </div>
           </div>
-          {/* Utilidad */}
-          <div className="justify-items-center">
-            <IndicadorDeRentabilidad value={30} limit={100} />
-            <h1 className="text-2xl font-bold">Utilidad</h1>
+          <div className="flex items-center xl:gap-5 gap-0">
+            {/* ROI */}
+            <div className="justify-items-center">
+              <IndicadorDeRentabilidad value={40} limit={100} />
+              <h1 className="text-2xl font-bold">ROI</h1>
+            </div>
+            {/* Cap Rate */}
+            <div className="justify-items-center">
+              <IndicadorDeRentabilidad value={60} limit={100} />
+              <h1 className="text-2xl font-bold">Cap Rate</h1>
+            </div>
           </div>
         </div>
-        <div className="flex items-center xl:gap-5 gap-0">
-          {/* ROI */}
-          <div className="justify-items-center">
-            <IndicadorDeRentabilidad value={40} limit={100} />
-            <h1 className="text-2xl font-bold">ROI</h1>
+
+        {/* Analisis */}
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
+          <p className="z-10 text-gray-800 text-sm font-medium leading-6">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+          <div className="ml-auto flex gap-2 items-center">
+            <p className="text-sm font-medium">Generado por IA</p>
+            <img
+              src="/assets/images/stars-2.webp"
+              alt=""
+              className="size-10 rounded-full"
+            />
           </div>
-          {/* Cap Rate */}
-          <div className="justify-items-center">
-            <IndicadorDeRentabilidad value={60} limit={100} />
-            <h1 className="text-2xl font-bold">Cap Rate</h1>
+        </div>
+      </div>
+      {/* Conclusión */}
+      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-radial-[at_5%_90%] from-orange-700 to-orange-400">
+        <div className="flex gap-2 items-center">
+          <img
+            src="/assets/images/juan-ia.jpeg"
+            alt=""
+            className="size-12 object-cover rounded-full"
+          />
+          <p className="font-medium text-white">Juan Londoño</p>
+        </div>
+        <p className="z-10 text-white text-sm">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
+          <div className="flex gap-1 items-center">
+            <Lightbulb className="size-5 text-yellow-600 fill-amber-300" />
+            <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
+          <p className="text-gray-900 text-sm">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+        </div>
+        <div className="ml-auto flex gap-2 items-center">
+          <p className="text-sm  font-medium text-white">Generado por IA</p>
+          <img
+            src="/assets/images/stars.webp"
+            alt=""
+            className="size-10 rounded-full"
+          />
         </div>
       </div>
 
@@ -446,27 +542,86 @@ const Charts = () => {
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Viabilidad</h2>
 
       {/* Grafica */}
-      <div className="flex flex-col gap-10">
-        <div className="flex items-center gap-40">
-          {/* Apalancamiento */}
-          <div className="justify-items-center">
-            <IndicadorDeRentabilidad value={3.33} limit={10} />
-            <h1 className="text-2xl font-bold">Apalancamiento</h1>
-          </div>
+      <div className="flex xl:flex-row flex-col xl:gap-40 gap-10">
+        {/* Apalancamiento */}
+        <div className="justify-items-center">
+          <IndicadorDeRentabilidad value={3.33} limit={10} />
+          <h1 className="text-2xl font-bold">Apalancamiento</h1>
+        </div>
 
-          {/* Analisis */}
-          <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
-            <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-              El apalancamiento de 3.333 en la compra del inmueble de $600.000.000, donde has aportado $180.000.000 y accedido a un crédito hipotecario de $420.000.000, indica que has utilizado un apalancamiento inteligente y eficiente. Esto significa que, por cada peso que inversoras, tienes el control de más de tres pesos en un activo que tiene potencial de valorización. Este enfoque no solo maximiza tus oportunidades de rentabilidad, sino que también permite optimizar el flujo de caja, ya que tu inversión inicial está multiplicada frente a los recursos que manejas a través del crédito.
-            </p>
-            <div className="ml-auto flex gap-2 items-center">
-              <p className="text-sm font-medium">Generado por IA</p>
-              <img
-                src="/assets/images/stars-2.webp"
-                alt=""
-                className="size-10 rounded-full"
-              />
-            </div>
+        {/* Analisis */}
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
+          <p className="z-10 text-gray-800 text-sm font-medium leading-6">
+            El apalancamiento de 3.333 en la compra del inmueble de $600.000.000, donde has aportado $180.000.000 y accedido a un crédito hipotecario de $420.000.000, indica que has utilizado un apalancamiento inteligente y eficiente. Esto significa que, por cada peso que inversoras, tienes el control de más de tres pesos en un activo que tiene potencial de valorización. Este enfoque no solo maximiza tus oportunidades de rentabilidad, sino que también permite optimizar el flujo de caja, ya que tu inversión inicial está multiplicada frente a los recursos que manejas a través del crédito.
+          </p>
+          <div className="ml-auto flex gap-2 items-center">
+            <p className="text-sm font-medium">Generado por IA</p>
+            <img
+              src="/assets/images/stars-2.webp"
+              alt=""
+              className="size-10 rounded-full"
+            />
+          </div>
+        </div>
+      </div>
+      {/* Conclusión */}
+      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-radial-[at_5%_90%] from-orange-700 to-orange-400">
+        <div className="flex gap-2 items-center">
+          <img
+            src="/assets/images/juan-ia.jpeg"
+            alt=""
+            className="size-12 object-cover rounded-full"
+          />
+          <p className="font-medium text-white">Juan Londoño</p>
+        </div>
+        <p className="z-10 text-white text-sm">
+          Conclusión: Usar apalancamiento es fundamental para alcanzar la libertad financiera, pero siempre debe hacerse con una estrategia clara y un análisis profundo del proyecto. Recuerda que el buen apalancamiento se traduce en mayor potencial de obtener rentabilidades que sorprendan, siempre que los flujos y el timing estén bien estructurados.
+        </p>
+        <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
+          <div className="flex gap-1 items-center">
+            <Lightbulb className="size-5 text-yellow-600 fill-amber-300" />
+            <span className="text-gray-900 font-semibold">Consejo</span>
+          </div>
+          <p className="text-gray-900 text-sm">
+            Asegúrate de entender los riesgos asociados al apalancamiento y diversifica tus inversiones. Mantener una buena relación entre tu crédito y tus aportes propios te permitirá tener control sobre tus decisiones y tiempo, asegurando el éxito en tu camino hacia la libertad financiera.
+          </p>
+        </div>
+        <div className="ml-auto flex gap-2 items-center">
+          <p className="text-sm  font-medium text-white">Generado por IA</p>
+          <img
+            src="/assets/images/stars.webp"
+            alt=""
+            className="size-10 rounded-full"
+          />
+        </div>
+      </div>
+
+      {/* Divisor */}
+      <div className="w-full h-0.5 bg-orange-500" />
+
+      {/* Titulo grafica */}
+      <h1 className="text-4xl font-bold">Costo financiero</h1>
+      <h2 className="-mt-20 text-2xl font-bold text-gray-500">Pago mensual</h2>
+
+      {/* Grafica */}
+      <div className="flex flex-col xl:flex-row items-center xl:gap-40 gap-10">
+        {/* Costo financiero */}
+        <div className="justify-items-center">
+          <IndicadorDeRentabilidad value={20} limit={100} colorInverted={true} />
+          <h1 className="text-2xl font-bold">Tasa de interés</h1>
+        </div>
+        {/* Analisis */}
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
+          <p className="z-10 text-gray-800 text-sm font-medium leading-6">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+          <div className="ml-auto flex gap-2 items-center">
+            <p className="text-sm font-medium">Generado por IA</p>
+            <img
+              src="/assets/images/stars-2.webp"
+              alt=""
+              className="size-10 rounded-full"
+            />
           </div>
         </div>
       </div>
@@ -506,31 +661,57 @@ const Charts = () => {
       <div className="w-full h-0.5 bg-orange-500" />
 
       {/* Titulo grafica */}
-      <h1 className="text-4xl font-bold">Costo financiero</h1>
-      <h2 className="-mt-20 text-2xl font-bold text-gray-500">Pago mensual</h2>
-
-      {/* Grafica */}
-      <div className="flex flex-col gap-10">
-        <div className="flex items-center gap-5">
-          {/* Costo financiero */}
-          <div className="justify-items-center">
-            <IndicadorDeRentabilidad value={20} limit={100} colorInverted={true} />
-            <h1 className="text-2xl font-bold">Tasa de interés</h1>
-          </div>
-        </div>
-      </div>
-
-      {/* Divisor */}
-      <div className="w-full h-0.5 bg-orange-500" />
-
-      {/* Titulo grafica */}
       <h1 className="text-4xl font-bold">Capacidad de endeudamiento</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Según perfil</h2>
 
-      {/* Grafica */}
-      <div className="flex flex-col gap-10 pl-30">
-        <div className="flex items-center gap-5">
-          <Endeudamiento price={6000000} />
+      <div className="flex xl:flex-row flex-col items-center xl:gap-60 gap-10 xl:pl-30">
+        {/* Grafica */}
+        <Endeudamiento price={6000000} />
+
+        {/* Analisis */}
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
+          <p className="z-10 text-gray-800 text-sm font-medium leading-6">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+          <div className="ml-auto flex gap-2 items-center">
+            <p className="text-sm font-medium">Generado por IA</p>
+            <img
+              src="/assets/images/stars-2.webp"
+              alt=""
+              className="size-10 rounded-full"
+            />
+          </div>
+        </div>
+      </div>
+      {/* Conclusión */}
+      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-radial-[at_5%_90%] from-orange-700 to-orange-400">
+        <div className="flex gap-2 items-center">
+          <img
+            src="/assets/images/juan-ia.jpeg"
+            alt=""
+            className="size-12 object-cover rounded-full"
+          />
+          <p className="font-medium text-white">Juan Londoño</p>
+        </div>
+        <p className="z-10 text-white text-sm">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
+          <div className="flex gap-1 items-center">
+            <Lightbulb className="size-5 text-yellow-600 fill-amber-300" />
+            <span className="text-gray-900 font-semibold">Consejo</span>
+          </div>
+          <p className="text-gray-900 text-sm">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+        </div>
+        <div className="ml-auto flex gap-2 items-center">
+          <p className="text-sm  font-medium text-white">Generado por IA</p>
+          <img
+            src="/assets/images/stars.webp"
+            alt=""
+            className="size-10 rounded-full"
+          />
         </div>
       </div>
 
@@ -603,7 +784,58 @@ const Charts = () => {
       <h1 className="text-4xl font-bold">Indicadores de rentabilidad</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">KPIs</h2>
 
+      {/* Grafica */}
       <IndicadoresDeRentabilidad />
+
+      {/* Analisis */}
+      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
+        <p className="z-10 text-gray-800 text-sm font-medium leading-6">
+          En la primera gráfica del ROI mensual y anualizado, se evidencia un comportamiento ascendente en el ROI mensual desde el tercer mes. Esto demuestra que, a medida que pasan los meses, la rentabilidad comienza a asentarse, logrando un ROI que supera el 1.0 hacia el año 2024, lo que refleja que ya se están generando ganancias significativas. Por otro lado, el ROI anualizado, aunque presenta un aumento más gradual, también indica que las inversiones están volviendo cada vez más rentables; esto es una señal de que el enfoque de inversión está alineado con la búsqueda de rentabilidades sorprendentes.
+          <br /><br />
+          En la segunda gráfica, la TIR mensual muestra un incremento constante a lo largo de los meses, lo cual es un indicador certero de que el flujo de caja y las ganancias están aumentando progresivamente. La TIR anualizada se estabiliza al alrededor del 3.0, lo que refuerza la idea de que las inversiones llevan a un crecimiento sostenido y predecible a largo plazo. Este es un enfoque fundamental en mi metodología, donde el análisis previo y el momento de compra son cruciales para asegurar un buen negocio.
+          <br /><br />
+          Finalmente, la tercera gráfica de la utilidad muestra un crecimiento exponencial a lo largo del tiempo, alcanzando valores significativos en el año 2042. Este aumento de la utilidad no solo simboliza la efectividad del “Sistema repetitivo de inversiones”, sino que también refleja cómo mis mentores y yo hemos logrado ayudar a otros a alcanzar el bienestar financiero. Ver este crecimiento en la utilidad es una evidencia clara de que se puede lograr la libertad financiera en 5 años o menos, como he prometido en mi filosofía.
+        </p>
+        <div className="ml-auto flex gap-2 items-center">
+          <p className="text-sm font-medium">Generado por IA</p>
+          <img
+            src="/assets/images/stars-2.webp"
+            alt=""
+            className="size-10 rounded-full"
+          />
+        </div>
+      </div>
+      {/* Conclusión */}
+      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-radial-[at_5%_90%] from-orange-700 to-orange-400">
+        <div className="flex gap-2 items-center">
+          <img
+            src="/assets/images/juan-ia.jpeg"
+            alt=""
+            className="size-12 object-cover rounded-full"
+          />
+          <p className="font-medium text-white">Juan Londoño</p>
+        </div>
+        <p className="z-10 text-white text-sm">
+          La información presentada en estas gráficas evidencia que mis estrategias de inversión no solo son efectivas, sino que proporcionan resultados claros y cuantificables en un marco temporal razonable. Hemos visto cómo la combinación de una metodología bien estructurada, un análisis exhaustivo y la diversificación geográfica permiten a los inversionistas generar rentas estables y crecientes.
+        </p>
+        <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
+          <div className="flex gap-1 items-center">
+            <Lightbulb className="size-5 text-yellow-600 fill-amber-300" />
+            <span className="text-gray-900 font-semibold">Consejo</span>
+          </div>
+          <p className="text-gray-900 text-sm">
+            Te invito a que te adentres en el mundo de las inversiones inmobiliarias. Enfócate en la creación de un portafolio diversificado y utiliza un "sistema repetitivo de inversiones" para maximizar tu tiempo y reducir riesgos. Recuerda: ser dueño de tu tiempo y decisiones es el verdadero objetivo de la libertad financiera. La clave está en el próximo paso que tomes; empieza hoy mismo.
+          </p>
+        </div>
+        <div className="ml-auto flex gap-2 items-center">
+          <p className="text-sm  font-medium text-white">Generado por IA</p>
+          <img
+            src="/assets/images/stars.webp"
+            alt=""
+            className="size-10 rounded-full"
+          />
+        </div>
+      </div>
 
       {/* Titulo */}
       <div className="w-full flex flex-col items-center text-center gap-9">
@@ -613,6 +845,55 @@ const Charts = () => {
       {/* Titulo grafica */}
       <h1 className="text-4xl font-bold">Recomendación</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Tiempo de venta</h2>
+
+      {/* Grafica */}
+      <Recomendaciones />
+
+      {/* Analisis */}
+      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
+        <p className="z-10 text-gray-800 text-sm font-medium leading-6">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <div className="ml-auto flex gap-2 items-center">
+          <p className="text-sm font-medium">Generado por IA</p>
+          <img
+            src="/assets/images/stars-2.webp"
+            alt=""
+            className="size-10 rounded-full"
+          />
+        </div>
+      </div>
+      {/* Conclusión */}
+      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-radial-[at_5%_90%] from-orange-700 to-orange-400">
+        <div className="flex gap-2 items-center">
+          <img
+            src="/assets/images/juan-ia.jpeg"
+            alt=""
+            className="size-12 object-cover rounded-full"
+          />
+          <p className="font-medium text-white">Juan Londoño</p>
+        </div>
+        <p className="z-10 text-white text-sm">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
+          <div className="flex gap-1 items-center">
+            <Lightbulb className="size-5 text-yellow-600 fill-amber-300" />
+            <span className="text-gray-900 font-semibold">Consejo</span>
+          </div>
+          <p className="text-gray-900 text-sm">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+        </div>
+        <div className="ml-auto flex gap-2 items-center">
+          <p className="text-sm  font-medium text-white">Generado por IA</p>
+          <img
+            src="/assets/images/stars.webp"
+            alt=""
+            className="size-10 rounded-full"
+          />
+        </div>
+      </div>
 
       <br />
     </Container>

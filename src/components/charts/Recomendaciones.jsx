@@ -9,10 +9,9 @@ import {
   Tooltip,
   XAxis,
   YAxis,
+  ReferenceLine,
 } from "recharts";
 import { parsePrice } from "../../constants/functions";
-import { IndicadorDeRentabilidad } from "./IndicadorDeRentabilidad";
-import { Slider } from "@/components/ui/slider";
 import { useState } from "react";
 
 // data para la grafica
@@ -278,69 +277,22 @@ const dataUtilidad = [
   { mes: "11/2024", Utilidad: 75727484 },
 ];
 
-const IndicadoresDeRentabilidad = () => {
+const mesVentaSeleccionado = "08/2023";
+const mesMayorTir = "05/2023";
+const mesMayorUtilidad = "11/2023";
+
+const Recomendaciones = () => {
   const [startIndexBrush, setStartIndexBrush] = useState(0);
   const [endIndexBrush, setEndIndexBrush] = useState(11);
-  const [maxStep, setMaxStep] = useState(11);
-  const [activeMonth, setActiveMonth] = useState(0);
-
-  const [kpi, setKPI] = useState({
-    roiMensual: 0,
-    tirMensual: 0,
-    utilidad: 0,
-  });
 
   const handleBrushOnchange = (e) => {
     setStartIndexBrush(e.startIndex);
     setEndIndexBrush(e.endIndex);
-    setMaxStep(e.endIndex - e.startIndex);
-  };
-
-  const handleKPI = (value) => {
-    const index = value[0];
-
-    const tir = dataTIR[index]["TIR mensual"];
-    const roi = dataROI[index]["ROI mensual"];
-    const utilidad = dataUtilidad[index].Utilidad;
-
-    setKPI({
-      tirMensual: tir,
-      roiMensual: roi,
-      utilidad: utilidad,
-    });
-
-    setActiveMonth(dataUtilidad[index].mes);
-  };
-
-  const CustomizedDot = (props) => {
-    const { cx, cy, stroke, payload, value } = props;
-    if (payload.mes === activeMonth) {
-      return (
-        <svg
-          x={cx - 10}
-          y={cy - 10}
-          width={20}
-          height={20}
-          viewBox="0 0 100 100"
-          fill="#FB3D03"
-        >
-          <circle cx="50" cy="50" r="30" />
-        </svg>
-      );
-    }
   };
 
   return (
     <div className="w-full flex flex-col md:flex-row gap-12">
       <div className="flex flex-col gap-4 w-[70%]">
-        <div className="flex flex-col items-center gap-4 mb-10">
-          <h2 className="text-2xl font-bold text-gray-500">
-            Mes de venta seleccionado
-          </h2>
-          <div className="w-full pl-14">
-            <Slider step={1} max={maxStep} onValueChange={handleKPI} />
-          </div>
-        </div>
         <div className="flex flex-col gap-20">
           <h2 className="text-2xl font-bold text-gray-500">
             Suma de ROI Anualizado y Suma de ROI por Mes
@@ -374,13 +326,33 @@ const IndicadoresDeRentabilidad = () => {
                   />
                 </YAxis>
                 <Tooltip />
+                <ReferenceLine x={mesMayorTir}
+                  label={{ value: 'Mayor TIR', style: { fill: 'black' }, angle: -90, position: 'center' }}
+                  stroke="orange"
+                  strokeWidth={60}
+                  isFront={false}
+                  style={{ opacity: 0.5 }}
+                />
+                <ReferenceLine x={mesMayorUtilidad}
+                  label={{ value: 'Mayor utilidad', style: { fill: 'black' }, angle: -90, position: 'center' }}
+                  stroke="green"
+                  strokeWidth={60}
+                  isFront={false}
+                  style={{ opacity: 0.5 }}
+                />
+                <ReferenceLine x={mesVentaSeleccionado}
+                  label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
+                  stroke="red"
+                  strokeWidth={2}
+                  isFront={false}
+                />
                 <Line
                   dataKey="ROI mensual"
                   strokeWidth={1.5}
                   stroke="#000000"
                   connectNulls
                   type="monotone"
-                  dot={<CustomizedDot />}
+                  dot={false}
                 />
                 <Line
                   dataKey="ROI Anualizada"
@@ -437,12 +409,32 @@ const IndicadoresDeRentabilidad = () => {
                   />
                 </YAxis>
                 <Tooltip />
+                <ReferenceLine x={mesMayorTir}
+                  label={{ value: 'Mayor TIR', style: { fill: 'black' }, angle: -90, position: 'center' }}
+                  stroke="orange"
+                  strokeWidth={60}
+                  isFront={false}
+                  style={{ opacity: 0.5 }}
+                />
+                <ReferenceLine x={mesMayorUtilidad}
+                  label={{ value: 'Mayor utilidad', style: { fill: 'black' }, angle: -90, position: 'center' }}
+                  stroke="green"
+                  strokeWidth={60}
+                  isFront={false}
+                  style={{ opacity: 0.5 }}
+                />
+                <ReferenceLine x={mesVentaSeleccionado}
+                  label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
+                  stroke="red"
+                  strokeWidth={2}
+                  isFront={true}
+                />
                 <Line
                   dataKey="TIR mensual"
                   strokeWidth={1.5}
                   stroke="#000000"
                   connectNulls
-                  dot={<CustomizedDot />}
+                  dot={false}
                   type="monotone"
                 />
                 <Line
@@ -493,12 +485,32 @@ const IndicadoresDeRentabilidad = () => {
                   />
                 </YAxis>
                 <Tooltip />
+                <ReferenceLine x={mesMayorTir}
+                  label={{ value: 'Mayor TIR', style: { fill: 'black' }, angle: -90, position: 'center' }}
+                  stroke="orange"
+                  strokeWidth={60}
+                  isFront={false}
+                  style={{ opacity: 0.5 }}
+                />
+                <ReferenceLine x={mesMayorUtilidad}
+                  label={{ value: 'Mayor utilidad', style: { fill: 'black' }, angle: -90, position: 'center' }}
+                  stroke="green"
+                  strokeWidth={60}
+                  isFront={false}
+                  style={{ opacity: 0.5 }}
+                />
+                <ReferenceLine x={mesVentaSeleccionado}
+                  label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
+                  stroke="red"
+                  strokeWidth={2}
+                  isFront={true}
+                />
                 <Line
                   dataKey="Utilidad"
                   strokeWidth={1.5}
                   stroke="#000000"
                   connectNulls
-                  dot={<CustomizedDot />}
+                  dot={false}
                   type="monotone"
                 />
                 <Legend wrapperStyle={{ top: -40 }} />
@@ -507,41 +519,8 @@ const IndicadoresDeRentabilidad = () => {
           </div>
         </div>
       </div>
-      <div className="flex-1 flex flex-col gap-10 h-fit">
-        <div className="flex flex-col gap-4 flex-1 rounded-md ring-1 shadow-lg shadow-invertiria-2/30 ring-gray-900/5 p-4 ">
-          <h2 className="text-2xl font-bold text-white px-4 py-2 bg-invertiria-2 w-fit rounded-md">
-            KPI
-          </h2>
-          <div className="flex flex-col gap-10 divide-y-1">
-            {/* TIR */}
-            <div className="justify-items-center">
-              <h3 className="text-2xl font-bold">{kpi.tirMensual}%</h3>
-              <IndicadorDeRentabilidad value={kpi.tirMensual} />
-              <h3 className="text-2xl font-bold">TIR</h3>
-            </div>
-            {/* Utilidad */}
-            <div className="justify-items-center">
-              <h3 className="text-2xl font-bold">{parsePrice(kpi.utilidad)}</h3>
-              <IndicadorDeRentabilidad value={30} />
-              <h3 className="text-2xl font-bold">Utilidad</h3>
-            </div>
-            {/* ROI */}
-            <div className="justify-items-center">
-              <h3 className="text-2xl font-bold">{kpi.roiMensual}%</h3>
-              <IndicadorDeRentabilidad value={kpi.roiMensual} />
-              <h3 className="text-2xl font-bold">ROI</h3>
-            </div>
-            {/* Cap Rate */}
-            <div className="justify-items-center">
-              <h3 className="text-2xl font-bold">0%</h3>
-              <IndicadorDeRentabilidad value={60} />
-              <h3 className="text-2xl font-bold">Cap Rate</h3>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
 
-export default IndicadoresDeRentabilidad;
+export default Recomendaciones;
