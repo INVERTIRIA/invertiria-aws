@@ -45,8 +45,8 @@ function ValorDeVenta({ price, minPrice, maxPrice }) {
           <div className="flex flex-col gap-2 items-center absolute left-[95px] -mt-5">
             <span className="text-xs font-semibold">Precio inmueble</span>
             <div className="w-24 h-[300px] flex flex-col justify-between items-center p-2 rounded-lg border border-gray-300 font-semibold text-sm">
-              <p>{parsePrice(720000)}</p>
-              <p>{parsePrice(500000)}</p>
+              <p>{parsePrice(920000)}</p>
+              <p>{parsePrice(400000)}</p>
             </div>
           </div>
 

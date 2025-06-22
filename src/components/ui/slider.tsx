@@ -43,7 +43,7 @@ function Slider({
         <SliderPrimitive.Range
           data-slot="slider-range"
           className={cn(
-            "bg-invertiria-2/80 absolute data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full"
+            "bg-invertiria-2 absolute data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full"
           )}
         />
       </SliderPrimitive.Track>

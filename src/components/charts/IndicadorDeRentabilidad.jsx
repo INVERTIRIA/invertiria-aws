@@ -1,13 +1,11 @@
 import { PieChart, Pie, Cell } from 'recharts';
+import { useId } from 'react';
 
 const RADIAN = Math.PI / 180;
-const data = [
-  { name: 'MAX', value: 100 },
-];
-const cx = 100;
-const cy = 100;
+const cx = 90;
+const cy = 90;
 const iR = 50;
-const oR = 100;
+const oR = 90;
 
 const needle = (value, data, cx, cy, iR, oR, color) => {
   let total = 0;
@@ -34,15 +32,21 @@ const needle = (value, data, cx, cy, iR, oR, color) => {
   ];
 };
 
-function IndicadorDeRentabiliad({ value }) {
+function IndicadorDeRentabilidad({ value, limit=100, colorInverted=false }) {
+  
+  const gradientId = useId();  
+  const data = [
+    { name: 'MAX', value: limit },
+  ];
+
   return (
-    <PieChart width={220} height={120}>
+    <PieChart width={200} height={120}>
 
       <defs>
-        <linearGradient id="gradienteVelocimetro" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#f00000" />
+        <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor={colorInverted ? '#00ab09' : '#f00000'} />
           <stop offset="50%" stopColor="#fff200" />
-          <stop offset="100%" stopColor="#00ab09" />
+          <stop offset="100%" stopColor={colorInverted ? '#f00000' : '#00ab09'} />
         </linearGradient>
       </defs>
 
@@ -55,7 +59,7 @@ function IndicadorDeRentabiliad({ value }) {
         cy={cy}
         innerRadius={iR}
         outerRadius={oR}
-        fill="url(#gradienteVelocimetro)"
+        fill={`url(#${gradientId})`}
         stroke="none"
       >
         {data.map((entry, index) => (
@@ -67,4 +71,4 @@ function IndicadorDeRentabiliad({ value }) {
   );
 }
 
-export { IndicadorDeRentabiliad }
+export { IndicadorDeRentabilidad }
