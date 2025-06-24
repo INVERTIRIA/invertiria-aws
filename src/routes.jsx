@@ -26,6 +26,7 @@ import HasPermissions from "./HasPermissions";
 import AuthorizationPage from "./pages/AuthorizationPage";
 import InactiveUserPage from "./pages/InactiveUserPage";
 import Charts from "./pages/Charts";
+import ChatBotButton from "./components/design/ChatBotButton";
 
 // Rutas de la aplicacion
 function AppRoutes() {
@@ -116,6 +117,9 @@ function AppRoutes() {
           </Route>
         </Routes>
       </main>
+      {/* Chatbot Button */}
+      {!hideLayout && <ChatBotButton />}
+
       {!hideLayout && <Footer />}
     </div>
   );
