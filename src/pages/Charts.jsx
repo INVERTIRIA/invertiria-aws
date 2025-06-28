@@ -11,14 +11,67 @@ import { Endeudamiento } from "../components/charts/Endeudamiento";
 import { FlujoDeCaja } from "../components/charts/FlujoDeCaja";
 import IndicadoresDeRentabilidad from "../components/charts/IndicadoresDeRentabilidad";
 import Recomendaciones from "../components/charts/Recomendaciones";
+import { supabase } from "../supabase";
+import { useEffect, useRef, useState } from "react";
+import Skeleton from "../components/design/Skeleton";
 
 const Charts = () => {
+  const [timeVectors, setTimeVectors] = useState(null);
+  const [modelation, setModelation] = useState(null);
+  const loadedTimeVectors = useRef(false);
+
+  // Funcion obtener modelacion
+  const getModelation = async () => {
+    const { data: modelation, error } = await supabase.from("modelaciones").select("*, ciudad:ciudades(nombre)").eq("id", "4ccdb1be-038d-464a-8059-0d532834cb09").single();
+    if (error) console.log(error);
+    setModelation(modelation);
+    console.log(modelation);
+  };
+
+  // Funcion obtener vectores temporales
+  const getTimeVectors = async () => {
+    const { data: timeVectors, error } = await supabase.from("vectores_temporales").select().eq("modelacion_id", "4ccdb1be-038d-464a-8059-0d532834cb09").single();
+    if (error) console.log(error);
+    setTimeVectors(timeVectors);
+    console.log(timeVectors);
+  };
+
+  // Funcion obtener varianza subzona
+  const getVarianzaSubzona = (min = false) => {
+    const varianza = timeVectors?.valorizacion.filter((item) => item[1] == modelation?.fecha_compra.slice(0,7))[0];
+    return min ? varianza[2] - varianza[3] : varianza[2] + varianza[3];  
+  }
+
+  // Funcion crear vectores temporales
+  const createTimeVectors = async () => {
+    const { data: timeVectors, error } = await supabase.functions.invoke("createTimeVectors", { body: { "modelacion_id": "4ccdb1be-038d-464a-8059-0d532834cb09" } });
+    if (error) console.log(error);
+    console.log(timeVectors);
+    return timeVectors;
+  };
+
+  useEffect(() => {
+    // if (!loadedTimeVectors.current) {
+    //   createTimeVectors();
+    //   loadedTimeVectors.current = true;
+    // }
+    getModelation()
+    getTimeVectors()
+  }, []);
+
+  if (!modelation || !timeVectors) {
+    return (<Skeleton />)
+  }
+
   return (
     <Container classNameParent={"my-20"} className="flex flex-col gap-20">
       {/* Titulo */}
       <div className="w-full flex flex-col items-center text-center gap-9">
         <h2 className="h2 !max-w-none">Análisis de inversión</h2>
       </div>
+      <h2 className="-mt-20 text-center text-2xl font-bold text-gray-500">
+        {modelation.titulo_modelacion}
+      </h2>
 
       {/* Titulo grafica */}
       <h1 className="text-4xl font-bold">Tiempos del proyecto</h1>
@@ -26,7 +79,7 @@ const Charts = () => {
         Linea de tiempo
       </h2>
 
-      <LineaDeTiempo />
+      <LineaDeTiempo modelation={modelation} />
       <br />
 
       {/* Titulo */}
@@ -38,7 +91,7 @@ const Charts = () => {
       <h1 className="text-4xl font-bold">Valor de compra</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Precio de m²</h2>
 
-      <div className="flex xl:flex-row flex-col items-center xl:gap-20 gap-10">
+      <div className="flex xl:flex-row flex-col items-center xl:gap-30 gap-10">
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
@@ -64,16 +117,16 @@ const Charts = () => {
         <div className="w-full flex flex-col gap-20 justify-center">
           <div className="w-full flex items-center xl:gap-40 gap-30">
             <ValorDeCompra
-              price={860000}
-              minPrice={760000}
-              maxPrice={920000}
-              location={"El Poblado"}
+              price={modelation.precio_de_compra / modelation.area_inmueble}
+              minPrice={getVarianzaSubzona(true)}
+              maxPrice={getVarianzaSubzona(false)}
+              location={modelation.subzona}
             />
             <ValorDeCompra
-              price={860000}
-              minPrice={800000}
-              maxPrice={1200000}
-              location={"Medellin"}
+              price={modelation.precio_de_compra / modelation.area_inmueble}
+              minPrice={4775632}
+              maxPrice={12518275}
+              location={modelation.ciudad.nombre}
             />
           </div>
         </div>
@@ -153,7 +206,7 @@ const Charts = () => {
 
       <div className="flex xl:flex-row flex-col items-center gap-10">
         {/* Grafica */}
-        <TiempoDeCompra />
+        <TiempoDeCompra timeVectors={timeVectors} />
 
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
