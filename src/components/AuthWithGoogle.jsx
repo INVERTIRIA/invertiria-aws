@@ -5,14 +5,14 @@ import { Button } from "./ui/button";
 const AuthWithGoogle = ({ title }) => {
   const handleGoogleLogin = async () => {
     let redirectUrl = `${window.location.origin}/access-link`;
-    console.log(redirectUrl);
+    //console.log(redirectUrl);
 
-    /* await supabase.auth.signInWithOAuth({
+    await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
         redirectTo: redirectUrl,
       },
-    }); */
+    });
   };
 
   return (
