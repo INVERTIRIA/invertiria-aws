@@ -54,12 +54,12 @@ const ImportMatrizModel = () => {
         records
           .get(key)
           .matriz.push([
+            Number(item.mes_proyecto),
             item.año_mes,
-            item.mes_proyecto,
-            item.precio_promedio_m2,
-            item.varianza_precio_promedio_m2,
-            item.valorizacion_promedio,
-            item.varianza_valorizacion_promedio,
+            Number(item.precio_promedio_m2),
+            Number(item.varianza_precio_promedio_m2),
+            Number(item.valorizacion_promedio),
+            Number(item.varianza_valorizacion_promedio),
           ]);
       });
 
