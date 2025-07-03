@@ -7,12 +7,14 @@ const cy = 90;
 const iR = 50;
 const oR = 90;
 
-const needle = (value, data, cx, cy, iR, oR, color) => {
-  let total = 0;
-  data.forEach((v) => {
-    total += v.value;
-  });
-  const ang = 180.0 * (1 - value / total);
+const needle = (value, min, max, cx, cy, iR, oR, color) => {
+  const percent = (value - min) / (max - min);
+
+  if (isNaN(percent) || !isFinite(percent)) {
+    return null;
+  }
+
+  const ang = 180 * (1 - percent);
   const length = (iR + 2 * oR) / 3;
   const sin = Math.sin(-RADIAN * ang);
   const cos = Math.cos(-RADIAN * ang);
@@ -28,20 +30,18 @@ const needle = (value, data, cx, cy, iR, oR, color) => {
 
   return [
     <circle key="needle-base" cx={x0} cy={y0} r={r} fill={color} stroke="none" />,
-    <path key="needle" d={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`} stroke="#none" fill={color} />,
+    <path key="needle" d={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`} fill={color} />,
   ];
 };
 
-function IndicadorDeRentabilidad({ value, limit=100, colorInverted=false }) {
-  
-  const gradientId = useId();  
+function IndicadorDeRentabilidad({ value, min = 0, max = 100, colorInverted = false }) {
+  const gradientId = useId();
   const data = [
-    { name: 'MAX', value: limit },
+    { name: 'Range', value: max - min },
   ];
 
   return (
     <PieChart width={200} height={120}>
-
       <defs>
         <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stopColor={colorInverted ? '#00ab09' : '#f00000'} />
@@ -62,13 +62,11 @@ function IndicadorDeRentabilidad({ value, limit=100, colorInverted=false }) {
         fill={`url(#${gradientId})`}
         stroke="none"
       >
-        {data.map((entry, index) => (
-          <Cell key={`cell-${index}`} />
-        ))}
+        <Cell />
       </Pie>
-      {needle(value, data, cx, cy, iR, oR, '#000000')}
+      {needle(value, min, max, cx, cy, iR, oR, '#000000')}
     </PieChart>
   );
 }
 
-export { IndicadorDeRentabilidad }
+export { IndicadorDeRentabilidad };
