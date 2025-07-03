@@ -11,14 +11,167 @@ import { Endeudamiento } from "../components/charts/Endeudamiento";
 import { FlujoDeCaja } from "../components/charts/FlujoDeCaja";
 import IndicadoresDeRentabilidad from "../components/charts/IndicadoresDeRentabilidad";
 import Recomendaciones from "../components/charts/Recomendaciones";
+import { supabase } from "../supabase";
+import { useEffect, useRef, useState } from "react";
+import Skeleton from "../components/design/Skeleton";
+import { parsePrice } from "../constants/functions";
 
 const Charts = () => {
+  const [timeVectors, setTimeVectors] = useState(null);
+  const [flowsResult, setFlowsResult] = useState(null);
+  const [modelation, setModelation] = useState(null);
+  const loadedTimeVectors = useRef(false);
+  const loadedFlowsResult = useRef(false);
+
+  // Funcion obtener modelacion
+  const getModelation = async () => {
+    const { data: modelation, error } = await supabase.from("modelaciones").select("*, ciudad:ciudades(nombre)").eq("id", "4ccdb1be-038d-464a-8059-0d532834cb09").single();
+    if (error) console.log(error);
+    setModelation(modelation);
+    console.log(modelation);
+  };
+
+  // Funcion obtener vectores temporales
+  const getTimeVectors = async () => {
+    const { data: timeVectors, error } = await supabase.from("vectores_temporales").select().eq("modelacion_id", "4ccdb1be-038d-464a-8059-0d532834cb09").single();
+    if (error) console.log(error);
+    setTimeVectors(timeVectors);
+    console.log(timeVectors);
+  };
+
+  // Funcion obtener flujos resultado
+  const getFlowsResult = async () => {
+    const { data: flowsResult, error } = await supabase.from("flujos_resultado").select().eq("modelacion_id", "4ccdb1be-038d-464a-8059-0d532834cb09").single();
+    if (error) console.log(error);
+    setFlowsResult(flowsResult);
+    console.log(flowsResult);
+  };
+
+  // Funcion obtener varianza subzona
+  const getVarianzaSubzona = (min = false) => {
+    const varianza = timeVectors?.valorizacion.filter((item) => item[1] == modelation?.fecha_compra.slice(0, 7))[0];
+    return min ? varianza[2] - varianza[3] : varianza[2] + varianza[3];
+  }
+
+  // Funcion crear vectores temporales
+  const createTimeVectors = async () => {
+    const { data: timeVectors, error } = await supabase.functions.invoke("createTimeVectors", { body: { "modelacion_id": "4ccdb1be-038d-464a-8059-0d532834cb09" } });
+    if (error) console.log(error);
+    console.log(timeVectors);
+    return timeVectors;
+  };
+
+  // Funcion crear flujos resultado
+  const createFlowsResult = async () => {
+    const { data: flowsResult, error } = await supabase.functions.invoke("createFlowsResult", { body: { "modelacion_id": "4ccdb1be-038d-464a-8059-0d532834cb09" } });
+    if (error) console.log(error);
+    console.log(flowsResult);
+    return flowsResult;
+  };
+
+  useEffect(() => {
+    // if (!loadedTimeVectors.current) {
+    //   createTimeVectors();
+    //   loadedTimeVectors.current = true;
+    // }
+    // if (!loadedFlowsResult.current) {
+    //   createFlowsResult();
+    //   loadedFlowsResult.current = true;
+    // }
+    getModelation()
+    getTimeVectors()
+    getFlowsResult()
+  }, []);
+
+  if (!modelation || !timeVectors || !flowsResult) {
+    return (<Skeleton />)
+  }
+
+  // Tir en ves de venta
+  let fechaVenta = modelation.fecha_prevista_venta.slice(0, 7);
+  let mesVentaTir = 0;
+  let maxTir = 0;
+  let minTir = 0;
+  for (let i = 0; i < flowsResult.tir_mensual.length; i++) {
+    if (flowsResult.tir_mensual[i][1] == fechaVenta) {
+      mesVentaTir = flowsResult.tir_mensual[i][2];
+    }
+    // Maximo tir
+    if (flowsResult.tir_mensual[i][2] > maxTir) {
+      maxTir = flowsResult.tir_mensual[i][2];
+    }
+    // Minimo tir
+    if (flowsResult.tir_mensual[i][2] < minTir) {
+      minTir = flowsResult.tir_mensual[i][2];
+    }
+  }
+
+  // Utilidad en ves de venta
+  let mesVentaUtilidad = 0;
+  let maxUtilidad = 0;
+  let minUtilidad = 0;
+  for (let i = 0; i < flowsResult.utilidad.length; i++) {
+    if (flowsResult.utilidad[i][1] == fechaVenta) {
+      mesVentaUtilidad = flowsResult.utilidad[i][2];
+    }
+    // Maximo utilidad
+    if (flowsResult.utilidad[i][2] > maxUtilidad) {
+      maxUtilidad = flowsResult.utilidad[i][2];
+    }
+    // Minimo utilidad
+    if (flowsResult.utilidad[i][2] < minUtilidad) {
+      minUtilidad = flowsResult.utilidad[i][2];
+    }
+  }
+
+  // // Roi en ves de venta
+  let mesVentaRoi = 0;
+  let maxRoi = 0;
+  let minRoi = 0;
+  for (let i = 0; i < flowsResult.roi.length; i++) {
+    if (flowsResult.roi[i][1] == fechaVenta) {
+      mesVentaRoi = flowsResult.roi[i][2];
+    }
+    // Maximo roi
+    if (flowsResult.roi[i][2] > maxRoi) {
+      maxRoi = flowsResult.roi[i][2];
+    }
+    // Minimo roi
+    if (flowsResult.roi[i][2] < minRoi) {
+      minRoi = flowsResult.roi[i][2];
+    }
+  }
+
+  // // Cap rate en ves de venta
+  let mesVentaCapRate = 0;
+  let maxCapRate = 0;
+  let minCapRate = 0;
+  for (let i = 0; i < flowsResult.cap_rate.length; i++) {
+    if (flowsResult.cap_rate[i][1] == fechaVenta) {
+      mesVentaCapRate = flowsResult.cap_rate[i][2];
+    }
+    // Maximo tir
+    if (flowsResult.cap_rate[i][2] > maxCapRate) {
+      maxCapRate = flowsResult.cap_rate[i][2];
+    }
+    // Minimo tir
+    if (flowsResult.cap_rate[i][2] < minCapRate) {
+      minCapRate = flowsResult.cap_rate[i][2];
+    }
+  }
+
+  // Apalancamiento
+  const apalancamiento = Math.round(modelation.precio_de_compra / (modelation.precio_de_compra * modelation.cuota_inicial / 100));
+
   return (
     <Container classNameParent={"my-20"} className="flex flex-col gap-20">
       {/* Titulo */}
       <div className="w-full flex flex-col items-center text-center gap-9">
         <h2 className="h2 !max-w-none">Análisis de inversión</h2>
       </div>
+      <h2 className="-mt-20 text-center text-2xl font-bold text-gray-500">
+        {modelation.titulo_modelacion}
+      </h2>
 
       {/* Titulo grafica */}
       <h1 className="text-4xl font-bold">Tiempos del proyecto</h1>
@@ -26,7 +179,7 @@ const Charts = () => {
         Linea de tiempo
       </h2>
 
-      <LineaDeTiempo />
+      <LineaDeTiempo modelation={modelation} />
       <br />
 
       {/* Titulo */}
@@ -38,7 +191,7 @@ const Charts = () => {
       <h1 className="text-4xl font-bold">Valor de compra</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Precio de m²</h2>
 
-      <div className="flex xl:flex-row flex-col items-center xl:gap-20 gap-10">
+      <div className="flex xl:flex-row flex-col items-center xl:gap-30 gap-10">
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
@@ -64,16 +217,16 @@ const Charts = () => {
         <div className="w-full flex flex-col gap-20 justify-center">
           <div className="w-full flex items-center xl:gap-40 gap-30">
             <ValorDeCompra
-              price={860000}
-              minPrice={760000}
-              maxPrice={920000}
-              location={"El Poblado"}
+              price={modelation.precio_de_compra / modelation.area_inmueble}
+              minPrice={getVarianzaSubzona(true)}
+              maxPrice={getVarianzaSubzona(false)}
+              location={modelation.subzona}
             />
             <ValorDeCompra
-              price={860000}
-              minPrice={800000}
-              maxPrice={1200000}
-              location={"Medellin"}
+              price={modelation.precio_de_compra / modelation.area_inmueble}
+              minPrice={4775632}
+              maxPrice={12518275}
+              location={modelation.ciudad.nombre}
             />
           </div>
         </div>
@@ -153,7 +306,7 @@ const Charts = () => {
 
       <div className="flex xl:flex-row flex-col items-center gap-10">
         {/* Grafica */}
-        <TiempoDeCompra />
+        <TiempoDeCompra timeVectors={timeVectors} />
 
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
@@ -239,7 +392,7 @@ const Charts = () => {
 
       <div className="flex xl:flex-row flex-col items-center gap-10">
         {/* Grafica */}
-        <RecomendacionesCompra />
+        <RecomendacionesCompra timeVectors={timeVectors} />
 
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
@@ -304,7 +457,7 @@ const Charts = () => {
 
         {/* Gráfica  */}
         <div className="xl:ml-0 -ml-30">
-          <ValorDeVenta price={860000} minPrice={760000} maxPrice={920000} />
+          <ValorDeVenta timeVectors={timeVectors} fechaVenta={fechaVenta} />
         </div>
 
         {/* Analisis */}
@@ -365,7 +518,7 @@ const Charts = () => {
 
       <div className="flex xl:flex-row flex-col items-center gap-10">
         {/* Gráfica  */}
-        <TiempoDeVenta />
+        <TiempoDeVenta timeVectors={timeVectors} flowsResult={flowsResult} />
 
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
@@ -462,24 +615,28 @@ const Charts = () => {
           <div className="flex items-center xl:gap-5 gap-0">
             {/* TIR */}
             <div className="justify-items-center">
-              <IndicadorDeRentabilidad value={25} limit={100} />
+              <h3 className="text-2xl font-bold">{mesVentaTir}%</h3>
+              <IndicadorDeRentabilidad value={mesVentaTir} max={maxTir} min={minTir} />
               <h1 className="text-2xl font-bold">TIR</h1>
             </div>
             {/* Utilidad */}
             <div className="justify-items-center">
-              <IndicadorDeRentabilidad value={30} limit={100} />
+              <h3 className="text-2xl font-bold">{parsePrice(mesVentaUtilidad)}</h3>
+              <IndicadorDeRentabilidad value={mesVentaUtilidad} max={maxUtilidad} min={minUtilidad} />
               <h1 className="text-2xl font-bold">Utilidad</h1>
             </div>
           </div>
           <div className="flex items-center xl:gap-5 gap-0">
             {/* ROI */}
             <div className="justify-items-center">
-              <IndicadorDeRentabilidad value={40} limit={100} />
+              <h3 className="text-2xl font-bold">{mesVentaRoi}%</h3>
+              <IndicadorDeRentabilidad value={mesVentaRoi} max={maxRoi} min={minRoi} />
               <h1 className="text-2xl font-bold">ROI</h1>
             </div>
             {/* Cap Rate */}
             <div className="justify-items-center">
-              <IndicadorDeRentabilidad value={60} limit={100} />
+              <h3 className="text-2xl font-bold">{mesVentaCapRate}%</h3>
+              <IndicadorDeRentabilidad value={mesVentaCapRate} max={maxCapRate} min={minCapRate} />
               <h1 className="text-2xl font-bold">Cap Rate</h1>
             </div>
           </div>
@@ -545,7 +702,8 @@ const Charts = () => {
       <div className="flex xl:flex-row flex-col xl:gap-40 gap-10">
         {/* Apalancamiento */}
         <div className="justify-items-center">
-          <IndicadorDeRentabilidad value={3.33} limit={10} />
+          <h3 className="text-lg font-bold">{apalancamiento} veces tu capital</h3>
+          <IndicadorDeRentabilidad value={apalancamiento} max={10} min={0} />
           <h1 className="text-2xl font-bold">Apalancamiento</h1>
         </div>
 
@@ -607,7 +765,7 @@ const Charts = () => {
       <div className="flex flex-col xl:flex-row items-center xl:gap-40 gap-10">
         {/* Costo financiero */}
         <div className="justify-items-center">
-          <IndicadorDeRentabilidad value={20} limit={100} colorInverted={true} />
+          <IndicadorDeRentabilidad value={20} max={100} colorInverted={true} />
           <h1 className="text-2xl font-bold">Tasa de interés</h1>
         </div>
         {/* Analisis */}
@@ -785,7 +943,7 @@ const Charts = () => {
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">KPIs</h2>
 
       {/* Grafica */}
-      <IndicadoresDeRentabilidad />
+      <IndicadoresDeRentabilidad timeVectors={timeVectors} flowsResult={flowsResult} />
 
       {/* Analisis */}
       <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
@@ -847,7 +1005,7 @@ const Charts = () => {
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Tiempo de venta</h2>
 
       {/* Grafica */}
-      <Recomendaciones />
+      <Recomendaciones timeVectors={timeVectors} flowsResult={flowsResult} mesVenta={modelation.fecha_prevista_venta} />
 
       {/* Analisis */}
       <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
