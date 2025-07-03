@@ -15,9 +15,18 @@ function Investment() {
 
   // Flujo de caja
   // const cashFlows = [-1000, 300, 400, 500, 200, 300, 600, 500, 400, 300, 200, 100];
-  const cashFlows = [-5000000, 0, 0, -4861000, -4861000, 33298722]
+  // const cashFlows = [-5000000, 0, 0, -4861000, -4861000, 33298722]
+  const cashFlows = [
+    -5000000, -2331572, -2331572, -2331572, -2331572, -2331572,
+    -2331572, -2331572, -2331572, -2331572, -2331572, -2331572,
+    -2331572, -2331572, -2331572, -2331572, -2331572, -2331572,
+    -2331572, -2331572, -2331572, -2331572, -2331572, -2331572,
+    -2331572, -2331572, -2331572, -2331572, -2331572, -2331572,
+    -2331572, -2331572, -2331572, -2331572, -2331572, -2331572,
+    -2331572, -2331572, -2331572, 130832836
+  ];
   // const cashFlows = [-5000000, 7076500, 7076500, 12076500, 21937611, 33298722, 27022499, 39634587, 51759125]
-  
+
   useEffect(() => {
     getResults();
   }, []);
@@ -47,13 +56,14 @@ function Investment() {
   function getResults() {
     let results = [];
     for (let i = 0; i < cashFlows.length; i++) {
-      let tir = irr(cashFlows.slice(0, i + 1));
+      let tir = irr(cashFlows.slice(0, i + 1), 0);
       if (isNaN(tir) || tir === Infinity) {
         results.push(0);
         continue;
       }
       results.push(Number((tir * 100).toFixed(2)));
     }
+    results.push(tir)
     setTir(results)
   }
 }

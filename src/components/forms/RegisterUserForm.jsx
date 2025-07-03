@@ -124,7 +124,7 @@ export const RegisterUserForm = () => {
           </form>
           <img
             className="hidden sm:block w-80 h-[680px] rounded-tr-2xl rounded-br-2xl"
-            src="assets/images/login.jpg"
+            src="/assets/images/login.jpg"
           />
         </div>
       </Form>
