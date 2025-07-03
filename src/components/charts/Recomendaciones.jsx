@@ -432,7 +432,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
                   dot={false}
                 />
                 <Line
-                  dataKey="ROI Anualizada"
+                  dataKey="ROI Anualizado"
                   strokeWidth={1.5}
                   stroke="#FB3D03"
                   connectNulls
