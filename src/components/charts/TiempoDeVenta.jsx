@@ -12,112 +12,23 @@ import {
 } from "recharts";
 import { parsePrice } from "../../constants/functions";
 
-// Data para la grafica
-const data = [
-  {
-    mes: "01/2023",
-    "Precio del inmueble": 580719993,
-    "TIR mensual": 1,
-  },
-  {
-    mes: "02/2023",
-    "Precio del inmueble": 590401637,
-    "TIR mensual": 1,
-  },
-  {
-    mes: "03/2023",
-    "Precio del inmueble": 600000000,
-    "TIR mensual": 1,
-  },
-  {
-    mes: "04/2023",
-    "Precio del inmueble": 609454917,
-    "TIR mensual": 42,
-  },
-  {
-    mes: "05/2023",
-    "Precio del inmueble": 618766386,
-    "TIR mensual": 19,
-  },
-  {
-    mes: "06/2023",
-    "Precio del inmueble": 627934410,
-    "TIR mensual": 34,
-  },
-  {
-    mes: "07/2023",
-    "Precio del inmueble": 636958986,
-    "TIR mensual": 33,
-  },
-  {
-    mes: "08/2023",
-    "Precio del inmueble": 645840116,
-    "TIR mensual": 30,
-  },
-  {
-    mes: "09/2023",
-    "Precio del inmueble": 654577799,
-    "TIR mensual": 11,
-  },
-  {
-    mes: "10/2023",
-    "Precio del inmueble": 662878598,
-    "TIR mensual": 14,
-  },
-  {
-    mes: "11/2023",
-    "Precio del inmueble": 670764357,
-    "TIR mensual": 14,
-  },
-  {
-    mes: "12/2023",
-    "Precio del inmueble": 678255828,
-    "TIR mensual": 13,
-  },
-  {
-    mes: "01/2024",
-    "Precio del inmueble": 684998152,
-    "TIR mensual": 12,
-  },
-  {
-    mes: "02/2024",
-    "Precio del inmueble": 691066243,
-    "TIR mensual": 11,
-  },
-  {
-    mes: "03/2024",
-    "Precio del inmueble": 696527525,
-    "TIR mensual": 10,
-  },
-  {
-    mes: "04/2024",
-    "Precio del inmueble": 701442680,
-    "TIR mensual": 9,
-  },
-  {
-    mes: "05/2024",
-    "Precio del inmueble": 705866318,
-    "TIR mensual": 9,
-  },
-  {
-    mes: "06/2024",
-    "Precio del inmueble": 709885434,
-    "TIR mensual": 8,
-  },
-  {
-    mes: "07/2024",
-    "Precio del inmueble": 713792519,
-    "TIR mensual": 7,
-  },
-  {
-    mes: "08/2024",
-    "Precio del inmueble": 717587573,
-    "TIR mensual": 7,
-  },
-];
-
 // Grafica
-function TiempoDeVenta({ results }) {
+function TiempoDeVenta({ timeVectors, flowsResult }) {
+
+  // Obtener data
+  const data = timeVectors?.valor_inmueble.map((item, index) => {
+    let tir_mensual = 0;    
+    for (let i = 0; i < flowsResult?.tir_mensual.length; i++) {
+      if(flowsResult.tir_mensual[i][0] == index){
+        tir_mensual = flowsResult.tir_mensual[i][2];
+      }      
+    }
+    return {
+      mes: item[1],
+      "Precio del inmueble": item[2],
+      "TIR mensual": tir_mensual,
+    };
+  });
 
   return (
     <div className="w-[100%] h-[50vh] lg:w-[60%]">
@@ -137,7 +48,7 @@ function TiempoDeVenta({ results }) {
           />
           <YAxis
             yAxisId="left"
-            domain={[data[0].Varianza, 'auto']}
+            domain={['dataMin', 'auto']}
             tickFormatter={(value) => parsePrice(value)}
             tickLine={false}
             axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
