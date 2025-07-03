@@ -119,7 +119,7 @@ const LoginForm = () => {
           </form>
           <img
             className="hidden sm:block w-72 h-[580px] rounded-tr-2xl rounded-br-2xl"
-            src="assets/images/login.jpg"
+            src="/assets/images/login.jpg"
           />
         </div>
       </Form>
