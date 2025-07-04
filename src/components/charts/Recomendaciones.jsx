@@ -282,7 +282,8 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
   const mesVentaSeleccionado = mesVenta.slice(0, 7);
 
   // Obtener data roi
-  let mesMayorRoi = 0;
+  let mayorRoi = 0;
+  let mesMayorRoi = '';
   const dataROI = timeVectors?.valor_inmueble.map((item, index) => {
     let roi = 0;
     for (let i = 0; i < flowsResult?.roi.length; i++) {
@@ -290,7 +291,8 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
         roi = flowsResult.roi[i][2];
       }
       // Maximo roi
-      if (flowsResult.roi[i][2] > mesMayorRoi) {
+      if (flowsResult.roi[i][2] > mayorRoi) {
+        mayorRoi = flowsResult.roi[i][2];
         mesMayorRoi = flowsResult.roi[i][1];
       }
     }
@@ -308,7 +310,8 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
   });
 
   // Obtener data tir
-  let mesMayorTir = 0;
+  let mayorTir = 0;
+  let mesMayorTir = '';
   const dataTIR = timeVectors?.valor_inmueble.map((item, index) => {
     let tir_mensual = 0;
     for (let i = 0; i < flowsResult?.tir_mensual.length; i++) {
@@ -316,7 +319,8 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
         tir_mensual = flowsResult.tir_mensual[i][2];
       }
       // Maximo tir
-      if (flowsResult.tir_mensual[i][2] > mesMayorTir) {
+      if (flowsResult.tir_mensual[i][2] > mayorTir) {
+        mayorTir = flowsResult.tir_mensual[i][2];
         mesMayorTir = flowsResult.tir_mensual[i][1];
       }
     }
@@ -334,7 +338,8 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
   });
 
   // Obtener data utilidad
-  let mesMayorUtilidad = 0;
+  let mayorUtilidad = 0;
+  let mesMayorUtilidad = '';
   const dataUtilidad = timeVectors?.valor_inmueble.map((item, index) => {
     let utilidad = 0;
     for (let i = 0; i < flowsResult?.utilidad.length; i++) {
@@ -342,7 +347,8 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
         utilidad = flowsResult.utilidad[i][2];
       }
       // Maximo utilidad
-      if (flowsResult.utilidad[i][2] > mesMayorUtilidad) {
+      if (flowsResult.utilidad[i][2] > mayorUtilidad) {
+        mayorUtilidad = flowsResult.utilidad[i][2];
         mesMayorUtilidad = flowsResult.utilidad[i][1];
       }
     }
@@ -396,33 +402,6 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
                   />
                 </YAxis>
                 <Tooltip />
-                <ReferenceLine x={mesMayorRoi}
-                  label={{ value: 'Mayor ROI', style: { fill: 'black' }, angle: -90, position: 'center' }}
-                  stroke="purple"
-                  strokeWidth={60}
-                  isFront={false}
-                  style={{ opacity: 0.5 }}
-                />
-                {/* <ReferenceLine x={mesMayorTir}
-                  label={{ value: 'Mayor TIR', style: { fill: 'black' }, angle: -90, position: 'center' }}
-                  stroke="orange"
-                  strokeWidth={60}
-                  isFront={false}
-                  style={{ opacity: 0.5 }}
-                />
-                <ReferenceLine x={mesMayorUtilidad}
-                  label={{ value: 'Mayor utilidad', style: { fill: 'black' }, angle: -90, position: 'center' }}
-                  stroke="green"
-                  strokeWidth={60}
-                  isFront={false}
-                  style={{ opacity: 0.5 }}
-                /> */}
-                <ReferenceLine x={mesVentaSeleccionado}
-                  label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
-                  stroke="red"
-                  strokeWidth={2}
-                  isFront={false}
-                />
                 <Line
                   dataKey="ROI mensual"
                   strokeWidth={1.5}
@@ -438,6 +417,19 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
                   connectNulls
                   dot={false}
                   type="monotone"
+                />
+                <ReferenceLine x={mesMayorRoi}
+                  label={{ value: 'Mayor ROI', style: { fill: 'black' }, angle: -90, position: 'center' }}
+                  stroke="purple"
+                  strokeWidth={30}
+                  isFront={true}
+                  style={{ opacity: 0.5 }}
+                />
+                <ReferenceLine x={mesVentaSeleccionado}
+                  label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
+                  stroke="red"
+                  strokeWidth={2}
+                  isFront={true}
                 />
                 <Legend wrapperStyle={{ top: -40 }} />
                 <Brush
@@ -486,26 +478,6 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
                   />
                 </YAxis>
                 <Tooltip />
-                <ReferenceLine x={mesMayorTir}
-                  label={{ value: 'Mayor TIR', style: { fill: 'black' }, angle: -90, position: 'center' }}
-                  stroke="orange"
-                  strokeWidth={60}
-                  isFront={false}
-                  style={{ opacity: 0.5 }}
-                />
-                {/* <ReferenceLine x={mesMayorUtilidad}
-                  label={{ value: 'Mayor utilidad', style: { fill: 'black' }, angle: -90, position: 'center' }}
-                  stroke="green"
-                  strokeWidth={60}
-                  isFront={false}
-                  style={{ opacity: 0.5 }}
-                /> */}
-                <ReferenceLine x={mesVentaSeleccionado}
-                  label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
-                  stroke="red"
-                  strokeWidth={2}
-                  isFront={true}
-                />
                 <Line
                   dataKey="TIR mensual"
                   strokeWidth={1.5}
@@ -521,6 +493,19 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
                   connectNulls
                   dot={false}
                   type="monotone"
+                />
+                <ReferenceLine x={mesMayorTir}
+                  label={{ value: 'Mayor TIR', style: { fill: 'black' }, angle: -90, position: 'center' }}
+                  stroke="orange"
+                  strokeWidth={30}
+                  isFront={true}
+                  style={{ opacity: 0.5  }}
+                />
+                <ReferenceLine x={mesVentaSeleccionado}
+                  label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
+                  stroke="red"
+                  strokeWidth={2}
+                  isFront={true}
                 />
                 <Legend wrapperStyle={{ top: -40 }} />
               </ComposedChart>
@@ -562,18 +547,11 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
                   />
                 </YAxis>
                 <Tooltip />
-                {/* <ReferenceLine x={mesMayorTir}
-                  label={{ value: 'Mayor TIR', style: { fill: 'black' }, angle: -90, position: 'center' }}
-                  stroke="orange"
-                  strokeWidth={60}
-                  isFront={false}
-                  style={{ opacity: 0.5 }}
-                /> */}
                 <ReferenceLine x={mesMayorUtilidad}
                   label={{ value: 'Mayor utilidad', style: { fill: 'black' }, angle: -90, position: 'center' }}
                   stroke="green"
-                  strokeWidth={60}
-                  isFront={false}
+                  strokeWidth={30}
+                  isFront={true}
                   style={{ opacity: 0.5 }}
                 />
                 <ReferenceLine x={mesVentaSeleccionado}
