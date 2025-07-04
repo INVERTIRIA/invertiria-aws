@@ -19,7 +19,7 @@ function TiempoDeCompra({ timeVectors }) {
   // Obtener data
   const data = timeVectors?.valor_inmueble.map((item, index) => {
     const varianzaPorcentaje = timeVectors.valorizacion[index][5];
-    const varianza = (item[2] * Number(varianzaPorcentaje));
+    const varianza = Math.round(item[2] * Number(varianzaPorcentaje));
     return {
       mes: item[1],
       Varianza: [(item[2] - varianza), (item[2] + varianza)],

@@ -20,12 +20,14 @@ const Charts = () => {
   const [timeVectors, setTimeVectors] = useState(null);
   const [flowsResult, setFlowsResult] = useState(null);
   const [modelation, setModelation] = useState(null);
+  const [analysis, setAnalysis] = useState(null);
   const loadedTimeVectors = useRef(false);
   const loadedFlowsResult = useRef(false);
+  const loadedAnalysis = useRef(false);
 
   // Funcion obtener modelacion
   const getModelation = async () => {
-    const { data: modelation, error } = await supabase.from("modelaciones").select("*, ciudad:ciudades(nombre)").eq("id", "4ccdb1be-038d-464a-8059-0d532834cb09").single();
+    const { data: modelation, error } = await supabase.from("modelaciones").select("*, ciudad:ciudades(nombre)").eq("id", "b4595bf7-ecde-4f54-8ab3-514d823914e4").single();
     if (error) console.log(error);
     setModelation(modelation);
     console.log(modelation);
@@ -33,7 +35,7 @@ const Charts = () => {
 
   // Funcion obtener vectores temporales
   const getTimeVectors = async () => {
-    const { data: timeVectors, error } = await supabase.from("vectores_temporales").select().eq("modelacion_id", "4ccdb1be-038d-464a-8059-0d532834cb09").single();
+    const { data: timeVectors, error } = await supabase.from("vectores_temporales").select().eq("modelacion_id", "b4595bf7-ecde-4f54-8ab3-514d823914e4").single();
     if (error) console.log(error);
     setTimeVectors(timeVectors);
     console.log(timeVectors);
@@ -41,10 +43,18 @@ const Charts = () => {
 
   // Funcion obtener flujos resultado
   const getFlowsResult = async () => {
-    const { data: flowsResult, error } = await supabase.from("flujos_resultado").select().eq("modelacion_id", "4ccdb1be-038d-464a-8059-0d532834cb09").single();
+    const { data: flowsResult, error } = await supabase.from("flujos_resultado").select().eq("modelacion_id", "b4595bf7-ecde-4f54-8ab3-514d823914e4").single();
     if (error) console.log(error);
     setFlowsResult(flowsResult);
     console.log(flowsResult);
+  };
+
+  // Funcion obtener analisis de las graficas
+  const getAnalysis = async () => {
+    const { data: analysis, error } = await supabase.from("analisis_modelacion_ia").select().eq("modelacion_id", "b4595bf7-ecde-4f54-8ab3-514d823914e4").single();
+    if (error) console.log(error);
+    setAnalysis(analysis);
+    console.log(analysis);
   };
 
   // Funcion obtener varianza subzona
@@ -55,7 +65,7 @@ const Charts = () => {
 
   // Funcion crear vectores temporales
   const createTimeVectors = async () => {
-    const { data: timeVectors, error } = await supabase.functions.invoke("createTimeVectors", { body: { "modelacion_id": "4ccdb1be-038d-464a-8059-0d532834cb09" } });
+    const { data: timeVectors, error } = await supabase.functions.invoke("createTimeVectors", { body: { "modelacion_id": "b4595bf7-ecde-4f54-8ab3-514d823914e4" } });
     if (error) console.log(error);
     console.log(timeVectors);
     return timeVectors;
@@ -63,10 +73,18 @@ const Charts = () => {
 
   // Funcion crear flujos resultado
   const createFlowsResult = async () => {
-    const { data: flowsResult, error } = await supabase.functions.invoke("createFlowsResult", { body: { "modelacion_id": "4ccdb1be-038d-464a-8059-0d532834cb09" } });
+    const { data: flowsResult, error } = await supabase.functions.invoke("createFlowsResult", { body: { "modelacion_id": "b4595bf7-ecde-4f54-8ab3-514d823914e4" } });
     if (error) console.log(error);
     console.log(flowsResult);
     return flowsResult;
+  };
+
+  // Funcion crear analisis
+  const createAnalysis = async () => {
+    const { data: analysis, error } = await supabase.functions.invoke("createAnalysis", { body: { "modelacion_id": "b4595bf7-ecde-4f54-8ab3-514d823914e4" } });
+    if (error) console.log(error);
+    console.log(analysis);
+    return analysis;
   };
 
   useEffect(() => {
@@ -78,12 +96,18 @@ const Charts = () => {
     //   createFlowsResult();
     //   loadedFlowsResult.current = true;
     // }
+    // if (!loadedAnalysis.current) {
+    //   createAnalysis();
+    //   loadedAnalysis.current = true;
+    // }
+
     getModelation()
     getTimeVectors()
     getFlowsResult()
+    getAnalysis()
   }, []);
 
-  if (!modelation || !timeVectors || !flowsResult) {
+  if (!modelation || !timeVectors || !flowsResult || !analysis) {
     return (<Skeleton />)
   }
 
@@ -195,14 +219,7 @@ const Charts = () => {
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            Analizando la primera gráfica, donde se representa el valor del
-            metro cuadrado en la zona específica, vemos que el indicador negro
-            refleja un valor de $860,000. En este caso, el valor máximo es de
-            $920,000 y el mínimo de $760,000, lo que sugiere que estás en un
-            punto medio dentro de esta zona. Sin embargo, al comprar a $860,000,
-            estás por encima del promedio del valor mínimo, lo que puede indicar
-            que el inmueble tiene características que justifican este precio,
-            como ubicación privilegiada o potencial de valorización.
+            {analysis.valor_de_compra.analisis_grafica_1}
           </p>
           <div className="ml-auto flex gap-2 items-center">
             <p className="text-sm font-medium">Generado por IA</p>
@@ -233,15 +250,7 @@ const Charts = () => {
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            En la segunda gráfica, que muestra el valor del metro cuadrado en
-            Medellín en general, el indicador negro también es de $860,000.
-            Aquí, el rango es más amplio, con un máximo de $1,200,000 y un
-            mínimo de $800,000. Esto implica que, comparado con la ciudad
-            completa, tu compra está en el extremo inferior del rango, lo que
-            puede significar que, dependiendo de la zona, estás comprando un
-            activo que todavía tiene mucho potencial para crecer en valor,
-            especialmente si consideramos que el mercado inmobiliario en esa
-            área tiene una buena tendencia de valorización.
+            {analysis.valor_de_compra.analisis_grafica_2}
           </p>
           <div className="ml-auto flex gap-2 items-center">
             <p className="text-sm font-medium">Generado por IA</p>
@@ -264,11 +273,7 @@ const Charts = () => {
           <p className="font-medium text-white">Juan Londoño</p>
         </div>
         <p className="z-10 text-white text-sm">
-          Conclusión: Comparando ambas gráficas, puedes notar que, mientras que
-          tu compra en la zona específica es competitiva en relación a su
-          contexto local, en comparación con la ciudad, estás aprovechando un
-          precio que tiene mucho margen para valorización. Esto sugiere una
-          buena oportunidad de inversión.
+          {analysis.valor_de_compra.conclusion}
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
@@ -276,13 +281,7 @@ const Charts = () => {
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
-            Antes de cerrar la compra, asegúrate de analizar las características
-            específicas del inmueble y su potencial en el mercado. Asegúrate de
-            que este proyecto cumpla con tus objetivos financieros y que forme
-            parte de tu &quot;sistema repetitivo de inversiones&quot;. Recuerda
-            que las inversiones deben ser estratégicas, así que evalúa si este
-            es el momento óptimo para entrar al mercado y potenciar tu libertad
-            financiera.
+            {analysis.valor_de_compra.consejo}
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
@@ -311,25 +310,7 @@ const Charts = () => {
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            La gráfica del precio del inmueble durante 240 meses muestra una
-            tendencia de valorización clara y sostenida. Desde el inicio, el
-            precio se ha incrementado mes a mes, lo que refleja un mercado
-            inmobiliario en crecimiento. Al analizar la varianza máxima y
-            mínima, se observa que el precio del inmueble se mantiene dentro de
-            estos rangos, lo que sugiere una estabilidad en su valorización. En
-            cada mes, el crecimiento constante media alrededor de un incremento
-            mensual, destacando un potencial de inversión en bienes raíces que
-            sorprende e inspira confianza.
-            <br></br>
-            <br></br>
-            Particularmente, en los últimos meses del análisis, aunque se
-            presentan variaciones en el precio de compra real con respecto a los
-            valores propuestos, la tendencia general sigue en ascenso. No se ha
-            evidenciado ninguna caída sustancial en el precio, lo que es un
-            indicador positivo para los futuros inversionistas. Las diferencias
-            entre la varianza mínima y máxima sugieren que el mercado se mueve
-            de manera controlada, permitiendo así que los inversionistas tengan
-            un buen pie en la seguridad de su inversión.
+            {analysis.tiempo_de_compra.analisis_grafica}
           </p>
           <div className="ml-auto flex gap-2 items-center">
             <p className="text-sm font-medium">Generado por IA</p>
@@ -352,11 +333,7 @@ const Charts = () => {
           <p className="font-medium text-white">Juan Londoño</p>
         </div>
         <p className="z-10 text-white text-sm">
-          La conclusión es clara: el bien inmueble analizado presenta un
-          comportamiento robusto y consistente en términos de valorización, lo
-          que lo convierte en una excelente opción de inversión. Para aquellos
-          que buscan alcanzar el bienestar financiero, contar con este tipo de
-          activos como parte de su portafolio es fundamental.
+          {analysis.valor_de_compra.conclusion}
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
@@ -364,11 +341,7 @@ const Charts = () => {
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
-            Siempre evalúa el momento de la compra, haz tu investigación y
-            asegúrate de adquirir propiedades en fases iniciales de sus
-            proyectos. Así, maximizarás tu potencial de valorización y
-            asegurarás un retorno atractivo. Recuerda que el verdadero negocio
-            se hace en el momento de la compra, no en la venta.
+            {analysis.tiempo_de_compra.consejo}
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
