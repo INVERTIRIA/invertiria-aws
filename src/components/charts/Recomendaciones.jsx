@@ -119,7 +119,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
               className={" flex aspect-video justify-center text-xs"}
             >
               <ComposedChart
-                syncId="syncId"
+                syncId="syncId2"
                 data={dataROI}
                 margin={{ top: 10, right: 10 }}
               >
@@ -194,7 +194,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
             <ResponsiveContainer
               className={" flex aspect-video justify-center text-xs"}
             >
-              <ComposedChart data={dataTIR.slice(startIndexBrush, endIndexBrush + 1)} syncId="syncId">
+              <ComposedChart data={dataTIR.slice(startIndexBrush, endIndexBrush + 1)} syncId="syncId2">
                 <CartesianGrid
                   className="opacity-50"
                   vertical={false}
@@ -264,7 +264,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
               <ComposedChart
                 data={dataUtilidad.slice(startIndexBrush, endIndexBrush + 1)}
                 margin={{ top: 10, right: 10, left: 80, bottom: 0 }}
-                syncId="syncId"
+                syncId="syncId2"
               >
                 <CartesianGrid className="opacity-50" vertical={false} />
                 <XAxis
