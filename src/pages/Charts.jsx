@@ -13,7 +13,7 @@ import IndicadoresDeRentabilidad from "../components/charts/IndicadoresDeRentabi
 import Recomendaciones from "../components/charts/Recomendaciones";
 import { supabase } from "../supabase";
 import { useEffect, useRef, useState } from "react";
-import Skeleton from "../components/design/Skeleton";
+import DashboardSkeleton from "../components/design/DashboardSkeleton";
 import { parsePrice } from "../constants/functions";
 
 const Charts = () => {
@@ -108,7 +108,10 @@ const Charts = () => {
   }, []);
 
   if (!modelation || !timeVectors || !flowsResult || !analysis) {
-    return (<Skeleton />)
+    return (
+      <Container classNameParent={"my-20"} className="flex flex-col gap-20">
+        <DashboardSkeleton />
+      </Container>)
   }
 
   // Tir en ves de venta
@@ -370,7 +373,7 @@ const Charts = () => {
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            {analysis.recomendaciones_compra.analisis_grafica}
           </p>
           <div className="ml-auto flex gap-2 items-center">
             <p className="text-sm font-medium">Generado por IA</p>
@@ -393,7 +396,7 @@ const Charts = () => {
           <p className="font-medium text-white">Juan Londoño</p>
         </div>
         <p className="z-10 text-white text-sm">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          {analysis.recomendaciones_compra.conclusion}
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
@@ -401,7 +404,7 @@ const Charts = () => {
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            {analysis.recomendaciones_compra.consejo}
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
@@ -436,7 +439,7 @@ const Charts = () => {
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            {analysis.valor_de_venta.analisis_grafica}
           </p>
           <div className="ml-auto flex gap-2 items-center">
             <p className="text-sm font-medium">Generado por IA</p>
@@ -459,7 +462,7 @@ const Charts = () => {
           <p className="font-medium text-white">Juan Londoño</p>
         </div>
         <p className="z-10 text-white text-sm">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          {analysis.valor_de_venta.conclusion}
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
@@ -467,7 +470,7 @@ const Charts = () => {
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            {analysis.valor_de_venta.consejo}
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
@@ -496,27 +499,7 @@ const Charts = () => {
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            La gráfica ilustra una tendencia de crecimiento constante en el
-            valor del inmueble, iniciando desde $580,719,993 en enero de 2023
-            hasta alcanzar los $1,186,963,994 en enero de 2043. Este incremento
-            sostenido representa una valorización significativa del activo,
-            destacando la importancia del timing en la inversión inmobiliaria.
-            Desde el comienzo, el precio del inmueble presenta un aumento
-            mensual relativamente regular, lo cual es un indicativo de un
-            mercado robusto que respalda la posibilidad de rentabilidades
-            atractivas.
-            <br></br>
-            <br></br>
-            En contraste, la Tasa Interna de Retorno (TIR) muestra una variación
-            más volátil a lo largo de los meses. Observamos un incremento
-            notable en abril de 2023, alcanzando un 0.42%, lo que sugiere un
-            punto óptimo de compra. Sin embargo, la TIR comienza a decrecer
-            sustancialmente y se estabiliza en cifras más bajas, en torno al
-            0.01%, en los últimos años del análisis. Esta disminución en la TIR
-            puede estar indicando que, aunque el activo sigue valorizándose, el
-            costo de adquisición y las condiciones del mercado pueden estar
-            haciendo que las rentabilidades futuras sean más desafiantes, al
-            tiempo que los flujos de caja se reducen.
+            {analysis.tiempo_de_venta.analisis_grafica}
           </p>
           <div className="ml-auto flex gap-2 items-center">
             <p className="text-sm font-medium">Generado por IA</p>
@@ -539,13 +522,7 @@ const Charts = () => {
           <p className="font-medium text-white">Juan Londoño</p>
         </div>
         <p className="z-10 text-white text-sm">
-          Conclusión: La gráfica subraya la importancia de entender el contexto
-          temporal en la inversión inmobiliaria. Aunque el precio del inmueble
-          continúa en aumento, la rentabilidad efectiva medida a través de la
-          TIR ha mostrado señales de debilidad. Esto sugiere que se debe tener
-          cuidado con los momentos de entrada y salida del mercado, entendiendo
-          que una adquisición hecha en el momento adecuado puede resultar en
-          rentabilidades significativamente más altas.
+          {analysis.tiempo_de_venta.conclusion}
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
@@ -553,14 +530,7 @@ const Charts = () => {
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
-            Mi recomendación es que enfoques tus inversiones en esos momentos
-            donde la TIR se encuentre en niveles más altos, tal como sucedió en
-            abril de 2023. Esto maximiza tus posibilidades de obtener
-            rentabilidades que realmente sorprendan. Además, evalúa siempre el
-            contexto del mercado y asegúrate de estar preparado para
-            diversificar tus inversiones de manera estratégica. La paciencia y
-            el análisis exhaustivo serán tus mejores aliados en esta travesía
-            hacia la libertad financiera.
+            {analysis.tiempo_de_venta.consejo}
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
@@ -618,7 +588,7 @@ const Charts = () => {
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            {analysis.indicadores_de_rentabilidad_venta.analisis_grafica}
           </p>
           <div className="ml-auto flex gap-2 items-center">
             <p className="text-sm font-medium">Generado por IA</p>
@@ -641,7 +611,7 @@ const Charts = () => {
           <p className="font-medium text-white">Juan Londoño</p>
         </div>
         <p className="z-10 text-white text-sm">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          {analysis.indicadores_de_rentabilidad_venta.conclusion}
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
@@ -649,7 +619,7 @@ const Charts = () => {
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            {analysis.indicadores_de_rentabilidad_venta.consejo}
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
@@ -683,7 +653,7 @@ const Charts = () => {
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            El apalancamiento de 3.333 en la compra del inmueble de $600.000.000, donde has aportado $180.000.000 y accedido a un crédito hipotecario de $420.000.000, indica que has utilizado un apalancamiento inteligente y eficiente. Esto significa que, por cada peso que inversoras, tienes el control de más de tres pesos en un activo que tiene potencial de valorización. Este enfoque no solo maximiza tus oportunidades de rentabilidad, sino que también permite optimizar el flujo de caja, ya que tu inversión inicial está multiplicada frente a los recursos que manejas a través del crédito.
+            {analysis.apalancamiento.analisis_grafica}
           </p>
           <div className="ml-auto flex gap-2 items-center">
             <p className="text-sm font-medium">Generado por IA</p>
@@ -706,7 +676,7 @@ const Charts = () => {
           <p className="font-medium text-white">Juan Londoño</p>
         </div>
         <p className="z-10 text-white text-sm">
-          Conclusión: Usar apalancamiento es fundamental para alcanzar la libertad financiera, pero siempre debe hacerse con una estrategia clara y un análisis profundo del proyecto. Recuerda que el buen apalancamiento se traduce en mayor potencial de obtener rentabilidades que sorprendan, siempre que los flujos y el timing estén bien estructurados.
+          {analysis.apalancamiento.conclusion}
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
@@ -714,7 +684,7 @@ const Charts = () => {
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
-            Asegúrate de entender los riesgos asociados al apalancamiento y diversifica tus inversiones. Mantener una buena relación entre tu crédito y tus aportes propios te permitirá tener control sobre tus decisiones y tiempo, asegurando el éxito en tu camino hacia la libertad financiera.
+            {analysis.apalancamiento.consejo}
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
@@ -744,7 +714,7 @@ const Charts = () => {
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            {analysis.costo_financiero.analisis_grafica}
           </p>
           <div className="ml-auto flex gap-2 items-center">
             <p className="text-sm font-medium">Generado por IA</p>
@@ -767,7 +737,7 @@ const Charts = () => {
           <p className="font-medium text-white">Juan Londoño</p>
         </div>
         <p className="z-10 text-white text-sm">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          {analysis.costo_financiero.conclusion}
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
@@ -775,7 +745,7 @@ const Charts = () => {
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            {analysis.costo_financiero.consejo}
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
@@ -802,7 +772,7 @@ const Charts = () => {
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            {analysis.capacidad_de_endeudamiento.analisis_grafica}
           </p>
           <div className="ml-auto flex gap-2 items-center">
             <p className="text-sm font-medium">Generado por IA</p>
@@ -825,7 +795,7 @@ const Charts = () => {
           <p className="font-medium text-white">Juan Londoño</p>
         </div>
         <p className="z-10 text-white text-sm">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          {analysis.capacidad_de_endeudamiento.conclusion}
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
@@ -833,7 +803,7 @@ const Charts = () => {
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            {analysis.capacidad_de_endeudamiento.consejo}
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
@@ -862,7 +832,7 @@ const Charts = () => {
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            {analysis.flujo_de_caja.analisis_grafica}
           </p>
           <div className="ml-auto flex gap-2 items-center">
             <p className="text-sm font-medium">Generado por IA</p>
@@ -885,7 +855,7 @@ const Charts = () => {
           <p className="font-medium text-white">Juan Londoño</p>
         </div>
         <p className="z-10 text-white text-sm">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          {analysis.flujo_de_caja.conclusion}
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
@@ -893,7 +863,7 @@ const Charts = () => {
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            {analysis.flujo_de_caja.consejo}
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
@@ -921,11 +891,7 @@ const Charts = () => {
       {/* Analisis */}
       <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
         <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-          En la primera gráfica del ROI mensual y anualizado, se evidencia un comportamiento ascendente en el ROI mensual desde el tercer mes. Esto demuestra que, a medida que pasan los meses, la rentabilidad comienza a asentarse, logrando un ROI que supera el 1.0 hacia el año 2024, lo que refleja que ya se están generando ganancias significativas. Por otro lado, el ROI anualizado, aunque presenta un aumento más gradual, también indica que las inversiones están volviendo cada vez más rentables; esto es una señal de que el enfoque de inversión está alineado con la búsqueda de rentabilidades sorprendentes.
-          <br /><br />
-          En la segunda gráfica, la TIR mensual muestra un incremento constante a lo largo de los meses, lo cual es un indicador certero de que el flujo de caja y las ganancias están aumentando progresivamente. La TIR anualizada se estabiliza al alrededor del 3.0, lo que refuerza la idea de que las inversiones llevan a un crecimiento sostenido y predecible a largo plazo. Este es un enfoque fundamental en mi metodología, donde el análisis previo y el momento de compra son cruciales para asegurar un buen negocio.
-          <br /><br />
-          Finalmente, la tercera gráfica de la utilidad muestra un crecimiento exponencial a lo largo del tiempo, alcanzando valores significativos en el año 2042. Este aumento de la utilidad no solo simboliza la efectividad del “Sistema repetitivo de inversiones”, sino que también refleja cómo mis mentores y yo hemos logrado ayudar a otros a alcanzar el bienestar financiero. Ver este crecimiento en la utilidad es una evidencia clara de que se puede lograr la libertad financiera en 5 años o menos, como he prometido en mi filosofía.
+          {analysis.indicadores_de_rentabilidad.analisis_grafica}
         </p>
         <div className="ml-auto flex gap-2 items-center">
           <p className="text-sm font-medium">Generado por IA</p>
@@ -947,7 +913,7 @@ const Charts = () => {
           <p className="font-medium text-white">Juan Londoño</p>
         </div>
         <p className="z-10 text-white text-sm">
-          La información presentada en estas gráficas evidencia que mis estrategias de inversión no solo son efectivas, sino que proporcionan resultados claros y cuantificables en un marco temporal razonable. Hemos visto cómo la combinación de una metodología bien estructurada, un análisis exhaustivo y la diversificación geográfica permiten a los inversionistas generar rentas estables y crecientes.
+          {analysis.indicadores_de_rentabilidad.conclusion}
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
@@ -955,7 +921,7 @@ const Charts = () => {
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
-            Te invito a que te adentres en el mundo de las inversiones inmobiliarias. Enfócate en la creación de un portafolio diversificado y utiliza un "sistema repetitivo de inversiones" para maximizar tu tiempo y reducir riesgos. Recuerda: ser dueño de tu tiempo y decisiones es el verdadero objetivo de la libertad financiera. La clave está en el próximo paso que tomes; empieza hoy mismo.
+            {analysis.indicadores_de_rentabilidad.consejo}
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
@@ -983,7 +949,7 @@ const Charts = () => {
       {/* Analisis */}
       <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
         <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          {analysis.recomendacion.analisis_grafica}
         </p>
         <div className="ml-auto flex gap-2 items-center">
           <p className="text-sm font-medium">Generado por IA</p>
@@ -1005,7 +971,7 @@ const Charts = () => {
           <p className="font-medium text-white">Juan Londoño</p>
         </div>
         <p className="z-10 text-white text-sm">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          {analysis.recomendacion.conclusion}
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
@@ -1013,7 +979,7 @@ const Charts = () => {
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            {analysis.recomendacion.consejo}
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
