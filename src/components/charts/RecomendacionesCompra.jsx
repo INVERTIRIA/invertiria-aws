@@ -20,8 +20,8 @@ function RecomendacionesCompra({ timeVectors }) {
     return {
       mes: item[1],
       "Precio del inmueble": item[2],
-      "Promedio ciudad": item[2] - (item[2] * 0.7 / 100), // Data quemada
-      "Promedio Juan Londoño": item[2] - (item[2] * 1.5 / 100) // Data quemada
+      "Promedio ciudad": Math.round(item[2] - (item[2] * 0.7 / 100)), // Data quemada
+      "Promedio Juan Londoño": Math.round(item[2] - (item[2] * 1.5 / 100)) // Data quemada
     };
   });
 
@@ -55,7 +55,9 @@ function RecomendacionesCompra({ timeVectors }) {
               angle="-90"
             />
           </YAxis>
-          <Tooltip />
+          <Tooltip
+            formatter={(value, name) => parsePrice(value)}
+          />
           <Line
             dataKey="Precio del inmueble"
             strokeWidth={1.5}
@@ -85,7 +87,7 @@ function RecomendacionesCompra({ timeVectors }) {
             dataKey="mes"
             stroke="#FB3D03"
             startIndex={0}
-            endIndex={11}
+            endIndex={120}
             height={30}
             className="custom-brush"
           />
