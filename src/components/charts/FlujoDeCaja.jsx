@@ -171,7 +171,9 @@ function FlujoDeCaja({ results }) {
               angle="-90"
             />
           </YAxis>
-          <Tooltip />
+          <Tooltip
+            formatter={(value, name) => parsePrice(value)}
+          />
           <Bar dataKey="Egresos" yAxisId="left" stackId="a" fill="#FB3D03" />
           <Bar dataKey="Ingresos" yAxisId="left" stackId="a" fill="#fc8f00" />
           <Line

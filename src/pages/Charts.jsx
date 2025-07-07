@@ -886,7 +886,7 @@ const Charts = () => {
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">KPIs</h2>
 
       {/* Grafica */}
-      <IndicadoresDeRentabilidad timeVectors={timeVectors} flowsResult={flowsResult} />
+      <IndicadoresDeRentabilidad timeVectors={timeVectors} flowsResult={flowsResult} fechaVenta={fechaVenta} />
 
       {/* Analisis */}
       <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">

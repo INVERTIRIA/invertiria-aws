@@ -84,7 +84,16 @@ function TiempoDeCompra({ timeVectors }) {
             dot={false}
             activeDot={true}
           />
-          <Tooltip />
+          <Tooltip 
+            formatter={(value, name) => {
+              if (name === "Precio del inmueble") {
+                return parsePrice(value);
+              }
+              if (name === "Varianza") {
+                return "" + value.map((item) => parsePrice(item));;
+              }
+            }}
+          />
           <Line
             dataKey="Precio del inmueble"
             strokeWidth={1.5}

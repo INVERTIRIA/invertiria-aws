@@ -55,7 +55,9 @@ function RecomendacionesCompra({ timeVectors }) {
               angle="-90"
             />
           </YAxis>
-          <Tooltip />
+          <Tooltip
+            formatter={(value, name) => parsePrice(value)}
+          />
           <Line
             dataKey="Precio del inmueble"
             strokeWidth={1.5}

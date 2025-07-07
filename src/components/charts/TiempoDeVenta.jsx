@@ -17,11 +17,11 @@ function TiempoDeVenta({ timeVectors, flowsResult }) {
 
   // Obtener data
   const data = timeVectors?.valor_inmueble.map((item, index) => {
-    let tir_mensual = 0;    
+    let tir_mensual = 0;
     for (let i = 0; i < flowsResult?.tir_mensual.length; i++) {
-      if(flowsResult.tir_mensual[i][0] == index){
+      if (flowsResult.tir_mensual[i][0] == index) {
         tir_mensual = flowsResult.tir_mensual[i][2];
-      }      
+      }
     }
     return {
       mes: item[1],
@@ -75,7 +75,16 @@ function TiempoDeVenta({ timeVectors, flowsResult }) {
               angle="-90"
             />
           </YAxis>
-          <Tooltip />
+          <Tooltip
+            formatter={(value, name) => {
+              if (name === "Precio del inmueble") {
+                return parsePrice(value);
+              }
+              if (name === "TIR mensual") {
+                return value + "%";
+              }
+            }}
+          />
           <Line
             yAxisId="left"
             dataKey="Precio del inmueble"

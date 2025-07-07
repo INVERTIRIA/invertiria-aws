@@ -15,7 +15,7 @@ import { IndicadorDeRentabilidad } from "./IndicadorDeRentabilidad";
 import { Slider } from "@/components/ui/slider";
 import { useState } from "react";
 
-const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
+const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => {
 
   // Obtener data roi
   let maxRoi = 0;
@@ -128,10 +128,10 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
   });
 
   const [startIndexBrush, setStartIndexBrush] = useState(0);
-  const [endIndexBrush, setEndIndexBrush] = useState(120);
-  const [maxStep, setMaxStep] = useState(120);
+  const [endIndexBrush, setEndIndexBrush] = useState(240);
+  const [maxStep, setMaxStep] = useState(240);
   const [activeMonth, setActiveMonth] = useState(0);
-
+  
   const [kpi, setKPI] = useState({
     roiMensual: 0,
     tirMensual: 0,
@@ -149,7 +149,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
     }, 200);
   };
 
-  const handleKPI = (value) => {    
+  const handleKPI = (value) => {
     const index = value[0];
 
     const tir = dataTIR[index]["TIR mensual"];
@@ -228,7 +228,9 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
                     angle="-90"
                   />
                 </YAxis>
-                <Tooltip />
+                <Tooltip
+                  formatter={(value, name) => value + "%"}
+                />
                 <Line
                   dataKey="ROI mensual"
                   strokeWidth={1.5}
@@ -267,7 +269,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
             <ResponsiveContainer
               className={" flex aspect-video justify-center text-xs"}
             >
-              <ComposedChart data={dataTIR.slice(startIndexBrush, endIndexBrush)} syncId="syncId">
+              <ComposedChart data={dataTIR.slice(startIndexBrush, endIndexBrush  + 1)} syncId="syncId">
                 <CartesianGrid
                   className="opacity-50"
                   vertical={false}
@@ -291,7 +293,9 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
                     angle="-90"
                   />
                 </YAxis>
-                <Tooltip />
+                <Tooltip
+                  formatter={(value, name) => value + "%"}
+                />
                 <Line
                   dataKey="TIR mensual"
                   strokeWidth={1.5}
@@ -322,7 +326,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
               className={"w-full flex aspect-video justify-center text-xs"}
             >
               <ComposedChart
-                data={dataUtilidad.slice(startIndexBrush, endIndexBrush)}
+                data={dataUtilidad.slice(startIndexBrush, endIndexBrush  + 1)}
                 margin={{ top: 10, right: 10, left: 80, bottom: 0 }}
                 syncId="syncId"
               >
@@ -347,7 +351,9 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
                     angle="-90"
                   />
                 </YAxis>
-                <Tooltip />
+                <Tooltip
+                  formatter={(value, name) => parsePrice(value)}
+                />
                 <Line
                   dataKey="Utilidad"
                   strokeWidth={1.5}

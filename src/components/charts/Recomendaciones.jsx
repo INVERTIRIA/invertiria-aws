@@ -142,7 +142,9 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
                     angle="-90"
                   />
                 </YAxis>
-                <Tooltip />
+                <Tooltip
+                  formatter={(value, name) => value + "%"}
+                />
                 <Line
                   dataKey="ROI mensual"
                   strokeWidth={1.5}
@@ -218,7 +220,9 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
                     angle="-90"
                   />
                 </YAxis>
-                <Tooltip />
+                <Tooltip
+                  formatter={(value, name) => value + "%"}
+                />
                 <Line
                   dataKey="TIR mensual"
                   strokeWidth={1.5}
@@ -287,7 +291,9 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
                     angle="-90"
                   />
                 </YAxis>
-                <Tooltip />
+                <Tooltip
+                  formatter={(value, name) => parsePrice(value)}
+                />
                 <ReferenceLine x={mesMayorUtilidad}
                   label={{ value: 'Mayor utilidad', style: { fill: 'black' }, angle: -90, position: 'center' }}
                   stroke="green"
