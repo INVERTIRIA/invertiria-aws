@@ -99,7 +99,7 @@ function TiempoDeVenta({ timeVectors, flowsResult }) {
             dataKey="mes"
             stroke="#FB3D03"
             startIndex={0}
-            endIndex={11}
+            endIndex={120}
             height={30}
             className="custom-brush"
           />
