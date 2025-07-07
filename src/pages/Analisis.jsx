@@ -12,23 +12,26 @@ import { FlujoDeCaja } from "../components/charts/FlujoDeCaja";
 import IndicadoresDeRentabilidad from "../components/charts/IndicadoresDeRentabilidad";
 import Recomendaciones from "../components/charts/Recomendaciones";
 import { supabase } from "../supabase";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import DashboardSkeleton from "../components/design/DashboardSkeleton";
 import { parsePrice } from "../constants/functions";
+import { useParams } from "react-router";
 
-const Charts = () => {
+const Analisis = () => {
+  let { id } = useParams();
   const [timeVectors, setTimeVectors] = useState(null);
   const [flowsResult, setFlowsResult] = useState(null);
   const [modelation, setModelation] = useState(null);
   const [analysis, setAnalysis] = useState(null);
-  const loadedTimeVectors = useRef(false);
-  const loadedFlowsResult = useRef(false);
-  const loadedAnalysis = useRef(false);
   const language = localStorage.getItem("language");
+
+  if (!id) {
+    id = '4ccdb1be-038d-464a-8059-0d532834cb09'
+  }  
 
   // Funcion obtener modelacion
   const getModelation = async () => {
-    const { data: modelation, error } = await supabase.from("modelaciones").select("*, ciudad:ciudades(nombre)").eq("id", "b4595bf7-ecde-4f54-8ab3-514d823914e4").single();
+    const { data: modelation, error } = await supabase.from("modelaciones").select("*, ciudad:ciudades(nombre)").eq("id", id).single();
     if (error) console.log(error);
     setModelation(modelation);
     console.log(modelation);
@@ -36,7 +39,7 @@ const Charts = () => {
 
   // Funcion obtener vectores temporales
   const getTimeVectors = async () => {
-    const { data: timeVectors, error } = await supabase.from("vectores_temporales").select().eq("modelacion_id", "b4595bf7-ecde-4f54-8ab3-514d823914e4").single();
+    const { data: timeVectors, error } = await supabase.from("vectores_temporales").select().eq("modelacion_id", id).single();
     if (error) console.log(error);
     setTimeVectors(timeVectors);
     console.log(timeVectors);
@@ -44,7 +47,7 @@ const Charts = () => {
 
   // Funcion obtener flujos resultado
   const getFlowsResult = async () => {
-    const { data: flowsResult, error } = await supabase.from("flujos_resultado").select().eq("modelacion_id", "b4595bf7-ecde-4f54-8ab3-514d823914e4").single();
+    const { data: flowsResult, error } = await supabase.from("flujos_resultado").select().eq("modelacion_id", id).single();
     if (error) console.log(error);
     setFlowsResult(flowsResult);
     console.log(flowsResult);
@@ -52,7 +55,7 @@ const Charts = () => {
 
   // Funcion obtener analisis de las graficas
   const getAnalysis = async () => {
-    const { data: analysis, error } = await supabase.from("analisis_modelacion_ia").select().eq("modelacion_id", "b4595bf7-ecde-4f54-8ab3-514d823914e4").single();
+    const { data: analysis, error } = await supabase.from("analisis_modelacion_ia").select().eq("modelacion_id", id).single();
     if (error) console.log(error);
     setAnalysis(analysis);
     console.log(analysis);
@@ -64,44 +67,7 @@ const Charts = () => {
     return min ? varianza[2] - varianza[3] : varianza[2] + varianza[3];
   }
 
-  // Funcion crear vectores temporales
-  const createTimeVectors = async () => {
-    const { data: timeVectors, error } = await supabase.functions.invoke("createTimeVectors", { body: { "modelacion_id": "b4595bf7-ecde-4f54-8ab3-514d823914e4" } });
-    if (error) console.log(error);
-    console.log(timeVectors);
-    return timeVectors;
-  };
-
-  // Funcion crear flujos resultado
-  const createFlowsResult = async () => {
-    const { data: flowsResult, error } = await supabase.functions.invoke("createFlowsResult", { body: { "modelacion_id": "b4595bf7-ecde-4f54-8ab3-514d823914e4" } });
-    if (error) console.log(error);
-    console.log(flowsResult);
-    return flowsResult;
-  };
-
-  // Funcion crear analisis
-  const createAnalysis = async () => {
-    const { data: analysis, error } = await supabase.functions.invoke("createAnalysis", { body: { "modelacion_id": "b4595bf7-ecde-4f54-8ab3-514d823914e4" } });
-    if (error) console.log(error);
-    console.log(analysis);
-    return analysis;
-  };
-
   useEffect(() => {
-    // if (!loadedTimeVectors.current) {
-    //   createTimeVectors();
-    //   loadedTimeVectors.current = true;
-    // }
-    // if (!loadedFlowsResult.current) {
-    //   createFlowsResult();
-    //   loadedFlowsResult.current = true;
-    // }
-    // if (!loadedAnalysis.current) {
-    //   createAnalysis();
-    //   loadedAnalysis.current = true;
-    // }
-
     getModelation()
     getTimeVectors()
     getFlowsResult()
@@ -998,4 +964,4 @@ const Charts = () => {
   );
 };
 
-export default Charts;
+export default Analisis;

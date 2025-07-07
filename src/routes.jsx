@@ -12,7 +12,6 @@ import { Footer } from "./components/Footer";
 import DashboardLayout from "./components/design/DashboardLayout";
 
 // Paginas
-import { App } from "./pages/App";
 import { Investment } from "./pages/Investment";
 import { Test } from "./pages/Test";
 import { LoginPage } from "./pages/LoginPage";
@@ -25,8 +24,9 @@ import AdminPages from "./pages/admin/index";
 import HasPermissions from "./HasPermissions";
 import AuthorizationPage from "./pages/AuthorizationPage";
 import InactiveUserPage from "./pages/InactiveUserPage";
-import Charts from "./pages/Charts";
 import ChatBotButton from "./components/design/ChatBotButton";
+import Analisis from "./pages/Analisis";
+import CreateModelation from "./pages/CreateModelation";
 
 // Rutas de la aplicacion
 function AppRoutes() {
@@ -60,7 +60,9 @@ function AppRoutes() {
           <Route path="/" element={<HomePage />} />
           <Route path="/investment" element={<Investment />} />
           <Route path="/test" element={<Test />} />
-          <Route path="/charts" element={<Charts />} />
+          <Route path="/analisis/:id" element={<Analisis />} />
+          <Route path="/crear-modelacion" element={<CreateModelation />} />
+          <Route path="/charts" element={<Analisis />} /> // Temporal
           <Route path="/inactive" element={<InactiveUserPage />} />
           <Route path="/import" element={<ImportMatrizModel />} />
           <Route path="/register" element={<RegisterPage />} />
