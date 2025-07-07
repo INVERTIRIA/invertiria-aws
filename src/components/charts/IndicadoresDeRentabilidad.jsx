@@ -13,7 +13,7 @@ import {
 import { parsePrice } from "../../constants/functions";
 import { IndicadorDeRentabilidad } from "./IndicadorDeRentabilidad";
 import { Slider } from "@/components/ui/slider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => {
 
@@ -127,11 +127,19 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
     };
   });
 
+  // Obtener mes de venta
+  let mesVenta = 0;
+  for (let i = 0; i < timeVectors?.valor_inmueble.length; i++) {
+    if (timeVectors?.valor_inmueble[i][1] == fechaVenta) {
+      mesVenta = timeVectors?.valor_inmueble[i][0];
+    }
+  }
+
   const [startIndexBrush, setStartIndexBrush] = useState(0);
   const [endIndexBrush, setEndIndexBrush] = useState(240);
   const [maxStep, setMaxStep] = useState(240);
   const [activeMonth, setActiveMonth] = useState(0);
-  
+
   const [kpi, setKPI] = useState({
     roiMensual: 0,
     tirMensual: 0,
@@ -185,6 +193,11 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
     }
   };
 
+  // Asignar mes de venta inicial
+  useEffect(() => {
+    handleKPI([mesVenta]);
+  }, [])
+
   return (
     <div className="w-full flex flex-col md:flex-row gap-12">
       <div className="flex flex-col gap-4 w-[70%]">
@@ -193,7 +206,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
             Mes de venta seleccionado
           </h2>
           <div className="w-full pl-14">
-            <Slider step={1} max={maxStep} onValueChange={handleKPI} />
+            <Slider step={1} max={maxStep} defaultValue={[mesVenta]} onValueChange={handleKPI} />
           </div>
         </div>
         <div className="flex flex-col gap-20">
@@ -269,7 +282,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
             <ResponsiveContainer
               className={" flex aspect-video justify-center text-xs"}
             >
-              <ComposedChart data={dataTIR.slice(startIndexBrush, endIndexBrush  + 1)} syncId="syncId">
+              <ComposedChart data={dataTIR.slice(startIndexBrush, endIndexBrush + 1)} syncId="syncId">
                 <CartesianGrid
                   className="opacity-50"
                   vertical={false}
@@ -326,7 +339,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
               className={"w-full flex aspect-video justify-center text-xs"}
             >
               <ComposedChart
-                data={dataUtilidad.slice(startIndexBrush, endIndexBrush  + 1)}
+                data={dataUtilidad.slice(startIndexBrush, endIndexBrush + 1)}
                 margin={{ top: 10, right: 10, left: 80, bottom: 0 }}
                 syncId="syncId"
               >
@@ -371,7 +384,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
       {<div className="flex-1 flex flex-col gap-10 h-fit">
         <div className="flex flex-col gap-4 flex-1 rounded-md ring-1 shadow-lg shadow-invertiria-2/30 ring-gray-900/5 p-4 ">
           <h2 className="text-2xl font-bold text-white px-4 py-2 bg-invertiria-2 w-fit rounded-md">
-            KPI
+            KPIs
           </h2>
           <div className="flex flex-col gap-10 divide-y-1">
             {/* TIR */}
