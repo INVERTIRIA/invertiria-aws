@@ -24,6 +24,7 @@ const Charts = () => {
   const loadedTimeVectors = useRef(false);
   const loadedFlowsResult = useRef(false);
   const loadedAnalysis = useRef(false);
+  const language = localStorage.getItem("language");
 
   // Funcion obtener modelacion
   const getModelation = async () => {
@@ -222,7 +223,7 @@ const Charts = () => {
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            {analysis.valor_de_compra.analisis_grafica_1}
+            {analysis.valor_de_compra.analisis_grafica_1[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
             <p className="text-sm font-medium">Generado por IA</p>
@@ -253,7 +254,7 @@ const Charts = () => {
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            {analysis.valor_de_compra.analisis_grafica_2}
+            {analysis.valor_de_compra.analisis_grafica_2[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
             <p className="text-sm font-medium">Generado por IA</p>
@@ -276,7 +277,7 @@ const Charts = () => {
           <p className="font-medium text-white">Juan Londoño</p>
         </div>
         <p className="z-10 text-white text-sm">
-          {analysis.valor_de_compra.conclusion}
+          {analysis.valor_de_compra.conclusion[language]}
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
@@ -284,7 +285,7 @@ const Charts = () => {
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
-            {analysis.valor_de_compra.consejo}
+            {analysis.valor_de_compra.consejo[language]}
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
@@ -313,7 +314,7 @@ const Charts = () => {
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            {analysis.tiempo_de_compra.analisis_grafica}
+            {analysis.tiempo_de_compra.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
             <p className="text-sm font-medium">Generado por IA</p>
@@ -336,7 +337,7 @@ const Charts = () => {
           <p className="font-medium text-white">Juan Londoño</p>
         </div>
         <p className="z-10 text-white text-sm">
-          {analysis.valor_de_compra.conclusion}
+          {analysis.valor_de_compra.conclusion[language]}
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
@@ -344,7 +345,7 @@ const Charts = () => {
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
-            {analysis.tiempo_de_compra.consejo}
+            {analysis.tiempo_de_compra.consejo[language]}
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
@@ -373,7 +374,7 @@ const Charts = () => {
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            {analysis.recomendaciones_compra.analisis_grafica}
+            {analysis.recomendaciones_compra.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
             <p className="text-sm font-medium">Generado por IA</p>
@@ -396,7 +397,7 @@ const Charts = () => {
           <p className="font-medium text-white">Juan Londoño</p>
         </div>
         <p className="z-10 text-white text-sm">
-          {analysis.recomendaciones_compra.conclusion}
+          {analysis.recomendaciones_compra.conclusion[language]}
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
@@ -404,7 +405,7 @@ const Charts = () => {
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
-            {analysis.recomendaciones_compra.consejo}
+            {analysis.recomendaciones_compra.consejo[language]}
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
@@ -439,7 +440,7 @@ const Charts = () => {
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            {analysis.valor_de_venta.analisis_grafica}
+            {analysis.valor_de_venta.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
             <p className="text-sm font-medium">Generado por IA</p>
@@ -462,7 +463,7 @@ const Charts = () => {
           <p className="font-medium text-white">Juan Londoño</p>
         </div>
         <p className="z-10 text-white text-sm">
-          {analysis.valor_de_venta.conclusion}
+          {analysis.valor_de_venta.conclusion[language]}
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
@@ -470,7 +471,7 @@ const Charts = () => {
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
-            {analysis.valor_de_venta.consejo}
+            {analysis.valor_de_venta.consejo[language]}
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
@@ -499,7 +500,7 @@ const Charts = () => {
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            {analysis.tiempo_de_venta.analisis_grafica}
+            {analysis.tiempo_de_venta.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
             <p className="text-sm font-medium">Generado por IA</p>
@@ -522,7 +523,7 @@ const Charts = () => {
           <p className="font-medium text-white">Juan Londoño</p>
         </div>
         <p className="z-10 text-white text-sm">
-          {analysis.tiempo_de_venta.conclusion}
+          {analysis.tiempo_de_venta.conclusion[language]}
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
@@ -530,7 +531,7 @@ const Charts = () => {
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
-            {analysis.tiempo_de_venta.consejo}
+            {analysis.tiempo_de_venta.consejo[language]}
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
@@ -588,7 +589,7 @@ const Charts = () => {
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            {analysis.indicadores_de_rentabilidad_venta.analisis_grafica}
+            {analysis.indicadores_de_rentabilidad_venta.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
             <p className="text-sm font-medium">Generado por IA</p>
@@ -611,7 +612,7 @@ const Charts = () => {
           <p className="font-medium text-white">Juan Londoño</p>
         </div>
         <p className="z-10 text-white text-sm">
-          {analysis.indicadores_de_rentabilidad_venta.conclusion}
+          {analysis.indicadores_de_rentabilidad_venta.conclusion[language]}
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
@@ -619,7 +620,7 @@ const Charts = () => {
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
-            {analysis.indicadores_de_rentabilidad_venta.consejo}
+            {analysis.indicadores_de_rentabilidad_venta.consejo[language]}
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
@@ -653,7 +654,7 @@ const Charts = () => {
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            {analysis.apalancamiento.analisis_grafica}
+            {analysis.apalancamiento.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
             <p className="text-sm font-medium">Generado por IA</p>
@@ -676,7 +677,7 @@ const Charts = () => {
           <p className="font-medium text-white">Juan Londoño</p>
         </div>
         <p className="z-10 text-white text-sm">
-          {analysis.apalancamiento.conclusion}
+          {analysis.apalancamiento.conclusion[language]}
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
@@ -684,7 +685,7 @@ const Charts = () => {
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
-            {analysis.apalancamiento.consejo}
+            {analysis.apalancamiento.consejo[language]}
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
@@ -714,7 +715,7 @@ const Charts = () => {
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            {analysis.costo_financiero.analisis_grafica}
+            {analysis.costo_financiero.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
             <p className="text-sm font-medium">Generado por IA</p>
@@ -737,7 +738,7 @@ const Charts = () => {
           <p className="font-medium text-white">Juan Londoño</p>
         </div>
         <p className="z-10 text-white text-sm">
-          {analysis.costo_financiero.conclusion}
+          {analysis.costo_financiero.conclusion[language]}
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
@@ -745,7 +746,7 @@ const Charts = () => {
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
-            {analysis.costo_financiero.consejo}
+            {analysis.costo_financiero.consejo[language]}
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
@@ -772,7 +773,7 @@ const Charts = () => {
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            {analysis.capacidad_de_endeudamiento.analisis_grafica}
+            {analysis.capacidad_de_endeudamiento.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
             <p className="text-sm font-medium">Generado por IA</p>
@@ -795,7 +796,7 @@ const Charts = () => {
           <p className="font-medium text-white">Juan Londoño</p>
         </div>
         <p className="z-10 text-white text-sm">
-          {analysis.capacidad_de_endeudamiento.conclusion}
+          {analysis.capacidad_de_endeudamiento.conclusion[language]}
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
@@ -803,7 +804,7 @@ const Charts = () => {
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
-            {analysis.capacidad_de_endeudamiento.consejo}
+            {analysis.capacidad_de_endeudamiento.consejo[language]}
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
@@ -832,7 +833,7 @@ const Charts = () => {
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            {analysis.flujo_de_caja.analisis_grafica}
+            {analysis.flujo_de_caja.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
             <p className="text-sm font-medium">Generado por IA</p>
@@ -855,7 +856,7 @@ const Charts = () => {
           <p className="font-medium text-white">Juan Londoño</p>
         </div>
         <p className="z-10 text-white text-sm">
-          {analysis.flujo_de_caja.conclusion}
+          {analysis.flujo_de_caja.conclusion[language]}
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
@@ -863,7 +864,7 @@ const Charts = () => {
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
-            {analysis.flujo_de_caja.consejo}
+            {analysis.flujo_de_caja.consejo[language]}
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
@@ -891,7 +892,7 @@ const Charts = () => {
       {/* Analisis */}
       <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
         <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-          {analysis.indicadores_de_rentabilidad.analisis_grafica}
+          {analysis.indicadores_de_rentabilidad.analisis_grafica[language]}
         </p>
         <div className="ml-auto flex gap-2 items-center">
           <p className="text-sm font-medium">Generado por IA</p>
@@ -913,7 +914,7 @@ const Charts = () => {
           <p className="font-medium text-white">Juan Londoño</p>
         </div>
         <p className="z-10 text-white text-sm">
-          {analysis.indicadores_de_rentabilidad.conclusion}
+          {analysis.indicadores_de_rentabilidad.conclusion[language]}
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
@@ -921,7 +922,7 @@ const Charts = () => {
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
-            {analysis.indicadores_de_rentabilidad.consejo}
+            {analysis.indicadores_de_rentabilidad.consejo[language]}
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
@@ -949,7 +950,7 @@ const Charts = () => {
       {/* Analisis */}
       <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
         <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-          {analysis.recomendacion.analisis_grafica}
+          {analysis.recomendacion.analisis_grafica[language]}
         </p>
         <div className="ml-auto flex gap-2 items-center">
           <p className="text-sm font-medium">Generado por IA</p>
@@ -971,7 +972,7 @@ const Charts = () => {
           <p className="font-medium text-white">Juan Londoño</p>
         </div>
         <p className="z-10 text-white text-sm">
-          {analysis.recomendacion.conclusion}
+          {analysis.recomendacion.conclusion[language]}
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
@@ -979,7 +980,7 @@ const Charts = () => {
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
-            {analysis.recomendacion.consejo}
+            {analysis.recomendacion.consejo[language]}
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
