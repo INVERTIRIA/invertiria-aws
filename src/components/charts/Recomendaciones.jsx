@@ -14,269 +14,6 @@ import {
 import { parsePrice } from "../../constants/functions";
 import { useState } from "react";
 
-// data para la grafica
-// const dataTIR = [
-//   {
-//     mes: "01/2023",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 1,
-//   },
-//   {
-//     mes: "02/2023",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 1,
-//   },
-//   {
-//     mes: "03/2023",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 1,
-//   },
-//   {
-//     mes: "04/2023",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 42,
-//   },
-//   {
-//     mes: "05/2023",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 19,
-//   },
-//   {
-//     mes: "06/2023",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 34,
-//   },
-//   {
-//     mes: "07/2023",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 33,
-//   },
-//   {
-//     mes: "08/2023",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 30,
-//   },
-//   {
-//     mes: "09/2023",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 11,
-//   },
-//   {
-//     mes: "10/2023",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 14,
-//   },
-//   {
-//     mes: "11/2023",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 14,
-//   },
-//   {
-//     mes: "12/2023",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 14,
-//   },
-//   {
-//     mes: "01/2024",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 13,
-//   },
-//   {
-//     mes: "02/2024",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 12,
-//   },
-//   {
-//     mes: "03/2024",
-//     "TIR Anualizada": 256,
-//     "TIR mensual": 11,
-//   },
-//   {
-//     mes: "04/2024",
-//     "TIR Anualizada": 224,
-//     "TIR mensual": 10,
-//   },
-//   {
-//     mes: "05/2024",
-//     "TIR Anualizada": 195,
-//     "TIR mensual": 9,
-//   },
-//   {
-//     mes: "06/2024",
-//     "TIR Anualizada": 172,
-//     "TIR mensual": 9,
-//   },
-//   {
-//     mes: "07/2024",
-//     "TIR Anualizada": 152,
-//     "TIR mensual": 8,
-//   },
-//   {
-//     mes: "08/2024",
-//     "TIR Anualizada": 138,
-//     "TIR mensual": 7,
-//   },
-//   {
-//     mes: "09/2024",
-//     "TIR Anualizada": 124,
-//     "TIR mensual": 7,
-//   },
-//   {
-//     mes: "10/2024",
-//     "TIR Anualizada": 113,
-//     "TIR mensual": 7,
-//   },
-//   {
-//     mes: "11/2024",
-//     "TIR Anualizada": 103,
-//     "TIR mensual": 6,
-//   },
-// ];
-
-// const dataROI = [
-//   {
-//     mes: "01/2023",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 1,
-//   },
-//   {
-//     mes: "02/2023",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 1,
-//   },
-//   {
-//     mes: "03/2023",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 100,
-//   },
-//   {
-//     mes: "04/2023",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 32,
-//   },
-//   {
-//     mes: "05/2023",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 32,
-//   },
-//   {
-//     mes: "06/2023",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 62,
-//   },
-//   {
-//     mes: "07/2023",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 74,
-//   },
-//   {
-//     mes: "08/2023",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 88,
-//   },
-//   {
-//     mes: "09/2023",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 16,
-//   },
-//   {
-//     mes: "10/2023",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 30,
-//   },
-//   {
-//     mes: "11/2023",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 40,
-//   },
-//   {
-//     mes: "12/2023",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 48,
-//   },
-//   {
-//     mes: "01/2024",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 53,
-//   },
-//   {
-//     mes: "02/2024",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 58,
-//   },
-//   {
-//     mes: "03/2024",
-//     "ROI Anualizada": 52,
-//     "ROI mensual": 60,
-//   },
-//   {
-//     mes: "04/2024",
-//     "ROI Anualizada": 50,
-//     "ROI mensual": 63,
-//   },
-//   {
-//     mes: "05/2024",
-//     "ROI Anualizada": 47,
-//     "ROI mensual": 63,
-//   },
-//   {
-//     mes: "06/2024",
-//     "ROI Anualizada": 45,
-//     "ROI mensual": 64,
-//   },
-//   {
-//     mes: "07/2024",
-//     "ROI Anualizada": 43,
-//     "ROI mensual": 64,
-//   },
-//   {
-//     mes: "08/2024",
-//     "ROI Anualizada": 41,
-//     "ROI mensual": 65,
-//   },
-//   {
-//     mes: "09/2024",
-//     "ROI Anualizada": 39,
-//     "ROI mensual": 65,
-//   },
-//   {
-//     mes: "10/2024",
-//     "ROI Anualizada": 37,
-//     "ROI mensual": 65,
-//   },
-//   {
-//     mes: "11/2024",
-//     "ROI Anualizada": 35,
-//     "ROI mensual": 65,
-//   },
-// ];
-
-// const dataUtilidad = [
-//   { mes: "01/2023", Utilidad: 0 },
-//   { mes: "02/2023", Utilidad: 0 },
-//   { mes: "03/2023", Utilidad: 5000000 },
-//   { mes: "04/2023", Utilidad: 2076500 },
-//   { mes: "05/2023", Utilidad: 2076500 },
-//   { mes: "06/2023", Utilidad: 7076500 },
-//   { mes: "07/2023", Utilidad: 12076500 },
-//   { mes: "08/2023", Utilidad: 18576500 },
-//   { mes: "09/2023", Utilidad: 7439166 },
-//   { mes: "10/2023", Utilidad: 15190142 },
-//   { mes: "11/2023", Utilidad: 22453569 },
-//   { mes: "12/2023", Utilidad: 29228825 },
-//   { mes: "01/2024", Utilidad: 35526555 },
-//   { mes: "02/2024", Utilidad: 41344513 },
-//   { mes: "03/2024", Utilidad: 46180674 },
-//   { mes: "04/2024", Utilidad: 51033220 },
-//   { mes: "05/2024", Utilidad: 54900510 },
-//   { mes: "06/2024", Utilidad: 58779937 },
-//   { mes: "07/2024", Utilidad: 62162724 },
-//   { mes: "08/2024", Utilidad: 66048873 },
-//   { mes: "09/2024", Utilidad: 69438382 },
-//   { mes: "10/2024", Utilidad: 72831252 },
-//   { mes: "11/2024", Utilidad: 75727484 },
-// ];
-
 const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
 
   const mesVentaSeleccionado = mesVenta.slice(0, 7);
@@ -359,11 +96,15 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
   });
 
   const [startIndexBrush, setStartIndexBrush] = useState(0);
-  const [endIndexBrush, setEndIndexBrush] = useState(11);
+  const [endIndexBrush, setEndIndexBrush] = useState(240);
 
+  let timeout;
   const handleBrushOnchange = (e) => {
-    // setStartIndexBrush(e.startIndex);
-    // setEndIndexBrush(e.endIndex);
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      setStartIndexBrush(e.startIndex);
+      setEndIndexBrush(e.endIndex);
+    }, 200);
   };
 
   return (
@@ -378,7 +119,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
               className={" flex aspect-video justify-center text-xs"}
             >
               <ComposedChart
-                syncId="syncId"
+                syncId="syncId2"
                 data={dataROI}
                 margin={{ top: 10, right: 10 }}
               >
@@ -401,7 +142,9 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
                     angle="-90"
                   />
                 </YAxis>
-                <Tooltip />
+                <Tooltip
+                  formatter={(value, name) => value + "%"}
+                />
                 <Line
                   dataKey="ROI mensual"
                   strokeWidth={1.5}
@@ -435,8 +178,8 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
                 <Brush
                   dataKey="mes"
                   stroke="#FB3D03"
-                  startIndex={0}
-                  endIndex={240}
+                  startIndex={startIndexBrush}
+                  endIndex={endIndexBrush}
                   height={30}
                   className="custom-brush"
                   onChange={handleBrushOnchange}
@@ -453,7 +196,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
             <ResponsiveContainer
               className={" flex aspect-video justify-center text-xs"}
             >
-              <ComposedChart data={dataTIR} syncId="syncId">
+              <ComposedChart data={dataTIR.slice(startIndexBrush, endIndexBrush + 1)} syncId="syncId2">
                 <CartesianGrid
                   className="opacity-50"
                   vertical={false}
@@ -477,7 +220,9 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
                     angle="-90"
                   />
                 </YAxis>
-                <Tooltip />
+                <Tooltip
+                  formatter={(value, name) => value + "%"}
+                />
                 <Line
                   dataKey="TIR mensual"
                   strokeWidth={1.5}
@@ -521,9 +266,9 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
               className={"w-full flex aspect-video justify-center text-xs"}
             >
               <ComposedChart
-                data={dataUtilidad}
+                data={dataUtilidad.slice(startIndexBrush, endIndexBrush + 1)}
                 margin={{ top: 10, right: 10, left: 80, bottom: 0 }}
-                syncId="syncId"
+                syncId="syncId2"
               >
                 <CartesianGrid className="opacity-50" vertical={false} />
                 <XAxis
@@ -546,7 +291,9 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
                     angle="-90"
                   />
                 </YAxis>
-                <Tooltip />
+                <Tooltip
+                  formatter={(value, name) => parsePrice(value)}
+                />
                 <ReferenceLine x={mesMayorUtilidad}
                   label={{ value: 'Mayor utilidad', style: { fill: 'black' }, angle: -90, position: 'center' }}
                   stroke="green"
