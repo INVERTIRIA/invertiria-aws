@@ -16,6 +16,8 @@ import { useEffect, useState } from "react";
 import DashboardSkeleton from "../components/design/DashboardSkeleton";
 import { parsePrice } from "../constants/functions";
 import { useParams } from "react-router";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
 
 const Analisis = () => {
   let { id } = useParams();
@@ -27,7 +29,7 @@ const Analisis = () => {
 
   if (!id) {
     id = '4ccdb1be-038d-464a-8059-0d532834cb09'
-  }  
+  }
 
   // Funcion obtener modelacion
   const getModelation = async () => {
@@ -159,6 +161,30 @@ const Analisis = () => {
 
   return (
     <Container classNameParent={"my-20"} className="flex flex-col gap-20">
+
+      {/* Informacion del analisis en popup */}
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="full_ghost" className="w-48 font-normal text-gray-600">
+            Información del analisis
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="w-[80%] xl:w-[35%] !max-w-none h-[80vh]">
+          <DialogTitle>Información del analisis</DialogTitle>
+          <DialogDescription></DialogDescription>
+          <div className="mt-2 mb-2 space-y-3 overflow-y-auto">
+            {Object.entries(modelation).map(([key, value]) => (
+              <p className="text-sm text-gray-600" key={key}>
+                <strong>{key}:</strong>{" "}
+                {typeof value === "object" && value !== null
+                  ? JSON.stringify(value)
+                  : String(value)}
+              </p>
+            ))}
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Titulo */}
       <div className="w-full flex flex-col items-center text-center gap-9">
         <h2 className="h2 !max-w-none">Análisis de inversión</h2>
