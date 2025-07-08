@@ -14,8 +14,6 @@ function Investment() {
   const [tir, setTir] = useState([]);
 
   // Flujo de caja
-  // const cashFlows = [-1000, 300, 400, 500, 200, 300, 600, 500, 400, 300, 200, 100];
-  // const cashFlows = [-5000000, 0, 0, -4861000, -4861000, 33298722]
   const cashFlows = [
     -5000000, -2331572, -2331572, -2331572, -2331572, -2331572,
     -2331572, -2331572, -2331572, -2331572, -2331572, -2331572,
@@ -25,7 +23,6 @@ function Investment() {
     -2331572, -2331572, -2331572, -2331572, -2331572, -2331572,
     -2331572, -2331572, -2331572, 130832836
   ];
-  // const cashFlows = [-5000000, 7076500, 7076500, 12076500, 21937611, 33298722, 27022499, 39634587, 51759125]
 
   useEffect(() => {
     getResults();
@@ -37,7 +34,7 @@ function Investment() {
         title={t("investment.title")}
         paragraph={t("investment.paragraph")}
       />
-      <InvestResult
+      {/* <InvestResult
         title={t("investment.results")}
         paragraph={t("investment.here_are_the_results")}
         results={
@@ -46,9 +43,9 @@ function Investment() {
             <p className="mx-auto mt-2 max-w-xl text-lg/8 text-pretty text-cyan-50"><b>TIR:</b> {tir.map(e => e + "%").join(", ")}</p>
           </>
         }
-      />
-      <MyLineChart results={cashFlows} dataName="CashFlows" />
-      <MyLineChart results={tir} dataName="TIR (%)" />
+      /> */}
+      {/* <MyLineChart results={cashFlows} dataName="CashFlows" />
+      <MyLineChart results={tir} dataName="TIR (%)" /> */}
     </div>
   )
 
