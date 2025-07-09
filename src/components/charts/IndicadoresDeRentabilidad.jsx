@@ -13,272 +13,9 @@ import {
 import { parsePrice } from "../../constants/functions";
 import { IndicadorDeRentabilidad } from "./IndicadorDeRentabilidad";
 import { Slider } from "@/components/ui/slider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-// data para la grafica
-// const dataTIR = [
-//   {
-//     mes: "01/2023",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 1,
-//   },
-//   {
-//     mes: "02/2023",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 1,
-//   },
-//   {
-//     mes: "03/2023",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 1,
-//   },
-//   {
-//     mes: "04/2023",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 42,
-//   },
-//   {
-//     mes: "05/2023",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 19,
-//   },
-//   {
-//     mes: "06/2023",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 34,
-//   },
-//   {
-//     mes: "07/2023",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 33,
-//   },
-//   {
-//     mes: "08/2023",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 30,
-//   },
-//   {
-//     mes: "09/2023",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 11,
-//   },
-//   {
-//     mes: "10/2023",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 14,
-//   },
-//   {
-//     mes: "11/2023",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 14,
-//   },
-//   {
-//     mes: "12/2023",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 14,
-//   },
-//   {
-//     mes: "01/2024",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 13,
-//   },
-//   {
-//     mes: "02/2024",
-//     "TIR Anualizada": 1,
-//     "TIR mensual": 12,
-//   },
-//   {
-//     mes: "03/2024",
-//     "TIR Anualizada": 256,
-//     "TIR mensual": 11,
-//   },
-//   {
-//     mes: "04/2024",
-//     "TIR Anualizada": 224,
-//     "TIR mensual": 10,
-//   },
-//   {
-//     mes: "05/2024",
-//     "TIR Anualizada": 195,
-//     "TIR mensual": 9,
-//   },
-//   {
-//     mes: "06/2024",
-//     "TIR Anualizada": 172,
-//     "TIR mensual": 9,
-//   },
-//   {
-//     mes: "07/2024",
-//     "TIR Anualizada": 152,
-//     "TIR mensual": 8,
-//   },
-//   {
-//     mes: "08/2024",
-//     "TIR Anualizada": 138,
-//     "TIR mensual": 7,
-//   },
-//   {
-//     mes: "09/2024",
-//     "TIR Anualizada": 124,
-//     "TIR mensual": 7,
-//   },
-//   {
-//     mes: "10/2024",
-//     "TIR Anualizada": 113,
-//     "TIR mensual": 7,
-//   },
-//   {
-//     mes: "11/2024",
-//     "TIR Anualizada": 103,
-//     "TIR mensual": 6,
-//   },
-// ];
-
-// const dataROI = [
-//   {
-//     mes: "01/2023",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 1,
-//   },
-//   {
-//     mes: "02/2023",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 1,
-//   },
-//   {
-//     mes: "03/2023",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 100,
-//   },
-//   {
-//     mes: "04/2023",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 32,
-//   },
-//   {
-//     mes: "05/2023",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 32,
-//   },
-//   {
-//     mes: "06/2023",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 62,
-//   },
-//   {
-//     mes: "07/2023",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 74,
-//   },
-//   {
-//     mes: "08/2023",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 88,
-//   },
-//   {
-//     mes: "09/2023",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 16,
-//   },
-//   {
-//     mes: "10/2023",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 30,
-//   },
-//   {
-//     mes: "11/2023",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 40,
-//   },
-//   {
-//     mes: "12/2023",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 48,
-//   },
-//   {
-//     mes: "01/2024",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 53,
-//   },
-//   {
-//     mes: "02/2024",
-//     "ROI Anualizada": 1,
-//     "ROI mensual": 58,
-//   },
-//   {
-//     mes: "03/2024",
-//     "ROI Anualizada": 52,
-//     "ROI mensual": 60,
-//   },
-//   {
-//     mes: "04/2024",
-//     "ROI Anualizada": 50,
-//     "ROI mensual": 63,
-//   },
-//   {
-//     mes: "05/2024",
-//     "ROI Anualizada": 47,
-//     "ROI mensual": 63,
-//   },
-//   {
-//     mes: "06/2024",
-//     "ROI Anualizada": 45,
-//     "ROI mensual": 64,
-//   },
-//   {
-//     mes: "07/2024",
-//     "ROI Anualizada": 43,
-//     "ROI mensual": 64,
-//   },
-//   {
-//     mes: "08/2024",
-//     "ROI Anualizada": 41,
-//     "ROI mensual": 65,
-//   },
-//   {
-//     mes: "09/2024",
-//     "ROI Anualizada": 39,
-//     "ROI mensual": 65,
-//   },
-//   {
-//     mes: "10/2024",
-//     "ROI Anualizada": 37,
-//     "ROI mensual": 65,
-//   },
-//   {
-//     mes: "11/2024",
-//     "ROI Anualizada": 35,
-//     "ROI mensual": 65,
-//   },
-// ];
-
-// const dataUtilidad = [
-//   { mes: "01/2023", Utilidad: 0 },
-//   { mes: "02/2023", Utilidad: 0 },
-//   { mes: "03/2023", Utilidad: 5000000 },
-//   { mes: "04/2023", Utilidad: 2076500 },
-//   { mes: "05/2023", Utilidad: 2076500 },
-//   { mes: "06/2023", Utilidad: 7076500 },
-//   { mes: "07/2023", Utilidad: 12076500 },
-//   { mes: "08/2023", Utilidad: 18576500 },
-//   { mes: "09/2023", Utilidad: 7439166 },
-//   { mes: "10/2023", Utilidad: 15190142 },
-//   { mes: "11/2023", Utilidad: 22453569 },
-//   { mes: "12/2023", Utilidad: 29228825 },
-//   { mes: "01/2024", Utilidad: 35526555 },
-//   { mes: "02/2024", Utilidad: 41344513 },
-//   { mes: "03/2024", Utilidad: 46180674 },
-//   { mes: "04/2024", Utilidad: 51033220 },
-//   { mes: "05/2024", Utilidad: 54900510 },
-//   { mes: "06/2024", Utilidad: 58779937 },
-//   { mes: "07/2024", Utilidad: 62162724 },
-//   { mes: "08/2024", Utilidad: 66048873 },
-//   { mes: "09/2024", Utilidad: 69438382 },
-//   { mes: "10/2024", Utilidad: 72831252 },
-//   { mes: "11/2024", Utilidad: 75727484 },
-// ];
-
-const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
+const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => {
 
   // Obtener data roi
   let maxRoi = 0;
@@ -290,11 +27,11 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
         roi = flowsResult.roi[i][2];
       }
       // Maximo roi
-      if(flowsResult.roi[i][2] > maxRoi){
+      if (flowsResult.roi[i][2] > maxRoi) {
         maxRoi = flowsResult.roi[i][2];
       }
       // Minimo roi
-      if(flowsResult.roi[i][2] < minRoi){
+      if (flowsResult.roi[i][2] < minRoi) {
         minRoi = flowsResult.roi[i][2];
       }
     }
@@ -321,11 +58,11 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
         tir_mensual = flowsResult.tir_mensual[i][2];
       }
       // Maximo tir
-      if(flowsResult.tir_mensual[i][2] > maxTir){
+      if (flowsResult.tir_mensual[i][2] > maxTir) {
         maxTir = flowsResult.tir_mensual[i][2];
       }
       // Minimo tir
-      if(flowsResult.tir_mensual[i][2] < minTir){
+      if (flowsResult.tir_mensual[i][2] < minTir) {
         minTir = flowsResult.tir_mensual[i][2];
       }
     }
@@ -344,7 +81,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
 
   // Obtener data utilidad
   let maxUtilidad = 0;
-  let minUtilidad  = 0;
+  let minUtilidad = 0;
   const dataUtilidad = timeVectors?.valor_inmueble.map((item, index) => {
     let utilidad = 0;
     for (let i = 0; i < flowsResult?.utilidad.length; i++) {
@@ -352,11 +89,11 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
         utilidad = flowsResult.utilidad[i][2];
       }
       // Maxima utilidad
-      if(flowsResult.utilidad[i][2] > maxUtilidad){
+      if (flowsResult.utilidad[i][2] > maxUtilidad) {
         maxUtilidad = flowsResult.utilidad[i][2];
       }
       // Minima utilidad
-      if(flowsResult.utilidad[i][2] < minUtilidad){
+      if (flowsResult.utilidad[i][2] < minUtilidad) {
         minUtilidad = flowsResult.utilidad[i][2];
       }
     }
@@ -376,11 +113,11 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
         cap_rate = flowsResult.cap_rate[i][2];
       }
       // Maximo cap rate
-      if(flowsResult.cap_rate[i][2] > maxCapRate){
+      if (flowsResult.cap_rate[i][2] > maxCapRate) {
         maxCapRate = flowsResult.cap_rate[i][2];
       }
       // Minimo cap rate
-      if(flowsResult.cap_rate[i][2] < minCapRate){
+      if (flowsResult.cap_rate[i][2] < minCapRate) {
         minCapRate = flowsResult.cap_rate[i][2];
       }
     }
@@ -390,8 +127,16 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
     };
   });
 
+  // Obtener mes de venta
+  let mesVenta = 0;
+  for (let i = 0; i < timeVectors?.valor_inmueble.length; i++) {
+    if (timeVectors?.valor_inmueble[i][1] == fechaVenta) {
+      mesVenta = timeVectors?.valor_inmueble[i][0];
+    }
+  }
+
   const [startIndexBrush, setStartIndexBrush] = useState(0);
-  const [endIndexBrush, setEndIndexBrush] = useState(11);
+  const [endIndexBrush, setEndIndexBrush] = useState(240);
   const [maxStep, setMaxStep] = useState(240);
   const [activeMonth, setActiveMonth] = useState(0);
 
@@ -402,10 +147,14 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
     capRate: 0,
   });
 
-  const handleBrushOnchange = (e) => {    
-    // setMaxStep(e.endIndex - e.startIndex);
-    // setStartIndexBrush(e.startIndex);
-    // setEndIndexBrush(e.endIndex);
+  let timeout;
+  const handleBrushOnchange = (e) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      setMaxStep([e.endIndex - e.startIndex]);
+      setStartIndexBrush(e.startIndex);
+      setEndIndexBrush(e.endIndex);
+    }, 200);
   };
 
   const handleKPI = (value) => {
@@ -444,6 +193,11 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
     }
   };
 
+  // Asignar mes de venta inicial
+  useEffect(() => {
+    handleKPI([mesVenta]);
+  }, [])
+
   return (
     <div className="w-full flex flex-col md:flex-row gap-12">
       <div className="flex flex-col gap-4 w-[70%]">
@@ -452,7 +206,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
             Mes de venta seleccionado
           </h2>
           <div className="w-full pl-14">
-            <Slider step={1} max={maxStep} onValueChange={handleKPI} />
+            <Slider step={1} max={maxStep} defaultValue={[mesVenta]} onValueChange={handleKPI} />
           </div>
         </div>
         <div className="flex flex-col gap-20">
@@ -487,7 +241,9 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
                     angle="-90"
                   />
                 </YAxis>
-                <Tooltip />
+                <Tooltip
+                  formatter={(value, name) => value + "%"}
+                />
                 <Line
                   dataKey="ROI mensual"
                   strokeWidth={1.5}
@@ -509,8 +265,8 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
                   dataKey="mes"
                   stroke="#FB3D03"
                   height={30}
-                  startIndex={0}
-                  endIndex={240}
+                  startIndex={startIndexBrush}
+                  endIndex={endIndexBrush}
                   className="custom-brush"
                   onChange={handleBrushOnchange}
                 />
@@ -526,7 +282,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
             <ResponsiveContainer
               className={" flex aspect-video justify-center text-xs"}
             >
-              <ComposedChart data={dataTIR} syncId="syncId">
+              <ComposedChart data={dataTIR.slice(startIndexBrush, endIndexBrush + 1)} syncId="syncId">
                 <CartesianGrid
                   className="opacity-50"
                   vertical={false}
@@ -550,7 +306,9 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
                     angle="-90"
                   />
                 </YAxis>
-                <Tooltip />
+                <Tooltip
+                  formatter={(value, name) => value + "%"}
+                />
                 <Line
                   dataKey="TIR mensual"
                   strokeWidth={1.5}
@@ -581,7 +339,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
               className={"w-full flex aspect-video justify-center text-xs"}
             >
               <ComposedChart
-                data={dataUtilidad}
+                data={dataUtilidad.slice(startIndexBrush, endIndexBrush + 1)}
                 margin={{ top: 10, right: 10, left: 80, bottom: 0 }}
                 syncId="syncId"
               >
@@ -606,7 +364,9 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
                     angle="-90"
                   />
                 </YAxis>
-                <Tooltip />
+                <Tooltip
+                  formatter={(value, name) => parsePrice(value)}
+                />
                 <Line
                   dataKey="Utilidad"
                   strokeWidth={1.5}
@@ -624,7 +384,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult }) => {
       {<div className="flex-1 flex flex-col gap-10 h-fit">
         <div className="flex flex-col gap-4 flex-1 rounded-md ring-1 shadow-lg shadow-invertiria-2/30 ring-gray-900/5 p-4 ">
           <h2 className="text-2xl font-bold text-white px-4 py-2 bg-invertiria-2 w-fit rounded-md">
-            KPI
+            KPIs
           </h2>
           <div className="flex flex-col gap-10 divide-y-1">
             {/* TIR */}

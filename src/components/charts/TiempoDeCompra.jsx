@@ -19,7 +19,7 @@ function TiempoDeCompra({ timeVectors }) {
   // Obtener data
   const data = timeVectors?.valor_inmueble.map((item, index) => {
     const varianzaPorcentaje = timeVectors.valorizacion[index][5];
-    const varianza = (item[2] * Number(varianzaPorcentaje));
+    const varianza = Math.round(item[2] * Number(varianzaPorcentaje));
     return {
       mes: item[1],
       Varianza: [(item[2] - varianza), (item[2] + varianza)],
@@ -84,7 +84,16 @@ function TiempoDeCompra({ timeVectors }) {
             dot={false}
             activeDot={true}
           />
-          <Tooltip />
+          <Tooltip 
+            formatter={(value, name) => {
+              if (name === "Precio del inmueble") {
+                return parsePrice(value);
+              }
+              if (name === "Varianza") {
+                return "" + value.map((item) => parsePrice(item));;
+              }
+            }}
+          />
           <Line
             dataKey="Precio del inmueble"
             strokeWidth={1.5}
@@ -97,7 +106,7 @@ function TiempoDeCompra({ timeVectors }) {
             dataKey="mes"
             stroke="#FB3D03"
             startIndex={0}
-            endIndex={11}
+            endIndex={120}
             height={30}
             className="custom-brush"
           />
