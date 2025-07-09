@@ -36,16 +36,6 @@ function Map() {
     return () => clearTimeout(timeout);
   }, [search])
 
-  // const handleSelect = (option) => {
-  //   setPosition({
-  //     lat: option.geometry.coordinates[1],
-  //     lng: option.geometry.coordinates[0]
-  //   });
-  //   setLocation(option.properties.geocoding);
-  //   getLocationLevels(option.properties.geocoding);
-  //   setOpen(false)
-  // }
-
   return (
     <div>
       <Popover open={open} onOpenChange={setOpen}>
@@ -95,37 +85,6 @@ function Map() {
           </Command>
         </PopoverContent>
       </Popover>
-      {/* <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          <Input
-            type="text"
-            name="location"
-            id="location"
-            placeholder="Busca una ubicación (Bogotá o Medellín)"
-            className="mb-5"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </PopoverTrigger>
-        <PopoverContent className="w-[90vw] lg:w-[680px]">
-          <div className="flex flex-col">
-            {filteredOptions.map((option, index) => (
-              <div
-                key={index}
-                className={cn(
-                  "cursor-pointer px-2 py-1 hover:bg-gray-100 rounded text-sm"
-                )}
-                onClick={() => handleSelect(option)}
-              >
-                {option.properties.geocoding.label}
-              </div>
-            ))}
-            {filteredOptions.length === 0 && (
-              <div className="text-sm text-gray-500 p-2">Sin resultados (solo Bogotá o Medellín)</div>
-            )}
-          </div>
-        </PopoverContent>
-      </Popover> */}
 
       <MapContainer center={initialPosition} zoom={6} style={{ height: '400px', width: '100%', borderRadius: '15px', zIndex: '0' }}>
         <TileLayer
