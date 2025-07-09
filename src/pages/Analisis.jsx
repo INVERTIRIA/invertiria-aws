@@ -1,4 +1,4 @@
-import { Lightbulb, Info } from "lucide-react";
+import { Lightbulb, Info, Sparkles } from "lucide-react";
 import { Container } from "../components/design/Container";
 import { TiempoDeCompra } from "../components/charts/TiempoDeCompra";
 import { ValorDeCompra } from "../components/charts/ValorDeCompra";
@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 import DashboardSkeleton from "../components/design/DashboardSkeleton";
 import { parsePrice } from "../constants/functions";
 import { useParams } from "react-router";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 
 const Analisis = () => {
@@ -279,12 +279,8 @@ const Analisis = () => {
             {analysis.valor_de_compra.analisis_grafica_1[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-sm font-medium">Generado por IA</p>
-            <img
-              src="/assets/images/stars-2.webp"
-              alt=""
-              className="size-10 rounded-full"
-            />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
           </div>
         </div>
         {/* Gráficas */}
@@ -310,12 +306,8 @@ const Analisis = () => {
             {analysis.valor_de_compra.analisis_grafica_2[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-sm font-medium">Generado por IA</p>
-            <img
-              src="/assets/images/stars-2.webp"
-              alt=""
-              className="size-10 rounded-full"
-            />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
           </div>
         </div>
       </div>
@@ -342,12 +334,8 @@ const Analisis = () => {
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm  font-medium text-white">Generado por IA</p>
-          <img
-            src="/assets/images/stars.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-white">Generado por IA</p>
+          <Sparkles size={16} className="text-white" />
         </div>
       </div>
 
@@ -370,12 +358,8 @@ const Analisis = () => {
             {analysis.tiempo_de_compra.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-sm font-medium">Generado por IA</p>
-            <img
-              src="/assets/images/stars-2.webp"
-              alt=""
-              className="size-10 rounded-full"
-            />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
           </div>
         </div>
       </div>
@@ -402,12 +386,8 @@ const Analisis = () => {
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm  font-medium text-white">Generado por IA</p>
-          <img
-            src="/assets/images/stars.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-white">Generado por IA</p>
+          <Sparkles size={16} className="text-white" />
         </div>
       </div>
 
@@ -430,12 +410,8 @@ const Analisis = () => {
             {analysis.recomendaciones_compra.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-sm font-medium">Generado por IA</p>
-            <img
-              src="/assets/images/stars-2.webp"
-              alt=""
-              className="size-10 rounded-full"
-            />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
           </div>
         </div>
       </div>
@@ -462,12 +438,8 @@ const Analisis = () => {
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm  font-medium text-white">Generado por IA</p>
-          <img
-            src="/assets/images/stars.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-white">Generado por IA</p>
+          <Sparkles size={16} className="text-white" />
         </div>
       </div>
       <br />
@@ -496,12 +468,8 @@ const Analisis = () => {
             {analysis.valor_de_venta.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-sm font-medium">Generado por IA</p>
-            <img
-              src="/assets/images/stars-2.webp"
-              alt=""
-              className="size-10 rounded-full"
-            />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
           </div>
         </div>
       </div>
@@ -528,12 +496,8 @@ const Analisis = () => {
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm  font-medium text-white">Generado por IA</p>
-          <img
-            src="/assets/images/stars.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-white">Generado por IA</p>
+          <Sparkles size={16} className="text-white" />
         </div>
       </div>
 
@@ -556,12 +520,8 @@ const Analisis = () => {
             {analysis.tiempo_de_venta.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-sm font-medium">Generado por IA</p>
-            <img
-              src="/assets/images/stars-2.webp"
-              alt=""
-              className="size-10 rounded-full"
-            />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
           </div>
         </div>
       </div>
@@ -588,12 +548,8 @@ const Analisis = () => {
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm  font-medium text-white">Generado por IA</p>
-          <img
-            src="/assets/images/stars.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-white">Generado por IA</p>
+          <Sparkles size={16} className="text-white" />
         </div>
       </div>
 
@@ -645,12 +601,8 @@ const Analisis = () => {
             {analysis.indicadores_de_rentabilidad_venta.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-sm font-medium">Generado por IA</p>
-            <img
-              src="/assets/images/stars-2.webp"
-              alt=""
-              className="size-10 rounded-full"
-            />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
           </div>
         </div>
       </div>
@@ -677,12 +629,8 @@ const Analisis = () => {
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm  font-medium text-white">Generado por IA</p>
-          <img
-            src="/assets/images/stars.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-white">Generado por IA</p>
+          <Sparkles size={16} className="text-white" />
         </div>
       </div>
 
@@ -710,12 +658,8 @@ const Analisis = () => {
             {analysis.apalancamiento.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-sm font-medium">Generado por IA</p>
-            <img
-              src="/assets/images/stars-2.webp"
-              alt=""
-              className="size-10 rounded-full"
-            />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
           </div>
         </div>
       </div>
@@ -742,12 +686,8 @@ const Analisis = () => {
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm  font-medium text-white">Generado por IA</p>
-          <img
-            src="/assets/images/stars.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-white">Generado por IA</p>
+          <Sparkles size={16} className="text-white" />
         </div>
       </div>
 
@@ -771,12 +711,8 @@ const Analisis = () => {
             {analysis.costo_financiero.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-sm font-medium">Generado por IA</p>
-            <img
-              src="/assets/images/stars-2.webp"
-              alt=""
-              className="size-10 rounded-full"
-            />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
           </div>
         </div>
       </div>
@@ -803,12 +739,8 @@ const Analisis = () => {
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm  font-medium text-white">Generado por IA</p>
-          <img
-            src="/assets/images/stars.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-white">Generado por IA</p>
+          <Sparkles size={16} className="text-white" />
         </div>
       </div>
 
@@ -829,12 +761,8 @@ const Analisis = () => {
             {analysis.capacidad_de_endeudamiento.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-sm font-medium">Generado por IA</p>
-            <img
-              src="/assets/images/stars-2.webp"
-              alt=""
-              className="size-10 rounded-full"
-            />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
           </div>
         </div>
       </div>
@@ -861,12 +789,8 @@ const Analisis = () => {
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm  font-medium text-white">Generado por IA</p>
-          <img
-            src="/assets/images/stars.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-white">Generado por IA</p>
+          <Sparkles size={16} className="text-white" />
         </div>
       </div>
 
@@ -889,12 +813,8 @@ const Analisis = () => {
             {analysis.flujo_de_caja.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-sm font-medium">Generado por IA</p>
-            <img
-              src="/assets/images/stars-2.webp"
-              alt=""
-              className="size-10 rounded-full"
-            />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
           </div>
         </div>
       </div>
@@ -921,12 +841,8 @@ const Analisis = () => {
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm  font-medium text-white">Generado por IA</p>
-          <img
-            src="/assets/images/stars.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-white">Generado por IA</p>
+          <Sparkles size={16} className="text-white" />
         </div>
       </div>
 
@@ -948,12 +864,8 @@ const Analisis = () => {
           {analysis.indicadores_de_rentabilidad.analisis_grafica[language]}
         </p>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm font-medium">Generado por IA</p>
-          <img
-            src="/assets/images/stars-2.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+          <Sparkles size={16} className="text-invertiria-1" />
         </div>
       </div>
       {/* Conclusión */}
@@ -979,12 +891,8 @@ const Analisis = () => {
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm  font-medium text-white">Generado por IA</p>
-          <img
-            src="/assets/images/stars.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-white">Generado por IA</p>
+            <Sparkles size={16} className="text-white" />
         </div>
       </div>
 
@@ -1006,12 +914,8 @@ const Analisis = () => {
           {analysis.recomendacion.analisis_grafica[language]}
         </p>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm font-medium">Generado por IA</p>
-          <img
-            src="/assets/images/stars-2.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
         </div>
       </div>
       {/* Conclusión */}
@@ -1037,12 +941,8 @@ const Analisis = () => {
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm  font-medium text-white">Generado por IA</p>
-          <img
-            src="/assets/images/stars.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-white">Generado por IA</p>
+            <Sparkles size={16} className="text-white" />
         </div>
       </div>
 
