@@ -1,4 +1,4 @@
-import { Lightbulb } from "lucide-react";
+import { Lightbulb, Info, Sparkles } from "lucide-react";
 import { Container } from "../components/design/Container";
 import { TiempoDeCompra } from "../components/charts/TiempoDeCompra";
 import { ValorDeCompra } from "../components/charts/ValorDeCompra";
@@ -16,6 +16,8 @@ import { useEffect, useState } from "react";
 import DashboardSkeleton from "../components/design/DashboardSkeleton";
 import { parsePrice } from "../constants/functions";
 import { useParams } from "react-router";
+import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
 
 const Analisis = () => {
   let { id } = useParams();
@@ -27,11 +29,11 @@ const Analisis = () => {
 
   if (!id) {
     id = '4ccdb1be-038d-464a-8059-0d532834cb09'
-  }  
+  }
 
   // Funcion obtener modelacion
   const getModelation = async () => {
-    const { data: modelation, error } = await supabase.from("modelaciones").select("*, ciudad:ciudades(nombre)").eq("id", id).single();
+    const { data: modelation, error } = await supabase.from("modelaciones").select("*, ciudad:ciudades(nombre), pais:paises(nombre)").eq("id", id).single();
     if (error) console.log(error);
     setModelation(modelation);
     console.log(modelation);
@@ -159,6 +161,91 @@ const Analisis = () => {
 
   return (
     <Container classNameParent={"my-20"} className="flex flex-col gap-20">
+
+      {/* Informacion del analisis en popup */}
+      <Dialog>
+        <DialogTrigger asChild>
+          <div className="flex justify-end">
+            <Button variant="full_ghost" className="font-normal text-gray-600">
+              Información del analisis
+              <Info />
+            </Button>
+          </div>
+        </DialogTrigger>
+        <DialogContent className="w-[85%] xl:w-[35%] !max-w-none h-[70vh] p-10">
+          <DialogTitle className="mt-2 text-2xl">Información del analisis</DialogTitle>
+          <DialogDescription></DialogDescription>
+          {/* <div className="mt-2 mb-2 space-y-3 overflow-y-auto">
+            {Object.entries(modelation).map(([key, value]) => (
+              <p className="text-sm text-gray-600" key={key}>
+                <strong>{key}:</strong>{" "}
+                {typeof value === "object" && value !== null
+                  ? JSON.stringify(value)
+                  : String(value)}
+              </p>
+            ))}
+          </div> */}
+          <div className="mb-2 space-y-3 overflow-y-auto text-gray-800 text-sm font-medium leading-6">
+            <p><strong>Nombre del analisis:</strong> {modelation.titulo_modelacion}</p>
+            <p><strong>Vigencia de la inversion:</strong> {"No disponible"}</p>
+            <p><strong>Nombre del proyecto:</strong> {modelation.nombre_del_proyecto}</p>
+            <p><strong>Pais:</strong> {modelation.pais.nombre}</p>
+            <p><strong>Ciudad:</strong> {modelation.ciudad.nombre}</p>
+            <p><strong>Zona:</strong> {modelation.zona}</p>
+            <p><strong>Subzona:</strong> {modelation.subzona}</p>
+            <p><strong>Tipo de inmueble:</strong> {modelation.tipo_inmueble}</p>
+            <p><strong>Condicion del inmueble:</strong> {modelation.estado_inmueble}</p>
+            <p><strong>Titularidad:</strong> {"No disponible"}</p>
+            <p><strong>Modelo de negocio:</strong> {modelation.modelo_de_negocio}</p>
+            <p><strong>Moneda:</strong> {modelation.moneda}</p>
+            <p><strong>Precio de compra:</strong> {parsePrice(modelation.precio_de_compra)}</p>
+            <p><strong>Precio de mercado:</strong> {parsePrice(modelation.precio_de_mercado)}</p>
+            <p><strong>Separacion:</strong> {parsePrice(modelation.separacion)}</p>
+            <p><strong>Cuota inicial:</strong> {modelation.con_cuota_inicial ? "Si" : "No"}</p>
+            <p><strong>Forma de pago cuota inicial:</strong> {"No disponible"}</p>
+            <p><strong>Porcentaje de cuota inicial:</strong> {modelation.cuota_inicial + "%"}</p>
+            <p><strong>Fecha inicio cuota inicial:</strong> {modelation.inicial_fecha_inicio_pago}</p>
+            <p><strong>Fecha fin cuota inicial:</strong> {modelation.inicial_fecha_fin_pago}</p>
+            <p><strong>Numero de pagos personalizados:</strong> {"No disponible"}</p>
+            <p><strong>Forma de pago cuota inicial:</strong> {"No disponible"}</p>
+            <p><strong>Valor de pagos personalizados:</strong> {"No disponible"}</p>
+            <p><strong>Credito hipotecario:</strong> {modelation.credito_hipotecario ? "Si" : "No"}</p>
+            <p><strong>Tasa de interes efectiva anual:</strong> {modelation.tasa_de_interes + "%"}</p>
+            <p><strong>Fecha inicio credito:</strong> {modelation.credito_fecha_inicio_pago}</p>
+            <p><strong>Fecha fin credito:</strong> {modelation.credito_fecha_fin_pago}</p>
+            <p><strong>Edad de la propiedad:</strong> {modelation.edad_propiedad + " años"}</p>
+            <p><strong>Area del inmueble:</strong> {modelation.area_inmueble + "m²"}</p>
+            <p><strong>Parqueaderos:</strong> {modelation.parqueaderos}</p>
+            <p><strong>VIS:</strong> {modelation.vivienda_vis ? "Si" : "No"}</p>
+            <p><strong>Cesion de derechos:</strong> {modelation.cesion_de_derechos ? "Si" : "No"}</p>
+            <p><strong>Fecha inicio ventas:</strong> {modelation.fecha_inicio_ventas}</p>
+            <p><strong>Fecha entrega del inmueble:</strong> {modelation.fecha_prevista_entrega}</p>
+            <p><strong>Fecha de compra:</strong> {modelation.fecha_compra}</p>
+            <p><strong>Fecha prevista de venta:</strong> {modelation.fecha_prevista_venta}</p>
+            <p><strong>Etapa del proyecto:</strong> {modelation.etapa_proyecto}</p>
+            <p><strong>Comision por venta:</strong> {modelation.comision_vendedor ? "Si" : "No"}</p>
+            <p><strong>Porcentaje de comision:</strong> {modelation.porcentaje_comision_vendedor + "%"}</p>
+            <p><strong>Pago de administracion:</strong> {modelation.administracion ? "Si" : "No"}</p>
+            <p><strong>Valor de administracion:</strong> {parsePrice(modelation.valor_administracion)}</p>
+            <p><strong>Valor de predial:</strong> {parsePrice(modelation.valor_predial)}</p>
+            <p><strong>Requiere mejoras:</strong> {modelation.mejoras ? "Si" : "No"}</p>
+            <p><strong>Valor de mejoras:</strong> {parsePrice(modelation.valor_mejoras)}</p>
+            <p><strong>Requiere licencia de construccion:</strong> {modelation.licencia_construccion ? "Si" : "No"}</p>
+            <p><strong>Valor licencia de construccion:</strong> {parsePrice(modelation.costos_licencias)}</p>
+            <p><strong>Renta:</strong> {modelation.renta ? "Si" : "No"}</p>
+            <p><strong>Tipo de renta:</strong> {"No disponible"}</p>
+            <p><strong>Valor canon de arrendamiento:</strong> {parsePrice(modelation.canon_de_arrendamiento)}</p>
+            <p><strong>Valor noche:</strong> {parsePrice(modelation.valor_noche)}</p>
+            <p><strong>Tarifa mensual:</strong> {parsePrice(modelation.tarifa_mensual)}</p>
+            <p><strong>Porcentaje de ocupacion media:</strong> {modelation.ocupacion_media + "%"}</p>
+            <p><strong>Operador:</strong> {modelation.operador ? "Si" : "No"}</p>
+            <p><strong>Porcentaje de operador:</strong> {modelation.porcentaje_del_operador + "%"}</p>
+            <p><strong>Inmobiliaria:</strong> {"No disponible"}</p>
+            <p><strong>Porcentaje de inmobiliaria:</strong> {modelation.costo_mobiliario + "%"}</p>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Titulo */}
       <div className="w-full flex flex-col items-center text-center gap-9">
         <h2 className="h2 !max-w-none">Análisis de inversión</h2>
@@ -192,12 +279,8 @@ const Analisis = () => {
             {analysis.valor_de_compra.analisis_grafica_1[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-sm font-medium">Generado por IA</p>
-            <img
-              src="/assets/images/stars-2.webp"
-              alt=""
-              className="size-10 rounded-full"
-            />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
           </div>
         </div>
         {/* Gráficas */}
@@ -223,12 +306,8 @@ const Analisis = () => {
             {analysis.valor_de_compra.analisis_grafica_2[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-sm font-medium">Generado por IA</p>
-            <img
-              src="/assets/images/stars-2.webp"
-              alt=""
-              className="size-10 rounded-full"
-            />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
           </div>
         </div>
       </div>
@@ -255,12 +334,8 @@ const Analisis = () => {
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm  font-medium text-white">Generado por IA</p>
-          <img
-            src="/assets/images/stars.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-white">Generado por IA</p>
+          <Sparkles size={16} className="text-white" />
         </div>
       </div>
 
@@ -283,12 +358,8 @@ const Analisis = () => {
             {analysis.tiempo_de_compra.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-sm font-medium">Generado por IA</p>
-            <img
-              src="/assets/images/stars-2.webp"
-              alt=""
-              className="size-10 rounded-full"
-            />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
           </div>
         </div>
       </div>
@@ -315,12 +386,8 @@ const Analisis = () => {
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm  font-medium text-white">Generado por IA</p>
-          <img
-            src="/assets/images/stars.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-white">Generado por IA</p>
+          <Sparkles size={16} className="text-white" />
         </div>
       </div>
 
@@ -343,12 +410,8 @@ const Analisis = () => {
             {analysis.recomendaciones_compra.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-sm font-medium">Generado por IA</p>
-            <img
-              src="/assets/images/stars-2.webp"
-              alt=""
-              className="size-10 rounded-full"
-            />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
           </div>
         </div>
       </div>
@@ -375,12 +438,8 @@ const Analisis = () => {
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm  font-medium text-white">Generado por IA</p>
-          <img
-            src="/assets/images/stars.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-white">Generado por IA</p>
+          <Sparkles size={16} className="text-white" />
         </div>
       </div>
       <br />
@@ -409,12 +468,8 @@ const Analisis = () => {
             {analysis.valor_de_venta.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-sm font-medium">Generado por IA</p>
-            <img
-              src="/assets/images/stars-2.webp"
-              alt=""
-              className="size-10 rounded-full"
-            />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
           </div>
         </div>
       </div>
@@ -441,12 +496,8 @@ const Analisis = () => {
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm  font-medium text-white">Generado por IA</p>
-          <img
-            src="/assets/images/stars.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-white">Generado por IA</p>
+          <Sparkles size={16} className="text-white" />
         </div>
       </div>
 
@@ -469,12 +520,8 @@ const Analisis = () => {
             {analysis.tiempo_de_venta.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-sm font-medium">Generado por IA</p>
-            <img
-              src="/assets/images/stars-2.webp"
-              alt=""
-              className="size-10 rounded-full"
-            />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
           </div>
         </div>
       </div>
@@ -501,12 +548,8 @@ const Analisis = () => {
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm  font-medium text-white">Generado por IA</p>
-          <img
-            src="/assets/images/stars.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-white">Generado por IA</p>
+          <Sparkles size={16} className="text-white" />
         </div>
       </div>
 
@@ -558,12 +601,8 @@ const Analisis = () => {
             {analysis.indicadores_de_rentabilidad_venta.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-sm font-medium">Generado por IA</p>
-            <img
-              src="/assets/images/stars-2.webp"
-              alt=""
-              className="size-10 rounded-full"
-            />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
           </div>
         </div>
       </div>
@@ -590,12 +629,8 @@ const Analisis = () => {
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm  font-medium text-white">Generado por IA</p>
-          <img
-            src="/assets/images/stars.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-white">Generado por IA</p>
+          <Sparkles size={16} className="text-white" />
         </div>
       </div>
 
@@ -623,12 +658,8 @@ const Analisis = () => {
             {analysis.apalancamiento.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-sm font-medium">Generado por IA</p>
-            <img
-              src="/assets/images/stars-2.webp"
-              alt=""
-              className="size-10 rounded-full"
-            />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
           </div>
         </div>
       </div>
@@ -655,12 +686,8 @@ const Analisis = () => {
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm  font-medium text-white">Generado por IA</p>
-          <img
-            src="/assets/images/stars.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-white">Generado por IA</p>
+          <Sparkles size={16} className="text-white" />
         </div>
       </div>
 
@@ -684,12 +711,8 @@ const Analisis = () => {
             {analysis.costo_financiero.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-sm font-medium">Generado por IA</p>
-            <img
-              src="/assets/images/stars-2.webp"
-              alt=""
-              className="size-10 rounded-full"
-            />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
           </div>
         </div>
       </div>
@@ -716,12 +739,8 @@ const Analisis = () => {
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm  font-medium text-white">Generado por IA</p>
-          <img
-            src="/assets/images/stars.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-white">Generado por IA</p>
+          <Sparkles size={16} className="text-white" />
         </div>
       </div>
 
@@ -742,12 +761,8 @@ const Analisis = () => {
             {analysis.capacidad_de_endeudamiento.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-sm font-medium">Generado por IA</p>
-            <img
-              src="/assets/images/stars-2.webp"
-              alt=""
-              className="size-10 rounded-full"
-            />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
           </div>
         </div>
       </div>
@@ -774,12 +789,8 @@ const Analisis = () => {
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm  font-medium text-white">Generado por IA</p>
-          <img
-            src="/assets/images/stars.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-white">Generado por IA</p>
+          <Sparkles size={16} className="text-white" />
         </div>
       </div>
 
@@ -802,12 +813,8 @@ const Analisis = () => {
             {analysis.flujo_de_caja.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-sm font-medium">Generado por IA</p>
-            <img
-              src="/assets/images/stars-2.webp"
-              alt=""
-              className="size-10 rounded-full"
-            />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
           </div>
         </div>
       </div>
@@ -834,12 +841,8 @@ const Analisis = () => {
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm  font-medium text-white">Generado por IA</p>
-          <img
-            src="/assets/images/stars.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-white">Generado por IA</p>
+          <Sparkles size={16} className="text-white" />
         </div>
       </div>
 
@@ -861,12 +864,8 @@ const Analisis = () => {
           {analysis.indicadores_de_rentabilidad.analisis_grafica[language]}
         </p>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm font-medium">Generado por IA</p>
-          <img
-            src="/assets/images/stars-2.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+          <Sparkles size={16} className="text-invertiria-1" />
         </div>
       </div>
       {/* Conclusión */}
@@ -892,12 +891,8 @@ const Analisis = () => {
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm  font-medium text-white">Generado por IA</p>
-          <img
-            src="/assets/images/stars.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-white">Generado por IA</p>
+            <Sparkles size={16} className="text-white" />
         </div>
       </div>
 
@@ -919,12 +914,8 @@ const Analisis = () => {
           {analysis.recomendacion.analisis_grafica[language]}
         </p>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm font-medium">Generado por IA</p>
-          <img
-            src="/assets/images/stars-2.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
         </div>
       </div>
       {/* Conclusión */}
@@ -950,12 +941,8 @@ const Analisis = () => {
           </p>
         </div>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-sm  font-medium text-white">Generado por IA</p>
-          <img
-            src="/assets/images/stars.webp"
-            alt=""
-            className="size-10 rounded-full"
-          />
+          <p className="text-xs font-medium text-white">Generado por IA</p>
+            <Sparkles size={16} className="text-white" />
         </div>
       </div>
 
