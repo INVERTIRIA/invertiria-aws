@@ -2478,6 +2478,196 @@ const RentaTradicional = ({ className }) => {
   );
 };
 
+const Like = ({ className }) => {
+  return (
+    <svg
+      version="1.1"
+      id="svg708"
+      xmlSpace="preserve"
+      width="53"
+      height="55"
+      viewBox="0 0 682.66669 682.66669"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      className={className}
+    >
+      <defs id="defs712">
+        <clipPath clipPathUnits="userSpaceOnUse" id="clipPath722">
+          <path d="M 0,512 H 512 V 0 H 0 Z" id="path720" />
+        </clipPath>
+      </defs>
+      <g id="g714" transform="matrix(1.3333333,0,0,-1.3333333,0,682.66667)">
+        <g id="g716">
+          <g id="g718" clipPath="url(#clipPath722)">
+            <g id="g724" transform="translate(106.2349,35.4858)">
+              <path
+                fill="currentColor"
+                stroke="currentColor"
+                d="m 0,0 c 46.021,0 92.042,-25.485 138.064,-25.485 h 112.143 c 57.206,0 72.637,61.54 53.503,79.91 m -14.295,145.624 50,1.088 c 21.924,0.476 39.861,18.073 39.861,39.096 0,23.513 -18.684,40.099 -40.859,40.098 L 138.823,280.325 M 305.282,123.358 c 48.538,0 58.188,64.404 34.164,77.762 M 286.093,50.967 c 42.398,0 58.084,53.308 39.722,76.927"
+                style={{
+                  fill: "none",
+                  strokeWidth: 20,
+                  strokeLinecap: "round",
+                  strokeLinejoin: "round",
+                  strokeMiterlimit: 22.926,
+                  strokeDasharray: "none",
+                  strokeOpacity: 1,
+                }}
+                id="path726"
+              />
+            </g>
+            <g id="g728" transform="translate(106.2349,124.2803)">
+              <path
+                fill="currentColor"
+                stroke="currentColor"
+                d="M 0,0 V -102.021 H -79.747 V 192.014 H 0 V 90"
+                style={{
+                  fill: "none",
+                  strokeWidth: 20,
+                  strokeLinecap: "round",
+                  strokeLinejoin: "round",
+                  strokeMiterlimit: 22.926,
+                  strokeDasharray: "none",
+                  strokeOpacity: 1,
+                }}
+                id="path730"
+              />
+            </g>
+            <g id="g732" transform="translate(278.0146,315.8193)">
+              <path
+                fill="currentColor"
+                stroke="currentColor"
+                d="m 0,0 c -21.476,20.703 -29.02,52.975 -18.276,78.833 11.785,28.363 11.328,50.768 -2.063,76.186 -13.596,25.808 -59.382,46.655 -65.701,15.641 -2.842,-13.951 1.817,-44.29 -18.526,-83.264 -23.088,-44.233 -0.342,-99.841 -66.683,-100.14"
+                style={{
+                  fill: "none",
+                  strokeWidth: 20,
+                  strokeLinecap: "round",
+                  strokeLinejoin: "round",
+                  strokeMiterlimit: 22.926,
+                  strokeDasharray: "none",
+                  strokeOpacity: 1,
+                }}
+                id="path734"
+              />
+            </g>
+            <g id="g736" transform="translate(106.2349,169.2842)">
+              <path
+                fill="currentColor"
+                stroke="currentColor"
+                d="M 0,0 V -0.007"
+                style={{
+                  fill: "none",
+                  strokeWidth: 20,
+                  strokeLinecap: "round",
+                  strokeLinejoin: "round",
+                  strokeMiterlimit: 2.613,
+                  strokeDasharray: "none",
+                  strokeOpacity: 1,
+                }}
+                id="path738"
+              />
+            </g>
+          </g>
+        </g>
+      </g>
+    </svg>
+  );
+};
+
+const Deslike = ({ className }) => {
+  return (
+    <svg
+      version="1.1"
+      id="svg1581"
+      xmlSpace="preserve"
+      width="53"
+      height="55"
+      viewBox="0 0 682.66669 682.66669"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <defs id="defs1585">
+        <clipPath clipPathUnits="userSpaceOnUse" id="clipPath1595">
+          <path d="M 0,512 H 512 V 0 H 0 Z" id="path1593" />
+        </clipPath>
+      </defs>
+      <g id="g1587" transform="matrix(1.3333333,0,0,-1.3333333,0,682.66667)">
+        <g id="g1589">
+          <g id="g1591" clipPath="url(#clipPath1595)">
+            <g id="g1597" transform="translate(405.7646,476.5156)">
+              <path
+                fill="currentColor"
+                stroke="currentColor"
+                d="m 0,0 c -46.021,0 -92.042,25.485 -138.064,25.485 h -112.143 c -57.205,0 -72.637,-61.54 -53.503,-79.91 m 14.295,-145.624 -50,-1.088 c -21.924,-0.475 -39.861,-18.073 -39.861,-39.095 0,-23.514 18.684,-40.099 40.859,-40.098 l 199.594,0.006 m -166.459,156.967 c -48.538,0 -58.187,-64.405 -34.163,-77.762 m 53.352,150.152 c -42.398,0 -58.084,-53.308 -39.722,-76.927"
+                style={{
+                  fill: "none",
+                  strokeWidth: 20,
+                  strokeLinecap: "round",
+                  strokeLinejoin: "round",
+                  strokeMiterlimit: 22.926,
+                  strokeDasharray: "none",
+                  strokeOpacity: 1,
+                }}
+                id="path1599"
+              />
+            </g>
+            <g id="g1601" transform="translate(405.7646,387.7217)">
+              <path
+                fill="currentColor"
+                stroke="currentColor"
+                d="M 0,0 V 102.021 H 79.747 V -192.014 H 0 V -90"
+                style={{
+                  fill: "none",
+                  strokeWidth: 20,
+                  strokeLinecap: "round",
+                  strokeLinejoin: "round",
+                  strokeMiterlimit: 22.926,
+                  strokeDasharray: "none",
+                  strokeOpacity: 1,
+                }}
+                id="path1603"
+              />
+            </g>
+            <g id="g1605" transform="translate(233.9854,196.1826)">
+              <path
+                fill="currentColor"
+                stroke="currentColor"
+                d="m 0,0 c 21.476,-20.703 29.02,-52.976 18.275,-78.834 -11.784,-28.362 -11.327,-50.767 2.063,-76.186 13.597,-25.807 59.382,-46.654 65.702,-15.64 2.842,13.951 -1.818,44.29 18.525,83.264 23.089,44.233 0.343,99.84 66.684,100.14"
+                style={{
+                  fill: "none",
+                  strokeWidth: 20,
+                  strokeLinecap: "round",
+                  strokeLinejoin: "round",
+                  strokeMiterlimit: 22.926,
+                  strokeDasharray: "none",
+                  strokeOpacity: 1,
+                }}
+                id="path1607"
+              />
+            </g>
+            <g id="g1609" transform="translate(405.7646,342.7178)">
+              <path
+                d="M 0,0 V 0.007"
+                stroke="currentColor"
+                style={{
+                  fill: "none",
+                  strokeWidth: 20,
+                  strokeLinecap: "round",
+                  strokeLinejoin: "round",
+                  strokeMiterlimit: 2.613,
+                  strokeDasharray: "none",
+                  strokeOpacity: 1,
+                }}
+                id="path1611"
+              />
+            </g>
+          </g>
+        </g>
+      </g>
+    </svg>
+  );
+};
+
 export {
   Casa,
   Apto,
@@ -2497,4 +2687,6 @@ export {
   Flipping,
   RentaCorta,
   RentaTradicional,
+  Like,
+  Deslike,
 };

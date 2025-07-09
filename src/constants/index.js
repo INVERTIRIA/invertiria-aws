@@ -164,3 +164,18 @@ export const modeloNegocio = {
   flipping: "Flipping",
   engorde: "Engorde",
 };
+
+export const stepsQuestions = [
+  {
+    step: 5,
+    questions: {
+      titulo_modelacion: `Inversion ${new Date().getTime()}`,
+    },
+  },
+  {
+    step: 6,
+    questions: {
+      nombre_del_proyecto: "nombre_del_proyecto",
+    },
+  },
+];

@@ -1,8 +1,12 @@
 const questions = [
   {
+    title: "Vigencia",
+    description: "Es una inversion nueva?",
+  },
+  {
     title: "Tipo del inmueble",
     description:
-      "Selecciona el tipo del inmueble para afinar tu proyección de inversión. ",
+      "Selecciona el tipo del inmueble para afinar tu proyección de inversión.",
   },
   {
     title: "Estado del inmueble",
@@ -17,6 +21,15 @@ const questions = [
     title: "Modelo de negocio",
     description:
       "Selecciona el modelo de negocio para afinar tu proyección de inversión.",
+  },
+  {
+    title: "Nombre de la inversión",
+    description:
+      "Ingrese un nombre para la inversión. Esto ayudará a identificarla.",
+  },
+  {
+    title: "Nombre del proyecto",
+    description: "Ingrese el nombre del proyecto el cual deseas evaluar.",
   },
 ];
 
