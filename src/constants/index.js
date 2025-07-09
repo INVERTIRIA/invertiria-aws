@@ -138,3 +138,29 @@ export const routes = {
     },
   ],
 };
+
+export const titularidad = {
+  matriculaInmobiliaria: "Matricula Inmobiliaria",
+  participacionFiduciaria: "Participacion Fiduciaria",
+};
+
+export const tipoInmueble = {
+  apartamento: "Apto.",
+  casa: "Casa",
+  lote: "Lote",
+  bodega: "Bodega",
+  oficina: "Oficina",
+  local: "Local",
+  consultorio: "Consultorio",
+  hotel: "Hotel",
+  coliving: "Coliving",
+};
+
+export const modeloNegocio = {
+  comprarVender: "Comprar para vender",
+  rentaTradicional: "Renta Tradicional",
+  rentaCorta: "Renta Corta",
+  negociosOportunidad: "Negocios de oportunidad",
+  flipping: "Flipping",
+  engorde: "Engorde",
+};

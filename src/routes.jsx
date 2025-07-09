@@ -27,6 +27,7 @@ import AuthorizationPage from "./pages/AuthorizationPage";
 import InactiveUserPage from "./pages/InactiveUserPage";
 import Charts from "./pages/Charts";
 import ChatBotButton from "./components/design/ChatBotButton";
+import AnalysisPage from "./pages/analysis/index";
 
 // Rutas de la aplicacion
 function AppRoutes() {
@@ -46,7 +47,8 @@ function AppRoutes() {
       location.pathname.startsWith("/user") ||
       location.pathname.startsWith("/admin") ||
       location.pathname.startsWith("/assistant") ||
-      location.pathname.startsWith("/company");
+      location.pathname.startsWith("/company") ||
+      location.pathname.startsWith("/analysis");
 
     setHideLayout(isUserRoute);
   }, [location.pathname, setHideLayout]);
@@ -67,6 +69,11 @@ function AppRoutes() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/access-link" element={<AccessLinkPage />} />
           <Route path="/authorization" element={<AuthorizationPage />} />
+          {/* Analysis */}
+          <Route
+            path="/analysis"
+            element={<AnalysisPage.CreateAnalysisPage />}
+          />
           {/* User */}
           <Route element={<ProtectedRoute roles={[roles.user]} />}>
             <Route path="/user" element={<DashboardLayout />}>
