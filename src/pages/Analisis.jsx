@@ -329,7 +329,7 @@ const Analisis = () => {
       </div>
 
       {/* Divisor */}
-      <div className="w-full h-0.5 bg-orange-500" />
+      <div className="w-full h-0.5 bg-invertiria-2/35" />
 
       {/* Titulo grafica */}
       <h1 className="text-4xl font-bold">Tiempo de compra</h1>
@@ -381,7 +381,7 @@ const Analisis = () => {
       </div>
 
       {/* Divisor */}
-      <div className="w-full h-0.5 bg-orange-500" />
+      <div className="w-full h-0.5 bg-invertiria-2/35" />
 
       {/* Titulo grafica */}
       <h1 className="text-4xl font-bold">Recomendaciones</h1>
@@ -491,7 +491,7 @@ const Analisis = () => {
       </div>
 
       {/* Divisor */}
-      <div className="w-full h-0.5 bg-orange-500" />
+      <div className="w-full h-0.5 bg-invertiria-2/35" />
 
       {/* Titulo grafica */}
       <h1 className="text-4xl font-bold">Tiempo de venta</h1>
@@ -543,7 +543,7 @@ const Analisis = () => {
       </div>
 
       {/* Divisor */}
-      <div className="w-full h-0.5 bg-orange-500" />
+      <div className="w-full h-0.5 bg-invertiria-2/35" />
 
       {/* Titulo grafica */}
       <h1 className="text-4xl font-bold">Indicadores de rentabilidad</h1>
@@ -681,7 +681,7 @@ const Analisis = () => {
       </div>
 
       {/* Divisor */}
-      <div className="w-full h-0.5 bg-orange-500" />
+      <div className="w-full h-0.5 bg-invertiria-2/35" />
 
       {/* Titulo grafica */}
       <h1 className="text-4xl font-bold">Costo financiero</h1>
@@ -734,7 +734,7 @@ const Analisis = () => {
       </div>
 
       {/* Divisor */}
-      <div className="w-full h-0.5 bg-orange-500" />
+      <div className="w-full h-0.5 bg-invertiria-2/35" />
 
       {/* Titulo grafica */}
       <h1 className="text-4xl font-bold">Capacidad de endeudamiento</h1>

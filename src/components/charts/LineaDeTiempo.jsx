@@ -3,7 +3,7 @@ function LineaDeTiempo( { modelation }) {
     <div className="flex flex-col items-center w-full p-6">
       <div className="relative flex items-center w-full mt-2">
         {/* Línea de tiempo */}
-        <div className="absolute w-full h-[3px] bg-gray-300" />
+        <div className="absolute w-full h-[3px] bg-invertiria-2/35" />
 
         {/* Puntos */}
         <div className="relative flex w-full justify-between">
