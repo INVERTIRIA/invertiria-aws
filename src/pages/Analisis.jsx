@@ -339,7 +339,7 @@ const Analisis = () => {
 
       <div className="flex xl:flex-row flex-col items-center gap-10">
         {/* Grafica */}
-        <TiempoDeCompra timeVectors={timeVectors} />
+        <TiempoDeCompra timeVectors={timeVectors} fechaCompra={modelation.fecha_compra.slice(0, 7)} />
 
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
@@ -881,7 +881,7 @@ const Analisis = () => {
         </div>
         <div className="ml-auto flex gap-2 items-center">
           <p className="text-xs font-medium text-white">Generado por IA</p>
-            <Sparkles size={16} className="text-white" />
+          <Sparkles size={16} className="text-white" />
         </div>
       </div>
 
@@ -904,7 +904,7 @@ const Analisis = () => {
         </p>
         <div className="ml-auto flex gap-2 items-center">
           <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
-            <Sparkles size={16} className="text-invertiria-1" />
+          <Sparkles size={16} className="text-invertiria-1" />
         </div>
       </div>
       {/* Conclusión */}
@@ -931,7 +931,7 @@ const Analisis = () => {
         </div>
         <div className="ml-auto flex gap-2 items-center">
           <p className="text-xs font-medium text-white">Generado por IA</p>
-            <Sparkles size={16} className="text-white" />
+          <Sparkles size={16} className="text-white" />
         </div>
       </div>
 

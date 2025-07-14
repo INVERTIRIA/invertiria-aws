@@ -36,10 +36,10 @@ const CreateModelation = () => {
     //   createTimeVectors();
     //   loadedTimeVectors.current = true;
     // }
-    if (!loadedFlowsResult.current) {
-      createFlowsResult();
-      loadedFlowsResult.current = true;
-    }
+    // if (!loadedFlowsResult.current) {
+    //   createFlowsResult();
+    //   loadedFlowsResult.current = true;
+    // }
     // if (!loadedAnalysis.current) {
     //   createAnalysis();
     //   loadedAnalysis.current = true;

@@ -14,7 +14,7 @@ import {
 import { parsePrice } from "../../constants/functions";
 
 // Grafica
-function TiempoDeCompra({ timeVectors }) {
+function TiempoDeCompra({ timeVectors, fechaCompra }) {
 
   // Obtener data
   const data = timeVectors?.valor_inmueble.map((item, index) => {
@@ -30,7 +30,7 @@ function TiempoDeCompra({ timeVectors }) {
   // Punto personalizado
   const CustomizedDot = (props) => {
     const { cx, cy, stroke, payload, value } = props;
-    if (payload.mes === "03/2023") {
+    if (payload.mes === fechaCompra) {
       return (
         <svg
           x={cx - 10}
@@ -40,7 +40,7 @@ function TiempoDeCompra({ timeVectors }) {
           viewBox="0 0 120 120"
           fill="#FB3D03"
         >
-          <circle cx="60" cy="60" r="50" />
+          <circle cx="60" cy="60" r="35" />
         </svg>
       );
     }
