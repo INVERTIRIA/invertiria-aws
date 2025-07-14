@@ -1,5 +1,7 @@
+import { stepsQuestions } from "..";
+
 export function decodeJWT(token) {
-  const [header, payload, signature] = token.split(".");
+  const [_header, payload, _signature] = token.split(".");
   /* const decodedPayload = JSON.parse(atob(payload));
       return decodedPayload; */
 
@@ -21,4 +23,18 @@ export function parsePrice(price) {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(price);
+}
+
+export function determineSkippedQuestions(steps) {
+  const skippedQuestions = new Set();
+
+  for (const step of steps) {
+    const { questions } = stepsQuestions.find((q) => q.step == step);
+
+    for (const question of questions) {
+      skippedQuestions.add(question);
+    }
+  }
+
+  return Array.from(skippedQuestions);
 }

@@ -1,12 +1,19 @@
-import { ArrowRight } from "lucide-react";
+import { supabase } from "../../../supabase";
+import { cn } from "@/lib/utils";
+import { es } from "date-fns/locale";
+import { format, parseISO } from "date-fns";
+
+// Hooks
 import { useEffect, useRef, useState } from "react";
+import useDebounce from "../../../hooks/use-debounces";
+import { useFieldArray } from "react-hook-form";
+
+// Contansts
+import { parsePrice } from "../../../constants/functions";
 import Analysis from "../../../constants/functions/analysis";
 
-// Components
-import {
-  RadioGroup,
-  RadioGroupItem,
-} from "../../../components/ui/radio-group-2";
+// Icons
+import { ArrowRight, CalendarIcon, Check, Plus, X } from "lucide-react";
 
 import {
   Apto,
@@ -25,16 +32,59 @@ import {
   ComprarVender,
   Like,
   Deslike,
+  PagosConstantes,
+  PagosPersonalizados,
+  PagosPersonalizados2,
 } from "../../../components/design/Icons";
 
-import { Button } from "../../../components/ui/button";
-import { FormControl, FormField, FormItem } from "../../../components/ui/form";
+// Components
+import {
+  RadioGroup,
+  RadioGroupItem,
+} from "../../../components/ui/radio-group-2";
+
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "../../../components/ui/form";
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "../../../components/ui/popover";
+
+import { Map } from "../../../components/Map";
 import StepInput from "../../../components/StepInput";
-import useDebounce from "../../../hooks/use-debounces";
+import { Button } from "../../../components/ui/button";
+import { Calendar } from "../../../components/ui/calendar";
+import { ScrollArea } from "../../../components/ui/scroll-area";
+import { Input } from "../../../components/ui/input";
+import { Separator } from "../../../components/ui/separator";
+
+/* Button */
+const ButtonNext = ({ setStep, stepIndex, setStepHistory, disabled }) => {
+  return (
+    <Button
+      type="button"
+      className="w-fit"
+      disabled={disabled}
+      onClick={(e) => {
+        e.preventDefault();
+        setStepHistory((prev) => [...prev, stepIndex]);
+        setStep((prev) => prev + 1);
+      }}
+    >
+      Siguente
+      <ArrowRight />
+    </Button>
+  );
+};
 
 /* Steps */
-
-const Zero = ({ form, setStep, stepIndex, setStepHistory }) => {
+const Zero = ({ form, ...props }) => {
   const value = form.watch("vigencia");
 
   return (
@@ -75,24 +125,12 @@ const Zero = ({ form, setStep, stepIndex, setStepHistory }) => {
           </FormItem>
         )}
       />
-      <Button
-        type="button"
-        className="w-fit"
-        disabled={value === undefined}
-        onClick={(e) => {
-          e.preventDefault();
-          setStepHistory((prev) => [...prev, stepIndex]);
-          setStep((prev) => prev + 1);
-        }}
-      >
-        Siguente
-        <ArrowRight />
-      </Button>
+      <ButtonNext {...props} disabled={value === undefined} />
     </div>
   );
 };
 
-const One = ({ form, setStep, stepIndex, setStepHistory }) => {
+const One = ({ form, ...props }) => {
   const value = form.watch("tipo_inmueble");
 
   const options = [
@@ -173,24 +211,12 @@ const One = ({ form, setStep, stepIndex, setStepHistory }) => {
           </FormItem>
         )}
       />
-      <Button
-        type="button"
-        className="w-fit"
-        disabled={!value}
-        onClick={(e) => {
-          e.preventDefault();
-          setStepHistory((prev) => [...prev, stepIndex]);
-          setStep((prev) => prev + 1);
-        }}
-      >
-        Siguente
-        <ArrowRight />
-      </Button>
+      <ButtonNext {...props} disabled={!value} />
     </div>
   );
 };
 
-const Two = ({ form, setStep, stepIndex, setStepHistory }) => {
+const Two = ({ form, ...props }) => {
   const value = form.watch("estado_inmueble");
 
   return (
@@ -225,7 +251,9 @@ const Two = ({ form, setStep, stepIndex, setStepHistory }) => {
           </FormItem>
         )}
       />
-      <Button
+      <ButtonNext {...props} disabled={!value} />
+
+      {/* <Button
         type="button"
         className="w-fit"
         disabled={!value}
@@ -233,23 +261,16 @@ const Two = ({ form, setStep, stepIndex, setStepHistory }) => {
           e.preventDefault();
           setStepHistory((prev) => [...prev, stepIndex]);
           setStep((prev) => prev + 1);
-        }}
-        /* onClick={(e) => {
-          e.preventDefault();
-          const opciones = ["Apto.", "Casa", "Lote", "Bodega"];
-          const additional = opciones.includes(tipo_inmueble) ? 1 : 0;
-
-          setStep((prev) => prev + 1 + additional);
-        }} */
+        }}        
       >
         Siguente
         <ArrowRight />
-      </Button>
+      </Button> */}
     </div>
   );
 };
 
-const Three = ({ form, setStep, stepIndex, setStepHistory }) => {
+const Three = ({ form, ...props }) => {
   const titularidad = form.watch("titularidad"); // Agregar a supabase
   const effectRan = useRef(false);
 
@@ -258,10 +279,10 @@ const Three = ({ form, setStep, stepIndex, setStepHistory }) => {
 
   useEffect(() => {
     if (!effectRan.current && opciones.includes(tipo_inmueble)) {
-      setStep(4);
+      props.setStep(4);
       effectRan.current = true;
     }
-  }, [tipo_inmueble, setStep]);
+  }, [tipo_inmueble]);
 
   return (
     <div className="flex flex-col items-center gap-14">
@@ -303,32 +324,23 @@ const Three = ({ form, setStep, stepIndex, setStepHistory }) => {
           </FormItem>
         )}
       />
-      <Button
-        type="button"
-        className="w-fit"
-        disabled={!titularidad}
-        onClick={(e) => {
-          e.preventDefault();
-          setStepHistory((prev) => [...prev, stepIndex]);
-          setStep((prev) => prev + 1);
-        }}
-      >
-        Siguente
-        <ArrowRight />
-      </Button>
+      <ButtonNext {...props} disabled={!titularidad} />
     </div>
   );
 };
 
-const Four = ({ form, setStep, stepIndex, setStepHistory }) => {
+const Four = ({ form, analysisInstance, ...props }) => {
   const value = form.watch("modelo_de_negocio");
 
   const tipoInmueble = form.watch("tipo_inmueble");
   const estadoInmueble = form.watch("estado_inmueble");
   const titularidad = form.watch("titularidad");
 
-  const analysis = new Analysis(tipoInmueble, estadoInmueble, titularidad);
-  const options = analysis.getBusinessModels();
+  const options = analysisInstance
+    .setTipoInmueble(tipoInmueble)
+    .setEstadoInmueble(estadoInmueble)
+    .setTitularidad(titularidad)
+    .getBusinessModels();
 
   return (
     <div className="flex flex-col items-center gap-14">
@@ -368,7 +380,9 @@ const Four = ({ form, setStep, stepIndex, setStepHistory }) => {
           </FormItem>
         )}
       />
-      <Button
+      <ButtonNext {...props} disabled={!value} />
+
+      {/* <Button
         type="button"
         className="w-fit"
         disabled={!value}
@@ -380,12 +394,12 @@ const Four = ({ form, setStep, stepIndex, setStepHistory }) => {
       >
         Siguente
         <ArrowRight />
-      </Button>
+      </Button> */}
     </div>
   );
 };
 
-const Five = ({ form, setStep, stepIndex, setStepHistory }) => {
+const Five = ({ form, ...props }) => {
   const value = form.watch("titulo_modelacion");
 
   return (
@@ -396,30 +410,17 @@ const Five = ({ form, setStep, stepIndex, setStepHistory }) => {
         render={({ field }) => (
           <FormItem className="w-md">
             <FormControl>
-              {/* <Input placeholder="Nombre de la inversion" {...field} /> */}
               <StepInput placeholder="Nombre de la inversion" {...field} />
             </FormControl>
           </FormItem>
         )}
       />
-      <Button
-        type="button"
-        className="w-fit"
-        disabled={!value}
-        onClick={(e) => {
-          e.preventDefault();
-          setStepHistory((prev) => [...prev, stepIndex]);
-          setStep((prev) => prev + 1);
-        }}
-      >
-        Siguente
-        <ArrowRight />
-      </Button>
+      <ButtonNext {...props} disabled={!value} />
     </div>
   );
 };
 
-const Six = ({ form, setStep, stepIndex, setStepHistory }) => {
+const Six = ({ form, analysisInstance, ...props }) => {
   const value = form.watch("nombre_del_proyecto");
   const [records, setRecords] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
@@ -427,30 +428,48 @@ const Six = ({ form, setStep, stepIndex, setStepHistory }) => {
   const debouncedQuery = useDebounce(value, 500);
 
   const fetchRecords = async (text) => {
-    console.log(text);
+    const res = await supabase
+      .from("proyectos_inmobiliarios")
+      .select("*, ciudad:ciudad_id(nombre)")
+      .ilike("nombre", `%${text}%`)
+      .limit(5);
+
+    setRecords(res.data);
   };
 
-  const handleFocus = () => {
-    //setSelectedAction(null);
-    setIsFocused(true);
+  const autocompleteFields = (data) => {
+    analysisInstance.setProjectInformation(data);
+
+    const options = [
+      "id",
+      "nombre",
+      "barrio",
+      "ciudad",
+      "created_at",
+      "direccion",
+      "latitud",
+      "longitud",
+    ];
+
+    for (const key in data) {
+      if (!options.includes(key)) {
+        form.setValue(key, data[key]);
+      }
+    }
   };
 
   useEffect(() => {
-    if (!isFocused) {
-      setRecords(null);
-      return;
-    }
-
     if (!debouncedQuery) {
       fetchRecords(" ");
       return;
     }
 
     fetchRecords(debouncedQuery);
+    return;
   }, [debouncedQuery, isFocused]);
 
   return (
-    <div className="flex flex-col items-center gap-14">
+    <div className="flex flex-col items-center gap-14 relative">
       <FormField
         name="nombre_del_proyecto"
         control={form.control}
@@ -458,35 +477,813 @@ const Six = ({ form, setStep, stepIndex, setStepHistory }) => {
           <FormItem className="w-md">
             <FormControl>
               <StepInput
-                placeholder="Nombre del proyecto"
-                onFocus={handleFocus}
-                onBlur={() => setTimeout(() => setIsFocused(false), 200)}
                 {...field}
+                autoComplete="off"
+                placeholder="Nombre del proyecto"
+                onFocus={() =>
+                  setTimeout(() => {
+                    setIsFocused(true);
+                  }, 100)
+                }
+                onBlur={() => {
+                  setTimeout(() => {
+                    setIsFocused(false);
+                  }, 150);
+                }}
+              />
+            </FormControl>
+
+            {isFocused && records && (
+              <ScrollArea
+                data-state={isFocused ? "open" : "closed"}
+                className={cn(
+                  "!absolute w-full z-10 top-8 flex flex-col gap-2 min-h-20 max-h-40 bg-white shadow rounded-xl ring-1 ring-gray-200",
+                  isFocused && "animate-in fade-in",
+                  !isFocused && "animate-out fade-out"
+                )}
+              >
+                <ul className="p-4">
+                  {records.map((item) => (
+                    <li
+                      key={item.id}
+                      className="cursor-pointer hover:bg-gray-100 p-2 rounded-lg flex items-center gap-2"
+                      onClick={() => {
+                        if (value === item.nombre) {
+                          form.setValue("nombre_del_proyecto", "");
+                          autocompleteFields(null);
+                          setIsFocused(false);
+
+                          return;
+                        }
+
+                        form.setValue("nombre_del_proyecto", item.nombre);
+                        autocompleteFields(item);
+                        setIsFocused(false);
+
+                        return;
+                      }}
+                    >
+                      <Check
+                        className={cn(
+                          "size-4 hidden",
+                          value === item.nombre && "block"
+                        )}
+                      />
+                      <p className="text-sm font-light">
+                        {item.nombre} -{" "}
+                        <span className="text-gray-500">
+                          {item.ciudad?.nombre}, {item.zona}, {item.subzona}
+                        </span>
+                      </p>
+                    </li>
+                  ))}
+
+                  {records.length === 0 && (
+                    <li className="flex items-center justify-center py-4">
+                      <p className="text-sm font-medium">No hay resultados</p>
+                    </li>
+                  )}
+
+                  {/* {Array.from({ length: 10 }).map((_, index) => (
+                    <li
+                      key={index}
+                      className="cursor-pointer hover:bg-gray-100 p-2 rounded-lg"
+                    >
+                      <p className="text-sm font-light">test - ciudad - zona</p>
+                    </li>
+                  ))} */}
+                </ul>
+              </ScrollArea>
+            )}
+          </FormItem>
+        )}
+      />
+      <ButtonNext {...props} disabled={!value} />
+    </div>
+  );
+};
+
+const Seven = ({ form, analysisInstance, ...props }) => {
+  //const value = form.watch("barrio");
+  const [value, setValue] = useState(null);
+  const [position, setPosition] = useState(null);
+
+  useEffect(() => {
+    if (value && !analysisInstance.projectInformation) {
+      console.log("Location levels: ", value);
+      form.setValue("pais_id", 46);
+      form.setValue("ciudad_id", value.city);
+      form.setValue("zona", value.zone);
+      form.setValue("subzona", value.subzone);
+
+      analysisInstance.setProjectInformation({
+        pais_id: 46,
+        ciudad: {
+          nombre: value.city,
+        },
+        zona: value.zone,
+        subzona: value.subzone,
+        latitud: value.latitud,
+        longitud: value.longitud,
+      });
+    }
+  }, [value]);
+
+  useEffect(() => {
+    if (analysisInstance.projectInformation) {
+      setPosition({
+        lat: analysisInstance.projectInformation.latitud,
+        lng: analysisInstance.projectInformation.longitud,
+      });
+
+      setValue(
+        `${analysisInstance.projectInformation.ciudad?.nombre}, ${analysisInstance.projectInformation.zona}, ${analysisInstance.projectInformation.subzona}`
+      );
+    }
+  }, []);
+
+  return (
+    <div className="flex flex-col items-center gap-14">
+      <Map
+        className={"w-3xl"}
+        setValue={setValue}
+        projectPosition={position}
+        initialSearch={value}
+      />
+      <ButtonNext {...props} disabled={!value} />
+    </div>
+  );
+};
+
+const Eight = ({ form, ...props }) => {
+  const value = form.watch("precio_de_compra");
+
+  const unformatCurrency = (formatted) => {
+    return formatted.replace(/[^0-9]/g, ""); // elimina $, puntos, espacios, etc.
+  };
+
+  return (
+    <div className="flex flex-col items-center gap-14">
+      <FormField
+        name="precio_de_compra"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="w-md">
+            <FormControl>
+              <StepInput
+                {...field}
+                type={"text"}
+                inputMode="numeric"
+                placeholder="Ingresa el precio de compra"
+                value={field.value ? parsePrice(field.value) : ""}
+                onChange={(e) => {
+                  const raw = unformatCurrency(e.target.value);
+                  if (/^\d*$/.test(raw)) {
+                    field.onChange(Number(raw)); // guarda limpio en react-hook-form
+                  }
+                }}
               />
             </FormControl>
           </FormItem>
         )}
       />
-      <Button
-        type="button"
-        className="w-fit"
-        disabled={!value}
-        onClick={(e) => {
-          e.preventDefault();
-          setStepHistory((prev) => [...prev, stepIndex]);
-          setStep((prev) => prev + 1);
-        }}
-      >
-        Siguente
-        <ArrowRight />
-      </Button>
+      <ButtonNext {...props} disabled={!value} />
+    </div>
+  );
+};
+
+const Nine = ({ form, ...props }) => {
+  const value = form.watch("precio_de_mercado");
+  const vigencia = form.watch("vigencia");
+
+  const effectRan = useRef(false);
+
+  const unformatCurrency = (formatted) => {
+    return formatted.replace(/[^0-9]/g, ""); // elimina $, puntos, espacios, etc.
+  };
+
+  useEffect(() => {
+    if (!effectRan.current && !vigencia) {
+      props.setStep(10);
+      effectRan.current = true;
+    }
+  }, [vigencia]);
+
+  return (
+    <div className="flex flex-col items-center gap-14">
+      <FormField
+        name="precio_de_mercado"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="w-md">
+            <FormControl>
+              <StepInput
+                {...field}
+                type={"text"}
+                inputMode="numeric"
+                placeholder="Ingresa el precio de compra"
+                value={field.value ? parsePrice(field.value) : ""}
+                onChange={(e) => {
+                  const raw = unformatCurrency(e.target.value);
+                  if (/^\d*$/.test(raw)) {
+                    field.onChange(Number(raw)); // guarda limpio en react-hook-form
+                  }
+                }}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <ButtonNext {...props} disabled={!value} />
+    </div>
+  );
+};
+
+const Ten = ({ form, ...props }) => {
+  const value = form.watch("separacion");
+  const estadoInmueble = form.watch("estado_inmueble");
+
+  const effectRan = useRef(false);
+
+  const unformatCurrency = (formatted) => {
+    return formatted.replace(/[^0-9]/g, ""); // elimina $, puntos, espacios, etc.
+  };
+
+  useEffect(() => {
+    if (!effectRan.current && estadoInmueble === "Usado") {
+      props.setStep(13);
+      effectRan.current = true;
+    }
+  }, [estadoInmueble]);
+
+  return (
+    <div className="flex flex-col items-center gap-14">
+      <FormField
+        name="separacion"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="w-md">
+            <FormControl>
+              <StepInput
+                {...field}
+                type={"text"}
+                inputMode="numeric"
+                placeholder="Ingresa el valor de la separacion"
+                value={field.value ? parsePrice(field.value) : ""}
+                onChange={(e) => {
+                  const raw = unformatCurrency(e.target.value);
+                  if (/^\d*$/.test(raw)) {
+                    field.onChange(Number(raw)); // guarda limpio en react-hook-form
+                  }
+                }}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <ButtonNext {...props} disabled={!value} />
+    </div>
+  );
+};
+
+const Eleven = ({ form, ...props }) => {
+  const value = form.watch("forma_pago_cuota_inicial");
+
+  return (
+    <div className="flex flex-col items-center gap-14">
+      <FormField
+        name="forma_pago_cuota_inicial"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="space-y-3">
+            <FormControl>
+              <RadioGroup
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                className="grid grid-cols-3 gap-x-20"
+              >
+                <FormItem>
+                  <RadioGroupItem
+                    value={1}
+                    id="cuota1"
+                    className="flex items-center justify-center py-6 px-10"
+                  >
+                    <PagosConstantes className="text-invertiria-2" />
+                    <p className="text-sm font-medium max-w-32">
+                      Pagos constantes mensuales
+                    </p>
+                  </RadioGroupItem>
+                </FormItem>
+                <FormItem>
+                  <RadioGroupItem
+                    value={2}
+                    id="cuota2"
+                    className="flex items-center justify-center py-6 px-10"
+                  >
+                    <PagosPersonalizados2 className="text-invertiria-2" />
+                    <p className="text-sm font-medium max-w-44">
+                      Pagos constantes y Pagos personalizados
+                    </p>
+                  </RadioGroupItem>
+                </FormItem>
+                <FormItem>
+                  <RadioGroupItem
+                    value={3}
+                    id="cuota3"
+                    className="flex items-center justify-center py-6 px-10"
+                  >
+                    <PagosPersonalizados className="text-invertiria-2" />
+
+                    <p className="text-sm font-medium max-w-32">
+                      Pagos personalizados
+                    </p>
+                  </RadioGroupItem>
+                </FormItem>
+              </RadioGroup>
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <ButtonNext {...props} disabled={!value} />
+    </div>
+  );
+};
+
+const Twelve = ({ form, ...props }) => {
+  const cuotaInicial = form.watch("cuota_inicial");
+  const fechaInicio = form.watch("inicial_fecha_inicio_pago");
+  const fechaFin = form.watch("inicial_fecha_fin_pago");
+  const formaPago = form.watch("forma_pago_cuota_inicial");
+
+  const [openPopovers, setOpenPopovers] = useState({});
+  const [buttonWidth, setButtonWidth] = useState(0);
+
+  const buttonRef = useRef(null);
+  const effectRan = useRef(false);
+
+  const togglePopover = (name) => {
+    setOpenPopovers((prev) => ({
+      ...prev,
+      [name]: !prev[name],
+    }));
+  };
+
+  useEffect(() => {
+    if (!effectRan.current && formaPago === 3) {
+      props.setStep(13);
+      effectRan.current = true;
+    }
+  }, [formaPago]);
+
+  useEffect(() => {
+    if (buttonRef.current) {
+      setButtonWidth(buttonRef.current.offsetWidth);
+    }
+  }, []);
+
+  return (
+    <div className="flex flex-col items-center gap-14">
+      <FormField
+        name="cuota_inicial"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="w-md">
+            <FormControl>
+              <StepInput
+                {...field}
+                type={"number"}
+                inputMode="numeric"
+                placeholder="Ingresa el % de la cuota inicial: 30%"
+                min={0}
+                max={100}
+                onChange={(e) => {
+                  let value = parseFloat(e.target.value);
+
+                  // Validar que esté entre 0 y 100
+                  if (value > 100) value = 100;
+                  if (value < 0) value = 0;
+
+                  field.onChange(value);
+                }}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="inicial_fecha_inicio_pago"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Fecha inicio couta inicial</FormLabel>
+            <Popover
+              open={!!openPopovers["inicial_fecha_inicio_pago"]}
+              onOpenChange={() => togglePopover("inicial_fecha_inicio_pago")}
+            >
+              <PopoverTrigger asChild>
+                <FormControl>
+                  <Button
+                    ref={buttonRef}
+                    variant={"outline"}
+                    className={cn(
+                      "w-md pl-3 text-left font-normal text-base md:text-sm",
+                      !field.value && "text-muted-foreground"
+                    )}
+                  >
+                    {field.value ? (
+                      format(parseISO(field.value), "yyyy-MM-dd")
+                    ) : (
+                      <span>Elige una fecha</span>
+                    )}
+                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                  </Button>
+                </FormControl>
+              </PopoverTrigger>
+              <PopoverContent
+                style={{ width: buttonWidth }}
+                className="p-0"
+                align="start"
+              >
+                <Calendar
+                  style={{ width: buttonWidth }}
+                  mode="single"
+                  selected={field.value ? parseISO(field.value) : undefined}
+                  //onSelect={field.onChange}
+                  onSelect={(date) => {
+                    const formattedDate = date
+                      ? format(date, "yyyy-MM-dd")
+                      : "";
+                    field.onChange(formattedDate); // Se almacena el string "yyyy-MM-dd"
+
+                    togglePopover("inicial_fecha_inicio_pago");
+                  }}
+                  /* disabled={(date) =>
+                    date > new Date() || date < new Date("1900-01-01")
+                  } */
+                  locale={es}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="inicial_fecha_fin_pago"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Fecha fin couta inicial</FormLabel>
+            <Popover
+              open={!!openPopovers["inicial_fecha_fin_pago"]}
+              onOpenChange={() => togglePopover("inicial_fecha_fin_pago")}
+            >
+              <PopoverTrigger asChild>
+                <FormControl>
+                  <Button
+                    ref={buttonRef}
+                    variant={"outline"}
+                    className={cn(
+                      "w-md pl-3 text-left font-normal text-base md:text-sm",
+                      !field.value && "text-muted-foreground"
+                    )}
+                  >
+                    {field.value ? (
+                      format(parseISO(field.value), "yyyy-MM-dd")
+                    ) : (
+                      <span>Elige una fecha</span>
+                    )}
+                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                  </Button>
+                </FormControl>
+              </PopoverTrigger>
+              <PopoverContent
+                style={{ width: buttonWidth }}
+                className="p-0"
+                align="start"
+              >
+                <Calendar
+                  style={{ width: buttonWidth }}
+                  mode="single"
+                  selected={field.value ? parseISO(field.value) : undefined}
+                  //onSelect={field.onChange}
+                  onSelect={(date) => {
+                    const formattedDate = date
+                      ? format(date, "yyyy-MM-dd")
+                      : "";
+                    field.onChange(formattedDate); // Se almacena el string "yyyy-MM-dd"
+
+                    togglePopover("inicial_fecha_fin_pago");
+                  }}
+                  /* disabled={(date) =>
+                    date > new Date() || date < new Date("1900-01-01")
+                  } */
+                  locale={es}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+          </FormItem>
+        )}
+      />
+      <ButtonNext
+        {...props}
+        disabled={!fechaInicio || !fechaFin || !cuotaInicial}
+      />
+    </div>
+  );
+};
+
+const Thirteen = ({ form, ...props }) => {
+  const pagosPersonalizados = form.watch("pagos_personalizados");
+  const estadoInmueble = form.watch("estado_inmueble");
+  const formaPago = form.watch("forma_pago_cuota_inicial");
+  const valoresPagos = form.watch("valor_pagos_personalizados") || [];
+  const fechasPagos = form.watch("fecha_pagos_personalizados") || [];
+
+  const [openPopovers, setOpenPopovers] = useState({});
+  const [buttonWidth, setButtonWidth] = useState(0);
+  const [allowedAmount, setAllowedAmount] = useState(0);
+  const [fecha, setFecha] = useState(null);
+  const [pagos, setPagos] = useState(null);
+
+  const buttonRef = useRef(null);
+  const effectRan = useRef(false);
+
+  // Functions
+  const togglePopover = (name) => {
+    setOpenPopovers((prev) => ({
+      ...prev,
+      [name]: !prev[name],
+    }));
+  };
+
+  const unformatCurrency = (formatted) => {
+    return formatted.replace(/[^0-9]/g, ""); // elimina $, puntos, espacios, etc.
+  };
+
+  const handlerAddToList = () => {
+    if (allowedAmount >= pagosPersonalizados) return;
+
+    if (!fecha || !pagos) return;
+
+    appendFecha(fecha);
+    appendValor(pagos);
+
+    setFecha(null);
+    setPagos(null);
+    setAllowedAmount(allowedAmount + 1);
+  };
+
+  const handlerRemoveFromList = (index) => {
+    removeValor(index);
+    removeFecha(index);
+
+    setAllowedAmount(allowedAmount - 1);
+  };
+
+  const { append: appendValor, remove: removeValor } = useFieldArray({
+    control: form.control,
+    name: "valor_pagos_personalizados",
+  });
+
+  const { append: appendFecha, remove: removeFecha } = useFieldArray({
+    control: form.control,
+    name: "fecha_pagos_personalizados",
+  });
+
+  // Effects
+  useEffect(() => {
+    if (
+      !effectRan.current &&
+      estadoInmueble === "Sobre planos" &&
+      formaPago === 1
+    ) {
+      props.setStep(14);
+      effectRan.current = true;
+    }
+  }, [formaPago]);
+
+  useEffect(() => {
+    if (buttonRef.current) {
+      setButtonWidth(buttonRef.current.offsetWidth);
+      setAllowedAmount(valoresPagos.length || 0);
+    }
+  }, []);
+
+  return (
+    <div className="flex flex-col items-center gap-14">
+      <FormField
+        name="pagos_personalizados"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="w-md">
+            <FormControl>
+              <StepInput
+                {...field}
+                type={"number"}
+                inputMode="numeric"
+                placeholder="Ingresa el número de pagos personalizados"
+                min={0}
+                max={100}
+                onChange={(e) => {
+                  let value = parseFloat(e.target.value);
+                  if (value < 0) value = 0;
+                  field.onChange(value);
+                }}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <div className="flex flex-col items-center gap-4">
+        {/* Fecha - Pagos */}
+        <div className="flex items-end gap-6">
+          {/* Fecha del pago personalizado */}
+          <div className="flex flex-col gap-1">
+            <p className="text-sm font-medium">Fecha del pago personalizados</p>
+            <Popover
+              open={!!openPopovers["fecha_pago"]}
+              onOpenChange={() => togglePopover("fecha_pago")}
+            >
+              <PopoverTrigger asChild>
+                <Button
+                  ref={buttonRef}
+                  variant={"outline"}
+                  className={cn(
+                    "w-xs pl-3 text-left font-normal text-base md:text-sm",
+                    !fecha && "text-muted-foreground"
+                  )}
+                >
+                  {fecha ? (
+                    format(parseISO(fecha), "yyyy-MM-dd")
+                  ) : (
+                    <span>Elige una fecha</span>
+                  )}
+                  <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent
+                style={{ width: buttonWidth }}
+                className="p-0"
+                align="start"
+              >
+                <Calendar
+                  style={{ width: buttonWidth }}
+                  mode="single"
+                  selected={fecha ? parseISO(fecha) : undefined}
+                  //onSelect={field.onChange}
+                  onSelect={(date) => {
+                    const formattedDate = date
+                      ? format(date, "yyyy-MM-dd")
+                      : "";
+
+                    setFecha(formattedDate); // Se almacena el string "yyyy-MM-dd"
+
+                    togglePopover("fecha_pago");
+                  }}
+                  locale={es}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
+          {/* Valor del pago */}
+          <div className="flex flex-col gap-1">
+            <p className="text-sm font-medium">Valor del pago</p>
+            <Input
+              placeholder="Ingresa el valor del pago"
+              className="bg-white w-xs"
+              value={pagos ? parsePrice(pagos) : ""}
+              onChange={(e) => {
+                const raw = unformatCurrency(e.target.value);
+                if (/^\d*$/.test(raw)) {
+                  setPagos(Number(raw)); // guarda limpio en react-hook-form
+                }
+              }}
+            />
+          </div>
+          <Button
+            type="button"
+            onClick={handlerAddToList}
+            disabled={
+              !pagosPersonalizados || allowedAmount >= pagosPersonalizados
+            }
+          >
+            Agregar
+          </Button>
+        </div>
+        {/* Listado */}
+        <ScrollArea className="flex flex-col gap-2 bg-white shadow p-3 w-full rounded-md min-h-20 max-h-56">
+          <ul className="flex flex-col gap-2">
+            {valoresPagos.map((item, index) => (
+              <li
+                className="py-3 px-3 rounded-md bg-gray-100 text-sm flex items-center gap-2 justify-between"
+                key={index}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center justify-center p-2 bg-black rounded-sm">
+                    <span className="text-xs font-semibold leading-none text-white">
+                      {index + 1}
+                    </span>
+                  </div>
+                  <span className="text-xs font-semibold">
+                    Fecha: <br />
+                    <span className="text-gray-500 font-normal">
+                      {fechasPagos[index]}
+                    </span>
+                  </span>
+                  <Separator
+                    orientation="vertical"
+                    className="!bg-gray-300 !h-8 mx-3"
+                  />
+                  <span className="text-xs font-semibold">
+                    Valor: <br />
+                    <span className="text-gray-500 font-normal">
+                      {parsePrice(item)}
+                    </span>
+                  </span>
+                </div>
+                <Button
+                  type="button"
+                  variant={"theme"}
+                  size={"icon"}
+                  className="size-7"
+                  onClick={() => handlerRemoveFromList(index)}
+                >
+                  <X className="size-3" />
+                </Button>
+              </li>
+            ))}
+            {valoresPagos.length === 0 && (
+              <span className="text-sm text-gray-500 text-center h-20 rounded-md flex items-center justify-center">
+                No se han agregado pagos personalizados
+              </span>
+            )}
+          </ul>
+        </ScrollArea>
+      </div>
+      <ButtonNext
+        {...props}
+        disabled={
+          !pagosPersonalizados || valoresPagos.length < pagosPersonalizados
+        }
+      />
+    </div>
+  );
+};
+
+const FourTeen = ({ form, ...props }) => {
+  const value = form.watch("credito_hipotecario");
+
+  return (
+    <div className="flex flex-col items-center gap-14">
+      <FormField
+        name="credito_hipotecario"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="space-y-3">
+            <FormControl>
+              <RadioGroup
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                className="grid grid-cols-2 gap-x-20"
+              >
+                <FormItem>
+                  <RadioGroupItem
+                    value={true}
+                    id="yes"
+                    className="flex items-center justify-center py-6 px-14"
+                  >
+                    <Like className="text-invertiria-2" />
+                    <p className="text-sm font-medium">Si</p>
+                  </RadioGroupItem>
+                </FormItem>
+                <FormItem>
+                  <RadioGroupItem
+                    value={false}
+                    id="not"
+                    className="flex items-center justify-center py-6 px-14"
+                  >
+                    <Deslike className="text-invertiria-2" />
+                    <p className="text-sm font-medium">No</p>
+                  </RadioGroupItem>
+                </FormItem>
+              </RadioGroup>
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <ButtonNext {...props} disabled={value === undefined} />
     </div>
   );
 };
 
 /* Main */
-const Steps = ({ stepIndex, setStep, setStepHistory, form }) => {
+const Steps = ({ stepIndex, setStep, setStepHistory, skippedStep, form }) => {
   let StepActive = null;
+  const businessModel = form.watch("modelo_de_negocio");
+  const analysisInstance = useRef(new Analysis(form)).current;
 
   switch (stepIndex) {
     case 0:
@@ -496,6 +1293,7 @@ const Steps = ({ stepIndex, setStep, setStepHistory, form }) => {
           setStep={setStep}
           stepIndex={stepIndex}
           setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
         />
       );
       break;
@@ -507,6 +1305,7 @@ const Steps = ({ stepIndex, setStep, setStepHistory, form }) => {
           setStep={setStep}
           stepIndex={stepIndex}
           setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
         />
       );
       break;
@@ -518,6 +1317,7 @@ const Steps = ({ stepIndex, setStep, setStepHistory, form }) => {
           setStep={setStep}
           stepIndex={stepIndex}
           setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
         />
       );
 
@@ -530,6 +1330,7 @@ const Steps = ({ stepIndex, setStep, setStepHistory, form }) => {
           setStep={setStep}
           stepIndex={stepIndex}
           setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
         />
       );
       break;
@@ -541,6 +1342,7 @@ const Steps = ({ stepIndex, setStep, setStepHistory, form }) => {
           setStep={setStep}
           stepIndex={stepIndex}
           setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
         />
       );
       break;
@@ -552,6 +1354,7 @@ const Steps = ({ stepIndex, setStep, setStepHistory, form }) => {
           setStep={setStep}
           stepIndex={stepIndex}
           setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
         />
       );
       break;
@@ -563,6 +1366,98 @@ const Steps = ({ stepIndex, setStep, setStepHistory, form }) => {
           setStep={setStep}
           stepIndex={stepIndex}
           setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 7:
+      StepActive = (
+        <Seven
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 8:
+      StepActive = (
+        <Eight
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+        />
+      );
+      break;
+
+    case 9:
+      StepActive = (
+        <Nine
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+        />
+      );
+      break;
+
+    case 10:
+      StepActive = (
+        <Ten
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+        />
+      );
+      break;
+
+    case 11:
+      StepActive = (
+        <Eleven
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 12:
+      StepActive = (
+        <Twelve
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+        />
+      );
+      break;
+
+    case 13:
+      StepActive = (
+        <Thirteen
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+        />
+      );
+      break;
+
+    case 14:
+      StepActive = (
+        <FourTeen
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
         />
       );
       break;
@@ -574,10 +1469,34 @@ const Steps = ({ stepIndex, setStep, setStepHistory, form }) => {
           setStep={setStep}
           stepIndex={stepIndex}
           setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
         />
       );
       break;
   }
+
+  // Detectar cuando se haga un skip
+  useEffect(() => {
+    if (skippedStep > 4) {
+      analysisInstance.skipStep(skippedStep);
+    }
+  }, [skippedStep]);
+
+  // Obtener la modelacion una vez se defina el modelo de negocio
+  useEffect(() => {
+    const handlerFetch = async () => {
+      const res = await analysisInstance.getDataModeling(businessModel);
+      analysisInstance.setModeling(res);
+
+      const res2 = await analysisInstance.getProjectInformation(
+        res.nombre_del_proyecto
+      );
+
+      analysisInstance.setProjectInformationModel(res2);
+    };
+
+    if (businessModel) handlerFetch();
+  }, [businessModel]);
 
   return StepActive;
 };

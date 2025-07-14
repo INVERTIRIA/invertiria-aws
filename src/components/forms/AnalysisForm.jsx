@@ -5,36 +5,29 @@ import { useForm } from "react-hook-form";
 import { Form } from "../ui/form";
 import { Steps } from "../../pages/analysis/components/Steps";
 import { useState } from "react";
-import { stepsQuestions } from "../../constants";
+import { determineSkippedQuestions } from "../../constants/functions";
 
 const AnalysisForm = ({ step, setStep }) => {
-  const [skippedQuestions, setSkippedQuestions] = useState([]);
+  const [skippedQuestions, setSkippedQuestions] = useState([]); //Array con los steps que se han saltado
+  const [skippedStep, setSkippedStep] = useState(0); // Step que se ha saltado
   const [stepHistory, setStepHistory] = useState([]);
 
   // Functions
-  const handleSkip = (step) => {
-    const { questions } = stepsQuestions.find((q) => q.step == step);
-
-    for (const key in questions) {
-      const value = questions[key];
-      form.setValue(key, value);
-    }
-  };
-
   const handleChangeStep = (action) => {
     if (action) {
       setStepHistory((prev) => [...prev, step]);
+      setSkippedStep(step);
+
       setStep(step + 1);
 
-      handleSkip(step);
       return;
     }
 
     const newStep = stepHistory[stepHistory.length - 1];
 
     setStep(newStep);
-    setSkippedQuestions((prev) => prev.filter((q) => q !== newStep));
     setStepHistory((prev) => prev.filter((q) => q !== newStep));
+    setSkippedQuestions((prev) => prev.filter((q) => q !== newStep));
 
     return;
   };
@@ -43,12 +36,32 @@ const AnalysisForm = ({ step, setStep }) => {
   const form = useForm({
     defaultValues: {
       titulo_modelacion: "",
+      /* Datos del proyecto */
       nombre_del_proyecto: "",
+      pais_id: "",
+      ciudad_id: "",
+      zona: "",
+      subzona: "",
+      fecha_inicio_ventas: "",
+      fecha_prevista_entrega: "",
+      vivienda_vis: "",
+      licencia_construccion: "",
+      edad_propiedad: "",
+      etapa_proyecto: "",
+      /* Datos del inmueble */
+      precio_de_compra: "",
+      precio_de_mercado: "",
+      separacion: "",
+      cuota_inicial: "",
+      pagos_personalizados: "",
+      fecha_pagos_personalizados: [],
+      valor_pagos_personalizados: [],
     },
   });
 
   const onSubmit = form.handleSubmit((values) => {
-    console.log({ ...values, skippedQuestions, stepHistory });
+    const res = determineSkippedQuestions(skippedQuestions);
+    console.log({ ...values, campos_omitidos: res });
   });
 
   /* useEffect(() => {
@@ -69,12 +82,13 @@ const AnalysisForm = ({ step, setStep }) => {
             className="w-full flex flex-col items-center gap-14"
           >
             <Steps
+              form={form}
               stepIndex={step}
               setStep={setStep}
-              form={form}
+              skippedStep={skippedStep}
               setStepHistory={setStepHistory}
             />
-            {step === 10 && (
+            {step === 14 && (
               <Button type="submit" variant="theme">
                 Enviar
               </Button>
@@ -93,7 +107,7 @@ const AnalysisForm = ({ step, setStep }) => {
         </Button>
         <Button
           variant="link"
-          disabled={!(step > 4 && step < 9)}
+          disabled={!(step > 4 && step < 19)}
           onClick={() => {
             handleChangeStep(true);
             setSkippedQuestions([...skippedQuestions, step]);

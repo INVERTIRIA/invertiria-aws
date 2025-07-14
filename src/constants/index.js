@@ -165,7 +165,7 @@ export const modeloNegocio = {
   engorde: "Engorde",
 };
 
-export const stepsQuestions = [
+/* export const stepsQuestions = [
   {
     step: 5,
     questions: {
@@ -177,5 +177,48 @@ export const stepsQuestions = [
     questions: {
       nombre_del_proyecto: "nombre_del_proyecto",
     },
+  },
+]; */
+
+export const stepsQuestions = [
+  {
+    step: 5,
+    questions: ["titulo_modelacion"],
+  },
+  {
+    step: 6,
+    questions: [
+      "nombre_del_proyecto",
+      "pais_id",
+      "ciudad_id",
+      "zona",
+      "subzona",
+      "fecha_inicio_ventas",
+      "fecha_prevista_entrega",
+      "vivienda_vis",
+      "licencia_construccion",
+      "edad_propiedad",
+      "etapa_proyecto",
+    ],
+  },
+  {
+    step: 7,
+    questions: ["pais_id", "ciudad_id", "zona", "subzona"],
+  },
+  {
+    step: 8,
+    questions: ["precio_de_compra"],
+  },
+  {
+    step: 9,
+    questions: ["precio_de_mercado"],
+  },
+  {
+    step: 10,
+    questions: ["separacion"],
+  },
+  {
+    step: 11,
+    questions: ["forma_pago_cuota_inicial"],
   },
 ];

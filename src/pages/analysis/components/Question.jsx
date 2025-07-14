@@ -31,6 +31,39 @@ const questions = [
     title: "Nombre del proyecto",
     description: "Ingrese el nombre del proyecto el cual deseas evaluar.",
   },
+  {
+    title: "Ubicación del proyecto",
+    description: "Seleccione la ubicación del proyecto.",
+  },
+  {
+    title: "Precio de compra",
+    description: "Ingrese el precio de compra del inmueble.",
+  },
+  {
+    title: "Precio de mercado",
+    description: "Ingrese el precio de mercado del inmueble.",
+  },
+  {
+    title: "Separación",
+    description: "Ingrese el valor de la separación.",
+  },
+  {
+    title: "Pago cuota inicial",
+    description: "Seleccione la forma de pago de la cuota inicial.",
+  },
+  {
+    title: "Cuota inicial",
+    description: "Ingrese los detalles de la cuota inicial.",
+  },
+  {
+    title: "Pagos personalizados",
+    description:
+      "Ingrese los pagos personalizados antes del pago de la cuota final.",
+  },
+  {
+    title: "Crédito hipotecario",
+    description: "Seleccione si el inmueble tiene crédito hipotecario.",
+  },
 ];
 
 const Question = ({ stepIndex }) => {

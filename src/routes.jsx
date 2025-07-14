@@ -26,6 +26,8 @@ import AuthorizationPage from "./pages/AuthorizationPage";
 import InactiveUserPage from "./pages/InactiveUserPage";
 import ChatBotButton from "./components/design/ChatBotButton";
 import AnalysisPage from "./pages/analysis/index";
+import Analisis from "./pages/Analisis";
+import CreateModelation from "./pages/CreateModelation";
 
 // Rutas de la aplicacion
 function AppRoutes() {
@@ -62,7 +64,7 @@ function AppRoutes() {
           <Route path="/test" element={<Test />} />
           <Route path="/analisis/:id" element={<Analisis />} />
           <Route path="/crear-modelacion" element={<CreateModelation />} />
-          <Route path="/charts" element={<Analisis />} /> // Temporal
+          <Route path="/charts" element={<Analisis />} />
           <Route path="/inactive" element={<InactiveUserPage />} />
           <Route path="/import" element={<ImportMatrizModel />} />
           <Route path="/register" element={<RegisterPage />} />
