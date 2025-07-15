@@ -8,28 +8,28 @@ function LineaDeTiempo( { modelation }) {
         {/* Puntos */}
         <div className="relative flex w-full justify-between">
           <div className="relative flex flex-col items-center">
-            <span className="mt-2 text-gray-500">{modelation?.fecha_inicio_ventas.slice(0, 7)}</span>
-            <div className="w-6 h-6 bg-invertiria-2 rounded-full border-4 border-invertiria-2" />
+            <span className="mb-2 text-gray-500">{modelation?.fecha_inicio_ventas.slice(0, 7)}</span>
+            <div className="w-5 h-5 bg-invertiria-2 rounded-full border-4 border-invertiria-2" />
             <span className="mt-2 text-gray-500">Inicio Ventas</span>
           </div>
 
           <div className="relative flex flex-col items-center">
-            <span className="mt-2 text-gray-500">{modelation?.fecha_compra.slice(0, 7)}</span>
-            <div className="w-6 h-6 bg-invertiria-2 rounded-full border-4 border-invertiria-2" />
+            <span className="mb-2 text-gray-500">{modelation?.fecha_compra.slice(0, 7)}</span>
+            <div className="w-5 h-5 bg-invertiria-2 rounded-full border-4 border-invertiria-2" />
             <span className="mt-2 text-gray-500">Compra</span>
             {/* <span className="text-xs text-gray-500">400 millones</span> */}
           </div>
 
           <div className="relative flex flex-col items-center">
-            <span className="mt-2 text-gray-500">{modelation?.fecha_prevista_entrega.slice(0, 7)}</span>
-            <div className="w-6 h-6 bg-invertiria-2 rounded-full border-4 border-invertiria-2" />
+            <span className="mb-2 text-gray-500">{modelation?.fecha_prevista_entrega.slice(0, 7)}</span>
+            <div className="w-5 h-5 bg-invertiria-2 rounded-full border-4 border-invertiria-2" />
             <span className="mt-2 text-gray-500">Entrega</span>
             {/* <span className="text-xs text-gray-500">500 millones</span> */}
           </div>
 
           <div className="relative flex flex-col items-center">
-            <span className="mt-2 text-gray-500">{modelation?.fecha_prevista_venta.slice(0, 7)}</span>
-            <div className="w-6 h-6 bg-invertiria-2 rounded-full border-4 border-invertiria-2" />
+            <span className="mb-2 text-gray-500">{modelation?.fecha_prevista_venta.slice(0, 7)}</span>
+            <div className="w-5 h-5 bg-invertiria-2 rounded-full border-4 border-invertiria-2" />
             <span className="mt-2 text-gray-500">Venta</span>
           </div>
         </div>

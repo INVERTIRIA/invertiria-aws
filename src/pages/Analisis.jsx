@@ -262,17 +262,9 @@ const Analisis = () => {
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Precio de m²</h2>
 
       <div className="flex xl:flex-row flex-col items-center xl:gap-30 gap-10">
+        {/* <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5"></div> */}
         {/* Analisis */}
-        {/* <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
-          <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            {analysis.valor_de_compra.analisis_grafica_1[language]}
-          </p>
-          <div className="ml-auto flex gap-2 items-center">
-            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
-            <Sparkles size={16} className="text-invertiria-1" />
-          </div>
-        </div> */}
-        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-1/20 border-2 border-invertiria-2/60">
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/50">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
             {analysis.valor_de_compra.analisis_grafica_1[language]}
           </p>
@@ -283,7 +275,7 @@ const Analisis = () => {
         </div>
 
         {/* Gráficas */}
-        <div className="w-full flex flex-col gap-20 justify-center">
+        <div className="w-full flex flex-col gap-20 justify-center xl:pl-10 pl-4">
           <div className="w-full flex items-center xl:gap-40 gap-30">
             <ValorDeCompra
               price={modelation.precio_de_compra / modelation.area_inmueble}
@@ -300,7 +292,7 @@ const Analisis = () => {
           </div>
         </div>
         {/* Analisis */}
-        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/50">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
             {analysis.valor_de_compra.analisis_grafica_2[language]}
           </p>
@@ -701,7 +693,7 @@ const Analisis = () => {
       <div className="flex flex-col xl:flex-row items-center xl:gap-40 gap-10">
         {/* Costo financiero */}
         <div className="justify-items-center">
-          <h3 className="text-lg font-bold">{modelation?.tasa_de_interes}% anual</h3>
+          <h3 className="text-lg font-bold">{modelation?.tasa_de_interes}% efectivo anual</h3>
           <IndicadorDeRentabilidad value={modelation?.tasa_de_interes} max={40} min={0} colorInverted={true} />
           <h1 className="text-2xl font-bold">Tasa de interés</h1>
           <br />
