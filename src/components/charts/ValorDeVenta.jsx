@@ -21,7 +21,13 @@ function ValorDeVenta({ timeVectors, fechaVenta }) {
     }
   }
 
-  const indicatorPositionInmueble = ((priceInmueble - minPriceInmueble) / (maxPriceInmueble - minPriceInmueble)) * 100;
+  let indicatorPositionInmueble = ((priceInmueble - minPriceInmueble) / (maxPriceInmueble - minPriceInmueble)) * 100;
+  if (priceInmueble > maxPriceInmueble || priceM2 > maxPriceM2) {
+    indicatorPositionInmueble = 100;
+  }
+  if (priceInmueble < minPriceInmueble || priceM2 < minPriceM2) {
+    indicatorPositionInmueble = 0;
+  }
 
   return (
     <div className="flex flex-col gap-1 items-center">
