@@ -120,7 +120,7 @@ const Analisis = () => {
     }
   }
 
-  // // Roi en ves de venta
+  // Roi en ves de venta
   let mesVentaRoi = 0;
   let maxRoi = 0;
   let minRoi = 0;
@@ -138,7 +138,7 @@ const Analisis = () => {
     }
   }
 
-  // // Cap rate en ves de venta
+  // Cap rate en ves de venta
   let mesVentaCapRate = 0;
   let maxCapRate = 0;
   let minCapRate = 0;
@@ -263,7 +263,16 @@ const Analisis = () => {
 
       <div className="flex xl:flex-row flex-col items-center xl:gap-30 gap-10">
         {/* Analisis */}
-        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
+        {/* <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
+          <p className="z-10 text-gray-800 text-sm font-medium leading-6">
+            {analysis.valor_de_compra.analisis_grafica_1[language]}
+          </p>
+          <div className="ml-auto flex gap-2 items-center">
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-1" />
+          </div>
+        </div> */}
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-1/20 border-2 border-invertiria-2/60">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
             {analysis.valor_de_compra.analisis_grafica_1[language]}
           </p>
@@ -272,6 +281,7 @@ const Analisis = () => {
             <Sparkles size={16} className="text-invertiria-1" />
           </div>
         </div>
+
         {/* Gráficas */}
         <div className="w-full flex flex-col gap-20 justify-center">
           <div className="w-full flex items-center xl:gap-40 gap-30">
@@ -557,13 +567,13 @@ const Analisis = () => {
           <div className="flex items-center xl:gap-5 gap-0">
             {/* TIR */}
             <div className="justify-items-center">
-              <h3 className="text-2xl font-bold">{mesVentaTir}%</h3>
+              <h3 className="text-lg font-bold">{mesVentaTir}%</h3>
               <IndicadorDeRentabilidad value={mesVentaTir} max={maxTir} min={minTir} />
               <h1 className="text-2xl font-bold">TIR</h1>
             </div>
             {/* Utilidad */}
             <div className="justify-items-center">
-              <h3 className="text-2xl font-bold">{parsePrice(mesVentaUtilidad)}</h3>
+              <h3 className="text-lg font-bold">{parsePrice(mesVentaUtilidad)}</h3>
               <IndicadorDeRentabilidad value={mesVentaUtilidad} max={maxUtilidad} min={minUtilidad} />
               <h1 className="text-2xl font-bold">Utilidad</h1>
             </div>
@@ -571,13 +581,13 @@ const Analisis = () => {
           <div className="flex items-center xl:gap-5 gap-0">
             {/* ROI */}
             <div className="justify-items-center">
-              <h3 className="text-2xl font-bold">{mesVentaRoi}%</h3>
+              <h3 className="text-lg font-bold">{mesVentaRoi}%</h3>
               <IndicadorDeRentabilidad value={mesVentaRoi} max={maxRoi} min={minRoi} />
               <h1 className="text-2xl font-bold">ROI</h1>
             </div>
             {/* Cap Rate */}
             <div className="justify-items-center">
-              <h3 className="text-2xl font-bold">{mesVentaCapRate}%</h3>
+              <h3 className="text-lg font-bold">{mesVentaCapRate}%</h3>
               <IndicadorDeRentabilidad value={mesVentaCapRate} max={maxCapRate} min={minCapRate} />
               <h1 className="text-2xl font-bold">Cap Rate</h1>
             </div>
@@ -691,8 +701,11 @@ const Analisis = () => {
       <div className="flex flex-col xl:flex-row items-center xl:gap-40 gap-10">
         {/* Costo financiero */}
         <div className="justify-items-center">
-          <IndicadorDeRentabilidad value={20} max={100} colorInverted={true} />
+          <h3 className="text-lg font-bold">{modelation?.tasa_de_interes}% anual</h3>
+          <IndicadorDeRentabilidad value={modelation?.tasa_de_interes} max={40} min={0} colorInverted={true} />
           <h1 className="text-2xl font-bold">Tasa de interés</h1>
+          <br />
+          <h3 className="text-lg font-bold text-center">Pago mensual de {parsePrice(timeVectors?.pagos_credito?.[0]?.[2])}</h3>
         </div>
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
@@ -895,7 +908,7 @@ const Analisis = () => {
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Tiempo de venta</h2>
 
       {/* Grafica */}
-      <Recomendaciones timeVectors={timeVectors} flowsResult={flowsResult} mesVenta={modelation.fecha_prevista_venta} />
+      <Recomendaciones timeVectors={timeVectors} flowsResult={flowsResult} mesVenta={modelation?.fecha_prevista_venta} />
 
       {/* Analisis */}
       <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">

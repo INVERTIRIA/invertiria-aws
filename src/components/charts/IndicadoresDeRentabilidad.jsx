@@ -389,25 +389,25 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
           <div className="flex flex-col gap-10 divide-y-1">
             {/* TIR */}
             <div className="justify-items-center">
-              <h3 className="text-2xl font-bold">{kpi.tirMensual}%</h3>
+              <h3 className="text-lg font-bold">{kpi.tirMensual}%</h3>
               <IndicadorDeRentabilidad value={kpi.tirMensual} max={maxTir} min={minTir} />
               <h3 className="text-2xl font-bold">TIR</h3>
             </div>
             {/* Utilidad */}
             <div className="justify-items-center">
-              <h3 className="text-2xl font-bold">{parsePrice(kpi.utilidad)}</h3>
+              <h3 className="text-lg font-bold">{parsePrice(kpi.utilidad)}</h3>
               <IndicadorDeRentabilidad value={kpi.utilidad} max={maxUtilidad} min={minUtilidad} />
               <h3 className="text-2xl font-bold">Utilidad</h3>
             </div>
             {/* ROI */}
             <div className="justify-items-center">
-              <h3 className="text-2xl font-bold">{kpi.roiMensual}%</h3>
+              <h3 className="text-lg font-bold">{kpi.roiMensual}%</h3>
               <IndicadorDeRentabilidad value={kpi.roiMensual} max={maxRoi} min={minRoi} />
               <h3 className="text-2xl font-bold">ROI</h3>
             </div>
             {/* Cap Rate */}
             <div className="justify-items-center">
-              <h3 className="text-2xl font-bold">{kpi.capRate}%</h3>
+              <h3 className="text-lg font-bold">{kpi.capRate}%</h3>
               <IndicadorDeRentabilidad value={kpi.capRate} max={maxCapRate} min={minCapRate} />
               <h3 className="text-2xl font-bold">Cap Rate</h3>
             </div>
