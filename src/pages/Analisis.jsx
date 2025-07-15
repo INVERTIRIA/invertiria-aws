@@ -317,10 +317,10 @@ const Analisis = () => {
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
-            <Lightbulb className="size-5 text-yellow-600 fill-amber-300" />
+            <Lightbulb className="size-5 text-invertiria-1 fill-yellow-300" />
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
-          <p className="text-gray-900 text-sm">
+          <p className="text-gray-900 text-sm"> 
             {analysis.valor_de_compra.consejo[language]}
           </p>
         </div>
@@ -369,7 +369,7 @@ const Analisis = () => {
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
-            <Lightbulb className="size-5 text-yellow-600 fill-amber-300" />
+            <Lightbulb className="size-5 text-invertiria-1 fill-yellow-300" />
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
@@ -421,7 +421,7 @@ const Analisis = () => {
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
-            <Lightbulb className="size-5 text-yellow-600 fill-amber-300" />
+            <Lightbulb className="size-5 text-invertiria-1 fill-yellow-300" />
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
@@ -479,7 +479,7 @@ const Analisis = () => {
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
-            <Lightbulb className="size-5 text-yellow-600 fill-amber-300" />
+            <Lightbulb className="size-5 text-invertiria-1 fill-yellow-300" />
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
@@ -531,7 +531,7 @@ const Analisis = () => {
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
-            <Lightbulb className="size-5 text-yellow-600 fill-amber-300" />
+            <Lightbulb className="size-5 text-invertiria-1 fill-yellow-300" />
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
@@ -612,7 +612,7 @@ const Analisis = () => {
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
-            <Lightbulb className="size-5 text-yellow-600 fill-amber-300" />
+            <Lightbulb className="size-5 text-invertiria-1 fill-yellow-300" />
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
@@ -669,7 +669,7 @@ const Analisis = () => {
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
-            <Lightbulb className="size-5 text-yellow-600 fill-amber-300" />
+            <Lightbulb className="size-5 text-invertiria-1 fill-yellow-300" />
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
@@ -725,7 +725,7 @@ const Analisis = () => {
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
-            <Lightbulb className="size-5 text-yellow-600 fill-amber-300" />
+            <Lightbulb className="size-5 text-invertiria-1 fill-yellow-300" />
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
@@ -775,7 +775,7 @@ const Analisis = () => {
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
-            <Lightbulb className="size-5 text-yellow-600 fill-amber-300" />
+            <Lightbulb className="size-5 text-invertiria-1 fill-yellow-300" />
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
@@ -827,7 +827,7 @@ const Analisis = () => {
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
-            <Lightbulb className="size-5 text-yellow-600 fill-amber-300" />
+            <Lightbulb className="size-5 text-invertiria-1 fill-yellow-300" />
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
@@ -877,7 +877,7 @@ const Analisis = () => {
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
-            <Lightbulb className="size-5 text-yellow-600 fill-amber-300" />
+            <Lightbulb className="size-5 text-invertiria-1 fill-yellow-300" />
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
@@ -927,7 +927,7 @@ const Analisis = () => {
         </p>
         <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
           <div className="flex gap-1 items-center">
-            <Lightbulb className="size-5 text-yellow-600 fill-amber-300" />
+            <Lightbulb className="size-5 text-invertiria-1 fill-yellow-300" />
             <span className="text-gray-900 font-semibold">Consejo</span>
           </div>
           <p className="text-gray-900 text-sm">
