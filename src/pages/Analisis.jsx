@@ -177,14 +177,14 @@ const Analisis = () => {
 
       {/* Informacion del analisis en popup */}
       <Dialog>
-        <DialogTrigger asChild>
-          <div className="flex justify-end">
+        <div className="flex justify-end">
+          <DialogTrigger asChild>
             <Button variant="full_ghost" className="font-normal text-gray-600">
               Información del análisis
               <Info />
             </Button>
-          </div>
-        </DialogTrigger>
+          </DialogTrigger>
+        </div>
         <DialogContent className="w-[85%] xl:w-[35%] !max-w-none h-[70vh] p-10">
           <DialogTitle className="mt-2 text-2xl">Información del análisis</DialogTitle>
           <DialogDescription></DialogDescription>
