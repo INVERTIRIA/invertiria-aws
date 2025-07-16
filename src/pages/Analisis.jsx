@@ -264,13 +264,13 @@ const Analisis = () => {
       <div className="flex xl:flex-row flex-col items-center xl:gap-30 gap-10">
         {/* <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5"></div> */}
         {/* Analisis */}
-        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/50">
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
             {analysis.valor_de_compra.analisis_grafica_1[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
             <Sparkles size={16} className="text-invertiria-1" />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
           </div>
         </div>
 
@@ -292,41 +292,45 @@ const Analisis = () => {
           </div>
         </div>
         {/* Analisis */}
-        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/50">
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
             {analysis.valor_de_compra.analisis_grafica_2[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
             <Sparkles size={16} className="text-invertiria-1" />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
           </div>
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-radial-[at_5%_90%] from-orange-700 to-orange-400">
-        <div className="flex gap-2 items-center">
+      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-lg relative">
+        <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
-            alt=""
-            className="size-12 object-cover rounded-full"
+            alt="Foto de Juan Londoño"
+            className="w-14 h-14 object-cover rounded-full border-2 border-white"
           />
-          <p className="font-medium text-white">Juan Londoño</p>
+          <div>
+            <p className="text-white text-base font-semibold">Juan Londoño</p>
+            <p className="text-white text-xs opacity-70">Asesor financiero</p>
+          </div>
         </div>
-        <p className="z-10 text-white text-sm">
+        <p className="text-white text-sm leading-relaxed">
           {analysis.valor_de_compra.conclusion[language]}
         </p>
-        <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
-          <div className="flex gap-1 items-center">
-            <Lightbulb className="size-5 text-invertiria-1 fill-yellow-300" />
-            <span className="text-gray-900 font-semibold">Consejo</span>
+        {/* Consejo */}
+        <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+          <div className="flex items-center gap-2">
+            <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+            <span className="text-gray-800 font-semibold text-sm">Consejo</span>
           </div>
-          <p className="text-gray-900 text-sm"> 
+          <p className="text-sm text-gray-800 leading-relaxed">
             {analysis.valor_de_compra.consejo[language]}
           </p>
         </div>
-        <div className="ml-auto flex gap-2 items-center">
-          <p className="text-xs font-medium text-white">Generado por IA</p>
+        <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
+          <p className="text-xs text-white font-medium">Generado por IA</p>
         </div>
       </div>
 
@@ -344,41 +348,45 @@ const Analisis = () => {
         <TiempoDeCompra timeVectors={timeVectors} fechaCompra={modelation.fecha_compra.slice(0, 7)} />
 
         {/* Analisis */}
-        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
             {analysis.tiempo_de_compra.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
             <Sparkles size={16} className="text-invertiria-1" />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
           </div>
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-radial-[at_5%_90%] from-orange-700 to-orange-400">
-        <div className="flex gap-2 items-center">
+      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-lg relative">
+        <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
-            alt=""
-            className="size-12 object-cover rounded-full"
+            alt="Foto de Juan Londoño"
+            className="w-14 h-14 object-cover rounded-full border-2 border-white"
           />
-          <p className="font-medium text-white">Juan Londoño</p>
-        </div>
-        <p className="z-10 text-white text-sm">
-          {analysis.valor_de_compra.conclusion[language]}
-        </p>
-        <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
-          <div className="flex gap-1 items-center">
-            <Lightbulb className="size-5 text-invertiria-1 fill-yellow-300" />
-            <span className="text-gray-900 font-semibold">Consejo</span>
+          <div>
+            <p className="text-white text-base font-semibold">Juan Londoño</p>
+            <p className="text-white text-xs opacity-70">Asesor financiero</p>
           </div>
-          <p className="text-gray-900 text-sm">
+        </div>
+        <p className="text-white text-sm leading-relaxed">
+          {analysis.tiempo_de_compra.conclusion[language]}
+        </p>
+        {/* Consejo */}
+        <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+          <div className="flex items-center gap-2">
+            <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+            <span className="text-gray-800 font-semibold text-sm">Consejo</span>
+          </div>
+          <p className="text-sm text-gray-800 leading-relaxed">
             {analysis.tiempo_de_compra.consejo[language]}
           </p>
         </div>
-        <div className="ml-auto flex gap-2 items-center">
-          <p className="text-xs font-medium text-white">Generado por IA</p>
+        <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
+          <p className="text-xs text-white font-medium">Generado por IA</p>
         </div>
       </div>
 
@@ -396,41 +404,45 @@ const Analisis = () => {
         <RecomendacionesCompra timeVectors={timeVectors} />
 
         {/* Analisis */}
-        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
             {analysis.recomendaciones_compra.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
             <Sparkles size={16} className="text-invertiria-1" />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
           </div>
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-radial-[at_5%_90%] from-orange-700 to-orange-400">
-        <div className="flex gap-2 items-center">
+      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-lg relative">
+        <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
-            alt=""
-            className="size-12 object-cover rounded-full"
+            alt="Foto de Juan Londoño"
+            className="w-14 h-14 object-cover rounded-full border-2 border-white"
           />
-          <p className="font-medium text-white">Juan Londoño</p>
+          <div>
+            <p className="text-white text-base font-semibold">Juan Londoño</p>
+            <p className="text-white text-xs opacity-70">Asesor financiero</p>
+          </div>
         </div>
-        <p className="z-10 text-white text-sm">
+        <p className="text-white text-sm leading-relaxed">
           {analysis.recomendaciones_compra.conclusion[language]}
         </p>
-        <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
-          <div className="flex gap-1 items-center">
-            <Lightbulb className="size-5 text-invertiria-1 fill-yellow-300" />
-            <span className="text-gray-900 font-semibold">Consejo</span>
+        {/* Consejo */}
+        <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+          <div className="flex items-center gap-2">
+            <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+            <span className="text-gray-800 font-semibold text-sm">Consejo</span>
           </div>
-          <p className="text-gray-900 text-sm">
+          <p className="text-sm text-gray-800 leading-relaxed">
             {analysis.recomendaciones_compra.consejo[language]}
           </p>
         </div>
-        <div className="ml-auto flex gap-2 items-center">
-          <p className="text-xs font-medium text-white">Generado por IA</p>
+        <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
+          <p className="text-xs text-white font-medium">Generado por IA</p>
         </div>
       </div>
       <br />
@@ -446,7 +458,7 @@ const Analisis = () => {
         Precio del inmueble
       </h2>
 
-      <div className="w-full flex xl:flex-row flex-col gap-10 xl:gap-60 items-center -mt-10">
+      <div className="w-full flex xl:flex-row flex-col gap-10 xl:gap-80 items-center -mt-10">
 
         {/* Gráfica  */}
         <div className="xl:ml-0 -ml-30">
@@ -454,41 +466,45 @@ const Analisis = () => {
         </div>
 
         {/* Analisis */}
-        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
             {analysis.valor_de_venta.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
             <Sparkles size={16} className="text-invertiria-1" />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
           </div>
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-radial-[at_5%_90%] from-orange-700 to-orange-400">
-        <div className="flex gap-2 items-center">
+      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-lg relative">
+        <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
-            alt=""
-            className="size-12 object-cover rounded-full"
+            alt="Foto de Juan Londoño"
+            className="w-14 h-14 object-cover rounded-full border-2 border-white"
           />
-          <p className="font-medium text-white">Juan Londoño</p>
+          <div>
+            <p className="text-white text-base font-semibold">Juan Londoño</p>
+            <p className="text-white text-xs opacity-70">Asesor financiero</p>
+          </div>
         </div>
-        <p className="z-10 text-white text-sm">
+        <p className="text-white text-sm leading-relaxed">
           {analysis.valor_de_venta.conclusion[language]}
         </p>
-        <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
-          <div className="flex gap-1 items-center">
-            <Lightbulb className="size-5 text-invertiria-1 fill-yellow-300" />
-            <span className="text-gray-900 font-semibold">Consejo</span>
+        {/* Consejo */}
+        <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+          <div className="flex items-center gap-2">
+            <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+            <span className="text-gray-800 font-semibold text-sm">Consejo</span>
           </div>
-          <p className="text-gray-900 text-sm">
+          <p className="text-sm text-gray-800 leading-relaxed">
             {analysis.valor_de_venta.consejo[language]}
           </p>
         </div>
-        <div className="ml-auto flex gap-2 items-center">
-          <p className="text-xs font-medium text-white">Generado por IA</p>
+        <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
+          <p className="text-xs text-white font-medium">Generado por IA</p>
         </div>
       </div>
 
@@ -506,41 +522,45 @@ const Analisis = () => {
         <TiempoDeVenta timeVectors={timeVectors} flowsResult={flowsResult} />
 
         {/* Analisis */}
-        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
             {analysis.tiempo_de_venta.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
             <Sparkles size={16} className="text-invertiria-1" />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
           </div>
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-radial-[at_5%_90%] from-orange-700 to-orange-400">
-        <div className="flex gap-2 items-center">
+      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-lg relative">
+        <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
-            alt=""
-            className="size-12 object-cover rounded-full"
+            alt="Foto de Juan Londoño"
+            className="w-14 h-14 object-cover rounded-full border-2 border-white"
           />
-          <p className="font-medium text-white">Juan Londoño</p>
+          <div>
+            <p className="text-white text-base font-semibold">Juan Londoño</p>
+            <p className="text-white text-xs opacity-70">Asesor financiero</p>
+          </div>
         </div>
-        <p className="z-10 text-white text-sm">
+        <p className="text-white text-sm leading-relaxed">
           {analysis.tiempo_de_venta.conclusion[language]}
         </p>
-        <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
-          <div className="flex gap-1 items-center">
-            <Lightbulb className="size-5 text-invertiria-1 fill-yellow-300" />
-            <span className="text-gray-900 font-semibold">Consejo</span>
+        {/* Consejo */}
+        <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+          <div className="flex items-center gap-2">
+            <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+            <span className="text-gray-800 font-semibold text-sm">Consejo</span>
           </div>
-          <p className="text-gray-900 text-sm">
+          <p className="text-sm text-gray-800 leading-relaxed">
             {analysis.tiempo_de_venta.consejo[language]}
           </p>
         </div>
-        <div className="ml-auto flex gap-2 items-center">
-          <p className="text-xs font-medium text-white">Generado por IA</p>
+        <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
+          <p className="text-xs text-white font-medium">Generado por IA</p>
         </div>
       </div>
 
@@ -553,7 +573,7 @@ const Analisis = () => {
         En tiempo de venta
       </h2>
 
-      <div className="flex flex-col xl:flex-row items-center xl:gap-20 gap-10">
+      <div className="flex flex-col xl:flex-row items-center xl:gap-40 gap-10">
         {/* Graficas */}
         <div className="flex flex-col gap-10">
           <div className="flex items-center xl:gap-5 gap-0">
@@ -587,41 +607,45 @@ const Analisis = () => {
         </div>
 
         {/* Analisis */}
-        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
             {analysis.indicadores_de_rentabilidad_venta.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
             <Sparkles size={16} className="text-invertiria-1" />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
           </div>
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-radial-[at_5%_90%] from-orange-700 to-orange-400">
-        <div className="flex gap-2 items-center">
+      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-lg relative">
+        <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
-            alt=""
-            className="size-12 object-cover rounded-full"
+            alt="Foto de Juan Londoño"
+            className="w-14 h-14 object-cover rounded-full border-2 border-white"
           />
-          <p className="font-medium text-white">Juan Londoño</p>
+          <div>
+            <p className="text-white text-base font-semibold">Juan Londoño</p>
+            <p className="text-white text-xs opacity-70">Asesor financiero</p>
+          </div>
         </div>
-        <p className="z-10 text-white text-sm">
+        <p className="text-white text-sm leading-relaxed">
           {analysis.indicadores_de_rentabilidad_venta.conclusion[language]}
         </p>
-        <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
-          <div className="flex gap-1 items-center">
-            <Lightbulb className="size-5 text-invertiria-1 fill-yellow-300" />
-            <span className="text-gray-900 font-semibold">Consejo</span>
+        {/* Consejo */}
+        <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+          <div className="flex items-center gap-2">
+            <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+            <span className="text-gray-800 font-semibold text-sm">Consejo</span>
           </div>
-          <p className="text-gray-900 text-sm">
+          <p className="text-sm text-gray-800 leading-relaxed">
             {analysis.indicadores_de_rentabilidad_venta.consejo[language]}
           </p>
         </div>
-        <div className="ml-auto flex gap-2 items-center">
-          <p className="text-xs font-medium text-white">Generado por IA</p>
+        <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
+          <p className="text-xs text-white font-medium">Generado por IA</p>
         </div>
       </div>
 
@@ -635,7 +659,7 @@ const Analisis = () => {
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Viabilidad</h2>
 
       {/* Grafica */}
-      <div className="flex xl:flex-row flex-col xl:gap-40 gap-10">
+      <div className="flex xl:flex-row flex-col xl:gap-60 gap-10">
         {/* Apalancamiento */}
         <div className="justify-items-center">
           <h3 className="text-lg font-bold">{apalancamiento} veces tu capital</h3>
@@ -644,41 +668,45 @@ const Analisis = () => {
         </div>
 
         {/* Analisis */}
-        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
             {analysis.apalancamiento.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
             <Sparkles size={16} className="text-invertiria-1" />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
           </div>
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-radial-[at_5%_90%] from-orange-700 to-orange-400">
-        <div className="flex gap-2 items-center">
+      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-lg relative">
+        <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
-            alt=""
-            className="size-12 object-cover rounded-full"
+            alt="Foto de Juan Londoño"
+            className="w-14 h-14 object-cover rounded-full border-2 border-white"
           />
-          <p className="font-medium text-white">Juan Londoño</p>
+          <div>
+            <p className="text-white text-base font-semibold">Juan Londoño</p>
+            <p className="text-white text-xs opacity-70">Asesor financiero</p>
+          </div>
         </div>
-        <p className="z-10 text-white text-sm">
+        <p className="text-white text-sm leading-relaxed">
           {analysis.apalancamiento.conclusion[language]}
         </p>
-        <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
-          <div className="flex gap-1 items-center">
-            <Lightbulb className="size-5 text-invertiria-1 fill-yellow-300" />
-            <span className="text-gray-900 font-semibold">Consejo</span>
+        {/* Consejo */}
+        <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+          <div className="flex items-center gap-2">
+            <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+            <span className="text-gray-800 font-semibold text-sm">Consejo</span>
           </div>
-          <p className="text-gray-900 text-sm">
+          <p className="text-sm text-gray-800 leading-relaxed">
             {analysis.apalancamiento.consejo[language]}
           </p>
         </div>
-        <div className="ml-auto flex gap-2 items-center">
-          <p className="text-xs font-medium text-white">Generado por IA</p>
+        <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
+          <p className="text-xs text-white font-medium">Generado por IA</p>
         </div>
       </div>
 
@@ -690,7 +718,7 @@ const Analisis = () => {
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Pago mensual</h2>
 
       {/* Grafica */}
-      <div className="flex flex-col xl:flex-row items-center xl:gap-40 gap-10">
+      <div className="flex flex-col xl:flex-row items-center xl:gap-60 gap-10">
         {/* Costo financiero */}
         <div className="justify-items-center">
           <h3 className="text-lg font-bold">{modelation?.tasa_de_interes}% efectivo anual</h3>
@@ -700,41 +728,45 @@ const Analisis = () => {
           <h3 className="text-lg font-bold text-center">Pago mensual de {parsePrice(timeVectors?.pagos_credito?.[0]?.[2])}</h3>
         </div>
         {/* Analisis */}
-        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
             {analysis.costo_financiero.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
             <Sparkles size={16} className="text-invertiria-1" />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
           </div>
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-radial-[at_5%_90%] from-orange-700 to-orange-400">
-        <div className="flex gap-2 items-center">
+      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-lg relative">
+        <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
-            alt=""
-            className="size-12 object-cover rounded-full"
+            alt="Foto de Juan Londoño"
+            className="w-14 h-14 object-cover rounded-full border-2 border-white"
           />
-          <p className="font-medium text-white">Juan Londoño</p>
+          <div>
+            <p className="text-white text-base font-semibold">Juan Londoño</p>
+            <p className="text-white text-xs opacity-70">Asesor financiero</p>
+          </div>
         </div>
-        <p className="z-10 text-white text-sm">
+        <p className="text-white text-sm leading-relaxed">
           {analysis.costo_financiero.conclusion[language]}
         </p>
-        <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
-          <div className="flex gap-1 items-center">
-            <Lightbulb className="size-5 text-invertiria-1 fill-yellow-300" />
-            <span className="text-gray-900 font-semibold">Consejo</span>
+        {/* Consejo */}
+        <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+          <div className="flex items-center gap-2">
+            <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+            <span className="text-gray-800 font-semibold text-sm">Consejo</span>
           </div>
-          <p className="text-gray-900 text-sm">
+          <p className="text-sm text-gray-800 leading-relaxed">
             {analysis.costo_financiero.consejo[language]}
           </p>
         </div>
-        <div className="ml-auto flex gap-2 items-center">
-          <p className="text-xs font-medium text-white">Generado por IA</p>
+        <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
+          <p className="text-xs text-white font-medium">Generado por IA</p>
         </div>
       </div>
 
@@ -745,46 +777,50 @@ const Analisis = () => {
       <h1 className="text-4xl font-bold">Capacidad de endeudamiento</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Según perfil</h2>
 
-      <div className="flex xl:flex-row flex-col items-center xl:gap-60 gap-10 xl:pl-30">
+      <div className="flex xl:flex-row flex-col items-center xl:gap-80 gap-10 xl:pl-30">
         {/* Grafica */}
         <Endeudamiento price={6000000} />
 
         {/* Analisis */}
-        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
             {analysis.capacidad_de_endeudamiento.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
             <Sparkles size={16} className="text-invertiria-1" />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
           </div>
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-radial-[at_5%_90%] from-orange-700 to-orange-400">
-        <div className="flex gap-2 items-center">
+      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-lg relative">
+        <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
-            alt=""
-            className="size-12 object-cover rounded-full"
+            alt="Foto de Juan Londoño"
+            className="w-14 h-14 object-cover rounded-full border-2 border-white"
           />
-          <p className="font-medium text-white">Juan Londoño</p>
+          <div>
+            <p className="text-white text-base font-semibold">Juan Londoño</p>
+            <p className="text-white text-xs opacity-70">Asesor financiero</p>
+          </div>
         </div>
-        <p className="z-10 text-white text-sm">
+        <p className="text-white text-sm leading-relaxed">
           {analysis.capacidad_de_endeudamiento.conclusion[language]}
         </p>
-        <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
-          <div className="flex gap-1 items-center">
-            <Lightbulb className="size-5 text-invertiria-1 fill-yellow-300" />
-            <span className="text-gray-900 font-semibold">Consejo</span>
+        {/* Consejo */}
+        <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+          <div className="flex items-center gap-2">
+            <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+            <span className="text-gray-800 font-semibold text-sm">Consejo</span>
           </div>
-          <p className="text-gray-900 text-sm">
+          <p className="text-sm text-gray-800 leading-relaxed">
             {analysis.capacidad_de_endeudamiento.consejo[language]}
           </p>
         </div>
-        <div className="ml-auto flex gap-2 items-center">
-          <p className="text-xs font-medium text-white">Generado por IA</p>
+        <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
+          <p className="text-xs text-white font-medium">Generado por IA</p>
         </div>
       </div>
 
@@ -802,41 +838,45 @@ const Analisis = () => {
         <FlujoDeCaja flowsResult={flowsResult} fechaVenta={fechaVenta} />
 
         {/* Analisis */}
-        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
             {analysis.flujo_de_caja.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
             <Sparkles size={16} className="text-invertiria-1" />
+            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
           </div>
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-radial-[at_5%_90%] from-orange-700 to-orange-400">
-        <div className="flex gap-2 items-center">
+      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-lg relative">
+        <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
-            alt=""
-            className="size-12 object-cover rounded-full"
+            alt="Foto de Juan Londoño"
+            className="w-14 h-14 object-cover rounded-full border-2 border-white"
           />
-          <p className="font-medium text-white">Juan Londoño</p>
+          <div>
+            <p className="text-white text-base font-semibold">Juan Londoño</p>
+            <p className="text-white text-xs opacity-70">Asesor financiero</p>
+          </div>
         </div>
-        <p className="z-10 text-white text-sm">
+        <p className="text-white text-sm leading-relaxed">
           {analysis.flujo_de_caja.conclusion[language]}
         </p>
-        <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
-          <div className="flex gap-1 items-center">
-            <Lightbulb className="size-5 text-invertiria-1 fill-yellow-300" />
-            <span className="text-gray-900 font-semibold">Consejo</span>
+        {/* Consejo */}
+        <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+          <div className="flex items-center gap-2">
+            <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+            <span className="text-gray-800 font-semibold text-sm">Consejo</span>
           </div>
-          <p className="text-gray-900 text-sm">
+          <p className="text-sm text-gray-800 leading-relaxed">
             {analysis.flujo_de_caja.consejo[language]}
           </p>
         </div>
-        <div className="ml-auto flex gap-2 items-center">
-          <p className="text-xs font-medium text-white">Generado por IA</p>
+        <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
+          <p className="text-xs text-white font-medium">Generado por IA</p>
         </div>
       </div>
 
@@ -853,40 +893,44 @@ const Analisis = () => {
       <IndicadoresDeRentabilidad timeVectors={timeVectors} flowsResult={flowsResult} fechaVenta={fechaVenta} />
 
       {/* Analisis */}
-      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
+      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
         <p className="z-10 text-gray-800 text-sm font-medium leading-6">
           {analysis.indicadores_de_rentabilidad.analisis_grafica[language]}
         </p>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
           <Sparkles size={16} className="text-invertiria-1" />
+          <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-radial-[at_5%_90%] from-orange-700 to-orange-400">
-        <div className="flex gap-2 items-center">
+      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-lg relative">
+        <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
-            alt=""
-            className="size-12 object-cover rounded-full"
+            alt="Foto de Juan Londoño"
+            className="w-14 h-14 object-cover rounded-full border-2 border-white"
           />
-          <p className="font-medium text-white">Juan Londoño</p>
+          <div>
+            <p className="text-white text-base font-semibold">Juan Londoño</p>
+            <p className="text-white text-xs opacity-70">Asesor financiero</p>
+          </div>
         </div>
-        <p className="z-10 text-white text-sm">
+        <p className="text-white text-sm leading-relaxed">
           {analysis.indicadores_de_rentabilidad.conclusion[language]}
         </p>
-        <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
-          <div className="flex gap-1 items-center">
-            <Lightbulb className="size-5 text-invertiria-1 fill-yellow-300" />
-            <span className="text-gray-900 font-semibold">Consejo</span>
+        {/* Consejo */}
+        <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+          <div className="flex items-center gap-2">
+            <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+            <span className="text-gray-800 font-semibold text-sm">Consejo</span>
           </div>
-          <p className="text-gray-900 text-sm">
+          <p className="text-sm text-gray-800 leading-relaxed">
             {analysis.indicadores_de_rentabilidad.consejo[language]}
           </p>
         </div>
-        <div className="ml-auto flex gap-2 items-center">
-          <p className="text-xs font-medium text-white">Generado por IA</p>
+        <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
+          <p className="text-xs text-white font-medium">Generado por IA</p>
         </div>
       </div>
 
@@ -903,40 +947,44 @@ const Analisis = () => {
       <Recomendaciones timeVectors={timeVectors} flowsResult={flowsResult} mesVenta={modelation?.fecha_prevista_venta} />
 
       {/* Analisis */}
-      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
+      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
         <p className="z-10 text-gray-800 text-sm font-medium leading-6">
           {analysis.recomendacion.analisis_grafica[language]}
         </p>
         <div className="ml-auto flex gap-2 items-center">
-          <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
           <Sparkles size={16} className="text-invertiria-1" />
+          <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-radial-[at_5%_90%] from-orange-700 to-orange-400">
-        <div className="flex gap-2 items-center">
+      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-lg relative">
+        <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
-            alt=""
-            className="size-12 object-cover rounded-full"
+            alt="Foto de Juan Londoño"
+            className="w-14 h-14 object-cover rounded-full border-2 border-white"
           />
-          <p className="font-medium text-white">Juan Londoño</p>
+          <div>
+            <p className="text-white text-base font-semibold">Juan Londoño</p>
+            <p className="text-white text-xs opacity-70">Asesor financiero</p>
+          </div>
         </div>
-        <p className="z-10 text-white text-sm">
+        <p className="text-white text-sm leading-relaxed">
           {analysis.recomendacion.conclusion[language]}
         </p>
-        <div className="flex flex-col gap-4 bg-white/80 p-5 rounded-2xl">
-          <div className="flex gap-1 items-center">
-            <Lightbulb className="size-5 text-invertiria-1 fill-yellow-300" />
-            <span className="text-gray-900 font-semibold">Consejo</span>
+        {/* Consejo */}
+        <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+          <div className="flex items-center gap-2">
+            <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+            <span className="text-gray-800 font-semibold text-sm">Consejo</span>
           </div>
-          <p className="text-gray-900 text-sm">
+          <p className="text-sm text-gray-800 leading-relaxed">
             {analysis.recomendacion.consejo[language]}
           </p>
         </div>
-        <div className="ml-auto flex gap-2 items-center">
-          <p className="text-xs font-medium text-white">Generado por IA</p>
+        <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
+          <p className="text-xs text-white font-medium">Generado por IA</p>
         </div>
       </div>
 
