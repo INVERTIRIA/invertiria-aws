@@ -190,7 +190,7 @@ const Analisis = () => {
           <DialogDescription></DialogDescription>
           <div className="mb-2 space-y-3 overflow-y-auto text-gray-800 text-sm font-medium leading-6">
             <p><strong>Nombre del análisis:</strong> {modelation.titulo_modelacion}</p>
-            <p><strong>Vigencia de la inversión:</strong> {modelation.vigencia}</p>
+            <p><strong>Vigencia de la inversión:</strong> {modelation.vigencia ? "Actual" : "Ya realizada"}</p>
             <p><strong>Nombre del proyecto:</strong> {modelation.nombre_del_proyecto}</p>
             <p><strong>País:</strong> {modelation.pais.nombre}</p>
             <p><strong>Ciudad:</strong> {modelation.ciudad.nombre}</p>
@@ -198,26 +198,26 @@ const Analisis = () => {
             <p><strong>Subzona:</strong> {modelation.subzona}</p>
             <p><strong>Tipo de inmueble:</strong> {modelation.tipo_inmueble}</p>
             <p><strong>Condición del inmueble:</strong> {modelation.estado_inmueble}</p>
-            <p><strong>Titularidad:</strong> {modelation.titularidad}</p>
+            <p><strong>Titularidad:</strong> {modelation.titularidad ? modelation.titularidad : "No aplica"}</p>
             <p><strong>Modelo de negocio:</strong> {modelation.modelo_de_negocio}</p>
             <p><strong>Moneda:</strong> {modelation.moneda}</p>
             <p><strong>Precio de compra:</strong> {parsePrice(modelation.precio_de_compra)}</p>
-            <p><strong>Precio de mercado:</strong> {parsePrice(modelation.precio_de_mercado)}</p>
-            <p><strong>Separación:</strong> {parsePrice(modelation.separacion)}</p>
-            <p><strong>Forma de pago cuota inicial:</strong> {modelation.forma_pago_cuota_inicial}</p>
-            <p><strong>Porcentaje de cuota inicial:</strong> {modelation.cuota_inicial + "%"}</p>
-            <p><strong>Fecha inicio cuota inicial:</strong> {modelation.inicial_fecha_inicio_pago}</p>
-            <p><strong>Fecha fin cuota inicial:</strong> {modelation.inicial_fecha_fin_pago}</p>
-            <p><strong>Número de pagos personalizados:</strong> {modelation.pagos_personalizados}</p>
-            <p><strong>Fecha de pagos personalizados:</strong> {modelation.fecha_pagos_personalizados}</p>
-            <p><strong>Valor de pagos personalizados:</strong> {modelation.valor_pagos_personalizados}</p>
+            <p><strong>Precio de mercado:</strong> {modelation.precio_de_mercado ? parsePrice(modelation.precio_de_mercado) : "No aplica"}</p>
+            <p><strong>Separación:</strong> {modelation.separacion ? parsePrice(modelation.separacion) : "No aplica"}</p>
+            <p><strong>Forma de pago cuota inicial:</strong> {modelation.forma_pago_cuota_inicial ? modelation.forma_pago_cuota_inicial : "No aplica"}</p>
+            <p><strong>Porcentaje de cuota inicial:</strong> {modelation.cuota_inicial ? modelation.cuota_inicial + "%" : "No aplica"}</p>
+            <p><strong>Fecha inicio cuota inicial:</strong> {modelation.inicial_fecha_inicio_pago ? modelation.inicial_fecha_inicio_pago : "No aplica"}</p>
+            <p><strong>Fecha fin cuota inicial:</strong> {modelation.inicial_fecha_fin_pago ? modelation.inicial_fecha_fin_pago : "No aplica"}</p>
+            <p><strong>Número de pagos personalizados:</strong> {modelation.pagos_personalizados ? modelation.pagos_personalizados : "No aplica"}</p>
+            <p><strong>Fecha de pagos personalizados:</strong> {modelation.fecha_pagos_personalizados ? modelation.fecha_pagos_personalizados : "No aplica"}</p>
+            <p><strong>Valor de pagos personalizados:</strong> {modelation.valor_pagos_personalizados ? modelation.valor_pagos_personalizados : "No aplica"}</p>
             <p><strong>Crédito hipotecario:</strong> {modelation.credito_hipotecario ? "Si" : "No"}</p>
-            <p><strong>Tasa de interés efectiva anual:</strong> {modelation.tasa_de_interes + "%"}</p>
-            <p><strong>Fecha inicio crédito:</strong> {modelation.credito_fecha_inicio_pago}</p>
-            <p><strong>Fecha fin crédito:</strong> {modelation.credito_fecha_fin_pago}</p>
-            <p><strong>Edad de la propiedad:</strong> {modelation.edad_propiedad + " años"}</p>
-            <p><strong>Área del inmueble:</strong> {modelation.area_inmueble + "m²"}</p>
-            <p><strong>Parqueaderos:</strong> {modelation.parqueaderos}</p>
+            <p><strong>Tasa de interés efectiva anual:</strong> {modelation.tasa_de_interes ? modelation.tasa_de_interes + "%" : "No aplica"}</p>
+            <p><strong>Fecha inicio crédito:</strong> {modelation.credito_fecha_inicio_pago ? modelation.credito_fecha_inicio_pago : "No aplica"}</p>
+            <p><strong>Fecha fin crédito:</strong> {modelation.credito_fecha_fin_pago ? modelation.credito_fecha_fin_pago : "No aplica"}</p>
+            <p><strong>Edad de la propiedad:</strong> {modelation.edad_propiedad ? modelation.edad_propiedad + " años" : "No aplica"}</p>
+            <p><strong>Área del inmueble:</strong> {modelation.area_inmueble ? modelation.area_inmueble + "m²" : "No aplica"}</p>
+            <p><strong>Parqueaderos:</strong> {modelation.parqueaderos ? modelation.parqueaderos : "No aplica"}</p>
             <p><strong>VIS:</strong> {modelation.vivienda_vis ? "Si" : "No"}</p>
             <p><strong>Cesión de derechos:</strong> {modelation.cesion_de_derechos ? "Si" : "No"}</p>
             <p><strong>Fecha inicio ventas:</strong> {modelation.fecha_inicio_ventas}</p>
@@ -291,13 +291,13 @@ const Analisis = () => {
         <div className="w-full flex flex-col gap-20 justify-center xl:pl-10 pl-4">
           <div className="w-full flex items-center xl:gap-40 gap-30">
             <ValorDeCompra
-              price={modelation.precio_de_compra / modelation.area_inmueble}
+              price={modelation.area_inmueble ? modelation.precio_de_compra / modelation.area_inmueble : 0}
               minPrice={getVarianzaSubzona(true)}
               maxPrice={getVarianzaSubzona(false)}
               location={modelation.subzona}
             />
             <ValorDeCompra
-              price={modelation.precio_de_compra / modelation.area_inmueble}
+              price={modelation.area_inmueble ? modelation.precio_de_compra / modelation.area_inmueble : 0}
               minPrice={4775632}
               maxPrice={12518275}
               location={modelation.ciudad.nombre}
