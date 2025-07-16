@@ -13,132 +13,37 @@ import {
 } from "recharts";
 import { parsePrice } from "../../constants/functions";
 
-// Data para la grafica
-const data = [
-  {
-    mes: "01/2023",
-    "Flujo neto": 4000000,
-    "Ingresos": 9000000,
-    "Egresos": 5000000,
-  },
-  {
-    mes: "02/2023",
-    "Flujo neto": 6000000,
-    "Ingresos": 9000000,
-    "Egresos": 3000000,
-  },
-  {
-    mes: "03/2023",
-    "Flujo neto": 4000000,
-    "Ingresos": 10000000,
-    "Egresos": 6000000,
-  },
-  {
-    mes: "04/2023",
-    "Flujo neto": 1000000,
-    "Ingresos": 9000000,
-    "Egresos": 8000000,
-  },
-  {
-    mes: "05/2023",
-    "Flujo neto": 2000000,
-    "Ingresos": 9000000,
-    "Egresos": 7000000,
-  },
-  {
-    mes: "06/2023",
-    "Flujo neto": 3000000,
-    "Ingresos": 7000000,
-    "Egresos": 4000000,
-  },
-  {
-    mes: "07/2023",
-    "Flujo neto": 4000000,
-    "Ingresos": 8000000,
-    "Egresos": 4000000,
-  },
-  {
-    mes: "08/2023",
-    "Flujo neto": 4000000,
-    "Ingresos": 7000000,
-    "Egresos": 3000000,
-  },
-  {
-    mes: "09/2023",
-    "Flujo neto": 6000000,
-    "Ingresos": 8000000,
-    "Egresos": 2000000,
-  },
-  {
-    mes: "10/2023",
-    "Flujo neto": 2000000,
-    "Ingresos": 9000000,
-    "Egresos": 7000000,
-  },
-  {
-    mes: "11/2023",
-    "Flujo neto": 4000000,
-    "Ingresos": 5000000,
-    "Egresos": 1000000,
-  },
-  {
-    mes: "12/2023",
-    "Flujo neto": 9000000,
-    "Ingresos": 9000000,
-    "Egresos": 9000000,
-  },
-  {
-    mes: "01/2024",
-    "Flujo neto": 9000000,
-    "Ingresos": 9000000,
-    "Egresos": 9000000,
-  },
-  {
-    mes: "02/2024",
-    "Flujo neto": 9000000,
-    "Ingresos": 9000000,
-    "Egresos": 9000000,
-  },
-  {
-    mes: "03/2024",
-    "Flujo neto": 9000000,
-    "Ingresos": 9000000,
-    "Egresos": 9000000,
-  },
-  {
-    mes: "04/2024",
-    "Flujo neto": 9000000,
-    "Ingresos": 9000000,
-    "Egresos": 9000000,
-  },
-  {
-    mes: "05/2024",
-    "Flujo neto": 9000000,
-    "Ingresos": 9000000,
-    "Egresos": 9000000,
-  },
-  {
-    mes: "06/2024",
-    "Flujo neto": 9000000,
-    "Ingresos": 9000000,
-    "Egresos": 9000000,
-  },
-  {
-    mes: "07/2024",
-    "Flujo neto": 9000000,
-    "Ingresos": 9000000,
-    "Egresos": 9000000,
-  },
-  {
-    mes: "08/2024",
-    "Flujo neto": 9000000,
-    "Ingresos": 9000000,
-    "Egresos": 9000000,
-  },
-];
-
 // Grafica
-function FlujoDeCaja({ results }) {
+function FlujoDeCaja({ flowsResult, fechaVenta }) {
+
+  // Obtener data
+  const data = flowsResult?.flujo_de_caja.map((item, index) => {
+    return {
+      mes: item[1],
+      "Ingresos": item[2],
+      "Egresos": item[3],
+      "Flujo neto": item[4],
+    };
+  });
+
+  // Punto personalizado
+  const CustomizedDot = (props) => {
+    const { cx, cy, stroke, payload, value } = props;
+    if (payload.mes === fechaVenta) {
+      return (
+        <svg
+          x={cx - 10}
+          y={cy - 10}
+          width={20}
+          height={20}
+          viewBox="0 0 120 120"
+          fill="black"
+        >
+          <circle cx="60" cy="60" r="35" />
+        </svg>
+      );
+    }
+  };
 
   return (
     <div className="w-[100%] h-[50vh] lg:w-[60%]">
@@ -182,14 +87,14 @@ function FlujoDeCaja({ results }) {
             strokeWidth={1.5}
             stroke="#000000"
             connectNulls
-            dot={{ stroke: 'black', fill: 'black', strokeWidth: 1 }}
+            dot={<CustomizedDot />}
           />
           <Legend wrapperStyle={{ top: -40 }} />
           <Brush
             dataKey="mes"
             stroke="#FB3D03"
             startIndex={0}
-            endIndex={11}
+            endIndex={60}
             height={30}
             className="custom-brush"
           />

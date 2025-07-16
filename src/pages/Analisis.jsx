@@ -795,11 +795,11 @@ const Analisis = () => {
 
       {/* Titulo grafica */}
       <h1 className="text-4xl font-bold">Flujo de caja mensual</h1>
-      <h2 className="-mt-20 text-2xl font-bold text-gray-500">Según perfil</h2>
+      <h2 className="-mt-20 text-2xl font-bold text-gray-500">En mes de venta</h2>
 
       <div className="flex xl:flex-row flex-col items-center gap-10">
         {/* Grafica */}
-        <FlujoDeCaja />
+        <FlujoDeCaja flowsResult={flowsResult} fechaVenta={fechaVenta} />
 
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5">
