@@ -3,7 +3,7 @@ import { parsePrice } from "../../constants/functions";
 function ValorDeCompra({ price, minPrice, maxPrice, location }) {
   let indicatorPosition = ((price - minPrice) / (maxPrice - minPrice)) * 100;
   if (price > maxPrice) {
-    indicatorPosition = 100;
+    indicatorPosition = 96;
   }
   if (price < minPrice) {
     indicatorPosition = 0;

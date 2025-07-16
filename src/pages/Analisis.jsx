@@ -779,7 +779,7 @@ const Analisis = () => {
 
       <div className="flex xl:flex-row flex-col items-center xl:gap-80 gap-10 xl:pl-30">
         {/* Grafica */}
-        <Endeudamiento price={6000000} />
+        <Endeudamiento price={1000000} />
 
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">

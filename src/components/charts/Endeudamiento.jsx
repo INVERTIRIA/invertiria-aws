@@ -1,7 +1,17 @@
 import { parsePrice } from "../../constants/functions";
 
 function Endeudamiento({ price, minPrice, maxPrice }) {
-  const indicatorPosition = ((price - minPrice) / (maxPrice - minPrice)) * 100;
+
+  minPrice = 2000000;
+  maxPrice = 8000000;
+
+  let indicatorPosition = ((price - minPrice) / (maxPrice - minPrice)) * 100;
+  if (price > maxPrice) {
+    indicatorPosition = 96;
+  }
+  if (price < minPrice) {
+    indicatorPosition = 0;
+  }
 
   return (
     <div className="flex flex-col gap-1 items-center">
