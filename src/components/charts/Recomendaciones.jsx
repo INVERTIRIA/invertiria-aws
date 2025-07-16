@@ -164,7 +164,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
                 <ReferenceLine x={mesMayorRoi}
                   label={{ value: 'Mayor ROI', style: { fill: 'black' }, angle: -90, position: 'center' }}
                   stroke="purple"
-                  strokeWidth={30}
+                  strokeWidth={25}
                   isFront={true}
                   style={{ opacity: 0.5 }}
                 />
@@ -242,7 +242,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
                 <ReferenceLine x={mesMayorTir}
                   label={{ value: 'Mayor TIR', style: { fill: 'black' }, angle: -90, position: 'center' }}
                   stroke="orange"
-                  strokeWidth={30}
+                  strokeWidth={25}
                   isFront={true}
                   style={{ opacity: 0.5  }}
                 />
@@ -297,7 +297,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
                 <ReferenceLine x={mesMayorUtilidad}
                   label={{ value: 'Mayor utilidad', style: { fill: 'black' }, angle: -90, position: 'center' }}
                   stroke="green"
-                  strokeWidth={30}
+                  strokeWidth={25}
                   isFront={true}
                   style={{ opacity: 0.5 }}
                 />

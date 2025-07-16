@@ -1,7 +1,13 @@
 import { parsePrice } from "../../constants/functions";
 
 function ValorDeCompra({ price, minPrice, maxPrice, location }) {
-  const indicatorPosition = ((price - minPrice) / (maxPrice - minPrice)) * 100;
+  let indicatorPosition = ((price - minPrice) / (maxPrice - minPrice)) * 100;
+  if (price > maxPrice) {
+    indicatorPosition = 96;
+  }
+  if (price < minPrice) {
+    indicatorPosition = 0;
+  }
 
   return (
     <div className="flex flex-col gap-1 items-center">

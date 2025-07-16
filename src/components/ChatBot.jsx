@@ -110,14 +110,14 @@ const ChatBot = ({ isOpen, onClose }) => {
             </div>
           </div>
           <div className="flex items-center space-x-2">
-            <Button
+            {/* <Button
               variant="ghost"
               size="sm"
               className="text-white hover:bg-white/20 h-8 w-8 p-0"
               onClick={() => setIsMinimized(!isMinimized)}
             >
               <Minimize2 className="h-4 w-4" />
-            </Button>
+            </Button> */}
             <Button
               variant="ghost"
               size="sm"

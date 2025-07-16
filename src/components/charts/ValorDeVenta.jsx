@@ -21,7 +21,13 @@ function ValorDeVenta({ timeVectors, fechaVenta }) {
     }
   }
 
-  const indicatorPositionInmueble = ((priceInmueble - minPriceInmueble) / (maxPriceInmueble - minPriceInmueble)) * 100;
+  let indicatorPositionInmueble = ((priceInmueble - minPriceInmueble) / (maxPriceInmueble - minPriceInmueble)) * 100;
+  if (priceInmueble > maxPriceInmueble || priceM2 > maxPriceM2) {
+    indicatorPositionInmueble = 96.5;
+  }
+  if (priceInmueble < minPriceInmueble || priceM2 < minPriceM2) {
+    indicatorPositionInmueble = 0;
+  }
 
   return (
     <div className="flex flex-col gap-1 items-center">
@@ -29,7 +35,7 @@ function ValorDeVenta({ timeVectors, fechaVenta }) {
 
         <div className="flex flex-col gap-2 items-center">
           <span className="text-xs font-semibold">Precio por m²</span>
-          <div className="w-24 flex flex-col justify-between items-center p-2 rounded-lg border border-gray-300 h-[300px] font-semibold text-sm">
+          <div className="w-24 flex flex-col justify-between items-center p-3 rounded-lg border border-gray-200 h-[300px] font-semibold text-sm">
             <p>{parsePrice(maxPriceM2)}</p>
             <p>{parsePrice(minPriceM2)}</p>
           </div>
@@ -64,7 +70,7 @@ function ValorDeVenta({ timeVectors, fechaVenta }) {
 
           <div className="flex flex-col gap-2 items-center absolute left-[95px] -mt-5">
             <span className="text-xs font-semibold">Precio inmueble</span>
-            <div className="w-28 h-[300px] flex flex-col justify-between items-center p-2 rounded-lg border border-gray-300 font-semibold text-sm">
+            <div className="w-28 h-[300px] flex flex-col justify-between items-center p-3 rounded-lg border border-gray-200 font-semibold text-sm">
               <p>{parsePrice(maxPriceInmueble)}</p>
               <p>{parsePrice(minPriceInmueble)}</p>
             </div>
