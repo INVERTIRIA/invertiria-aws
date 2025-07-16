@@ -62,7 +62,6 @@ function AppRoutes() {
           <Route path="/test" element={<Test />} />
           <Route path="/analisis/:id" element={<Analisis />} />
           <Route path="/crear-modelacion" element={<CreateModelation />} />
-          <Route path="/charts" element={<Analisis />} /> // Temporal
           <Route path="/inactive" element={<InactiveUserPage />} />
           <Route path="/import" element={<ImportMatrizModel />} />
           <Route path="/register" element={<RegisterPage />} />

@@ -2,10 +2,10 @@ import { PieChart, Pie, Cell } from 'recharts';
 import { useId } from 'react';
 
 const RADIAN = Math.PI / 180;
-const cx = 90;
+const cx = 80;
 const cy = 90;
-const iR = 50;
-const oR = 90;
+const iR = 35;
+const oR = 80;
 
 const needle = (value, min, max, cx, cy, iR, oR, color) => {
   const percent = (value - min) / (max - min);
@@ -41,7 +41,7 @@ function IndicadorDeRentabilidad({ value, min = 0, max = 100, colorInverted = fa
   ];
 
   return (
-    <PieChart width={200} height={120}>
+    <PieChart width={190} height={110}>
       <defs>
         <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stopColor={colorInverted ? '#00ab09' : '#f00000'} />
