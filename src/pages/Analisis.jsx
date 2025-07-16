@@ -169,9 +169,8 @@ const Analisis = () => {
   const apalancamiento = Math.round(modelation.precio_de_compra / (modelation.precio_de_compra * modelation.cuota_inicial / 100));
 
   // Capacidad de endeudamiento
-  const ingresos = user?.ingresos_mensuales;
-  const maxEndeudamiento = ingresos * 0.4;
   const endeudamiento = timeVectors?.pagos_credito?.[0]?.[2];
+  const maxEndeudamiento = user?.ingresos_mensuales * 0.4;
 
   return (
     <Container classNameParent={"my-20"} className="flex flex-col gap-20">
