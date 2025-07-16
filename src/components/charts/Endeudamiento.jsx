@@ -2,9 +2,6 @@ import { parsePrice } from "../../constants/functions";
 
 function Endeudamiento({ price, minPrice, maxPrice }) {
 
-  minPrice = 2000000;
-  maxPrice = 8000000;
-
   let indicatorPosition = ((price - minPrice) / (maxPrice - minPrice)) * 100;
   if (price > maxPrice) {
     indicatorPosition = 96;
@@ -56,7 +53,7 @@ function Endeudamiento({ price, minPrice, maxPrice }) {
           }}
         >
           <span className="leading-none">{parsePrice(price)}</span>
-          <span className="text-[11px] font-normal">Capacidad</span>
+          <span className="text-[11px] font-normal">Pagos mensuales</span>
         </div>
       </div>
     </div>
