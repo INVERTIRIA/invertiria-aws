@@ -63,7 +63,7 @@ function FlujoDeCaja({ flowsResult, fechaVenta }) {
           />
           <YAxis
             yAxisId="left"
-            domain={[data[0].Varianza, 'auto']}
+            domain={['dataMin', 'auto']}
             tickFormatter={(value) => parsePrice(value)}
             tickLine={false}
             axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
