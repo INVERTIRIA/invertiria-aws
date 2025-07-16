@@ -159,6 +159,9 @@ const Analisis = () => {
   // Apalancamiento
   const apalancamiento = Math.round(modelation.precio_de_compra / (modelation.precio_de_compra * modelation.cuota_inicial / 100));
 
+  // Capacidad de endeudamiento
+  const endeudamiento = 4000000;
+
   return (
     <Container classNameParent={"my-20"} className="flex flex-col gap-20">
 
@@ -723,8 +726,7 @@ const Analisis = () => {
         <div className="justify-items-center">
           <h3 className="text-lg font-bold">{modelation?.tasa_de_interes}% efectivo anual</h3>
           <IndicadorDeRentabilidad value={modelation?.tasa_de_interes} max={40} min={0} colorInverted={true} />
-          <h1 className="text-2xl font-bold">Tasa de interés</h1>
-          <br />
+          <h1 className="text-2xl font-bold mb-8">Tasa de interés</h1>
           <h3 className="text-lg font-bold text-center">Pago mensual de {parsePrice(timeVectors?.pagos_credito?.[0]?.[2])}</h3>
         </div>
         {/* Analisis */}
@@ -779,7 +781,7 @@ const Analisis = () => {
 
       <div className="flex xl:flex-row flex-col items-center xl:gap-80 gap-10 xl:pl-30">
         {/* Grafica */}
-        <Endeudamiento price={1000000} />
+        <Endeudamiento price={endeudamiento} />
 
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">

@@ -47,7 +47,7 @@ function Endeudamiento({ price, minPrice, maxPrice }) {
           style={{
             position: "absolute",
             left: "95px",
-            top: "150px",
+            // top: "150px",
             bottom: `${indicatorPosition}%`,
             fontSize: "14px",
             fontWeight: "bold",
