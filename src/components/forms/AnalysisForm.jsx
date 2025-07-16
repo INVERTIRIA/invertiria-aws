@@ -56,6 +56,8 @@ const AnalysisForm = ({ step, setStep }) => {
       pagos_personalizados: "",
       fecha_pagos_personalizados: [],
       valor_pagos_personalizados: [],
+      tasa_de_interes: "",
+      area_inmueble: "",
     },
   });
 
@@ -71,7 +73,7 @@ const AnalysisForm = ({ step, setStep }) => {
   return (
     <div className="flex-1 flex flex-col items-center justify-center h-full px-4 py-2">
       <div className="w-full flex flex-col gap-14 items-center justify-center flex-1 rounded-tr-2xl">
-        {/* <p>Paso {step}</p> */}
+        <p>Paso {step}</p>
 
         {/* Pregunta */}
         <Question stepIndex={step} />
@@ -88,7 +90,7 @@ const AnalysisForm = ({ step, setStep }) => {
               skippedStep={skippedStep}
               setStepHistory={setStepHistory}
             />
-            {step === 14 && (
+            {step === 19 && (
               <Button type="submit" variant="theme">
                 Enviar
               </Button>

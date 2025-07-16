@@ -64,6 +64,34 @@ const questions = [
     title: "Crédito hipotecario",
     description: "Seleccione si el inmueble tiene crédito hipotecario.",
   },
+  {
+    title: "Detalles del crédito",
+    description: "Ingrese los detalles del crédito hipotecario.",
+  },
+  {
+    title: "Edad de la propiedad",
+    description: "Ingrese la edad de la propiedad.",
+  },
+  {
+    title: "Area",
+    description: "Ingrese area de la propiedad.",
+  },
+  {
+    title: "Parqueaderos",
+    description: "Ingrese número de parqueaderos.",
+  },
+  {
+    title: "Vivienda vis",
+    description: "¿Es vivienda vis?.",
+  },
+  {
+    title: "Cesión de derechos",
+    description: "¿Se puede hacer cesión de derechos?.",
+  },
+  {
+    title: "Detalles del proyecto",
+    description: "Información detalles del proyecto.",
+  },
 ];
 
 const Question = ({ stepIndex }) => {

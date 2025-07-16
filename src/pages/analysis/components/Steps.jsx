@@ -10,6 +10,11 @@ import { useFieldArray } from "react-hook-form";
 
 // Contansts
 import { parsePrice } from "../../../constants/functions";
+import {
+  titularidad as titularidadConst,
+  tipoInmueble as tipoInmuebleConst,
+  modeloNegocio as modeloNegocioConst,
+} from "../../../constants/index";
 import Analysis from "../../../constants/functions/analysis";
 
 // Icons
@@ -859,6 +864,8 @@ const Twelve = ({ form, ...props }) => {
                 onChange={(e) => {
                   let value = parseFloat(e.target.value);
 
+                  if (isNaN(value)) field.onChange("");
+
                   // Validar que esté entre 0 y 100
                   if (value > 100) value = 100;
                   if (value < 0) value = 0;
@@ -1088,6 +1095,8 @@ const Thirteen = ({ form, ...props }) => {
                 max={100}
                 onChange={(e) => {
                   let value = parseFloat(e.target.value);
+                  if (isNaN(value)) field.onChange("");
+
                   if (value < 0) value = 0;
                   field.onChange(value);
                 }}
@@ -1235,6 +1244,23 @@ const Thirteen = ({ form, ...props }) => {
 
 const FourTeen = ({ form, ...props }) => {
   const value = form.watch("credito_hipotecario");
+  const tipoInmueble = form.watch("tipo_inmueble");
+  const titularidad = form.watch("titularidad");
+
+  const effectRan = useRef(false);
+
+  useEffect(() => {
+    if (
+      !effectRan.current &&
+      ["Oficina", "Local", "Consultoria", "Hotel", "Coliving"].includes(
+        tipoInmueble
+      ) &&
+      titularidad === titularidadConst.participacionFiduciaria
+    ) {
+      props.setStep(16);
+      effectRan.current = true;
+    }
+  }, [tipoInmueble]);
 
   return (
     <div className="flex flex-col items-center gap-14">
@@ -1275,6 +1301,608 @@ const FourTeen = ({ form, ...props }) => {
         )}
       />
       <ButtonNext {...props} disabled={value === undefined} />
+    </div>
+  );
+};
+
+const FifTeen = ({ form, ...props }) => {
+  const tasaInteres = form.watch("tasa_de_interes");
+  const fechaInicio = form.watch("credito_fecha_inicio_pago");
+  const fechaFin = form.watch("credito_fecha_fin_pago");
+  const creditoHipotecario = form.watch("credito_hipotecario");
+
+  const [openPopovers, setOpenPopovers] = useState({});
+  const [buttonWidth, setButtonWidth] = useState(0);
+
+  const buttonRef = useRef(null);
+  const effectRan = useRef(false);
+
+  const togglePopover = (name) => {
+    setOpenPopovers((prev) => ({
+      ...prev,
+      [name]: !prev[name],
+    }));
+  };
+
+  useEffect(() => {
+    if (!effectRan.current && !creditoHipotecario) {
+      props.setStep(16);
+      effectRan.current = true;
+    }
+  }, [creditoHipotecario]);
+
+  useEffect(() => {
+    if (buttonRef.current) {
+      setButtonWidth(buttonRef.current.offsetWidth);
+    }
+  }, []);
+
+  return (
+    <div className="flex flex-col items-center gap-14">
+      <FormField
+        name="tasa_de_interes"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="w-md">
+            <FormControl>
+              <StepInput
+                {...field}
+                type={"number"}
+                inputMode="numeric"
+                placeholder="Ingresa el % de la tasa de interes efectiva anual"
+                min={0}
+                max={100}
+                onChange={(e) => {
+                  let value = parseFloat(e.target.value);
+
+                  if (isNaN(value)) field.onChange("");
+
+                  // Validar que esté entre 0 y 100
+                  if (value > 100) value = 100;
+                  if (value < 0) value = 0;
+
+                  field.onChange(value);
+                }}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="credito_fecha_inicio_pago"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Fecha inicio de pago</FormLabel>
+            <Popover
+              open={!!openPopovers["credito_fecha_inicio_pago"]}
+              onOpenChange={() => togglePopover("credito_fecha_inicio_pago")}
+            >
+              <PopoverTrigger asChild>
+                <FormControl>
+                  <Button
+                    ref={buttonRef}
+                    variant={"outline"}
+                    className={cn(
+                      "w-md pl-3 text-left font-normal text-base md:text-sm",
+                      !field.value && "text-muted-foreground"
+                    )}
+                  >
+                    {field.value ? (
+                      format(parseISO(field.value), "yyyy-MM-dd")
+                    ) : (
+                      <span>Elige una fecha</span>
+                    )}
+                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                  </Button>
+                </FormControl>
+              </PopoverTrigger>
+              <PopoverContent
+                style={{ width: buttonWidth }}
+                className="p-0"
+                align="start"
+              >
+                <Calendar
+                  style={{ width: buttonWidth }}
+                  mode="single"
+                  selected={field.value ? parseISO(field.value) : undefined}
+                  //onSelect={field.onChange}
+                  onSelect={(date) => {
+                    const formattedDate = date
+                      ? format(date, "yyyy-MM-dd")
+                      : "";
+                    field.onChange(formattedDate); // Se almacena el string "yyyy-MM-dd"
+
+                    togglePopover("credito_fecha_inicio_pago");
+                  }}
+                  /* disabled={(date) =>
+                    date > new Date() || date < new Date("1900-01-01")
+                  } */
+                  locale={es}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="credito_fecha_fin_pago"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Fecha fin de pago</FormLabel>
+            <Popover
+              open={!!openPopovers["credito_fecha_fin_pago"]}
+              onOpenChange={() => togglePopover("credito_fecha_fin_pago")}
+            >
+              <PopoverTrigger asChild>
+                <FormControl>
+                  <Button
+                    ref={buttonRef}
+                    variant={"outline"}
+                    className={cn(
+                      "w-md pl-3 text-left font-normal text-base md:text-sm",
+                      !field.value && "text-muted-foreground"
+                    )}
+                  >
+                    {field.value ? (
+                      format(parseISO(field.value), "yyyy-MM-dd")
+                    ) : (
+                      <span>Elige una fecha</span>
+                    )}
+                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                  </Button>
+                </FormControl>
+              </PopoverTrigger>
+              <PopoverContent
+                style={{ width: buttonWidth }}
+                className="p-0"
+                align="start"
+              >
+                <Calendar
+                  style={{ width: buttonWidth }}
+                  mode="single"
+                  selected={field.value ? parseISO(field.value) : undefined}
+                  //onSelect={field.onChange}
+                  onSelect={(date) => {
+                    const formattedDate = date
+                      ? format(date, "yyyy-MM-dd")
+                      : "";
+                    field.onChange(formattedDate); // Se almacena el string "yyyy-MM-dd"
+
+                    togglePopover("credito_fecha_fin_pago");
+                  }}
+                  /* disabled={(date) =>
+                    date > new Date() || date < new Date("1900-01-01")
+                  } */
+                  locale={es}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+          </FormItem>
+        )}
+      />
+      <ButtonNext
+        {...props}
+        disabled={!fechaInicio || !fechaFin || !tasaInteres}
+      />
+    </div>
+  );
+};
+
+const SixTeen = ({ form, ...props }) => {
+  const value = form.watch("edad_propiedad");
+  const estadoInmueble = form.watch("estado_inmueble");
+  const tipoInmueble = form.watch("tipo_inmueble");
+
+  const effectRan = useRef(false);
+
+  useEffect(() => {
+    if (
+      !effectRan.current &&
+      (estadoInmueble !== "Usado" || tipoInmueble == tipoInmuebleConst.lote)
+    ) {
+      props.setStep(17);
+      effectRan.current = true;
+    }
+  }, [estadoInmueble]);
+
+  return (
+    <div className="flex flex-col items-center gap-14">
+      <FormField
+        name="edad_propiedad"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="w-md">
+            <FormControl>
+              <StepInput
+                {...field}
+                placeholder="Ingrese la edad de la propiedad."
+                type={"number"}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <ButtonNext {...props} disabled={!value} />
+    </div>
+  );
+};
+
+const SevenTeen = ({ form, ...props }) => {
+  const value = form.watch("area_inmueble");
+
+  const tipoInmueble = form.watch("tipo_inmueble");
+  const titularidad = form.watch("titularidad");
+  const estadoInmueble = form.watch("estado_inmueble");
+  const modeloNegocio = form.watch("modelo_de_negocio");
+
+  const tiposInmuebles = [
+    tipoInmuebleConst.oficina,
+    tipoInmuebleConst.local,
+    tipoInmuebleConst.consultorio,
+    tipoInmuebleConst.coliving,
+  ];
+
+  const effectRan = useRef(false);
+
+  useEffect(() => {
+    if (
+      !effectRan.current &&
+      ((tiposInmuebles.includes(tipoInmueble) &&
+        titularidad === titularidadConst.participacionFiduciaria) ||
+        (tipoInmueble === tipoInmuebleConst.hotel &&
+          estadoInmueble === "Sobre planos" &&
+          titularidad === titularidadConst.matriculaInmobiliaria &&
+          modeloNegocio === modeloNegocioConst.comprarVender))
+    ) {
+      props.setStep(18);
+      effectRan.current = true;
+    }
+  }, [tipoInmueble]);
+
+  return (
+    <div className="flex flex-col items-center gap-14">
+      <FormField
+        name="area_inmueble"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="w-md">
+            <FormControl>
+              <StepInput
+                {...field}
+                placeholder="Ingrese el área del inmueble."
+                type={"number"}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <ButtonNext {...props} disabled={!value} />
+    </div>
+  );
+};
+
+const EighTeen = ({ form, ...props }) => {
+  const value = form.watch("parqueaderos");
+  const tipoInmueble = form.watch("tipo_inmueble");
+  const titularidad = form.watch("titularidad");
+  const modeloNegocio = form.watch("modelo_de_negocio");
+
+  const tiposInmuebles = [
+    tipoInmuebleConst.oficina,
+    tipoInmuebleConst.local,
+    tipoInmuebleConst.consultorio,
+    tipoInmuebleConst.coliving,
+    tipoInmuebleConst.hotel,
+  ];
+
+  const effectRan = useRef(false);
+
+  useEffect(() => {
+    if (effectRan.current) return;
+
+    if (!tiposInmuebles.includes(tipoInmueble)) return;
+
+    if (
+      (titularidad === titularidadConst.matriculaInmobiliaria &&
+        ![
+          modeloNegocioConst.comprarVender,
+          modeloNegocioConst.rentaCorta,
+        ].includes(modeloNegocio)) ||
+      titularidad === titularidadConst.matriculaInmobiliaria
+    )
+      return;
+
+    props.setStep(20);
+    effectRan.current = true;
+  }, [tipoInmueble]);
+
+  return (
+    <div className="flex flex-col items-center gap-14">
+      <FormField
+        name="parqueaderos"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="w-md">
+            <FormControl>
+              <StepInput
+                {...field}
+                placeholder="Ingrese el número de parqueaderos."
+                type={"number"}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <ButtonNext {...props} disabled={!value} />
+    </div>
+  );
+};
+
+const NineTeen = ({ form, ...props }) => {
+  const value = form.watch("vivienda_vis");
+
+  const tipoInmueble = form.watch("tipo_inmueble");
+  const estadoInmueble = form.watch("estado_inmueble");
+  const modeloNegocio = form.watch("modelo_de_negocio");
+
+  const effectRan = useRef(false);
+
+  useEffect(() => {
+    if (effectRan.current) return;
+
+    if (
+      estadoInmueble === "Sobre planos" &&
+      [tipoInmuebleConst.apartamento, tipoInmuebleConst.casa].includes(
+        tipoInmueble
+      ) &&
+      [
+        modeloNegocioConst.rentaTradicional,
+        modeloNegocioConst.rentaCorta,
+        modeloNegocioConst.comprarVender,
+      ].includes(modeloNegocio)
+    )
+      return;
+
+    props.setStep(20);
+    effectRan.current = true;
+  }, [tipoInmueble]);
+
+  return (
+    <div className="flex flex-col items-center gap-14">
+      <FormField
+        name="vivienda_vis"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="space-y-3">
+            <FormControl>
+              <RadioGroup
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                className="grid grid-cols-2 gap-x-20"
+              >
+                <FormItem>
+                  <RadioGroupItem
+                    value={true}
+                    id="yes"
+                    className="flex items-center justify-center py-6 px-14"
+                  >
+                    <Like className="text-invertiria-2" />
+                    <p className="text-sm font-medium">Si</p>
+                  </RadioGroupItem>
+                </FormItem>
+                <FormItem>
+                  <RadioGroupItem
+                    value={false}
+                    id="not"
+                    className="flex items-center justify-center py-6 px-14"
+                  >
+                    <Deslike className="text-invertiria-2" />
+                    <p className="text-sm font-medium">No</p>
+                  </RadioGroupItem>
+                </FormItem>
+              </RadioGroup>
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <ButtonNext {...props} disabled={value === undefined || value === null} />
+    </div>
+  );
+};
+
+const Twenty = ({ form, ...props }) => {
+  const value = form.watch("cesion_de_derechos");
+
+  return (
+    <div className="flex flex-col items-center gap-14">
+      <FormField
+        name="cesion_de_derechos"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="space-y-3">
+            <FormControl>
+              <RadioGroup
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                className="grid grid-cols-2 gap-x-20"
+              >
+                <FormItem>
+                  <RadioGroupItem
+                    value={true}
+                    id="yes"
+                    className="flex items-center justify-center py-6 px-14"
+                  >
+                    <Like className="text-invertiria-2" />
+                    <p className="text-sm font-medium">Si</p>
+                  </RadioGroupItem>
+                </FormItem>
+                <FormItem>
+                  <RadioGroupItem
+                    value={false}
+                    id="not"
+                    className="flex items-center justify-center py-6 px-14"
+                  >
+                    <Deslike className="text-invertiria-2" />
+                    <p className="text-sm font-medium">No</p>
+                  </RadioGroupItem>
+                </FormItem>
+              </RadioGroup>
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <ButtonNext {...props} disabled={value === undefined || value === null} />
+    </div>
+  );
+};
+
+const TwentyOne = ({ form, ...props }) => {
+  const fechaVentas = form.watch("fecha_inicio_ventas");
+  const fechaEntrega = form.watch("fecha_prevista_entrega");
+  const formaPago = form.watch("forma_pago_cuota_inicial");
+
+  const [openPopovers, setOpenPopovers] = useState({});
+  const [buttonWidth, setButtonWidth] = useState(0);
+
+  const buttonRef = useRef(null);
+  const effectRan = useRef(false);
+
+  const togglePopover = (name) => {
+    setOpenPopovers((prev) => ({
+      ...prev,
+      [name]: !prev[name],
+    }));
+  };
+
+  useEffect(() => {
+    if (!effectRan.current && formaPago === 3) {
+      props.setStep(13);
+      effectRan.current = true;
+    }
+  }, [formaPago]);
+
+  useEffect(() => {
+    if (buttonRef.current) {
+      setButtonWidth(buttonRef.current.offsetWidth);
+    }
+  }, []);
+
+  return (
+    <div className="flex flex-col items-center gap-14">
+      <FormField
+        control={form.control}
+        name="fecha_inicio_ventas"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Fecha inicio ventas del proyecto</FormLabel>
+            <Popover
+              open={!!openPopovers["fecha_inicio_ventas"]}
+              onOpenChange={() => togglePopover("fecha_inicio_ventas")}
+            >
+              <PopoverTrigger asChild>
+                <FormControl>
+                  <Button
+                    ref={buttonRef}
+                    variant={"outline"}
+                    className={cn(
+                      "w-md pl-3 text-left font-normal text-base md:text-sm",
+                      !field.value && "text-muted-foreground"
+                    )}
+                  >
+                    {field.value ? (
+                      format(parseISO(field.value), "yyyy-MM-dd")
+                    ) : (
+                      <span>Elige una fecha</span>
+                    )}
+                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                  </Button>
+                </FormControl>
+              </PopoverTrigger>
+              <PopoverContent
+                style={{ width: buttonWidth }}
+                className="p-0"
+                align="start"
+              >
+                <Calendar
+                  style={{ width: buttonWidth }}
+                  mode="single"
+                  selected={field.value ? parseISO(field.value) : undefined}
+                  onSelect={(date) => {
+                    const formattedDate = date
+                      ? format(date, "yyyy-MM-dd")
+                      : "";
+                    field.onChange(formattedDate); // Se almacena el string "yyyy-MM-dd"
+
+                    togglePopover("fecha_inicio_ventas");
+                  }}
+                  locale={es}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="fecha_prevista_entrega"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Fecha entrega del inmueble</FormLabel>
+            <Popover
+              open={!!openPopovers["fecha_prevista_entrega"]}
+              onOpenChange={() => togglePopover("fecha_prevista_entrega")}
+            >
+              <PopoverTrigger asChild>
+                <FormControl>
+                  <Button
+                    ref={buttonRef}
+                    variant={"outline"}
+                    className={cn(
+                      "w-md pl-3 text-left font-normal text-base md:text-sm",
+                      !field.value && "text-muted-foreground"
+                    )}
+                  >
+                    {field.value ? (
+                      format(parseISO(field.value), "yyyy-MM-dd")
+                    ) : (
+                      <span>Elige una fecha</span>
+                    )}
+                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                  </Button>
+                </FormControl>
+              </PopoverTrigger>
+              <PopoverContent
+                style={{ width: buttonWidth }}
+                className="p-0"
+                align="start"
+              >
+                <Calendar
+                  style={{ width: buttonWidth }}
+                  mode="single"
+                  selected={field.value ? parseISO(field.value) : undefined}
+                  //onSelect={field.onChange}
+                  onSelect={(date) => {
+                    const formattedDate = date
+                      ? format(date, "yyyy-MM-dd")
+                      : "";
+                    field.onChange(formattedDate); // Se almacena el string "yyyy-MM-dd"
+
+                    togglePopover("fecha_prevista_entrega");
+                  }}
+                  locale={es}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+          </FormItem>
+        )}
+      />
+      <ButtonNext {...props} disabled={!fechaVentas || !fechaEntrega} />
     </div>
   );
 };
@@ -1453,6 +2081,90 @@ const Steps = ({ stepIndex, setStep, setStepHistory, skippedStep, form }) => {
     case 14:
       StepActive = (
         <FourTeen
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 15:
+      StepActive = (
+        <FifTeen
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 16:
+      StepActive = (
+        <SixTeen
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 17:
+      StepActive = (
+        <SevenTeen
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 18:
+      StepActive = (
+        <EighTeen
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 19:
+      StepActive = (
+        <NineTeen
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 20:
+      StepActive = (
+        <Twenty
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 21:
+      StepActive = (
+        <TwentyOne
           form={form}
           setStep={setStep}
           stepIndex={stepIndex}
