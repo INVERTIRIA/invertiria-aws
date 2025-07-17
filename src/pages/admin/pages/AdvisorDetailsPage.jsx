@@ -110,20 +110,21 @@ const AdvisorDetailsPage = () => {
             />
           </div>
           {/* Usuario asignado */}
-          {user.user_metadata.role !== roles.company && (
-            <div
-              className="col-span-1 flex flex-col gap-10 w-full rounded-lg ring-1 ring-zinc-200 p-4 md:p-8 "
-              style={{ boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)" }}
-            >
-              <div className="flex flex-col">
-                <p className="font-semibold text-lg">Usuarios asignados</p>
-                <p className="text-xs text-gray-700">
-                  Lista de usuarios que se le asigna el asesor
-                </p>
+          {user.user_metadata.role !== roles.company &&
+            record.empresa.name === "Invertiria" && (
+              <div
+                className="col-span-1 flex flex-col gap-10 w-full rounded-lg ring-1 ring-zinc-200 p-4 md:p-8 "
+                style={{ boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)" }}
+              >
+                <div className="flex flex-col">
+                  <p className="font-semibold text-lg">Usuarios asignados</p>
+                  <p className="text-xs text-gray-700">
+                    Lista de usuarios que se le asigna el asesor
+                  </p>
+                </div>
+                <UserAdvisorAssigner advisorId={record.usuario.id} />
               </div>
-              <UserAdvisorAssigner advisorId={record.usuario.id} />
-            </div>
-          )}
+            )}
         </div>
       </div>
     </div>

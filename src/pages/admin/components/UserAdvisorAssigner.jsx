@@ -23,6 +23,7 @@ import { CheckIcon, SearchIcon, X } from "lucide-react";
 import { cn } from "../../../lib/utils";
 import { ScrollArea } from "../../../components/ui/scroll-area";
 import { Separator } from "../../../components/ui/separator";
+import BulkDeleteConfirmation from "../../../components/BulkDeleteConfirmation";
 
 const SearchUser = ({ width, advisorId, onSuccess }) => {
   const [open, setOpen] = useState(false);
@@ -37,7 +38,7 @@ const SearchUser = ({ width, advisorId, onSuccess }) => {
   const debouncedQuery = useDebounce(search, 500);
 
   const fetchRecords = async (query) => {
-    const res = await adminInstance.getUsersBy("email", query, "company");
+    const res = await adminInstance.getUsersBy("email", query, "user");
     setOptions(res);
   };
 
@@ -137,6 +138,8 @@ const SearchUser = ({ width, advisorId, onSuccess }) => {
 const UserAdvisorAssigner = ({ advisorId }) => {
   const [records, setRecords] = useState([]);
   const [width, setWidth] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+  const [recordsDelete, setRecordsDelete] = useState([]);
 
   const containerRef = useRef(null);
   const effectRan = useRef(false);
@@ -192,7 +195,10 @@ const UserAdvisorAssigner = ({ advisorId }) => {
                 variant={"theme"}
                 size={"icon"}
                 className="size-7"
-                //onClick={() => handlerRemoveFromList(index)}
+                onClick={() => {
+                  setRecordsDelete([item.usuario.id]);
+                  setIsOpen(true);
+                }}
               >
                 <X className="size-3" />
               </Button>
@@ -205,6 +211,15 @@ const UserAdvisorAssigner = ({ advisorId }) => {
           )}
         </ul>
       </ScrollArea>
+      {/* Bulk delete confirmation */}
+      <BulkDeleteConfirmation
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        onConfirm={fetchRecords}
+        tableName="asesorados"
+        fieldName="usuario_id"
+        records={recordsDelete}
+      />
     </div>
   );
 };
