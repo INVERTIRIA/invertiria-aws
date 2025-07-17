@@ -22,7 +22,7 @@ const buttonVariants = cva(
         link:
           "text-primary underline-offset-4 hover:underline",
         full_ghost:
-          "text-primary-foreground hover:text-invertiria-1",
+          "text-primary-foreground hover:text-invertiria-2",
         theme:
           "bg-invertiria-2 text-white ring ring-invertiria-2 shadow-xs hover:bg-transparent hover:text-invertiria-2",
       },

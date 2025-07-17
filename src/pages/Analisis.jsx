@@ -278,15 +278,14 @@ const Analisis = () => {
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Precio de m²</h2>
 
       <div className="flex xl:flex-row flex-col items-center xl:gap-30 gap-10">
-        {/* <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl bg-gray-50 shadow-lg shadow-invertiria-2/30 ring-1 ring-gray-900/5"></div> */}
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
             {analysis.valor_de_compra.analisis_grafica_1[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <Sparkles size={16} className="text-invertiria-1" />
-            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-2" />
+            <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
           </div>
         </div>
 
@@ -313,8 +312,8 @@ const Analisis = () => {
             {analysis.valor_de_compra.analisis_grafica_2[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <Sparkles size={16} className="text-invertiria-1" />
-            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-2" />
+            <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
           </div>
         </div>
       </div>
@@ -369,8 +368,8 @@ const Analisis = () => {
             {analysis.tiempo_de_compra.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <Sparkles size={16} className="text-invertiria-1" />
-            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-2" />
+            <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
           </div>
         </div>
       </div>
@@ -425,8 +424,8 @@ const Analisis = () => {
             {analysis.recomendaciones_compra.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <Sparkles size={16} className="text-invertiria-1" />
-            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-2" />
+            <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
           </div>
         </div>
       </div>
@@ -487,8 +486,8 @@ const Analisis = () => {
             {analysis.valor_de_venta.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <Sparkles size={16} className="text-invertiria-1" />
-            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-2" />
+            <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
           </div>
         </div>
       </div>
@@ -543,8 +542,8 @@ const Analisis = () => {
             {analysis.tiempo_de_venta.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <Sparkles size={16} className="text-invertiria-1" />
-            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-2" />
+            <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
           </div>
         </div>
       </div>
@@ -628,8 +627,8 @@ const Analisis = () => {
             {analysis.indicadores_de_rentabilidad_venta.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <Sparkles size={16} className="text-invertiria-1" />
-            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-2" />
+            <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
           </div>
         </div>
       </div>
@@ -689,8 +688,8 @@ const Analisis = () => {
             {analysis.apalancamiento.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <Sparkles size={16} className="text-invertiria-1" />
-            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-2" />
+            <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
           </div>
         </div>
       </div>
@@ -748,8 +747,8 @@ const Analisis = () => {
             {analysis.costo_financiero.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <Sparkles size={16} className="text-invertiria-1" />
-            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-2" />
+            <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
           </div>
         </div>
       </div>
@@ -804,8 +803,8 @@ const Analisis = () => {
             {analysis.capacidad_de_endeudamiento.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <Sparkles size={16} className="text-invertiria-1" />
-            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-2" />
+            <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
           </div>
         </div>
       </div>
@@ -860,8 +859,8 @@ const Analisis = () => {
             {analysis.flujo_de_caja.analisis_grafica[language]}
           </p>
           <div className="ml-auto flex gap-2 items-center">
-            <Sparkles size={16} className="text-invertiria-1" />
-            <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+            <Sparkles size={16} className="text-invertiria-2" />
+            <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
           </div>
         </div>
       </div>
@@ -915,8 +914,8 @@ const Analisis = () => {
           {analysis.indicadores_de_rentabilidad.analisis_grafica[language]}
         </p>
         <div className="ml-auto flex gap-2 items-center">
-          <Sparkles size={16} className="text-invertiria-1" />
-          <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+          <Sparkles size={16} className="text-invertiria-2" />
+          <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
         </div>
       </div>
       {/* Conclusión */}
@@ -969,8 +968,8 @@ const Analisis = () => {
           {analysis.recomendacion.analisis_grafica[language]}
         </p>
         <div className="ml-auto flex gap-2 items-center">
-          <Sparkles size={16} className="text-invertiria-1" />
-          <p className="text-xs font-medium text-invertiria-1">Generado por IA</p>
+          <Sparkles size={16} className="text-invertiria-2" />
+          <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
         </div>
       </div>
       {/* Conclusión */}
@@ -1004,7 +1003,6 @@ const Analisis = () => {
           <p className="text-xs text-white font-medium">Generado por IA</p>
         </div>
       </div>
-
       <br />
     </Container>
   );
