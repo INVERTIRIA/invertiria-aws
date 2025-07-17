@@ -14,9 +14,7 @@ import {
 import { parsePrice } from "../../constants/functions";
 import { useState } from "react";
 
-const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
-
-  const mesVentaSeleccionado = mesVenta.slice(0, 7);
+const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
 
   // Obtener data roi
   let mayorRoi = 0;
@@ -168,7 +166,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
                   isFront={true}
                   style={{ opacity: 0.5 }}
                 />
-                <ReferenceLine x={mesVentaSeleccionado}
+                <ReferenceLine x={fechaVenta}
                   label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
                   stroke="red"
                   strokeWidth={2}
@@ -246,7 +244,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
                   isFront={true}
                   style={{ opacity: 0.5  }}
                 />
-                <ReferenceLine x={mesVentaSeleccionado}
+                <ReferenceLine x={fechaVenta}
                   label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
                   stroke="red"
                   strokeWidth={2}
@@ -301,7 +299,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
                   isFront={true}
                   style={{ opacity: 0.5 }}
                 />
-                <ReferenceLine x={mesVentaSeleccionado}
+                <ReferenceLine x={fechaVenta}
                   label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
                   stroke="red"
                   strokeWidth={2}
