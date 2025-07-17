@@ -92,8 +92,10 @@ const Analisis = () => {
       </Container>)
   }
 
-  // Tir en ves de venta
+  // Fecha de venta
   let fechaVenta = modelation.fecha_prevista_venta.slice(0, 7);
+
+  // Tir en ves de venta
   let mesVentaTir = 0;
   let maxTir = 0;
   let minTir = 0;
@@ -959,7 +961,7 @@ const Analisis = () => {
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Tiempo de venta</h2>
 
       {/* Grafica */}
-      <Recomendaciones timeVectors={timeVectors} flowsResult={flowsResult} mesVenta={modelation?.fecha_prevista_venta} />
+      <Recomendaciones timeVectors={timeVectors} flowsResult={flowsResult} fechaVenta={fechaVenta} />
 
       {/* Analisis */}
       <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
