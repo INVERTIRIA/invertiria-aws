@@ -7,7 +7,7 @@ export class Admin extends BaseModel {
     super(data, setErrorToast);
   }
 
-  /* Advisors
+  /* Users
   ___________________________________________________ */
   async getUsers() {
     const { data, error } = await supabase.rpc("get_users");
@@ -17,6 +17,20 @@ export class Admin extends BaseModel {
     }
 
     return data ? data.map((item) => item.result) : [];
+  }
+
+  async getUsersBy(field, search, role) {
+    const { data, error } = await supabase.rpc("get_users_by", {
+      field,
+      search,
+      role,
+    });
+
+    if (error) {
+      this.setErrorToast(error.message);
+    }
+
+    return data ? data.map((item) => item.result.usuario) : [];
   }
 
   /* Advisors
@@ -35,6 +49,14 @@ export class Admin extends BaseModel {
 
   async createAdvisor(data) {
     const res = await supabase.functions.invoke("createAdvisor", {
+      body: JSON.stringify(data),
+    });
+
+    return this.handleSupabaseFunctionResponse(res);
+  }
+
+  async updateAdvisor(data) {
+    const res = await supabase.functions.invoke("updateAdvisor", {
       body: JSON.stringify(data),
     });
 

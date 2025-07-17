@@ -3,7 +3,6 @@ import {
   Building2,
   ChartColumnIncreasing,
   House,
-  Repeat,
   UserPen,
   UsersRound,
 } from "lucide-react";
@@ -14,7 +13,7 @@ export const roles = {
   user: "user",
   company: "company",
   advisor: "advisor",
-  intarnal_advisor: "intarnal_advisor",
+  internal_advisor: "internal_advisor",
   external_advisor: "external_advisor",
 };
 
@@ -85,11 +84,6 @@ export const routes = {
       url: "/admin/advisors",
       icon: BriefcaseBusiness,
     },
-    {
-      title: "Cambiar de perfil",
-      url: "/user/change-profile",
-      icon: Repeat,
-    },
   ],
   assistant: [
     {
@@ -135,6 +129,23 @@ export const routes = {
       title: "Asesores",
       url: "/company/advisors",
       icon: BriefcaseBusiness,
+    },
+  ],
+  internal_advisor: [
+    {
+      title: "Home",
+      url: "/",
+      icon: House,
+    },
+    {
+      title: "Mi perfil",
+      url: "/internal_advisor/dashboard",
+      icon: UserPen,
+    },
+    {
+      title: "Mis inversionistas",
+      url: "/internal_advisor/investors",
+      icon: ChartColumnIncreasing,
     },
   ],
 };

@@ -201,7 +201,6 @@ const UserForm = ({ userInfo, setUserInfo }) => {
   ];
 
   // Submit
-
   const handleFileUpload = async (file, ref, fileName) => {
     // Iniciar la simulación de carga
     ref.current?.startSimulateUpload();

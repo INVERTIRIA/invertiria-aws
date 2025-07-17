@@ -98,6 +98,10 @@ function AppRoutes() {
               <Route path="dashboard" element={<UserPages.DashboardPage />} />
               <Route path="companies" element={<AdminPages.CompaniesPage />} />
               <Route path="advisors" element={<AdminPages.AdvisorsPage />} />
+              <Route
+                path="advisors/:id"
+                element={<AdminPages.AdvisorDetailsPage />}
+              />
               <Route path="users" element={<AdminPages.UsersPage />} />
             </Route>
           </Route>
@@ -108,6 +112,10 @@ function AppRoutes() {
             <Route path="/assistant" element={<DashboardLayout />}>
               <Route path="users" element={<AdminPages.UsersPage />} />
               <Route path="dashboard" element={<UserPages.DashboardPage />} />
+              <Route
+                path="advisors/:id"
+                element={<AdminPages.AdvisorDetailsPage />}
+              />
               <Route element={<HasPermissions roles={[roles.assistant]} />}>
                 <Route path="advisors" element={<AdminPages.AdvisorsPage />} />
                 <Route
@@ -122,6 +130,16 @@ function AppRoutes() {
             <Route path="/company" element={<DashboardLayout />}>
               <Route path="dashboard" element={<UserPages.DashboardPage />} />
               <Route path="advisors" element={<AdminPages.AdvisorsPage />} />
+              <Route
+                path="advisors/:id"
+                element={<AdminPages.AdvisorDetailsPage />}
+              />
+            </Route>
+          </Route>
+          {/* Internal Advisor */}
+          <Route element={<ProtectedRoute roles={[roles.internal_advisor]} />}>
+            <Route path="/internal_advisor" element={<DashboardLayout />}>
+              <Route path="dashboard" element={<UserPages.DashboardPage />} />
             </Route>
           </Route>
         </Routes>

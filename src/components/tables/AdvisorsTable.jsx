@@ -15,7 +15,7 @@ import {
 // Componentes
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
@@ -50,6 +50,7 @@ import {
 } from "@tanstack/react-table";
 
 import { useAuth } from "../../contexts/AuthContext";
+import { Link } from "react-router";
 
 const FilterSection = ({ table, options }) => {
   const [selectedFilter, setSelectedFilter] = useState({
@@ -283,14 +284,17 @@ const AdvisorsTable = ({ records }) => {
     },
     {
       id: "actions",
-      cell: () => (
-        <Button
-          variant="ghost"
-          className="text-invertiria-2 hover:text-invertiria-2 flex"
+      cell: ({ row }) => (
+        <Link
+          to={`/${user?.user_metadata.role}/advisors/${row.original.id}`}
+          className={buttonVariants({
+            variant: "ghost",
+            className: "text-invertiria-2 hover:text-invertiria-2 flex",
+          })}
         >
-          Ingresar
-          <span className="sr-only">Ingresar</span>
-        </Button>
+          Detalles
+          <span className="sr-only">Detalles</span>
+        </Link>
       ),
     },
   ];
