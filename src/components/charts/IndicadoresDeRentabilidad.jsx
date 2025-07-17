@@ -9,6 +9,7 @@ import {
   Tooltip,
   XAxis,
   YAxis,
+  Scatter,
 } from "recharts";
 import { parsePrice } from "../../constants/functions";
 import { IndicadorDeRentabilidad } from "./IndicadorDeRentabilidad";
@@ -16,6 +17,8 @@ import { Slider } from "@/components/ui/slider";
 import { useEffect, useState } from "react";
 
 const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => {
+
+  const [activeMonth, setActiveMonth] = useState(0);
 
   // Obtener data roi
   let maxRoi = 0;
@@ -41,10 +44,12 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
         roi_anualizado = flowsResult.roi_anualizado[i][2];
       }
     }
+    const mes_de_venta = item[1] == activeMonth ? roi : null;
     return {
       mes: item[1],
       "ROI Anualizado": roi_anualizado,
       "ROI mensual": roi,
+      "Mes de venta": mes_de_venta
     };
   });
 
@@ -72,10 +77,12 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
         tir_anualizada = flowsResult.tir_anualizada[i][2];
       }
     }
+    const mes_de_venta = item[1] == activeMonth ? tir_mensual : null;
     return {
       mes: item[1],
       "TIR Anualizada": tir_anualizada,
       "TIR mensual": tir_mensual,
+      "Mes de venta": mes_de_venta
     };
   });
 
@@ -97,9 +104,11 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
         minUtilidad = flowsResult.utilidad[i][2];
       }
     }
+    const mes_de_venta = item[1] == activeMonth ? utilidad : null;
     return {
       mes: item[1],
       Utilidad: utilidad,
+      "Mes de venta": mes_de_venta
     };
   });
 
@@ -138,7 +147,6 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
   const [startIndexBrush, setStartIndexBrush] = useState(0);
   const [endIndexBrush, setEndIndexBrush] = useState(240);
   const [maxStep, setMaxStep] = useState(240);
-  const [activeMonth, setActiveMonth] = useState(0);
 
   const [kpi, setKPI] = useState({
     roiMensual: 0,
@@ -175,24 +183,6 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
     setActiveMonth(dataUtilidad[index].mes);
   };
 
-  const CustomizedDot = (props) => {
-    const { cx, cy, stroke, payload, value } = props;
-    if (payload.mes === activeMonth) {
-      return (
-        <svg
-          x={cx - 10}
-          y={cy - 10}
-          width={20}
-          height={20}
-          viewBox="0 0 100 100"
-          fill="#FB3D03"
-        >
-          <circle cx="50" cy="50" r="30" />
-        </svg>
-      );
-    }
-  };
-
   // Asignar mes de venta inicial
   useEffect(() => {
     handleKPI([mesVenta]);
@@ -220,7 +210,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
               <ComposedChart
                 syncId="syncId"
                 data={dataROI}
-                margin={{ top: 10, right: 10 }}
+                margin={{ top: 10, right: 60 }}
               >
                 <CartesianGrid className="opacity-50" vertical={false} />
                 <XAxis
@@ -242,7 +232,13 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
                   />
                 </YAxis>
                 <Tooltip
-                  formatter={(value, name) => value + "%"}
+                  formatter={(value, name, props) => {
+                    if (name === "Mes de venta") {
+                      return props.payload.mes;
+                    } else {
+                      return value + "%";
+                    }
+                  }}
                 />
                 <Line
                   dataKey="ROI mensual"
@@ -250,7 +246,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
                   stroke="#000000"
                   connectNulls
                   type="monotone"
-                  dot={<CustomizedDot />}
+                  dot={false}
                 />
                 <Line
                   dataKey="ROI Anualizado"
@@ -260,6 +256,17 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
                   dot={false}
                   type="monotone"
                 />
+                <Scatter dataKey="Mes de venta" fill="red" shape={(props) => {
+                  if (props.cy == null) { return null; }
+                  return (
+                    <circle
+                      cx={props.cx}
+                      cy={props.cy}
+                      r={5}
+                      fill={props.fill}
+                    />
+                  );
+                }} />
                 <Legend wrapperStyle={{ top: -40 }} />
                 <Brush
                   dataKey="mes"
@@ -282,11 +289,10 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
             <ResponsiveContainer
               className={" flex aspect-video justify-center text-xs"}
             >
-              <ComposedChart data={dataTIR.slice(startIndexBrush, endIndexBrush + 1)} syncId="syncId">
+              <ComposedChart data={dataTIR.slice(startIndexBrush, endIndexBrush + 1)} syncId="syncId" margin={{ top: 10, right: 60 }}>
                 <CartesianGrid
                   className="opacity-50"
                   vertical={false}
-                  margin={{ top: 10, right: 10 }}
                 />
                 <XAxis
                   className="fill-gray-100"
@@ -307,14 +313,20 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
                   />
                 </YAxis>
                 <Tooltip
-                  formatter={(value, name) => value + "%"}
+                  formatter={(value, name, props) => {
+                    if (name === "Mes de venta") {
+                      return props.payload.mes;
+                    } else {
+                      return value + "%";
+                    }
+                  }}
                 />
                 <Line
                   dataKey="TIR mensual"
                   strokeWidth={1.5}
                   stroke="#000000"
                   connectNulls
-                  dot={<CustomizedDot />}
+                  dot={false}
                   type="monotone"
                 />
                 <Line
@@ -325,6 +337,17 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
                   dot={false}
                   type="monotone"
                 />
+                <Scatter dataKey="Mes de venta" fill="red" shape={(props) => {
+                  if (props.cy == null) { return null; }
+                  return (
+                    <circle
+                      cx={props.cx}
+                      cy={props.cy}
+                      r={5}
+                      fill={props.fill}
+                    />
+                  );
+                }} />
                 <Legend wrapperStyle={{ top: -40 }} />
               </ComposedChart>
             </ResponsiveContainer>
@@ -340,7 +363,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
             >
               <ComposedChart
                 data={dataUtilidad.slice(startIndexBrush, endIndexBrush + 1)}
-                margin={{ top: 10, right: 10, left: 80, bottom: 0 }}
+                margin={{ top: 10, right: 60, left: 80, bottom: 0 }}
                 syncId="syncId"
               >
                 <CartesianGrid className="opacity-50" vertical={false} />
@@ -365,24 +388,41 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
                   />
                 </YAxis>
                 <Tooltip
-                  formatter={(value, name) => parsePrice(value)}
+                  formatter={(value, name, props) => {
+                    if (name === "Mes de venta") {
+                      return props.payload.mes;
+                    } else {
+                      return parsePrice(value);
+                    }
+                  }}
                 />
                 <Line
                   dataKey="Utilidad"
                   strokeWidth={1.5}
                   stroke="#000000"
                   connectNulls
-                  dot={<CustomizedDot />}
+                  dot={false}
                   type="monotone"
                 />
+                <Scatter dataKey="Mes de venta" fill="red" shape={(props) => {
+                  if (props.cy == null) { return null; }
+                  return (
+                    <circle
+                      cx={props.cx}
+                      cy={props.cy}
+                      r={5}
+                      fill={props.fill}
+                    />
+                  );
+                }} />
                 <Legend wrapperStyle={{ top: -40 }} />
               </ComposedChart>
             </ResponsiveContainer>
           </div>
         </div>
       </div>
-      {<div className="flex-1 flex flex-col gap-10 h-fit">
-        <div className="flex flex-col w-[90%] flex-1 rounded-3xl ring-1 shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60 ring-gray-900/5 p-4">
+      <div className="flex-1 flex flex-col gap-0 h-fit">
+        <div className="flex flex-col w-[100%] rounded-3xl ring-1 shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60 ring-gray-900/5 p-4">
           <h2 className="text-lg font-bold text-white px-4 py-2 bg-invertiria-2 w-fit rounded-xl">
             KPIs
           </h2>
@@ -413,7 +453,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
             </div>
           </div>
         </div>
-      </div>}
+      </div>
     </div>
   );
 };

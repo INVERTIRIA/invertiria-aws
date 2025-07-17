@@ -209,24 +209,24 @@ const Analisis = () => {
             <p><strong>Separación:</strong> {modelation.separacion ? parsePrice(modelation.separacion) : "No aplica"}</p>
             <p><strong>Forma de pago cuota inicial:</strong> {modelation.forma_pago_cuota_inicial ? modelation.forma_pago_cuota_inicial : "No aplica"}</p>
             <p><strong>Porcentaje de cuota inicial:</strong> {modelation.cuota_inicial ? modelation.cuota_inicial + "%" : "No aplica"}</p>
-            <p><strong>Fecha inicio cuota inicial:</strong> {modelation.inicial_fecha_inicio_pago ? modelation.inicial_fecha_inicio_pago : "No aplica"}</p>
-            <p><strong>Fecha fin cuota inicial:</strong> {modelation.inicial_fecha_fin_pago ? modelation.inicial_fecha_fin_pago : "No aplica"}</p>
+            <p><strong>Fecha inicio cuota inicial:</strong> {modelation.inicial_fecha_inicio_pago ? modelation.inicial_fecha_inicio_pago.slice(0, 7) : "No aplica"}</p>
+            <p><strong>Fecha fin cuota inicial:</strong> {modelation.inicial_fecha_fin_pago ? modelation.inicial_fecha_fin_pago.slice(0, 7) : "No aplica"}</p>
             <p><strong>Número de pagos personalizados:</strong> {modelation.pagos_personalizados ? modelation.pagos_personalizados : "No aplica"}</p>
             <p><strong>Fecha de pagos personalizados:</strong> {modelation.fecha_pagos_personalizados ? modelation.fecha_pagos_personalizados : "No aplica"}</p>
             <p><strong>Valor de pagos personalizados:</strong> {modelation.valor_pagos_personalizados ? modelation.valor_pagos_personalizados : "No aplica"}</p>
             <p><strong>Crédito hipotecario:</strong> {modelation.credito_hipotecario ? "Si" : "No"}</p>
             <p><strong>Tasa de interés efectiva anual:</strong> {modelation.tasa_de_interes ? modelation.tasa_de_interes + "%" : "No aplica"}</p>
-            <p><strong>Fecha inicio crédito:</strong> {modelation.credito_fecha_inicio_pago ? modelation.credito_fecha_inicio_pago : "No aplica"}</p>
-            <p><strong>Fecha fin crédito:</strong> {modelation.credito_fecha_fin_pago ? modelation.credito_fecha_fin_pago : "No aplica"}</p>
+            <p><strong>Fecha inicio crédito:</strong> {modelation.credito_fecha_inicio_pago ? modelation.credito_fecha_inicio_pago.slice(0, 7) : "No aplica"}</p>
+            <p><strong>Fecha fin crédito:</strong> {modelation.credito_fecha_fin_pago ? modelation.credito_fecha_fin_pago.slice(0, 7) : "No aplica"}</p>
             <p><strong>Edad de la propiedad:</strong> {modelation.edad_propiedad ? modelation.edad_propiedad + " años" : "No aplica"}</p>
             <p><strong>Área del inmueble:</strong> {modelation.area_inmueble ? modelation.area_inmueble + "m²" : "No aplica"}</p>
             <p><strong>Parqueaderos:</strong> {modelation.parqueaderos ? modelation.parqueaderos : "No aplica"}</p>
             <p><strong>VIS:</strong> {modelation.vivienda_vis ? "Si" : "No"}</p>
             <p><strong>Cesión de derechos:</strong> {modelation.cesion_de_derechos ? "Si" : "No"}</p>
-            <p><strong>Fecha inicio ventas:</strong> {modelation.fecha_inicio_ventas ? modelation.fecha_inicio_ventas : "No aplica"}</p>
-            <p><strong>Fecha entrega del inmueble:</strong> {modelation.fecha_prevista_entrega ? modelation.fecha_prevista_entrega : "No aplica"}</p>
-            <p><strong>Fecha de compra:</strong> {modelation.fecha_compra}</p>
-            <p><strong>Fecha prevista de venta:</strong> {modelation.fecha_prevista_venta ? modelation.fecha_prevista_venta : "No aplica"}</p>
+            <p><strong>Fecha inicio ventas:</strong> {modelation.fecha_inicio_ventas ? modelation.fecha_inicio_ventas.slice(0, 7) : "No aplica"}</p>
+            <p><strong>Fecha entrega del inmueble:</strong> {modelation.fecha_prevista_entrega ? modelation.fecha_prevista_entrega.slice(0, 7) : "No aplica"}</p>
+            <p><strong>Fecha de compra:</strong> {modelation.fecha_compra.slice(0, 7)}</p>
+            <p><strong>Fecha prevista de venta:</strong> {modelation.fecha_prevista_venta ? modelation.fecha_prevista_venta.slice(0, 7) : "No aplica"}</p>
             <p><strong>Etapa del proyecto:</strong> {modelation.etapa_proyecto ? modelation.etapa_proyecto : "No aplica"}</p>
             <p><strong>Comisión por venta:</strong> {modelation.comision_vendedor ? "Si" : "No"}</p>
             <p><strong>Porcentaje de comisión:</strong> {modelation.porcentaje_comision_vendedor ? modelation.porcentaje_comision_vendedor + "%" : "No aplica"}</p>
@@ -318,7 +318,7 @@ const Analisis = () => {
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-lg relative">
+      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
@@ -374,7 +374,7 @@ const Analisis = () => {
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-lg relative">
+      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
@@ -430,7 +430,7 @@ const Analisis = () => {
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-lg relative">
+      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
@@ -492,7 +492,7 @@ const Analisis = () => {
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-lg relative">
+      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
@@ -548,7 +548,7 @@ const Analisis = () => {
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-lg relative">
+      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
@@ -633,7 +633,7 @@ const Analisis = () => {
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-lg relative">
+      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
@@ -694,7 +694,7 @@ const Analisis = () => {
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-lg relative">
+      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
@@ -753,7 +753,7 @@ const Analisis = () => {
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-lg relative">
+      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
@@ -809,7 +809,7 @@ const Analisis = () => {
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-lg relative">
+      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
@@ -865,7 +865,7 @@ const Analisis = () => {
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-lg relative">
+      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
@@ -919,7 +919,7 @@ const Analisis = () => {
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-lg relative">
+      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
@@ -973,7 +973,7 @@ const Analisis = () => {
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-lg relative">
+      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
