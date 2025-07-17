@@ -166,11 +166,12 @@ const Analisis = () => {
   }
 
   // Apalancamiento
-  const apalancamiento = Math.round(modelation.precio_de_compra / (modelation.precio_de_compra * modelation.cuota_inicial / 100));
+  const cuota_inicial = modelation?.cuota_inicial || 0;
+  const apalancamiento = Math.round(modelation.precio_de_compra / (modelation.precio_de_compra * cuota_inicial / 100));
 
   // Capacidad de endeudamiento
+  const maxEndeudamiento = (user?.ingresos_mensuales - user?.gastos_mensuales) * 0.4;
   const endeudamiento = timeVectors?.pagos_credito?.[0]?.[2];
-  const maxEndeudamiento = user?.ingresos_mensuales * 0.4;
 
   return (
     <Container classNameParent={"my-20"} className="flex flex-col gap-20">
@@ -220,30 +221,30 @@ const Analisis = () => {
             <p><strong>Parqueaderos:</strong> {modelation.parqueaderos ? modelation.parqueaderos : "No aplica"}</p>
             <p><strong>VIS:</strong> {modelation.vivienda_vis ? "Si" : "No"}</p>
             <p><strong>Cesión de derechos:</strong> {modelation.cesion_de_derechos ? "Si" : "No"}</p>
-            <p><strong>Fecha inicio ventas:</strong> {modelation.fecha_inicio_ventas}</p>
-            <p><strong>Fecha entrega del inmueble:</strong> {modelation.fecha_prevista_entrega}</p>
+            <p><strong>Fecha inicio ventas:</strong> {modelation.fecha_inicio_ventas ? modelation.fecha_inicio_ventas : "No aplica"}</p>
+            <p><strong>Fecha entrega del inmueble:</strong> {modelation.fecha_prevista_entrega ? modelation.fecha_prevista_entrega : "No aplica"}</p>
             <p><strong>Fecha de compra:</strong> {modelation.fecha_compra}</p>
-            <p><strong>Fecha prevista de venta:</strong> {modelation.fecha_prevista_venta}</p>
-            <p><strong>Etapa del proyecto:</strong> {modelation.etapa_proyecto}</p>
+            <p><strong>Fecha prevista de venta:</strong> {modelation.fecha_prevista_venta ? modelation.fecha_prevista_venta : "No aplica"}</p>
+            <p><strong>Etapa del proyecto:</strong> {modelation.etapa_proyecto ? modelation.etapa_proyecto : "No aplica"}</p>
             <p><strong>Comisión por venta:</strong> {modelation.comision_vendedor ? "Si" : "No"}</p>
-            <p><strong>Porcentaje de comisión:</strong> {modelation.porcentaje_comision_vendedor + "%"}</p>
+            <p><strong>Porcentaje de comisión:</strong> {modelation.porcentaje_comision_vendedor ? modelation.porcentaje_comision_vendedor + "%" : "No aplica"}</p>
             <p><strong>Pago de administración:</strong> {modelation.administracion ? "Si" : "No"}</p>
-            <p><strong>Valor de administración:</strong> {parsePrice(modelation.valor_administracion)}</p>
-            <p><strong>Valor de predial:</strong> {parsePrice(modelation.valor_predial)}</p>
+            <p><strong>Valor de administración:</strong> {modelation.valor_administracion ? parsePrice(modelation.valor_administracion) : "No aplica"}</p>
+            <p><strong>Valor de predial:</strong> {modelation.valor_predial ? parsePrice(modelation.valor_predial) : "No aplica"}</p>
             <p><strong>Requiere mejoras:</strong> {modelation.mejoras ? "Si" : "No"}</p>
-            <p><strong>Valor de mejoras:</strong> {parsePrice(modelation.valor_mejoras)}</p>
+            <p><strong>Valor de mejoras:</strong> {modelation.valor_mejoras ? parsePrice(modelation.valor_mejoras) : "No aplica"}</p>
             <p><strong>Requiere licencia de construcción:</strong> {modelation.licencia_construccion ? "Si" : "No"}</p>
-            <p><strong>Valor licencia de construcción:</strong> {parsePrice(modelation.costos_licencias)}</p>
+            <p><strong>Valor licencia de construcción:</strong> {modelation.costos_licencias ? parsePrice(modelation.costos_licencias) : "No aplica"}</p>
             <p><strong>Renta:</strong> {modelation.renta ? "Si" : "No"}</p>
-            <p><strong>Valor cánon de arrendamiento:</strong> {parsePrice(modelation.canon_de_arrendamiento)}</p>
-            <p><strong>Valor noche:</strong> {parsePrice(modelation.valor_noche)}</p>
-            <p><strong>Tarifa mensual:</strong> {parsePrice(modelation.tarifa_mensual)}</p>
-            <p><strong>Porcentaje de ocupacion media:</strong> {modelation.ocupacion_media + "%"}</p>
+            <p><strong>Valor cánon de arrendamiento:</strong> {modelation.canon_de_arrendamiento ? parsePrice(modelation.canon_de_arrendamiento) : "No aplica"}</p>
+            <p><strong>Valor noche:</strong> {modelation.valor_noche ? parsePrice(modelation.valor_noche) : "No aplica"}</p>
+            <p><strong>Tarifa mensual:</strong> {modelation.tarifa_mensual ? parsePrice(modelation.tarifa_mensual) : "No aplica"}</p>
+            <p><strong>Porcentaje de ocupacion media:</strong> {modelation.ocupacion_media ? modelation.ocupacion_media + "%" : "No aplica"}</p>
             <p><strong>Operador:</strong> {modelation.operador ? "Si" : "No"}</p>
-            <p><strong>Porcentaje de operador:</strong> {modelation.porcentaje_del_operador + "%"}</p>
+            <p><strong>Porcentaje de operador:</strong> {modelation.porcentaje_del_operador ? modelation.porcentaje_del_operador + "%" : "No aplica"}</p>
             <p><strong>Inmobiliaria:</strong> {modelation.inmobiliaria ? "Si" : "No"}</p>
-            <p><strong>Porcentaje de inmobiliaria:</strong> {modelation.porcentaje_inmobiliaria + "%"}</p>
-            <p><strong>Precio de venta:</strong> {parsePrice(modelation.precio_venta)}</p>
+            <p><strong>Porcentaje de inmobiliaria:</strong> {modelation.porcentaje_inmobiliaria ? modelation.porcentaje_inmobiliaria + "%" : "No aplica"}</p>
+            <p><strong>Precio de venta:</strong> {modelation.precio_venta ? parsePrice(modelation.precio_venta) : "No aplica"}</p>
           </div>
         </DialogContent>
       </Dialog>
@@ -735,7 +736,7 @@ const Analisis = () => {
         {/* Costo financiero */}
         <div className="justify-items-center">
           <h3 className="text-lg font-bold">{modelation?.tasa_de_interes}% efectivo anual</h3>
-          <IndicadorDeRentabilidad value={modelation?.tasa_de_interes} max={40} min={0} colorInverted={true} />
+          <IndicadorDeRentabilidad value={modelation?.tasa_de_interes} max={30} min={0} colorInverted={true} />
           <h1 className="text-2xl font-bold mb-8">Tasa de interés</h1>
           <h3 className="text-lg font-bold text-center">Pago mensual de {parsePrice(timeVectors?.pagos_credito?.[0]?.[2])}</h3>
         </div>
