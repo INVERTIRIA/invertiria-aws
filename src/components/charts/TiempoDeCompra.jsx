@@ -37,7 +37,7 @@ function TiempoDeCompra({ timeVectors, fechaCompra }) {
       >
         <ComposedChart
           data={data}
-          margin={{ top: 0, right: 80, left: 80, bottom: 0 }}
+          margin={{ top: 0, right: 60, left: 80, bottom: 0 }}
         >
           <CartesianGrid className="opacity-50" vertical={false} />
           <XAxis
