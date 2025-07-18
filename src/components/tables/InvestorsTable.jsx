@@ -288,7 +288,7 @@ const InvestorsTable = ({ records }) => {
       id: "actions",
       cell: ({ row }) => (
         <Link
-          to={`/${user?.user_metadata.role}/investors/${row.original.id}`}
+          to={`/${user?.user_metadata.role}/investors/${row.original.usuario.id}`}
           className={buttonVariants({
             variant: "ghost",
             className: "text-invertiria-2 hover:text-invertiria-2 flex",

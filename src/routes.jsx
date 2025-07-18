@@ -150,6 +150,10 @@ function AppRoutes() {
                 path="investors/:id"
                 element={<InternalAdvisorPages.InvestorDetailsPage />}
               />
+              <Route
+                path="investors/:id/analysis"
+                element={<InternalAdvisorPages.InvestorAnalysisPage />}
+              />
             </Route>
           </Route>
         </Routes>
