@@ -5,7 +5,7 @@ function LineaDeTiempo({ modelation }) {
   const fecha_prevista_venta = modelation?.fecha_prevista_venta?.slice(0, 7) || "No aplica"
 
   return (
-    <div className="flex flex-col items-center w-full pt-10">
+    <div className="flex flex-col items-center w-full pt-5 pb-20">
       <div className="relative w-full">
         <div className="absolute top-1/2 left-0 right-0 h-[3px] bg-gradient-to-r from-invertiria-2/25 to-invertiria-2/45 transform -translate-y-1/2" />
         <div className="flex justify-between items-center relative z-10 w-full">
