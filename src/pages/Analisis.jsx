@@ -188,7 +188,7 @@ const Analisis = () => {
             </Button>
           </DialogTrigger>
         </div>
-        <DialogContent className="w-[85%] xl:w-[35%] !max-w-none h-[70vh] p-10">
+        <DialogContent className="w-[90%] xl:w-[35%] !max-w-none h-[70vh] p-8">
           <DialogTitle className="mt-2 text-2xl">Información del análisis</DialogTitle>
           <DialogDescription></DialogDescription>
           <div className="mb-2 space-y-3 overflow-y-auto text-gray-800 text-sm font-medium leading-6">
@@ -252,21 +252,18 @@ const Analisis = () => {
       </Dialog>
 
       {/* Titulo */}
-      <div className="w-full flex flex-col items-center text-center gap-9">
-        <h2 className="h2 !max-w-none">Análisis de inversión</h2>
+      <div className="w-full flex flex-col items-center text-center gap-9 -mt-10">
+        <h2 className="h2 !max-w-none max-sm:text-4xl">Análisis de inversión</h2>
       </div>
       <h2 className="-mt-20 text-center text-2xl font-bold text-gray-500">
         {modelation.titulo_modelacion}
       </h2>
 
       {/* Titulo grafica */}
-      <h1 className="text-4xl font-bold">Tiempos del proyecto</h1>
-      <h2 className="-mt-20 text-2xl font-bold text-gray-500">
-        Linea de tiempo
-      </h2>
+      <h1 className="lg:text-4xl text-2xl font-bold">Tiempos del proyecto</h1>
+      <h2 className="-mt-20 lg:text-2xl text-xl font-bold text-gray-500">Linea de tiempo</h2>
 
       <LineaDeTiempo modelation={modelation} />
-      <br />
 
       {/* Titulo */}
       <div className="w-full flex flex-col items-center text-center gap-9">
@@ -290,8 +287,8 @@ const Analisis = () => {
         </div>
 
         {/* Gráficas */}
-        <div className="w-full flex flex-col gap-20 justify-center xl:pl-10 pl-4">
-          <div className="w-full flex items-center xl:gap-40 gap-30">
+        <div className="w-full flex flex-col gap-20 justify-center xl:pl-10 pl-2">
+          <div className="w-full flex items-center xl:gap-40 gap-25">
             <ValorDeCompra
               price={modelation.area_inmueble ? modelation.precio_de_compra / modelation.area_inmueble : 0}
               minPrice={getVarianzaSubzona(true)}
