@@ -14,9 +14,7 @@ import {
 import { parsePrice } from "../../constants/functions";
 import { useState } from "react";
 
-const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
-
-  const mesVentaSeleccionado = mesVenta.slice(0, 7);
+const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
 
   // Obtener data roi
   let mayorRoi = 0;
@@ -121,7 +119,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
               <ComposedChart
                 syncId="syncId2"
                 data={dataROI}
-                margin={{ top: 10, right: 10 }}
+                margin={{ top: 10, right: 60 }}
               >
                 <CartesianGrid className="opacity-50" vertical={false} />
                 <XAxis
@@ -163,12 +161,12 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
                 />
                 <ReferenceLine x={mesMayorRoi}
                   label={{ value: 'Mayor ROI', style: { fill: 'black' }, angle: -90, position: 'center' }}
-                  stroke="purple"
-                  strokeWidth={30}
+                  stroke="#FB3D03"
+                  strokeWidth={20}
                   isFront={true}
-                  style={{ opacity: 0.5 }}
+                  style={{ opacity: 0.95 }}
                 />
-                <ReferenceLine x={mesVentaSeleccionado}
+                <ReferenceLine x={fechaVenta}
                   label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
                   stroke="red"
                   strokeWidth={2}
@@ -196,11 +194,10 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
             <ResponsiveContainer
               className={" flex aspect-video justify-center text-xs"}
             >
-              <ComposedChart data={dataTIR.slice(startIndexBrush, endIndexBrush + 1)} syncId="syncId2">
+              <ComposedChart data={dataTIR.slice(startIndexBrush, endIndexBrush + 1)} syncId="syncId2" margin={{ top: 10, right: 60 }}>
                 <CartesianGrid
                   className="opacity-50"
                   vertical={false}
-                  margin={{ top: 10, right: 10 }}
                 />
                 <XAxis
                   className="fill-gray-100"
@@ -242,11 +239,11 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
                 <ReferenceLine x={mesMayorTir}
                   label={{ value: 'Mayor TIR', style: { fill: 'black' }, angle: -90, position: 'center' }}
                   stroke="orange"
-                  strokeWidth={30}
+                  strokeWidth={20}
                   isFront={true}
-                  style={{ opacity: 0.5  }}
+                  style={{ opacity: 0.95 }}
                 />
-                <ReferenceLine x={mesVentaSeleccionado}
+                <ReferenceLine x={fechaVenta}
                   label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
                   stroke="red"
                   strokeWidth={2}
@@ -267,7 +264,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
             >
               <ComposedChart
                 data={dataUtilidad.slice(startIndexBrush, endIndexBrush + 1)}
-                margin={{ top: 10, right: 10, left: 80, bottom: 0 }}
+                margin={{ top: 10, right: 60, left: 80, bottom: 0 }}
                 syncId="syncId2"
               >
                 <CartesianGrid className="opacity-50" vertical={false} />
@@ -294,19 +291,6 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
                 <Tooltip
                   formatter={(value, name) => parsePrice(value)}
                 />
-                <ReferenceLine x={mesMayorUtilidad}
-                  label={{ value: 'Mayor utilidad', style: { fill: 'black' }, angle: -90, position: 'center' }}
-                  stroke="green"
-                  strokeWidth={30}
-                  isFront={true}
-                  style={{ opacity: 0.5 }}
-                />
-                <ReferenceLine x={mesVentaSeleccionado}
-                  label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
-                  stroke="red"
-                  strokeWidth={2}
-                  isFront={true}
-                />
                 <Line
                   dataKey="Utilidad"
                   strokeWidth={1.5}
@@ -314,6 +298,19 @@ const Recomendaciones = ({ timeVectors, flowsResult, mesVenta }) => {
                   connectNulls
                   dot={false}
                   type="monotone"
+                />
+                <ReferenceLine x={mesMayorUtilidad}
+                  label={{ value: 'Mayor utilidad', style: { fill: 'black' }, angle: -90, position: 'center' }}
+                  stroke="#fcc705"
+                  strokeWidth={20}
+                  isFront={true}
+                  style={{ opacity: 0.95 }}
+                />
+                <ReferenceLine x={fechaVenta}
+                  label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
+                  stroke="red"
+                  strokeWidth={2}
+                  isFront={true}
                 />
                 <Legend wrapperStyle={{ top: -40 }} />
               </ComposedChart>

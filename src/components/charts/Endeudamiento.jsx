@@ -1,7 +1,14 @@
 import { parsePrice } from "../../constants/functions";
 
 function Endeudamiento({ price, minPrice, maxPrice }) {
-  const indicatorPosition = ((price - minPrice) / (maxPrice - minPrice)) * 100;
+
+  let indicatorPosition = ((price - minPrice) / (maxPrice - minPrice)) * 100;
+  if (price > maxPrice) {
+    indicatorPosition = 96;
+  }
+  if (price < minPrice) {
+    indicatorPosition = 0;
+  }
 
   return (
     <div className="flex flex-col gap-1 items-center">
@@ -37,7 +44,7 @@ function Endeudamiento({ price, minPrice, maxPrice }) {
           style={{
             position: "absolute",
             left: "95px",
-            top: "150px",
+            // top: "150px",
             bottom: `${indicatorPosition}%`,
             fontSize: "14px",
             fontWeight: "bold",
@@ -46,7 +53,7 @@ function Endeudamiento({ price, minPrice, maxPrice }) {
           }}
         >
           <span className="leading-none">{parsePrice(price)}</span>
-          <span className="text-[11px] font-normal">Capacidad</span>
+          <span className="text-[11px] font-normal">Pagos mensuales</span>
         </div>
       </div>
     </div>

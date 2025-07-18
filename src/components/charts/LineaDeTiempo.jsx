@@ -1,37 +1,30 @@
-function LineaDeTiempo( { modelation }) {
+function LineaDeTiempo({ modelation }) {
+
+  const fecha_inicio_ventas = modelation?.fecha_inicio_ventas?.slice(0, 7) || "No aplica"
+  const fecha_prevista_entrega = modelation?.fecha_prevista_entrega?.slice(0, 7) || "No aplica"
+  const fecha_prevista_venta = modelation?.fecha_prevista_venta?.slice(0, 7) || "No aplica"
+
   return (
-    <div className="flex flex-col items-center w-full p-6">
-      <div className="relative flex items-center w-full mt-2">
-        {/* Línea de tiempo */}
-        <div className="absolute w-full h-[3px] bg-gray-300" />
-
-        {/* Puntos */}
-        <div className="relative flex w-full justify-between">
-          <div className="relative flex flex-col items-center">
-            <span className="mt-2 text-gray-500">{modelation?.fecha_inicio_ventas.slice(0, 7)}</span>
-            <div className="w-6 h-6 bg-invertiria-2 rounded-full border-4 border-invertiria-2" />
-            <span className="mt-2 text-gray-500">Inicio Ventas</span>
-          </div>
-
-          <div className="relative flex flex-col items-center">
-            <span className="mt-2 text-gray-500">{modelation?.fecha_compra.slice(0, 7)}</span>
-            <div className="w-6 h-6 bg-invertiria-2 rounded-full border-4 border-invertiria-2" />
-            <span className="mt-2 text-gray-500">Compra</span>
-            {/* <span className="text-xs text-gray-500">400 millones</span> */}
-          </div>
-
-          <div className="relative flex flex-col items-center">
-            <span className="mt-2 text-gray-500">{modelation?.fecha_prevista_entrega.slice(0, 7)}</span>
-            <div className="w-6 h-6 bg-invertiria-2 rounded-full border-4 border-invertiria-2" />
-            <span className="mt-2 text-gray-500">Entrega</span>
-            {/* <span className="text-xs text-gray-500">500 millones</span> */}
-          </div>
-
-          <div className="relative flex flex-col items-center">
-            <span className="mt-2 text-gray-500">{modelation?.fecha_prevista_venta.slice(0, 7)}</span>
-            <div className="w-6 h-6 bg-invertiria-2 rounded-full border-4 border-invertiria-2" />
-            <span className="mt-2 text-gray-500">Venta</span>
-          </div>
+    <div className="flex flex-col items-center w-full pt-5 pb-20">
+      <div className="relative w-full">
+        <div className="absolute top-1/2 left-0 right-0 h-[3px] bg-gradient-to-r from-invertiria-2/25 to-invertiria-2/45 transform -translate-y-1/2" />
+        <div className="flex justify-between items-center relative z-10 w-full">
+          {[
+            { label: "Inicio Ventas", date: fecha_inicio_ventas },
+            { label: "Compra", date: modelation?.fecha_compra.slice(0, 7) },
+            { label: "Entrega", date: fecha_prevista_entrega },
+            { label: "Venta", date: fecha_prevista_venta },
+          ].map((event, idx) => (
+            <div key={idx} className="flex flex-col items-center text-center group min-w-[60px] flex-1">
+              <span className="mb-2 text-md max-sm:text-sm text-gray-500">
+                {event.date}
+              </span>
+              <div className="w-6 h-6 rounded-full bg-invertiria-2 border-4 border-white shadow-md" />
+              <span className="mt-2 text-md max-sm:text-sm text-gray-600">
+                {event.label}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
     </div>

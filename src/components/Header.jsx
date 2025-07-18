@@ -135,7 +135,7 @@ function Header() {
               </div>
             ) : (
               <div className="hidden sm:flex items-center text-black">
-                <Link className="hover:text-invertiria-" to="/login">
+                <Link className="hover:text-invertiria-1" to="/login">
                   Login
                 </Link>
                 <div className="w-0.5 h-5 bg-invertiria-1 mx-4" />
@@ -144,7 +144,7 @@ function Header() {
                 </Link>
               </div>
             )}
-            <LanguageSelector />
+            {/* <LanguageSelector /> */}
             {isMobile && <HamburgerMenu />}
           </div>
         </div>

@@ -10,135 +10,24 @@ import {
   ComposedChart,
   Brush,
   Bar,
+  Scatter,
 } from "recharts";
 import { parsePrice } from "../../constants/functions";
 
-// Data para la grafica
-const data = [
-  {
-    mes: "01/2023",
-    "Flujo neto": 4000000,
-    "Ingresos": 9000000,
-    "Egresos": 5000000,
-  },
-  {
-    mes: "02/2023",
-    "Flujo neto": 6000000,
-    "Ingresos": 9000000,
-    "Egresos": 3000000,
-  },
-  {
-    mes: "03/2023",
-    "Flujo neto": 4000000,
-    "Ingresos": 10000000,
-    "Egresos": 6000000,
-  },
-  {
-    mes: "04/2023",
-    "Flujo neto": 1000000,
-    "Ingresos": 9000000,
-    "Egresos": 8000000,
-  },
-  {
-    mes: "05/2023",
-    "Flujo neto": 2000000,
-    "Ingresos": 9000000,
-    "Egresos": 7000000,
-  },
-  {
-    mes: "06/2023",
-    "Flujo neto": 3000000,
-    "Ingresos": 7000000,
-    "Egresos": 4000000,
-  },
-  {
-    mes: "07/2023",
-    "Flujo neto": 4000000,
-    "Ingresos": 8000000,
-    "Egresos": 4000000,
-  },
-  {
-    mes: "08/2023",
-    "Flujo neto": 4000000,
-    "Ingresos": 7000000,
-    "Egresos": 3000000,
-  },
-  {
-    mes: "09/2023",
-    "Flujo neto": 6000000,
-    "Ingresos": 8000000,
-    "Egresos": 2000000,
-  },
-  {
-    mes: "10/2023",
-    "Flujo neto": 2000000,
-    "Ingresos": 9000000,
-    "Egresos": 7000000,
-  },
-  {
-    mes: "11/2023",
-    "Flujo neto": 4000000,
-    "Ingresos": 5000000,
-    "Egresos": 1000000,
-  },
-  {
-    mes: "12/2023",
-    "Flujo neto": 9000000,
-    "Ingresos": 9000000,
-    "Egresos": 9000000,
-  },
-  {
-    mes: "01/2024",
-    "Flujo neto": 9000000,
-    "Ingresos": 9000000,
-    "Egresos": 9000000,
-  },
-  {
-    mes: "02/2024",
-    "Flujo neto": 9000000,
-    "Ingresos": 9000000,
-    "Egresos": 9000000,
-  },
-  {
-    mes: "03/2024",
-    "Flujo neto": 9000000,
-    "Ingresos": 9000000,
-    "Egresos": 9000000,
-  },
-  {
-    mes: "04/2024",
-    "Flujo neto": 9000000,
-    "Ingresos": 9000000,
-    "Egresos": 9000000,
-  },
-  {
-    mes: "05/2024",
-    "Flujo neto": 9000000,
-    "Ingresos": 9000000,
-    "Egresos": 9000000,
-  },
-  {
-    mes: "06/2024",
-    "Flujo neto": 9000000,
-    "Ingresos": 9000000,
-    "Egresos": 9000000,
-  },
-  {
-    mes: "07/2024",
-    "Flujo neto": 9000000,
-    "Ingresos": 9000000,
-    "Egresos": 9000000,
-  },
-  {
-    mes: "08/2024",
-    "Flujo neto": 9000000,
-    "Ingresos": 9000000,
-    "Egresos": 9000000,
-  },
-];
-
 // Grafica
-function FlujoDeCaja({ results }) {
+function FlujoDeCaja({ flowsResult, fechaVenta }) {
+
+  // Obtener data
+  const data = flowsResult?.flujo_de_caja.map((item, index) => {
+    const fecha_de_venta = item[1] == fechaVenta ? item[4] : null;
+    return {
+      mes: item[1],
+      "Ingresos": item[2],
+      "Egresos": item[3],
+      "Flujo neto": item[4],
+      "Fecha de venta": fecha_de_venta
+    };
+  });
 
   return (
     <div className="w-[100%] h-[50vh] lg:w-[60%]">
@@ -147,7 +36,7 @@ function FlujoDeCaja({ results }) {
       >
         <ComposedChart
           data={data}
-          margin={{ top: 0, right: 80, left: 80, bottom: 0 }}
+          margin={{ top: 0, right: 60, left: 80, bottom: 0 }}
         >
           <CartesianGrid className="opacity-50" vertical={false} />
           <XAxis
@@ -157,8 +46,7 @@ function FlujoDeCaja({ results }) {
             axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
           />
           <YAxis
-            yAxisId="left"
-            domain={[data[0].Varianza, 'auto']}
+            domain={['dataMin', 'auto']}
             tickFormatter={(value) => parsePrice(value)}
             tickLine={false}
             axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
@@ -172,24 +60,40 @@ function FlujoDeCaja({ results }) {
             />
           </YAxis>
           <Tooltip
-            formatter={(value, name) => parsePrice(value)}
+            formatter={(value, name, props) => {
+              if (name === "Fecha de venta") {
+                return props.payload.mes;
+              } else {
+                return parsePrice(value);
+              }
+            }}
           />
-          <Bar dataKey="Egresos" yAxisId="left" stackId="a" fill="#FB3D03" />
-          <Bar dataKey="Ingresos" yAxisId="left" stackId="a" fill="#fc8f00" />
+          <Bar dataKey="Egresos" stackId="a" fill="#FB3D03" />
+          <Bar dataKey="Ingresos" stackId="a" fill="#fc8f00" />
           <Line
-            yAxisId="left"
             dataKey="Flujo neto"
             strokeWidth={1.5}
             stroke="#000000"
             connectNulls
-            dot={{ stroke: 'black', fill: 'black', strokeWidth: 1 }}
+            dot={false}
           />
+          <Scatter dataKey="Fecha de venta" fill="black" shape={(props) => {
+            if (props.cy == null) { return null; }
+            return (
+              <circle
+                cx={props.cx}
+                cy={props.cy}
+                r={5}
+                fill={props.fill}
+              />
+            );
+          }} />
           <Legend wrapperStyle={{ top: -40 }} />
           <Brush
             dataKey="mes"
             stroke="#FB3D03"
             startIndex={0}
-            endIndex={11}
+            endIndex={60}
             height={30}
             className="custom-brush"
           />

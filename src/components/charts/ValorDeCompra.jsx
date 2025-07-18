@@ -1,7 +1,13 @@
 import { parsePrice } from "../../constants/functions";
 
 function ValorDeCompra({ price, minPrice, maxPrice, location }) {
-  const indicatorPosition = ((price - minPrice) / (maxPrice - minPrice)) * 100;
+  let indicatorPosition = ((price - minPrice) / (maxPrice - minPrice)) * 100;
+  if (price > maxPrice) {
+    indicatorPosition = 96;
+  }
+  if (price < minPrice) {
+    indicatorPosition = 0;
+  }
 
   return (
     <div className="flex flex-col gap-1 items-center">
@@ -23,7 +29,7 @@ function ValorDeCompra({ price, minPrice, maxPrice, location }) {
         <div
           style={{
             position: "absolute",
-            width: "100px",
+            width: "90px",
             height: "12px",
             background: "black",
             borderRadius: "4px",
@@ -37,15 +43,15 @@ function ValorDeCompra({ price, minPrice, maxPrice, location }) {
           className="w-24 flex flex-col"
           style={{
             position: "absolute",
-            left: "95px",
+            left: "90px",
             bottom: `${indicatorPosition}%`,
             fontSize: "14px",
             fontWeight: "bold",
             color: "black",
           }}
         >
-          <span className="text-[11px] font-normal">Valor Compra m²</span>
-          <span className="leading-none">{parsePrice(price)}</span>{" "}
+          <span className="text-[11px] max-sm:text-[10px] font-normal">Valor Compra m²</span>
+          <span className="leading-none max-sm:text-[10px]">{parsePrice(price)}</span>{" "}
         </div>
       </div>
       <span className="text-sm font-semibold">{parsePrice(minPrice)}</span>
