@@ -1,7 +1,7 @@
 // Hooks
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 // Constants
@@ -47,7 +47,12 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon, Check, ChevronsUpDown, Loader2 } from "lucide-react";
 
-const AdvisorForm = ({ onOpenChange, onSuccess }) => {
+const AdvisorForm = ({
+  onOpenChange,
+  onSuccess,
+  advisorData = null,
+  action = "create",
+}) => {
   const [cities, setCities] = useState([]);
   const [isSubmitting, startTransition] = useTransition();
   const [openPopovers, setOpenPopovers] = useState({});
@@ -61,15 +66,15 @@ const AdvisorForm = ({ onOpenChange, onSuccess }) => {
   const form = useForm({
     resolver: zodResolver(advisorSchema),
     defaultValues: {
-      first_name: "",
-      last_name: "",
-      telefono: "",
-      email: "",
-      fecha_de_nacimiento: "",
-      direccion: "",
-      pais_id: "",
-      ciudad: "",
-      genero: "",
+      first_name: advisorData?.nombre || "",
+      last_name: advisorData?.apellidos || "",
+      telefono: advisorData?.telefono?.toString() || "",
+      email: advisorData?.email || "",
+      fecha_de_nacimiento: advisorData?.fecha_de_nacimiento || "",
+      direccion: advisorData?.direccion || "",
+      pais_id: advisorData?.pais_id || "",
+      ciudad: advisorData?.ciudad || "",
+      genero: advisorData?.genero || "",
     },
   });
 
@@ -151,17 +156,39 @@ const AdvisorForm = ({ onOpenChange, onSuccess }) => {
   // Submit
   const onSubmit = form.handleSubmit((values) => {
     startTransition(async () => {
-      const { status } = await adminInstance.createAdvisor(values);
+      if (action === "create") {
+        const { status } = await adminInstance.createAdvisor(values);
 
-      if (status) {
-        toast.success("Asesor creado con exito");
-        await onSuccess(); // Actualizar la tabla
+        if (status) {
+          toast.success("Asesor creado con exito");
+          await onSuccess(); // Actualizar la tabla
+        }
+
+        form.reset(); // Limpiar el formulario
+        return onOpenChange(false);
       }
 
-      form.reset(); // Limpiar el formulario
-      return onOpenChange(false);
+      if (action === "update") {
+        const { status } = await adminInstance.updateAdvisor({
+          usuarioId: advisorData.id,
+          userId: advisorData.usuario_id,
+          toUpdate: values,
+        });
+
+        if (status) {
+          await onSuccess(); // Actualizar la tabla
+          return toast.success("Asesor actualizado con exito");
+        }
+      }
+
+      return null;
     });
   });
+
+  useEffect(() => {
+    // Obtener las ciudades al cargar el componente
+    if (advisorData?.pais_id) getCities(advisorData.pais_id);
+  }, []);
 
   return (
     <Form {...form}>
@@ -179,9 +206,9 @@ const AdvisorForm = ({ onOpenChange, onSuccess }) => {
                   </FormLabel>
                   <FormControl>
                     <Input
+                      {...field}
                       placeholder={item.placeholder}
                       type={item.type || "text"}
-                      {...field}
                     />
                   </FormControl>
                   <FormMessage />
@@ -332,7 +359,7 @@ const AdvisorForm = ({ onOpenChange, onSuccess }) => {
         </div>
         <Button disabled={isSubmitting} type="submit" className="w-full mt-6">
           {isSubmitting && <Loader2 className="mr-2 animate-spin" />}
-          Crear asesor
+          {action === "create" ? "Crear asesor" : "Actualizar asesor"}
         </Button>
       </form>
     </Form>

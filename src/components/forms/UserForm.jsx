@@ -38,6 +38,7 @@ import { userSchema } from "@/constants/schema/user";
 import { useAuth } from "../../contexts/AuthContext";
 import { toast } from "sonner";
 import UploadFiles from "../UploadFiles";
+import { formatCurrencyInput, parsePrice } from "../../constants/functions";
 
 // Main
 const UserForm = ({ userInfo, setUserInfo }) => {
@@ -69,10 +70,10 @@ const UserForm = ({ userInfo, setUserInfo }) => {
       objetivo: userInfo?.objetivo || "",
       plazo_de_inversion: userInfo?.plazo_de_inversion || "",
       experiencia: userInfo?.experiencia || "",
-      ahorros_disponibles: userInfo?.ahorros_disponibles?.toString() || "",
-      flujo_de_recursos: userInfo?.flujo_de_recursos?.toString() || "",
-      ingresos_mensuales: userInfo?.ingresos_mensuales?.toString() || "",
-      gastos_mensuales: userInfo?.gastos_mensuales?.toString() || "",
+      ahorros_disponibles: userInfo?.ahorros_disponibles || "",
+      flujo_de_recursos: userInfo?.flujo_de_recursos || "",
+      ingresos_mensuales: userInfo?.ingresos_mensuales || "",
+      gastos_mensuales: userInfo?.gastos_mensuales || "",
     },
   });
 
@@ -201,7 +202,6 @@ const UserForm = ({ userInfo, setUserInfo }) => {
   ];
 
   // Submit
-
   const handleFileUpload = async (file, ref, fileName) => {
     // Iniciar la simulación de carga
     ref.current?.startSimulateUpload();
@@ -277,8 +277,8 @@ const UserForm = ({ userInfo, setUserInfo }) => {
         {/* Información personal */}
         <div className="grid lg:grid-cols-3 gap-x-2 gap-y-6">
           <div className="flex flex-col">
-            <p className="font-semibold">Información personal</p>
-            <p className="text-sm text-gray-900">
+            <p className="font-semibold text-lg">Información personal</p>
+            <p className="text-xs text-gray-700">
               Actualiza tu foto y tus datos personales
             </p>
           </div>
@@ -483,8 +483,10 @@ const UserForm = ({ userInfo, setUserInfo }) => {
         {/* Información de inversión */}
         <div className="mt-10 grid lg:grid-cols-3 gap-x-2 gap-y-6">
           <div className="flex flex-col">
-            <p className="font-semibold">Información de inversionista</p>
-            <p className="text-sm text-gray-900">
+            <p className="font-semibold text-lg">
+              Información de inversionista
+            </p>
+            <p className="text-xs text-gray-700">
               Actualiza tus datos como inversionista.
             </p>
           </div>
@@ -586,10 +588,12 @@ const UserForm = ({ userInfo, setUserInfo }) => {
                       </FormLabel>
                       <FormControl>
                         <Input
+                          {...field}
                           className="bg-white"
                           placeholder={item.placeholder}
-                          type={item.type || "text"}
-                          {...field}
+                          value={field.value ? parsePrice(field.value) : ""}
+                          onChange={formatCurrencyInput(field)}
+                          //type={item.type || "text"}
                         />
                       </FormControl>
                       <FormMessage />
