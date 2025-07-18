@@ -23,17 +23,20 @@ export const investorOptions = {
   profile: [
     { value: "Conservador", label: "Conservador" },
     { value: "Arriesgado", label: "Arriesgado" },
+    { value: "Moderado", label: "Moderado" },
   ],
   objective: [
     { value: "Ganancias de capital", label: "Ganancias de capital" },
-    { value: "Indice de rentabilidad", label: "Indice de rentabilidad" },
+    { value: "Ganancias por rentar", label: "Ganancias por rentar" },
+    { value: "Ambas", label: "Ambas" },
   ],
   term: [
     { value: "Corto", label: "Corto" },
-    { value: "Medio", label: "Medio" },
+    { value: "Mediano", label: "Mediano" },
     { value: "Largo", label: "Largo" },
   ],
   experience: [
+    { value: "Ninguna", label: "Ninguna" },
     { value: "Bajo", label: "Bajo" },
     { value: "Medio", label: "Medio" },
     { value: "Alto", label: "Alto" },
@@ -145,7 +148,7 @@ export const routes = {
     {
       title: "Mis inversionistas",
       url: "/internal_advisor/investors",
-      icon: ChartColumnIncreasing,
+      icon: UsersRound,
     },
   ],
 };

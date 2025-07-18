@@ -38,3 +38,12 @@ export function determineSkippedQuestions(steps) {
 
   return Array.from(skippedQuestions);
 }
+
+export function formatCurrencyInput(field) {
+  return (e) => {
+    const raw = e.target.value.replace(/[^0-9]/g, "");
+    if (/^\d*$/.test(raw)) {
+      field.onChange(Number(raw)); // actualiza el valor limpio en el form
+    }
+  };
+}

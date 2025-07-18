@@ -41,7 +41,7 @@ const UserHeader = ({ userInfo, changeEmail = true, className, children }) => {
         </div>
         <div className="flex-grow flex flex-col sm:flex-row items-center gap-4">
           <div className="flex flex-col gap-2 items-center sm:items-start">
-            <h1 className="text-2xl font-semibold leading-6 text-gray-900">
+            <h1 className="text-center sm:text-left text-2xl font-semibold leading-6 text-gray-900">
               {userInfo.nombre
                 ? `${userInfo.nombre} ${userInfo.apellidos}`
                 : "Invertiria"}

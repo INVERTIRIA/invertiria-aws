@@ -20,6 +20,7 @@ import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
 import AccessLinkPage from "./pages/AccessLinkPage";
 import UserPages from "./pages/users/index";
+import InternalAdvisorPages from "./pages/internal_advisor/index";
 import AdminPages from "./pages/admin/index";
 import HasPermissions from "./HasPermissions";
 import AuthorizationPage from "./pages/AuthorizationPage";
@@ -48,7 +49,8 @@ function AppRoutes() {
       location.pathname.startsWith("/admin") ||
       location.pathname.startsWith("/assistant") ||
       location.pathname.startsWith("/company") ||
-      location.pathname.startsWith("/analysis");
+      location.pathname.startsWith("/analysis") ||
+      location.pathname.startsWith("/internal_advisor");
 
     setHideLayout(isUserRoute);
   }, [location.pathname, setHideLayout]);
@@ -140,6 +142,14 @@ function AppRoutes() {
           <Route element={<ProtectedRoute roles={[roles.internal_advisor]} />}>
             <Route path="/internal_advisor" element={<DashboardLayout />}>
               <Route path="dashboard" element={<UserPages.DashboardPage />} />
+              <Route
+                path="investors"
+                element={<InternalAdvisorPages.InvestorsPage />}
+              />
+              <Route
+                path="investors/:id"
+                element={<InternalAdvisorPages.InvestorDetailsPage />}
+              />
             </Route>
           </Route>
         </Routes>

@@ -53,7 +53,7 @@ const SearchUser = ({ width, advisorId, onSuccess }) => {
 
     if (error) {
       const message = error.message.includes("duplicate key")
-        ? "El usuario ya se encuentra asignado a este asesor."
+        ? "El usuario ya se encuentra asignado a un asesor."
         : "No autorizado, su rol no tiene los permisos necesarios.";
 
       setErrorToast(message);
@@ -74,20 +74,20 @@ const SearchUser = ({ width, advisorId, onSuccess }) => {
   }, [debouncedQuery]);
 
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <div className="grid grid-cols-3 lg:grid-cols-1 xl:grid-cols-3 gap-4">
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="col-span-2 justify-between font-normal text-gray-600"
+            className="col-span-2 lg:col-span-1 xl:col-span-2 justify-between font-normal text-gray-600"
           >
             {value || "Buscar usuario"}
             <SearchIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent style={{ width: width }} className="ml-auto">
+        <PopoverContent style={{ width: width }} className="max-w-xl">
           <Command>
             <CommandInput
               placeholder="Buscar por email..."

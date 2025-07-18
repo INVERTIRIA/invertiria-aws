@@ -9,7 +9,7 @@ import useDebounce from "../../../hooks/use-debounces";
 import { useFieldArray } from "react-hook-form";
 
 // Contansts
-import { parsePrice } from "../../../constants/functions";
+import { formatCurrencyInput, parsePrice } from "../../../constants/functions";
 import {
   titularidad as titularidadConst,
   tipoInmueble as tipoInmuebleConst,
@@ -623,10 +623,6 @@ const Seven = ({ form, analysisInstance, ...props }) => {
 const Eight = ({ form, ...props }) => {
   const value = form.watch("precio_de_compra");
 
-  const unformatCurrency = (formatted) => {
-    return formatted.replace(/[^0-9]/g, ""); // elimina $, puntos, espacios, etc.
-  };
-
   return (
     <div className="flex flex-col items-center gap-14">
       <FormField
@@ -641,12 +637,7 @@ const Eight = ({ form, ...props }) => {
                 inputMode="numeric"
                 placeholder="Ingresa el precio de compra"
                 value={field.value ? parsePrice(field.value) : ""}
-                onChange={(e) => {
-                  const raw = unformatCurrency(e.target.value);
-                  if (/^\d*$/.test(raw)) {
-                    field.onChange(Number(raw)); // guarda limpio en react-hook-form
-                  }
-                }}
+                onChange={formatCurrencyInput(field)}
               />
             </FormControl>
           </FormItem>
@@ -710,10 +701,6 @@ const Ten = ({ form, ...props }) => {
 
   const effectRan = useRef(false);
 
-  const unformatCurrency = (formatted) => {
-    return formatted.replace(/[^0-9]/g, ""); // elimina $, puntos, espacios, etc.
-  };
-
   useEffect(() => {
     if (!effectRan.current && estadoInmueble === "Usado") {
       props.setStep(13);
@@ -735,12 +722,7 @@ const Ten = ({ form, ...props }) => {
                 inputMode="numeric"
                 placeholder="Ingresa el valor de la separacion"
                 value={field.value ? parsePrice(field.value) : ""}
-                onChange={(e) => {
-                  const raw = unformatCurrency(e.target.value);
-                  if (/^\d*$/.test(raw)) {
-                    field.onChange(Number(raw)); // guarda limpio en react-hook-form
-                  }
-                }}
+                onChange={formatCurrencyInput(field)}
               />
             </FormControl>
           </FormItem>

@@ -63,6 +63,14 @@ export class Admin extends BaseModel {
     return this.handleSupabaseFunctionResponse(res);
   }
 
+  async updateInvestor(toUpdate) {
+    const res = await supabase.functions.invoke("updateInvestor", {
+      body: JSON.stringify(toUpdate),
+    });
+
+    return this.handleSupabaseFunctionResponse(res);
+  }
+
   /* Companies
   ___________________________________________________ */
   async getCompanies() {
