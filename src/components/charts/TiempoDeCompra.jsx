@@ -13,9 +13,12 @@ import {
   Scatter,
 } from "recharts";
 import { parsePrice } from "../../constants/functions";
+import { useIsMobile } from "../../hooks/use-mobile";
 
 // Grafica
 function TiempoDeCompra({ timeVectors, fechaCompra }) {
+
+  const isMobile = useIsMobile();
 
   // Obtener data
   const data = timeVectors?.valor_inmueble.map((item, index) => {
@@ -37,7 +40,7 @@ function TiempoDeCompra({ timeVectors, fechaCompra }) {
       >
         <ComposedChart
           data={data}
-          margin={{ top: 0, right: 60, left: 80, bottom: 0 }}
+          margin={{ top: 0, right: 40, left: isMobile ? -25 : 80, bottom: 0 }}
         >
           <CartesianGrid className="opacity-50" vertical={false} />
           <XAxis
@@ -50,15 +53,18 @@ function TiempoDeCompra({ timeVectors, fechaCompra }) {
             domain={['dataMin', 'auto']}
             tickFormatter={(value) => parsePrice(value)}
             tickLine={false}
+            tick={!isMobile}
             axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
           >
-            <Label
-              value="Precio del inmueble"
-              offset={-60}
-              style={{ textAnchor: "middle" }}
-              position="insideLeft"
-              angle="-90"
-            />
+            {!isMobile && (
+              <Label
+                value="Precio del inmueble"
+                offset={-60}
+                style={{ textAnchor: "middle" }}
+                position="insideLeft"
+                angle="-90"
+              />
+            )}
           </YAxis>
           <Area
             dataKey="Varianza"
@@ -99,13 +105,14 @@ function TiempoDeCompra({ timeVectors, fechaCompra }) {
               />
             );
           }} />
-          <Legend wrapperStyle={{ top: -40 }} />
+          <Legend wrapperStyle={{ top: -40, left: isMobile ? 20 : 80 }} />
           <Brush
             dataKey="mes"
             stroke="#FB3D03"
             startIndex={0}
             endIndex={120}
             height={30}
+            tickFormatter={() => ""}
             className="custom-brush"
           />
         </ComposedChart>
