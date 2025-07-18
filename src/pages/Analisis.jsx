@@ -290,8 +290,8 @@ const Analisis = () => {
         </div>
 
         {/* Gráficas */}
-        <div className="w-full flex flex-col gap-20 justify-center xl:pl-10 pl-4">
-          <div className="w-full flex items-center xl:gap-40 gap-30">
+        <div className="w-full flex flex-col gap-20 justify-center xl:pl-10 pl-2">
+          <div className="w-full flex items-center xl:gap-40 gap-25">
             <ValorDeCompra
               price={modelation.area_inmueble ? modelation.precio_de_compra / modelation.area_inmueble : 0}
               minPrice={getVarianzaSubzona(true)}
