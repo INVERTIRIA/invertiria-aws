@@ -215,6 +215,7 @@ export const AuthProvider = ({ children }) => {
         createUserInstance,
         createAdminInstance,
         uploadFiles,
+        setErrorToast,
       }}
     >
       {children}

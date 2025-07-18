@@ -1,11 +1,4 @@
 import {
-  ChartColumnIncreasing,
-  Handshake,
-  House,
-  Repeat,
-  UsersRound,
-} from "lucide-react";
-import {
   Sidebar,
   SidebarContent,
   SidebarFooter,

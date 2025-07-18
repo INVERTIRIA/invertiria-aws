@@ -20,11 +20,13 @@ import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
 import AccessLinkPage from "./pages/AccessLinkPage";
 import UserPages from "./pages/users/index";
+import InternalAdvisorPages from "./pages/internal_advisor/index";
 import AdminPages from "./pages/admin/index";
 import HasPermissions from "./HasPermissions";
 import AuthorizationPage from "./pages/AuthorizationPage";
 import InactiveUserPage from "./pages/InactiveUserPage";
 import ChatBotButton from "./components/design/ChatBotButton";
+import AnalysisPage from "./pages/analysis/index";
 import Analisis from "./pages/Analisis";
 import CreateModelation from "./pages/CreateModelation";
 
@@ -46,7 +48,9 @@ function AppRoutes() {
       location.pathname.startsWith("/user") ||
       location.pathname.startsWith("/admin") ||
       location.pathname.startsWith("/assistant") ||
-      location.pathname.startsWith("/company");
+      location.pathname.startsWith("/company") ||
+      location.pathname.startsWith("/analysis") ||
+      location.pathname.startsWith("/internal_advisor");
 
     setHideLayout(isUserRoute);
   }, [location.pathname, setHideLayout]);
@@ -62,12 +66,18 @@ function AppRoutes() {
           <Route path="/test" element={<Test />} />
           <Route path="/analisis/:id" element={<Analisis />} />
           <Route path="/crear-modelacion" element={<CreateModelation />} />
+          <Route path="/charts" element={<Analisis />} />
           <Route path="/inactive" element={<InactiveUserPage />} />
           <Route path="/import" element={<ImportMatrizModel />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/access-link" element={<AccessLinkPage />} />
           <Route path="/authorization" element={<AuthorizationPage />} />
+          {/* Analysis */}
+          <Route
+            path="/analysis"
+            element={<AnalysisPage.CreateAnalysisPage />}
+          />
           {/* User */}
           <Route element={<ProtectedRoute roles={[roles.user]} />}>
             <Route path="/user" element={<DashboardLayout />}>
@@ -90,6 +100,10 @@ function AppRoutes() {
               <Route path="dashboard" element={<UserPages.DashboardPage />} />
               <Route path="companies" element={<AdminPages.CompaniesPage />} />
               <Route path="advisors" element={<AdminPages.AdvisorsPage />} />
+              <Route
+                path="advisors/:id"
+                element={<AdminPages.AdvisorDetailsPage />}
+              />
               <Route path="users" element={<AdminPages.UsersPage />} />
             </Route>
           </Route>
@@ -100,6 +114,10 @@ function AppRoutes() {
             <Route path="/assistant" element={<DashboardLayout />}>
               <Route path="users" element={<AdminPages.UsersPage />} />
               <Route path="dashboard" element={<UserPages.DashboardPage />} />
+              <Route
+                path="advisors/:id"
+                element={<AdminPages.AdvisorDetailsPage />}
+              />
               <Route element={<HasPermissions roles={[roles.assistant]} />}>
                 <Route path="advisors" element={<AdminPages.AdvisorsPage />} />
                 <Route
@@ -114,6 +132,24 @@ function AppRoutes() {
             <Route path="/company" element={<DashboardLayout />}>
               <Route path="dashboard" element={<UserPages.DashboardPage />} />
               <Route path="advisors" element={<AdminPages.AdvisorsPage />} />
+              <Route
+                path="advisors/:id"
+                element={<AdminPages.AdvisorDetailsPage />}
+              />
+            </Route>
+          </Route>
+          {/* Internal Advisor */}
+          <Route element={<ProtectedRoute roles={[roles.internal_advisor]} />}>
+            <Route path="/internal_advisor" element={<DashboardLayout />}>
+              <Route path="dashboard" element={<UserPages.DashboardPage />} />
+              <Route
+                path="investors"
+                element={<InternalAdvisorPages.InvestorsPage />}
+              />
+              <Route
+                path="investors/:id"
+                element={<InternalAdvisorPages.InvestorDetailsPage />}
+              />
             </Route>
           </Route>
         </Routes>
