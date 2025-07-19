@@ -13,8 +13,11 @@ import {
 } from "recharts";
 import { parsePrice } from "../../constants/functions";
 import { useState } from "react";
+import { useIsMobile } from "../../hooks/use-mobile";
 
 const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
+
+  const isMobile = useIsMobile();
 
   // Obtener data roi
   let mayorRoi = 0;
@@ -107,7 +110,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
 
   return (
     <div className="w-full flex flex-col md:flex-row gap-12">
-      <div className="flex flex-col gap-4 w-[70%]">
+      <div className="flex flex-col gap-4 w-[70%] max-sm:w-full">
         <div className="flex flex-col gap-20">
           <h2 className="text-2xl font-bold text-gray-500">
             Suma de ROI Anualizado y Suma de ROI por Mes
@@ -119,7 +122,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
               <ComposedChart
                 syncId="syncId2"
                 data={dataROI}
-                margin={{ top: 10, right: 60 }}
+                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 0, bottom: 0 }}
               >
                 <CartesianGrid className="opacity-50" vertical={false} />
                 <XAxis
@@ -131,14 +134,17 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
                 <YAxis
                   tickFormatter={(value) => value + "%"}
                   tickLine={false}
+                  tick={!isMobile}
                   axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
                 >
-                  <Label
-                    value="Porcentaje (%)"
-                    style={{ textAnchor: "middle" }}
-                    position="insideLeft"
-                    angle="-90"
-                  />
+                  {!isMobile && (
+                    <Label
+                      value="Porcentaje (%)"
+                      style={{ textAnchor: "middle" }}
+                      position="insideLeft"
+                      angle="-90"
+                    />
+                  )}
                 </YAxis>
                 <Tooltip
                   formatter={(value, name) => value + "%"}
@@ -172,13 +178,14 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
                   strokeWidth={2}
                   isFront={true}
                 />
-                <Legend wrapperStyle={{ top: -40 }} />
+                <Legend wrapperStyle={{ top: -40, left: isMobile ? 10 : 80 }} />
                 <Brush
                   dataKey="mes"
                   stroke="#FB3D03"
                   startIndex={startIndexBrush}
                   endIndex={endIndexBrush}
                   height={30}
+                  tickFormatter={(value) => isMobile ? "" : value}
                   className="custom-brush"
                   onChange={handleBrushOnchange}
                 />
@@ -194,7 +201,10 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
             <ResponsiveContainer
               className={" flex aspect-video justify-center text-xs"}
             >
-              <ComposedChart data={dataTIR.slice(startIndexBrush, endIndexBrush + 1)} syncId="syncId2" margin={{ top: 10, right: 60 }}>
+              <ComposedChart data={dataTIR.slice(startIndexBrush, endIndexBrush + 1)}
+                syncId="syncId2"
+                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 0, bottom: 0 }}
+              >
                 <CartesianGrid
                   className="opacity-50"
                   vertical={false}
@@ -208,14 +218,17 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
                 <YAxis
                   tickFormatter={(value) => value + "%"}
                   tickLine={false}
+                  tick={!isMobile}
                   axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
                 >
-                  <Label
-                    value="Porcentaje (%)"
-                    style={{ textAnchor: "middle" }}
-                    position="insideLeft"
-                    angle="-90"
-                  />
+                  {!isMobile && (
+                    <Label
+                      value="Porcentaje (%)"
+                      style={{ textAnchor: "middle" }}
+                      position="insideLeft"
+                      angle="-90"
+                    />
+                  )}
                 </YAxis>
                 <Tooltip
                   formatter={(value, name) => value + "%"}
@@ -249,7 +262,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
                   strokeWidth={2}
                   isFront={true}
                 />
-                <Legend wrapperStyle={{ top: -40 }} />
+                <Legend wrapperStyle={{ top: -40, left: isMobile ? 10 : 80 }} />
               </ComposedChart>
             </ResponsiveContainer>
           </div>
@@ -264,7 +277,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
             >
               <ComposedChart
                 data={dataUtilidad.slice(startIndexBrush, endIndexBrush + 1)}
-                margin={{ top: 10, right: 60, left: 80, bottom: 0 }}
+                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 0, bottom: 0 }}
                 syncId="syncId2"
               >
                 <CartesianGrid className="opacity-50" vertical={false} />
@@ -278,15 +291,18 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
                   domain={["dataMin", "auto"]}
                   tickFormatter={(value) => parsePrice(value)}
                   tickLine={false}
+                  tick={!isMobile}
                   axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
                 >
-                  <Label
-                    value="Promedio utilidad"
-                    offset={-60}
-                    style={{ textAnchor: "middle" }}
-                    position="insideLeft"
-                    angle="-90"
-                  />
+                  {!isMobile && (
+                    <Label
+                      value="Promedio utilidad"
+                      offset={-60}
+                      style={{ textAnchor: "middle" }}
+                      position="insideLeft"
+                      angle="-90"
+                    />
+                  )}
                 </YAxis>
                 <Tooltip
                   formatter={(value, name) => parsePrice(value)}
@@ -312,7 +328,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
                   strokeWidth={2}
                   isFront={true}
                 />
-                <Legend wrapperStyle={{ top: -40 }} />
+                <Legend wrapperStyle={{ top: -40, left: isMobile ? 10 : 80 }} />
               </ComposedChart>
             </ResponsiveContainer>
           </div>

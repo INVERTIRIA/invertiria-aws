@@ -40,7 +40,7 @@ function TiempoDeCompra({ timeVectors, fechaCompra }) {
       >
         <ComposedChart
           data={data}
-          margin={{ top: 0, right: 40, left: isMobile ? -25 : 80, bottom: 0 }}
+          margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 80, bottom: 0 }}
         >
           <CartesianGrid className="opacity-50" vertical={false} />
           <XAxis
@@ -105,14 +105,14 @@ function TiempoDeCompra({ timeVectors, fechaCompra }) {
               />
             );
           }} />
-          <Legend wrapperStyle={{ top: -40, left: isMobile ? 20 : 80 }} />
+          <Legend wrapperStyle={{ top: -40, left: isMobile ? 10 : 80 }} />
           <Brush
             dataKey="mes"
             stroke="#FB3D03"
             startIndex={0}
             endIndex={120}
             height={30}
-            tickFormatter={() => ""}
+            tickFormatter={(value) => isMobile ? "" : value}
             className="custom-brush"
           />
         </ComposedChart>

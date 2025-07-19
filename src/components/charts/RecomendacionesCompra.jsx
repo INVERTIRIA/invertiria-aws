@@ -11,9 +11,12 @@ import {
   Brush,
 } from "recharts";
 import { parsePrice } from "../../constants/functions";
+import { useIsMobile } from "../../hooks/use-mobile";
 
 // Grafica
 function RecomendacionesCompra({ timeVectors }) {
+
+  const isMobile = useIsMobile();
 
   // Obtener data
   const data = timeVectors?.valor_inmueble.map((item, index) => {
@@ -32,7 +35,7 @@ function RecomendacionesCompra({ timeVectors }) {
       >
         <ComposedChart
           data={data}
-          margin={{ top: 0, right: 60, left: 80, bottom: 0 }}
+          margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 80, bottom: 0 }}
         >
           <CartesianGrid className="opacity-50" vertical={false} />
           <XAxis
@@ -45,15 +48,18 @@ function RecomendacionesCompra({ timeVectors }) {
             domain={['dataMin', 'auto']}
             tickFormatter={(value) => parsePrice(value)}
             tickLine={false}
+            tick={!isMobile}
             axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
           >
-            <Label
-              value="Valor proyectado"
-              offset={-60}
-              style={{ textAnchor: "middle" }}
-              position="insideLeft"
-              angle="-90"
-            />
+            {!isMobile && (
+              <Label
+                value="Valor proyectado"
+                offset={-60}
+                style={{ textAnchor: "middle" }}
+                position="insideLeft"
+                angle="-90"
+              />
+            )}
           </YAxis>
           <Tooltip
             formatter={(value, name) => parsePrice(value)}
@@ -82,13 +88,14 @@ function RecomendacionesCompra({ timeVectors }) {
             dot={false}
             type="monotone"
           />
-          <Legend wrapperStyle={{ top: -40 }} />
+          <Legend wrapperStyle={{ top: -40, left: isMobile ? 10 : 80 }} />
           <Brush
             dataKey="mes"
             stroke="#FB3D03"
             startIndex={0}
             endIndex={120}
             height={30}
+            tickFormatter={(value) => isMobile ? "" : value}
             className="custom-brush"
           />
         </ComposedChart>
