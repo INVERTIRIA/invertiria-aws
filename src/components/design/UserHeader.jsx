@@ -1,13 +1,17 @@
 import { Button } from "../ui/button";
 import { Mail } from "lucide-react";
+import { cn } from "../../lib/utils";
 
-const UserHeader = ({ userInfo }) => {
+const UserHeader = ({ userInfo, changeEmail = true, className, children }) => {
   return (
     <div className="flex flex-col gap-2">
-      <img
-        className="self-stretch h-40 sm:h-60 relative rounded-xl"
-        src="/assets/images/user-header.jpg"
-      />
+      <div className={cn("relative w-full h-40 sm:h-60", className)}>
+        <img
+          className="self-stretch h-full w-full object-cover relative rounded-xl"
+          src="/assets/images/user-header.jpg"
+        />
+        {children}
+      </div>
       <div className="-mt-14 sm:-mt-10 lg:px-10 flex flex-col sm:flex-row gap-6 items-center">
         <div
           data-placeholder="False"
@@ -37,18 +41,20 @@ const UserHeader = ({ userInfo }) => {
         </div>
         <div className="flex-grow flex flex-col sm:flex-row items-center gap-4">
           <div className="flex flex-col gap-2 items-center sm:items-start">
-            <h1 className="text-2xl font-semibold leading-6 text-gray-900">
+            <h1 className="text-center sm:text-left text-2xl font-semibold leading-6 text-gray-900">
               {userInfo.nombre
                 ? `${userInfo.nombre} ${userInfo.apellidos}`
                 : "Invertiria"}
             </h1>
             <p className="text-sm leading-6 text-gray-600">
-              {userInfo.email || "soytodero@soytodero.com"}
+              {userInfo.email || "inverteria@invertiria.com"}
             </p>
           </div>
-          <Button variant={"theme"} className={"sm:ml-auto"}>
-            <Mail className="size-5" /> Cambiar email
-          </Button>
+          {changeEmail && (
+            <Button variant={"theme"} className={"sm:ml-auto"}>
+              <Mail className="size-5" /> Cambiar email
+            </Button>
+          )}
         </div>
       </div>
     </div>

@@ -15,8 +15,11 @@ import { parsePrice } from "../../constants/functions";
 import { IndicadorDeRentabilidad } from "./IndicadorDeRentabilidad";
 import { Slider } from "@/components/ui/slider";
 import { useEffect, useState } from "react";
+import { useIsMobile } from "../../hooks/use-mobile";
 
 const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => {
+
+  const isMobile = useIsMobile();
 
   const [activeMonth, setActiveMonth] = useState(0);
 
@@ -190,12 +193,12 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
 
   return (
     <div className="w-full flex flex-col md:flex-row gap-20">
-      <div className="flex flex-col gap-4 w-[70%]">
+      <div className="flex flex-col gap-4 w-[70%] max-sm:w-full">
         <div className="flex flex-col items-center gap-4 mb-10">
           <h2 className="text-2xl font-bold text-gray-500">
             Mes de venta seleccionado
           </h2>
-          <div className="w-full pl-14">
+          <div className="w-full pl-14 pr-14 max-sm:pl-5 max-sm:pr-5">
             <Slider step={1} max={maxStep} defaultValue={[mesVenta]} onValueChange={handleKPI} />
           </div>
         </div>
@@ -210,7 +213,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
               <ComposedChart
                 syncId="syncId"
                 data={dataROI}
-                margin={{ top: 10, right: 60 }}
+                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 0, bottom: 0 }}
               >
                 <CartesianGrid className="opacity-50" vertical={false} />
                 <XAxis
@@ -222,14 +225,17 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
                 <YAxis
                   tickFormatter={(value) => value + "%"}
                   tickLine={false}
+                  tick={!isMobile}
                   axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
                 >
-                  <Label
-                    value="Porcentaje (%)"
-                    style={{ textAnchor: "middle" }}
-                    position="insideLeft"
-                    angle="-90"
-                  />
+                  {!isMobile && (
+                    <Label
+                      value="Porcentaje (%)"
+                      style={{ textAnchor: "middle" }}
+                      position="insideLeft"
+                      angle="-90"
+                    />
+                  )}
                 </YAxis>
                 <Tooltip
                   formatter={(value, name, props) => {
@@ -267,13 +273,14 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
                     />
                   );
                 }} />
-                <Legend wrapperStyle={{ top: -40 }} />
+                <Legend wrapperStyle={{ top: -40, left: isMobile ? 10 : 80 }} />
                 <Brush
                   dataKey="mes"
                   stroke="#FB3D03"
                   height={30}
                   startIndex={startIndexBrush}
                   endIndex={endIndexBrush}
+                  tickFormatter={(value) => isMobile ? "" : value}
                   className="custom-brush"
                   onChange={handleBrushOnchange}
                 />
@@ -289,7 +296,10 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
             <ResponsiveContainer
               className={" flex aspect-video justify-center text-xs"}
             >
-              <ComposedChart data={dataTIR.slice(startIndexBrush, endIndexBrush + 1)} syncId="syncId" margin={{ top: 10, right: 60 }}>
+              <ComposedChart data={dataTIR.slice(startIndexBrush, endIndexBrush + 1)}
+                syncId="syncId"
+                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 0, bottom: 0 }}
+              >
                 <CartesianGrid
                   className="opacity-50"
                   vertical={false}
@@ -303,14 +313,17 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
                 <YAxis
                   tickFormatter={(value) => value + "%"}
                   tickLine={false}
+                  tick={!isMobile}
                   axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
                 >
-                  <Label
-                    value="Porcentaje (%)"
-                    style={{ textAnchor: "middle" }}
-                    position="insideLeft"
-                    angle="-90"
-                  />
+                  {!isMobile && (
+                    <Label
+                      value="Porcentaje (%)"
+                      style={{ textAnchor: "middle" }}
+                      position="insideLeft"
+                      angle="-90"
+                    />
+                  )}
                 </YAxis>
                 <Tooltip
                   formatter={(value, name, props) => {
@@ -348,7 +361,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
                     />
                   );
                 }} />
-                <Legend wrapperStyle={{ top: -40 }} />
+                <Legend wrapperStyle={{ top: -40, left: isMobile ? 10 : 80 }} />
               </ComposedChart>
             </ResponsiveContainer>
           </div>
@@ -363,7 +376,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
             >
               <ComposedChart
                 data={dataUtilidad.slice(startIndexBrush, endIndexBrush + 1)}
-                margin={{ top: 10, right: 60, left: 80, bottom: 0 }}
+                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 0, bottom: 0 }}
                 syncId="syncId"
               >
                 <CartesianGrid className="opacity-50" vertical={false} />
@@ -377,15 +390,18 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
                   domain={["dataMin", "auto"]}
                   tickFormatter={(value) => parsePrice(value)}
                   tickLine={false}
+                  tick={!isMobile}
                   axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
                 >
-                  <Label
-                    value="Promedio utilidad"
-                    offset={-60}
-                    style={{ textAnchor: "middle" }}
-                    position="insideLeft"
-                    angle="-90"
-                  />
+                  {!isMobile && (
+                    <Label
+                      value="Promedio utilidad"
+                      offset={-60}
+                      style={{ textAnchor: "middle" }}
+                      position="insideLeft"
+                      angle="-90"
+                    />
+                  )}
                 </YAxis>
                 <Tooltip
                   formatter={(value, name, props) => {
@@ -415,14 +431,14 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
                     />
                   );
                 }} />
-                <Legend wrapperStyle={{ top: -40 }} />
+                <Legend wrapperStyle={{ top: -40, left: isMobile ? 10 : 80 }} />
               </ComposedChart>
             </ResponsiveContainer>
           </div>
         </div>
       </div>
       <div className="flex-1 flex flex-col gap-0 h-fit">
-        <div className="flex flex-col w-[100%] rounded-3xl ring-1 shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60 ring-gray-900/5 p-4">
+        <div className="flex flex-col w-[85%] rounded-3xl ml-7 max-sm:-mt-10 ring-1 shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60 ring-gray-900/5 p-4">
           <h2 className="text-lg font-bold text-white px-4 py-2 bg-invertiria-2 w-fit rounded-xl">
             KPIs
           </h2>

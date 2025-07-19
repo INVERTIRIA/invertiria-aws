@@ -13,9 +13,12 @@ import {
   Scatter,
 } from "recharts";
 import { parsePrice } from "../../constants/functions";
+import { useIsMobile } from "../../hooks/use-mobile";
 
 // Grafica
 function FlujoDeCaja({ flowsResult, fechaVenta }) {
+
+  const isMobile = useIsMobile();
 
   // Obtener data
   const data = flowsResult?.flujo_de_caja.map((item, index) => {
@@ -36,7 +39,7 @@ function FlujoDeCaja({ flowsResult, fechaVenta }) {
       >
         <ComposedChart
           data={data}
-          margin={{ top: 0, right: 60, left: 80, bottom: 0 }}
+          margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 80, bottom: 0 }}
         >
           <CartesianGrid className="opacity-50" vertical={false} />
           <XAxis
@@ -49,15 +52,18 @@ function FlujoDeCaja({ flowsResult, fechaVenta }) {
             domain={['dataMin', 'auto']}
             tickFormatter={(value) => parsePrice(value)}
             tickLine={false}
+            tick={!isMobile}
             axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
           >
-            <Label
-              value="Monto"
-              offset={-60}
-              style={{ textAnchor: "middle" }}
-              position="insideLeft"
-              angle="-90"
-            />
+            {!isMobile && (
+              <Label
+                value="Monto"
+                offset={-60}
+                style={{ textAnchor: "middle" }}
+                position="insideLeft"
+                angle="-90"
+              />
+            )}
           </YAxis>
           <Tooltip
             formatter={(value, name, props) => {
@@ -88,13 +94,14 @@ function FlujoDeCaja({ flowsResult, fechaVenta }) {
               />
             );
           }} />
-          <Legend wrapperStyle={{ top: -40 }} />
+          <Legend wrapperStyle={{ top: -40, left: isMobile ? 10 : 80 }} />
           <Brush
             dataKey="mes"
             stroke="#FB3D03"
             startIndex={0}
             endIndex={60}
             height={30}
+            tickFormatter={(value) => isMobile ? "" : value}
             className="custom-brush"
           />
         </ComposedChart>

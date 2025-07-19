@@ -78,28 +78,16 @@ export const userSchema = z.object({
     investorOptions.experience.map((item) => item.value),
     "Seleccione una experiencia válida del listado"
   ),
-  ahorros_disponibles: z
-    .string()
-    .transform((val) => Number(val))
-    .refine((val) => !isNaN(val) && val > 0, {
-      message: "Los ahorros disponibles deben ser un número mayor a 0",
-    }),
-  flujo_de_recursos: z
-    .string()
-    .transform((val) => Number(val))
-    .refine((val) => !isNaN(val) && val > 0, {
-      message: "El flujo de recursos debe ser un número mayor a 0",
-    }),
-  ingresos_mensuales: z
-    .string()
-    .transform((val) => Number(val))
-    .refine((val) => !isNaN(val) && val > 0, {
-      message: "Los ingresos mensuales deben ser un número mayor a 0",
-    }),
-  gastos_mensuales: z
-    .string()
-    .transform((val) => Number(val))
-    .refine((val) => !isNaN(val) && val > 0, {
-      message: "Los gastos mensuales deben ser un número mayor a 0",
-    }),
+  ahorros_disponibles: z.number().min(1, {
+    message: "Los ahorros disponibles deben ser un número mayor a 0",
+  }),
+  flujo_de_recursos: z.number().min(1, {
+    message: "El flujo de recursos debe ser un número mayor a 0",
+  }),
+  ingresos_mensuales: z.number().min(1, {
+    message: "Los ingresos mensuales deben ser un número mayor a 0",
+  }),
+  gastos_mensuales: z.number().min(1, {
+    message: "Los gastos mensuales deben ser un número mayor a 0",
+  }),
 });

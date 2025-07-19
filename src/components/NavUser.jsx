@@ -24,8 +24,6 @@ const NavUser = ({ userInfo }) => {
   const { isMobile } = useSidebar();
   const { user, logout } = useAuth();
 
-  console.log(userInfo);
-
   return (
     <SidebarMenu>
       <SidebarMenuItem>
