@@ -29,7 +29,7 @@ function Endeudamiento({ price, minPrice, maxPrice }) {
         <div
           style={{
             position: "absolute",
-            width: "100px",
+            width: "90px",
             height: "12px",
             background: "black",
             borderRadius: "4px",
