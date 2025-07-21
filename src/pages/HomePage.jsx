@@ -175,7 +175,7 @@ const HomePage = () => {
             "relative z-10 flex items-center justify-center h-full overflow-hidden bg-black/15"
           }
         >
-          <div className="py-20 grid lg:grid-cols-2 gap-8">
+          <div className="py-20 grid lg:grid-cols-2 gap-8 grid-cols-1">
             <div className="flex flex-col items-center justify-center text-center gap-10 bg-white/80 px-20 py-10 rounded-4xl">
               <h2 className="h2">Redefiniendo el mundo inmobiliario</h2>
               <p className="sm:text-xl max-w-2xl text-pretty">
@@ -268,7 +268,7 @@ const HomePage = () => {
           }
           className={"w-full"}
         >
-          <div className="px-5 xs:px-10 xl:px-30 w-full flex flex-col lg:flex-row items-center justify-between text-center gap-5 bg-white rounded-[58px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.20)]">
+          <div className="px-5 xs:px-10 xl:px-30 w-full flex flex-col lg:flex-row items-center justify-between text-center gap-5 bg-white rounded-4xl shadow-[0px_4px_4px_0px_rgba(0,0,0,0.20)]">
             <div className="w-full lg:flex-1 pt-10 sm:py-10 flex flex-col items-center lg:items-start text-left gap-8">
               <h2 className="h2 text-center max-w-none lg:text-left lg:max-w-lg">
                 Invertir nunca{" "}
