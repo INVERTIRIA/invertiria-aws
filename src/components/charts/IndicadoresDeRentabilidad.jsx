@@ -439,7 +439,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
       </div>
       <div className="flex-1 flex flex-col gap-0 h-fit">
         <div className="flex flex-col w-[85%] rounded-3xl ml-7 max-sm:-mt-10 ring-1 shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60 ring-gray-900/5 p-4">
-          <h2 className="text-lg font-bold text-white px-4 py-2 bg-invertiria-2 w-fit rounded-xl">
+          <h2 className="text-lg font-bold text-white px-4 py-1 bg-invertiria-2 w-fit rounded-xl">
             KPIs
           </h2>
           <div className="flex flex-col gap-8 mb-2">

@@ -170,6 +170,7 @@ const Analisis = () => {
   // Apalancamiento
   const cuota_inicial = modelation?.cuota_inicial || 0;
   const apalancamiento = Math.round(modelation.precio_de_compra / (modelation.precio_de_compra * cuota_inicial / 100));
+  const credito_hipotecario = Math.round(modelation.precio_de_compra - (modelation.precio_de_compra * cuota_inicial / 100))
 
   // Capacidad de endeudamiento
   const maxEndeudamiento = (user?.ingresos_mensuales - user?.gastos_mensuales) * 0.4;
@@ -714,12 +715,13 @@ const Analisis = () => {
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Viabilidad</h2>
 
       {/* Grafica */}
-      <div className="flex xl:flex-row flex-col xl:gap-60 gap-10">
+      <div className="flex flex-col xl:flex-row items-center xl:gap-60 gap-10">
         {/* Apalancamiento */}
         <div className="justify-items-center">
           <h3 className="text-lg font-bold">{apalancamiento} veces tu capital</h3>
           <IndicadorDeRentabilidad value={apalancamiento} max={10} min={0} />
-          <h1 className="text-2xl font-bold">Apalancamiento</h1>
+          <h1 className="text-2xl font-bold mb-8">Apalancamiento</h1>
+          <h3 className="text-lg font-bold text-center">Crédito hipotecario {parsePrice(credito_hipotecario)}</h3>
         </div>
 
         {/* Analisis */}

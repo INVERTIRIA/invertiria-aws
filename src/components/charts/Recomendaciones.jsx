@@ -10,6 +10,7 @@ import {
   XAxis,
   YAxis,
   ReferenceLine,
+  ReferenceArea,
 } from "recharts";
 import { parsePrice } from "../../constants/functions";
 import { useState } from "react";
@@ -21,7 +22,6 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
 
   // Obtener data roi
   let mayorRoi = 0;
-  let mesMayorRoi = '';
   const dataROI = timeVectors?.valor_inmueble.map((item, index) => {
     let roi = 0;
     for (let i = 0; i < flowsResult?.roi.length; i++) {
@@ -31,7 +31,6 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
       // Maximo roi
       if (flowsResult.roi[i][2] > mayorRoi) {
         mayorRoi = flowsResult.roi[i][2];
-        mesMayorRoi = flowsResult.roi[i][1];
       }
     }
     let roi_anualizado = 0;
@@ -108,6 +107,27 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
     }, 200);
   };
 
+  // Obtener zonas de mayor tir y utilidad
+  let zonaMayorTir = mejoresTresMesesSeguidos(flowsResult.tir_mensual);
+  let zonaMayorUtilidad = mejoresTresMesesSeguidos(flowsResult.utilidad);
+
+  // Funcion para obtener zonas de 3 meses
+  function mejoresTresMesesSeguidos(datos) {
+    datos = datos.map((item) => ({ mes: item[1], dato: item[2] }));
+    if (datos.length < 3) return [];
+    let maxSuma = -Infinity;
+    let mejorSecuencia = [];
+    for (let i = 0; i <= datos.length - 3; i++) {
+      const grupo = datos.slice(i, i + 3);
+      const sumaTir = grupo.reduce((sum, item) => sum + item.dato, 0);
+      if (sumaTir > maxSuma) {
+        maxSuma = sumaTir;
+        mejorSecuencia = grupo;
+      }
+    }
+    return mejorSecuencia;
+  }
+
   return (
     <div className="w-full flex flex-col md:flex-row gap-12">
       <div className="flex flex-col gap-4 w-[70%] max-sm:w-full">
@@ -165,12 +185,19 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
                   dot={false}
                   type="monotone"
                 />
-                <ReferenceLine x={mesMayorRoi}
-                  label={{ value: 'Mayor ROI', style: { fill: 'black' }, angle: -90, position: 'center' }}
-                  stroke="#FB3D03"
-                  strokeWidth={20}
-                  isFront={true}
-                  style={{ opacity: 0.95 }}
+                <ReferenceArea
+                  x1={zonaMayorTir[0].mes}
+                  x2={zonaMayorTir[2].mes}
+                  strokeOpacity={0}
+                  fill="green"
+                  fillOpacity={0.3}
+                />
+                <ReferenceArea
+                  x1={zonaMayorUtilidad[0].mes}
+                  x2={zonaMayorUtilidad[2].mes}
+                  strokeOpacity={0}
+                  fill="DodgerBlue"
+                  fillOpacity={0.3}
                 />
                 <ReferenceLine x={fechaVenta}
                   label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
@@ -249,12 +276,19 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
                   dot={false}
                   type="monotone"
                 />
-                <ReferenceLine x={mesMayorTir}
-                  label={{ value: 'Mayor TIR', style: { fill: 'black' }, angle: -90, position: 'center' }}
-                  stroke="orange"
-                  strokeWidth={20}
-                  isFront={true}
-                  style={{ opacity: 0.95 }}
+                <ReferenceArea
+                  x1={zonaMayorTir[0].mes}
+                  x2={zonaMayorTir[2].mes}
+                  strokeOpacity={0}
+                  fill="green"
+                  fillOpacity={0.3}
+                />
+                <ReferenceArea
+                  x1={zonaMayorUtilidad[0].mes}
+                  x2={zonaMayorUtilidad[2].mes}
+                  strokeOpacity={0}
+                  fill="DodgerBlue"
+                  fillOpacity={0.3}
                 />
                 <ReferenceLine x={fechaVenta}
                   label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
@@ -315,12 +349,19 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
                   dot={false}
                   type="monotone"
                 />
-                <ReferenceLine x={mesMayorUtilidad}
-                  label={{ value: 'Mayor utilidad', style: { fill: 'black' }, angle: -90, position: 'center' }}
-                  stroke="#fcc705"
-                  strokeWidth={20}
-                  isFront={true}
-                  style={{ opacity: 0.95 }}
+                <ReferenceArea
+                  x1={zonaMayorTir[0].mes}
+                  x2={zonaMayorTir[2].mes}
+                  strokeOpacity={0}
+                  fill="green"
+                  fillOpacity={0.3}
+                />
+                <ReferenceArea
+                  x1={zonaMayorUtilidad[0].mes}
+                  x2={zonaMayorUtilidad[2].mes}
+                  strokeOpacity={0}
+                  fill="DodgerBlue"
+                  fillOpacity={0.3}
                 />
                 <ReferenceLine x={fechaVenta}
                   label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
