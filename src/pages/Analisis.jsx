@@ -265,6 +265,49 @@ const Analisis = () => {
 
       <LineaDeTiempo modelation={modelation} />
 
+      {/* Analisis */}
+      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
+        <p className="z-10 text-gray-800 text-sm font-medium leading-6">
+          {analysis.tiempos_del_proyecto.analisis_grafica[language]}
+        </p>
+        <div className="ml-auto flex gap-2 items-center">
+          <Sparkles size={16} className="text-invertiria-2" />
+          <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
+        </div>
+      </div>
+      {/* Conclusión */}
+      <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+        <div className="flex items-center gap-4">
+          <img
+            src="/assets/images/juan-ia.jpeg"
+            alt="Foto de Juan Londoño"
+            className="w-14 h-14 object-cover rounded-full border-2 border-white"
+          />
+          <div>
+            <p className="text-white text-base font-semibold">Juan Londoño</p>
+            <p className="text-white text-xs opacity-70">Asesor financiero</p>
+          </div>
+        </div>
+        <p className="text-white text-sm leading-relaxed">
+          {analysis.tiempos_del_proyecto.conclusion[language]}
+        </p>
+        {/* Consejo */}
+        <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+          <div className="flex items-center gap-2">
+            <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+            <span className="text-gray-800 font-semibold text-sm">Consejo</span>
+          </div>
+          <p className="text-sm text-gray-800 leading-relaxed">
+            {analysis.tiempos_del_proyecto.consejo[language]}
+          </p>
+        </div>
+        <div className="flex items-center gap-2 self-end mt-2">
+          <Sparkles size={16} className="text-white" />
+          <p className="text-xs text-white font-medium">Generado por IA</p>
+        </div>
+      </div>
+      <br />
+
       {/* Titulo */}
       <div className="w-full flex flex-col items-center text-center gap-9">
         <h2 className="h2 !max-w-none">Análisis de la compra</h2>
