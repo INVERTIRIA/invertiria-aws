@@ -6,11 +6,14 @@ import { Form } from "../ui/form";
 import { Steps } from "../../pages/analysis/components/Steps";
 import { useState } from "react";
 import { determineSkippedQuestions } from "../../constants/functions";
+import { supabase } from "../../supabase";
+import { useNavigate } from "react-router";
 
-const AnalysisForm = ({ step, setStep }) => {
+const AnalysisForm = ({ step, setStep, setIsSubmitting }) => {
   const [skippedQuestions, setSkippedQuestions] = useState([]); //Array con los steps que se han saltado
   const [skippedStep, setSkippedStep] = useState(0); // Step que se ha saltado
   const [stepHistory, setStepHistory] = useState([]);
+  const navigate = useNavigate();
 
   // Functions
   const handleChangeStep = (action) => {
@@ -58,23 +61,147 @@ const AnalysisForm = ({ step, setStep }) => {
       valor_pagos_personalizados: [],
       tasa_de_interes: "",
       area_inmueble: "",
+      parqueaderos: "",
+      porcentaje_comision_vendedor: "",
+      valor_administracion: "",
+      valor_predial: null,
+      valor_mejoras: null,
+      costos_licencias: "",
+      canon_de_arrendamiento: "",
+      valor_noche: "",
+      tarifa_mensual: "",
+      ocupacion_media: "",
+      porcentaje_del_operador: "",
+      porcentaje_inmobiliaria: "",
+      precio_venta: "",
+      fecha_compra: "",
     },
   });
 
-  const onSubmit = form.handleSubmit((values) => {
-    const res = determineSkippedQuestions(skippedQuestions);
-    console.log({ ...values, campos_omitidos: res });
+  const onSubmit = form.handleSubmit(async (values2) => {
+    //const camposOmitidos = determineSkippedQuestions(skippedQuestions);
+
+    setIsSubmitting(true); // Cambia el estado de isSubmitting a true
+
+    const values = {
+      usuario_id: "70bf12cf-83e3-4263-83aa-841000ccea7b",
+      titulo_modelacion: "Nombre de la inversion",
+      nombre_del_proyecto: "Palmanova",
+      pais_id: 46,
+      ciudad_id: 2,
+      zona: "Centro",
+      subzona: "Poblado",
+      fecha_inicio_ventas: "2025-06-01",
+      fecha_prevista_entrega: "2028-07-01",
+      vivienda_vis: false,
+      licencia_construccion: false,
+      edad_propiedad: 0,
+      etapa_proyecto: 1,
+      precio_de_compra: 300000000,
+      precio_de_mercado: 320000000,
+      separacion: 2000000,
+      cuota_inicial: 30,
+      pagos_personalizados: null,
+      fecha_pagos_personalizados: [],
+      valor_pagos_personalizados: [],
+      tasa_de_interes: 10,
+      area_inmueble: 50,
+      parqueaderos: 1,
+      porcentaje_comision_vendedor: 3,
+      valor_administracion: 240000,
+      valor_predial: 1800000,
+      valor_mejoras: null,
+      costos_licencias: null,
+      canon_de_arrendamiento: 1950000,
+      valor_noche: null,
+      tarifa_mensual: null,
+      ocupacion_media: null,
+      porcentaje_del_operador: null,
+      porcentaje_inmobiliaria: null,
+      precio_venta: null,
+      fecha_compra: "2025-07-01",
+      vigencia: true,
+      tipo_inmueble: "Apto.",
+      estado_inmueble: "Sobre planos",
+      modelo_de_negocio: "Comprar para vender",
+      forma_pago_cuota_inicial: 1,
+      inicial_fecha_inicio_pago: "2025-08-01",
+      inicial_fecha_fin_pago: "2028-06-01",
+      credito_hipotecario: true,
+      credito_fecha_inicio_pago: "2028-08-01",
+      credito_fecha_fin_pago: "2048-08-01",
+      cesion_de_derechos: true,
+      fecha_prevista_venta: "2029-08-01",
+      comision_vendedor: true,
+      administracion: true,
+      mejoras: false,
+      renta: 1,
+      inmobiliaria: false,
+    };
+
+    Object.keys(values).forEach((key) => {
+      if (values[key] === "") {
+        values[key] = null;
+      }
+    });
+
+    const res = await supabase
+      .from("modelaciones")
+      .insert(values)
+      .select("id")
+      .single();
+
+    // Validar que se haya creado la modelacion
+    if (res.error || !res.data) {
+      return handleError(res.error);
+    }
+
+    // Crear vectores temporales
+    const { data: timeVectors, error: timeVectorsError } =
+      await supabase.functions.invoke("createTimeVectors", {
+        body: { modelacion_id: res.data.id },
+      });
+
+    if (timeVectorsError) {
+      return handleError(timeVectorsError);
+    }
+
+    // Crear flujos resultado
+    if (timeVectors.data.length > 0) {
+      const { data: flowsResult, error: flowsResultError } =
+        await supabase.functions.invoke("createFlowsResult", {
+          body: { modelacion_id: res.data.id },
+        });
+
+      if (flowsResultError) {
+        return handleError(flowsResultError);
+      }
+
+      if (flowsResult) {
+        const { error: analysisError } = await supabase.functions.invoke(
+          "createAnalysis",
+          { body: { modelacion_id: res.data.id } }
+        );
+
+        if (analysisError) {
+          return handleError(analysisError);
+        }
+
+        return navigate(`/analysis/${res.data.id}`);
+      }
+    }
+
+    return handleError(timeVectorsError);
   });
 
-  /* useEffect(() => {
-    console.log(stepHistory);
-  }, [stepHistory]); */
+  const handleError = (error) => {
+    console.log(error);
+    return navigate("/error");
+  };
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center h-full px-4 py-2">
-      <div className="w-full flex flex-col gap-14 items-center justify-center flex-1 rounded-tr-2xl">
-        <p>Paso {step}</p>
-
+    <div className="flex-1 flex flex-col items-center p-6 lg:px-4 lg:py-2 min-h-0 overflow-y-auto">
+      <div className="w-full pb-10 sm:pb-0 flex flex-col gap-10 md:gap-14 items-center justify-center flex-1 rounded-tr-2xl">
         {/* Pregunta */}
         <Question stepIndex={step} />
         {/* Form */}
@@ -90,11 +217,11 @@ const AnalysisForm = ({ step, setStep }) => {
               skippedStep={skippedStep}
               setStepHistory={setStepHistory}
             />
-            {step === 19 && (
+            {/* {step === 0 && (
               <Button type="submit" variant="theme">
                 Enviar
               </Button>
-            )}
+            )} */}
           </form>
         </Form>
       </div>

@@ -64,7 +64,7 @@ function AppRoutes() {
           <Route path="/" element={<HomePage />} />
           <Route path="/investment" element={<Investment />} />
           <Route path="/test" element={<Test />} />
-          <Route path="/analisis/:id" element={<Analisis />} />
+          <Route path="/analysis/:id" element={<Analisis />} />
           <Route path="/crear-modelacion" element={<CreateModelation />} />
           <Route path="/charts" element={<Analisis />} />
           <Route path="/inactive" element={<InactiveUserPage />} />
@@ -75,7 +75,7 @@ function AppRoutes() {
           <Route path="/authorization" element={<AuthorizationPage />} />
           {/* Analysis */}
           <Route
-            path="/analysis"
+            path="/analysis/create"
             element={<AnalysisPage.CreateAnalysisPage />}
           />
           {/* User */}
@@ -149,6 +149,10 @@ function AppRoutes() {
               <Route
                 path="investors/:id"
                 element={<InternalAdvisorPages.InvestorDetailsPage />}
+              />
+              <Route
+                path="investors/:id/analysis"
+                element={<InternalAdvisorPages.InvestorAnalysisPage />}
               />
             </Route>
           </Route>

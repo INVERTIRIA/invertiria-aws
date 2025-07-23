@@ -31,7 +31,7 @@ function RadioGroupItem({
       )} */
 
         className={cn(
-        "z-5 border-input p-10 ring-1 ring-gray-100 bg-white rounded-2xl shadow-sm hover:!ring-invertiria-2/10 hover:!shadow-invertiria-2 flex flex-col items-center gap-4 cursor-pointer transition-all data-[state=checked]:!ring-invertiria-2/10 data-[state=checked]:!shadow-invertiria-2",
+        "z-5 border-input ring-1 ring-gray-100 bg-white rounded-2xl shadow-sm hover:!ring-invertiria-2/10 hover:!shadow-invertiria-2 flex flex-col py-5 px-6 items-center justify-center gap-4 cursor-pointer transition-all data-[state=checked]:!ring-invertiria-2/10 data-[state=checked]:!shadow-invertiria-2",
         className
       )}
       {...props}

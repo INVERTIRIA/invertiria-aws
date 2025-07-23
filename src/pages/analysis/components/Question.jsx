@@ -92,11 +92,72 @@ const questions = [
     title: "Detalles del proyecto",
     description: "Información detalles del proyecto.",
   },
+  {
+    title: "Fecha de venta",
+    description: "Ingrese la fecha prevista de venta.",
+  },
+  {
+    title: "Etapa del proyecto",
+    description: "Ingrese la etapa del proyecto.",
+  },
+  {
+    title: "Comisión por venta",
+    description: "¿Paga comisión por venta?.",
+  },
+  {
+    title: "Administración",
+    description: "¿Paga administración?.",
+  },
+  {
+    title: "Valor predial",
+    description: "Ingrese el valor predial del inmueble.",
+  },
+  {
+    title: "Mejoras",
+    description: "¿Tiene mejoras?.",
+  },
+  {
+    title: "Licencia de construcción",
+    description: "¿Tiene licencia de construcción?.",
+  },
+  {
+    title: "Renta",
+    description: "Selecciona el tipo de renta.",
+  },
+  {
+    title: "Canón de arrendamiento",
+    description: "Ingrese el canón de arrendamiento.",
+  },
+  {
+    title: "Renta corta",
+    description: "Detalles para renta corta.",
+  },
+  {
+    title: "Operador",
+    description: "¿Tiene operador?.",
+  },
+  {
+    title: "Inmobiliaria",
+    description: "¿Tiene inmobiliaria?.",
+  },
+  {
+    title: "Precio de venta",
+    description: "Ingrese el precio de venta del inmueble.",
+  },
+  {
+    title: "Estrato",
+    description: "Ingrese el estrato del inmueble.",
+  },
+  {
+    title: "Enviar",
+    description:
+      "¿Estas listo para enviar la información para realizar el análisis?",
+  },
 ];
 
 const Question = ({ stepIndex }) => {
   return (
-    <div className="flex flex-col items-center gap-1">
+    <div className="flex flex-col items-center text-center gap-1">
       <h2 className="font-bold text-4xl">{questions[stepIndex]?.title}</h2>
       <p className="text-sm text-gray-700">
         {questions[stepIndex]?.description}
