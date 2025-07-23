@@ -93,7 +93,7 @@ const Zero = ({ form, ...props }) => {
   const value = form.watch("vigencia");
 
   return (
-    <div className="flex flex-col items-center gap-14">
+    <div className="flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="vigencia"
         control={form.control}
@@ -103,15 +103,15 @@ const Zero = ({ form, ...props }) => {
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                className="grid grid-cols-2 gap-x-20"
+                className="grid grid-cols-2 gap-x-5 xs:gap-x-20"
               >
                 <FormItem>
                   <RadioGroupItem
                     value={true}
                     id="yes"
-                    className="flex items-center justify-center py-6 px-14"
+                    className="flex items-center justify-center !py-5 !px-10"
                   >
-                    <Like className="text-invertiria-2" />
+                    <Like className="text-invertiria-2 size-11" />
                     <p className="text-sm font-medium">Si</p>
                   </RadioGroupItem>
                 </FormItem>
@@ -119,9 +119,9 @@ const Zero = ({ form, ...props }) => {
                   <RadioGroupItem
                     value={false}
                     id="not"
-                    className="flex items-center justify-center py-6 px-14"
+                    className="flex items-center justify-center !py-5 !px-10"
                   >
-                    <Deslike className="text-invertiria-2" />
+                    <Deslike className="text-invertiria-2 size-11" />
                     <p className="text-sm font-medium">No</p>
                   </RadioGroupItem>
                 </FormItem>
@@ -142,22 +142,22 @@ const One = ({ form, ...props }) => {
     {
       value: "Apto.",
       label: "Apartamento",
-      icon: () => <Apto className="text-invertiria-2" />,
+      icon: () => <Apto className="text-invertiria-2 size-11 " />,
     },
     {
       value: "Casa",
       label: "Casa",
-      icon: () => <Casa className="text-invertiria-2" />,
+      icon: () => <Casa className="text-invertiria-2 size-11 " />,
     },
     {
       value: "Lote",
       label: "Lote",
-      icon: () => <Lote className="text-invertiria-2" />,
+      icon: () => <Lote className="text-invertiria-2 size-11 " />,
     },
     {
       value: "Bodega",
       label: "Bodega",
-      icon: () => <Bodega className="text-invertiria-2" />,
+      icon: () => <Bodega className="text-invertiria-2 size-11 " />,
     },
     {
       value: "Oficina",
@@ -167,12 +167,12 @@ const One = ({ form, ...props }) => {
     {
       value: "Local",
       label: "Local",
-      icon: () => <Local className="text-invertiria-2" />,
+      icon: () => <Local className="text-invertiria-2 size-11" />,
     },
     {
       value: "Consultorio",
       label: "Consultorio",
-      icon: () => <Consultorio className="text-invertiria-2" />,
+      icon: () => <Consultorio className="text-invertiria-2 size-11" />,
     },
     {
       value: "Hotel",
@@ -182,12 +182,12 @@ const One = ({ form, ...props }) => {
     {
       value: "Coliving",
       label: "Coliving",
-      icon: () => <Coliving className="text-invertiria-2" />,
+      icon: () => <Coliving className="text-invertiria-2 size-11" />,
     },
   ];
 
   return (
-    <div className="flex flex-col items-center max-w-3xl gap-14">
+    <div className="flex flex-col items-center max-w-3xl gap-10 md:gap-14">
       <FormField
         name="tipo_inmueble"
         control={form.control}
@@ -204,10 +204,12 @@ const One = ({ form, ...props }) => {
                     <RadioGroupItem
                       value={option.value}
                       id={option.value}
-                      className="p-4 w-30"
+                      className="!p-4 w-24 sm:w-30"
                     >
-                      <option.icon className="text-invertiria-2" />
-                      <p className="mt-2 text-sm font-medium">{option.label}</p>
+                      <option.icon className="text-invertiria-2 size-11" />
+                      <p className="text-xs xs:text-sm font-medium">
+                        {option.label}
+                      </p>
                     </RadioGroupItem>
                   </FormItem>
                 ))}
@@ -225,7 +227,7 @@ const Two = ({ form, ...props }) => {
   const value = form.watch("estado_inmueble");
 
   return (
-    <div className="flex flex-col items-center gap-14">
+    <div className="flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="estado_inmueble"
         control={form.control}
@@ -235,20 +237,26 @@ const Two = ({ form, ...props }) => {
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                className="grid grid-cols-2 gap-x-20"
+                className="grid xs:grid-cols-2 gap-x-5 xs:gap-x-20"
               >
                 <FormItem>
-                  <RadioGroupItem value="Usado" id="usado">
-                    <Usado className="text-invertiria-2" />
-                    <p className="mt-2 text-sm font-medium">OP - Usado</p>
+                  <RadioGroupItem
+                    value="Usado"
+                    id="usado"
+                    className="flex items-center justify-center !py-5 !px-6"
+                  >
+                    <Usado className="text-invertiria-2 size-11" />
+                    <p className="mt-2 text-sm font-medium">Usado</p>
                   </RadioGroupItem>
                 </FormItem>
                 <FormItem>
-                  <RadioGroupItem value="Sobre planos" id="sobre-planos">
-                    <SobrePlanos className="text-invertiria-2" />
-                    <p className="mt-2 text-sm font-medium">
-                      OP - Sobre planos
-                    </p>
+                  <RadioGroupItem
+                    value="Sobre planos"
+                    id="sobre-planos"
+                    className="flex items-center justify-center !py-5 !px-6"
+                  >
+                    <SobrePlanos className="text-invertiria-2 size-11" />
+                    <p className="mt-2 text-sm font-medium">Sobre planos</p>
                   </RadioGroupItem>
                 </FormItem>
               </RadioGroup>
@@ -257,20 +265,6 @@ const Two = ({ form, ...props }) => {
         )}
       />
       <ButtonNext {...props} disabled={!value} />
-
-      {/* <Button
-        type="button"
-        className="w-fit"
-        disabled={!value}
-        onClick={(e) => {
-          e.preventDefault();
-          setStepHistory((prev) => [...prev, stepIndex]);
-          setStep((prev) => prev + 1);
-        }}        
-      >
-        Siguente
-        <ArrowRight />
-      </Button> */}
     </div>
   );
 };
@@ -280,7 +274,7 @@ const Three = ({ form, ...props }) => {
   const effectRan = useRef(false);
 
   const tipo_inmueble = form.watch("tipo_inmueble");
-  const opciones = ["Apto.", "Casa", "Lote", "Bodega"];
+  const opciones = ["Apto.", "Casa", "Lote"];
 
   useEffect(() => {
     if (!effectRan.current && opciones.includes(tipo_inmueble)) {
@@ -290,7 +284,7 @@ const Three = ({ form, ...props }) => {
   }, [tipo_inmueble]);
 
   return (
-    <div className="flex flex-col items-center gap-14">
+    <div className="flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="titularidad"
         control={form.control}
@@ -300,15 +294,15 @@ const Three = ({ form, ...props }) => {
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                className="grid grid-cols-2 gap-x-20"
+                className="grid xs:grid-cols-2 sm:gap-x-20"
               >
                 <FormItem>
                   <RadioGroupItem
                     value="Matricula Inmobiliaria"
                     id="matricula-inmobiliariado"
                   >
-                    <MatriculaInmobiliaria className="text-invertiria-2" />
-                    <p className="mt-2 text-sm font-medium">
+                    <MatriculaInmobiliaria className="text-invertiria-2 size-11" />
+                    <p className="mt-2 text-sm font-medium max-w-36">
                       Matricula Inmobiliaria
                     </p>
                   </RadioGroupItem>
@@ -318,8 +312,8 @@ const Three = ({ form, ...props }) => {
                     value="Participacion Fiduciaria"
                     id="participacion-fiduciaria"
                   >
-                    <ParticipacionFiduciaria className="text-invertiria-2" />
-                    <p className="mt-2 text-sm font-medium">
+                    <ParticipacionFiduciaria className="text-invertiria-2 size-11" />
+                    <p className="mt-2 text-sm font-medium max-w-36">
                       Participación Fiduciaria
                     </p>
                   </RadioGroupItem>
@@ -348,7 +342,7 @@ const Four = ({ form, analysisInstance, ...props }) => {
     .getBusinessModels();
 
   return (
-    <div className="flex flex-col items-center gap-14">
+    <div className="flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="modelo_de_negocio"
         control={form.control}
@@ -358,14 +352,17 @@ const Four = ({ form, analysisInstance, ...props }) => {
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                className={`grid grid-cols-${options.length + 1} gap-x-10 `}
+                className={`grid xs:grid-cols-2 lg:grid-cols-${
+                  options.length + 1
+                } xs:gap-10`}
               >
                 <FormItem>
                   <RadioGroupItem
                     value="Comprar para vender"
                     id="comprar-para-vender"
+                    className=""
                   >
-                    <ComprarVender className="text-invertiria-2" />
+                    <ComprarVender className="text-invertiria-2 size-11" />
                     <p className="mt-2 text-sm font-medium">
                       Comprar para vender
                     </p>
@@ -375,7 +372,7 @@ const Four = ({ form, analysisInstance, ...props }) => {
                 {options.map(({ id, value, icon: Icon }) => (
                   <FormItem key={id}>
                     <RadioGroupItem value={value} id={id}>
-                      <Icon className="text-invertiria-2" />
+                      <Icon className="text-invertiria-2 size-11" />
                       <p className="mt-2 text-sm font-medium">{value}</p>
                     </RadioGroupItem>
                   </FormItem>
@@ -386,20 +383,6 @@ const Four = ({ form, analysisInstance, ...props }) => {
         )}
       />
       <ButtonNext {...props} disabled={!value} />
-
-      {/* <Button
-        type="button"
-        className="w-fit"
-        disabled={!value}
-        onClick={(e) => {
-          e.preventDefault();
-          setStepHistory((prev) => [...prev, stepIndex]);
-          setStep((prev) => prev + 1);
-        }}
-      >
-        Siguente
-        <ArrowRight />
-      </Button> */}
     </div>
   );
 };
@@ -408,12 +391,12 @@ const Five = ({ form, ...props }) => {
   const value = form.watch("titulo_modelacion");
 
   return (
-    <div className="flex flex-col items-center gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="titulo_modelacion"
         control={form.control}
         render={({ field }) => (
-          <FormItem className="w-md">
+          <FormItem className="w-full sm:w-md">
             <FormControl>
               <StepInput placeholder="Nombre de la inversion" {...field} />
             </FormControl>
@@ -465,7 +448,7 @@ const Six = ({ form, analysisInstance, ...props }) => {
 
   useEffect(() => {
     if (!debouncedQuery) {
-      fetchRecords(" ");
+      fetchRecords("");
       return;
     }
 
@@ -474,12 +457,12 @@ const Six = ({ form, analysisInstance, ...props }) => {
   }, [debouncedQuery, isFocused]);
 
   return (
-    <div className="flex flex-col items-center gap-14 relative">
+    <div className="w-[95%] sm:w-auto flex flex-col items-center gap-10 md:gap-14 relative">
       <FormField
         name="nombre_del_proyecto"
         control={form.control}
         render={({ field }) => (
-          <FormItem className="w-md">
+          <FormItem className="w-full sm:w-md">
             <FormControl>
               <StepInput
                 {...field}
@@ -575,7 +558,6 @@ const Seven = ({ form, analysisInstance, ...props }) => {
 
   useEffect(() => {
     if (value && !analysisInstance.projectInformation) {
-      console.log("Location levels: ", value);
       form.setValue("pais_id", 46);
       form.setValue("ciudad_id", value.city);
       form.setValue("zona", value.zone);
@@ -608,9 +590,9 @@ const Seven = ({ form, analysisInstance, ...props }) => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <Map
-        className={"w-3xl"}
+        className={"w-full xl:w-3xl"}
         setValue={setValue}
         projectPosition={position}
         initialSearch={value}
@@ -624,12 +606,12 @@ const Eight = ({ form, ...props }) => {
   const value = form.watch("precio_de_compra");
 
   return (
-    <div className="flex flex-col items-center gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="precio_de_compra"
         control={form.control}
         render={({ field }) => (
-          <FormItem className="w-md">
+          <FormItem className="w-full md:w-md">
             <FormControl>
               <StepInput
                 {...field}
@@ -654,10 +636,6 @@ const Nine = ({ form, ...props }) => {
 
   const effectRan = useRef(false);
 
-  const unformatCurrency = (formatted) => {
-    return formatted.replace(/[^0-9]/g, ""); // elimina $, puntos, espacios, etc.
-  };
-
   useEffect(() => {
     if (!effectRan.current && !vigencia) {
       props.setStep(10);
@@ -666,7 +644,7 @@ const Nine = ({ form, ...props }) => {
   }, [vigencia]);
 
   return (
-    <div className="flex flex-col items-center gap-14">
+    <div className="flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="precio_de_mercado"
         control={form.control}
@@ -677,14 +655,9 @@ const Nine = ({ form, ...props }) => {
                 {...field}
                 type={"text"}
                 inputMode="numeric"
-                placeholder="Ingresa el precio de compra"
+                placeholder="Ingresa el precio de mercado"
                 value={field.value ? parsePrice(field.value) : ""}
-                onChange={(e) => {
-                  const raw = unformatCurrency(e.target.value);
-                  if (/^\d*$/.test(raw)) {
-                    field.onChange(Number(raw)); // guarda limpio en react-hook-form
-                  }
-                }}
+                onChange={formatCurrencyInput(field)}
               />
             </FormControl>
           </FormItem>
@@ -709,7 +682,7 @@ const Ten = ({ form, ...props }) => {
   }, [estadoInmueble]);
 
   return (
-    <div className="flex flex-col items-center gap-14">
+    <div className="flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="separacion"
         control={form.control}
@@ -737,7 +710,7 @@ const Eleven = ({ form, ...props }) => {
   const value = form.watch("forma_pago_cuota_inicial");
 
   return (
-    <div className="flex flex-col items-center gap-14">
+    <div className="flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="forma_pago_cuota_inicial"
         control={form.control}
@@ -747,7 +720,7 @@ const Eleven = ({ form, ...props }) => {
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                className="grid grid-cols-3 gap-x-20"
+                className="grid md:grid-cols-3 gap-x-5 lg:gap-x-20"
               >
                 <FormItem>
                   <RadioGroupItem
@@ -829,7 +802,7 @@ const Twelve = ({ form, ...props }) => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center gap-14">
+    <div className="flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="cuota_inicial"
         control={form.control}
@@ -983,7 +956,7 @@ const Twelve = ({ form, ...props }) => {
   );
 };
 
-const Thirteen = ({ form, ...props }) => {
+const ThirTeen = ({ form, ...props }) => {
   const pagosPersonalizados = form.watch("pagos_personalizados");
   const estadoInmueble = form.watch("estado_inmueble");
   const formaPago = form.watch("forma_pago_cuota_inicial");
@@ -1061,7 +1034,7 @@ const Thirteen = ({ form, ...props }) => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center gap-14">
+    <div className="flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="pagos_personalizados"
         control={form.control}
@@ -1245,7 +1218,7 @@ const FourTeen = ({ form, ...props }) => {
   }, [tipoInmueble]);
 
   return (
-    <div className="flex flex-col items-center gap-14">
+    <div className="flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="credito_hipotecario"
         control={form.control}
@@ -1320,7 +1293,7 @@ const FifTeen = ({ form, ...props }) => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center gap-14">
+    <div className="flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="tasa_de_interes"
         control={form.control}
@@ -1492,7 +1465,7 @@ const SixTeen = ({ form, ...props }) => {
   }, [estadoInmueble]);
 
   return (
-    <div className="flex flex-col items-center gap-14">
+    <div className="flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="edad_propiedad"
         control={form.control}
@@ -1522,10 +1495,9 @@ const SevenTeen = ({ form, ...props }) => {
   const modeloNegocio = form.watch("modelo_de_negocio");
 
   const tiposInmuebles = [
-    tipoInmuebleConst.oficina,
-    tipoInmuebleConst.local,
-    tipoInmuebleConst.consultorio,
-    tipoInmuebleConst.coliving,
+    tipoInmuebleConst.apartamento,
+    tipoInmuebleConst.casa,
+    tipoInmuebleConst.lote,
   ];
 
   const effectRan = useRef(false);
@@ -1533,12 +1505,16 @@ const SevenTeen = ({ form, ...props }) => {
   useEffect(() => {
     if (
       !effectRan.current &&
-      ((tiposInmuebles.includes(tipoInmueble) &&
-        titularidad === titularidadConst.participacionFiduciaria) ||
-        (tipoInmueble === tipoInmuebleConst.hotel &&
-          estadoInmueble === "Sobre planos" &&
-          titularidad === titularidadConst.matriculaInmobiliaria &&
-          modeloNegocio === modeloNegocioConst.comprarVender))
+      !tiposInmuebles.includes(tipoInmueble) &&
+      titularidad === titularidadConst.participacionFiduciaria
+    ) {
+      props.setStep(18);
+      effectRan.current = true;
+    } else if (
+      tipoInmueble === tipoInmuebleConst.hotel &&
+      estadoInmueble === "Sobre planos" &&
+      titularidad === titularidadConst.matriculaInmobiliaria &&
+      modeloNegocio === modeloNegocioConst.comprarVender
     ) {
       props.setStep(18);
       effectRan.current = true;
@@ -1546,7 +1522,7 @@ const SevenTeen = ({ form, ...props }) => {
   }, [tipoInmueble]);
 
   return (
-    <div className="flex flex-col items-center gap-14">
+    <div className="flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="area_inmueble"
         control={form.control}
@@ -1557,6 +1533,10 @@ const SevenTeen = ({ form, ...props }) => {
                 {...field}
                 placeholder="Ingrese el área del inmueble."
                 type={"number"}
+                onChange={(e) => {
+                  let value = parseInt(e.target.value);
+                  field.onChange(value);
+                }}
               />
             </FormControl>
           </FormItem>
@@ -1594,7 +1574,7 @@ const EighTeen = ({ form, ...props }) => {
           modeloNegocioConst.comprarVender,
           modeloNegocioConst.rentaCorta,
         ].includes(modeloNegocio)) ||
-      titularidad === titularidadConst.matriculaInmobiliaria
+      titularidad === titularidadConst.participacionFiduciaria
     )
       return;
 
@@ -1603,7 +1583,7 @@ const EighTeen = ({ form, ...props }) => {
   }, [tipoInmueble]);
 
   return (
-    <div className="flex flex-col items-center gap-14">
+    <div className="flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="parqueaderos"
         control={form.control}
@@ -1614,12 +1594,21 @@ const EighTeen = ({ form, ...props }) => {
                 {...field}
                 placeholder="Ingrese el número de parqueaderos."
                 type={"number"}
+                onChange={(e) => {
+                  let value = parseInt(e.target.value);
+                  field.onChange(value);
+                }}
               />
             </FormControl>
           </FormItem>
         )}
       />
-      <ButtonNext {...props} disabled={!value} />
+      <ButtonNext
+        {...props}
+        disabled={
+          value < 0 || value === null || value === undefined || isNaN(value)
+        }
+      />
     </div>
   );
 };
@@ -1654,7 +1643,7 @@ const NineTeen = ({ form, ...props }) => {
   }, [tipoInmueble]);
 
   return (
-    <div className="flex flex-col items-center gap-14">
+    <div className="flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="vivienda_vis"
         control={form.control}
@@ -1698,9 +1687,31 @@ const NineTeen = ({ form, ...props }) => {
 
 const Twenty = ({ form, ...props }) => {
   const value = form.watch("cesion_de_derechos");
+  const tipoInmueble = form.watch("tipo_inmueble");
+  const estadoInmueble = form.watch("estado_inmueble");
+  const modeloNegocio = form.watch("modelo_de_negocio");
+
+  const effectRan = useRef(false);
+
+  useEffect(() => {
+    if (effectRan.current) return;
+
+    if (
+      tipoInmueble === tipoInmuebleConst.lote &&
+      estadoInmueble === "Sobre planos" &&
+      modeloNegocio === modeloNegocioConst.comprarVender
+    ) {
+      return;
+    }
+
+    if (estadoInmueble === "Sobre planos") return;
+
+    props.setStep(21);
+    effectRan.current = true;
+  }, [value]);
 
   return (
-    <div className="flex flex-col items-center gap-14">
+    <div className="flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="cesion_de_derechos"
         control={form.control}
@@ -1745,7 +1756,7 @@ const Twenty = ({ form, ...props }) => {
 const TwentyOne = ({ form, ...props }) => {
   const fechaVentas = form.watch("fecha_inicio_ventas");
   const fechaEntrega = form.watch("fecha_prevista_entrega");
-  const formaPago = form.watch("forma_pago_cuota_inicial");
+  const estadoInmueble = form.watch("estado_inmueble");
 
   const [openPopovers, setOpenPopovers] = useState({});
   const [buttonWidth, setButtonWidth] = useState(0);
@@ -1761,11 +1772,11 @@ const TwentyOne = ({ form, ...props }) => {
   };
 
   useEffect(() => {
-    if (!effectRan.current && formaPago === 3) {
-      props.setStep(13);
+    if (!effectRan.current && estadoInmueble === "Usado") {
+      props.setStep(22);
       effectRan.current = true;
     }
-  }, [formaPago]);
+  }, [estadoInmueble]);
 
   useEffect(() => {
     if (buttonRef.current) {
@@ -1774,7 +1785,7 @@ const TwentyOne = ({ form, ...props }) => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center gap-14">
+    <div className="flex flex-col items-center gap-10 md:gap-14">
       <FormField
         control={form.control}
         name="fecha_inicio_ventas"
@@ -1885,6 +1896,1141 @@ const TwentyOne = ({ form, ...props }) => {
         )}
       />
       <ButtonNext {...props} disabled={!fechaVentas || !fechaEntrega} />
+    </div>
+  );
+};
+
+const TwentyTwo = ({ form, ...props }) => {
+  const fechaVenta = form.watch("fecha_prevista_venta");
+  const fechaCompra = form.watch("fecha_compra");
+
+  const vigencia = form.watch("vigencia");
+
+  const [openPopovers, setOpenPopovers] = useState({});
+  const [buttonWidth, setButtonWidth] = useState(0);
+
+  const buttonRef = useRef(null);
+
+  const togglePopover = (name) => {
+    setOpenPopovers((prev) => ({
+      ...prev,
+      [name]: !prev[name],
+    }));
+  };
+
+  /* useEffect(() => {
+    if (!effectRan.current && !vigencia) {
+      props.setStep(23);
+      effectRan.current = true;
+    }
+  }, [vigencia]); */
+
+  useEffect(() => {
+    if (buttonRef.current) {
+      setButtonWidth(buttonRef.current.offsetWidth);
+    }
+  }, []);
+
+  return (
+    <div className="flex flex-col items-center gap-10 md:gap-14">
+      <FormField
+        control={form.control}
+        name="fecha_compra"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Fecha de compra</FormLabel>
+            <Popover
+              open={!!openPopovers["fecha_compra"]}
+              onOpenChange={() => togglePopover("fecha_compra")}
+            >
+              <PopoverTrigger asChild>
+                <FormControl>
+                  <Button
+                    ref={buttonRef}
+                    variant={"outline"}
+                    className={cn(
+                      "w-md pl-3 text-left font-normal text-base md:text-sm",
+                      !field.value && "text-muted-foreground"
+                    )}
+                  >
+                    {field.value ? (
+                      format(parseISO(field.value), "yyyy-MM-dd")
+                    ) : (
+                      <span>Elige una fecha</span>
+                    )}
+                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                  </Button>
+                </FormControl>
+              </PopoverTrigger>
+              <PopoverContent
+                style={{ width: buttonWidth }}
+                className="p-0"
+                align="start"
+              >
+                <Calendar
+                  style={{ width: buttonWidth }}
+                  mode="single"
+                  selected={field.value ? parseISO(field.value) : undefined}
+                  onSelect={(date) => {
+                    const formattedDate = date
+                      ? format(date, "yyyy-MM-dd")
+                      : "";
+                    field.onChange(formattedDate); // Se almacena el string "yyyy-MM-dd"
+
+                    togglePopover("fecha_compra");
+                  }}
+                  locale={es}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+          </FormItem>
+        )}
+      />
+      {vigencia && (
+        <FormField
+          control={form.control}
+          name="fecha_prevista_venta"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Fecha prevista venta</FormLabel>
+              <Popover
+                open={!!openPopovers["fecha_prevista_venta"]}
+                onOpenChange={() => togglePopover("fecha_prevista_venta")}
+              >
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      ref={buttonRef}
+                      variant={"outline"}
+                      className={cn(
+                        "w-md pl-3 text-left font-normal text-base md:text-sm",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      {field.value ? (
+                        format(parseISO(field.value), "yyyy-MM-dd")
+                      ) : (
+                        <span>Elige una fecha</span>
+                      )}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent
+                  style={{ width: buttonWidth }}
+                  className="p-0"
+                  align="start"
+                >
+                  <Calendar
+                    style={{ width: buttonWidth }}
+                    mode="single"
+                    selected={field.value ? parseISO(field.value) : undefined}
+                    onSelect={(date) => {
+                      const formattedDate = date
+                        ? format(date, "yyyy-MM-dd")
+                        : "";
+                      field.onChange(formattedDate); // Se almacena el string "yyyy-MM-dd"
+
+                      togglePopover("fecha_prevista_venta");
+                    }}
+                    locale={es}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            </FormItem>
+          )}
+        />
+      )}
+
+      <ButtonNext
+        {...props}
+        disabled={!fechaVenta || (!fechaCompra && vigencia)}
+      />
+    </div>
+  );
+};
+
+const TwentyThree = ({ form, ...props }) => {
+  const value = form.watch("etapa_proyecto");
+  const estadoInmueble = form.watch("estado_inmueble");
+
+  const effectRan = useRef(false);
+
+  useEffect(() => {
+    if (!effectRan.current && estadoInmueble === "Usado") {
+      props.setStep(24);
+      effectRan.current = true;
+    }
+  }, [estadoInmueble]);
+
+  return (
+    <div className="flex flex-col items-center gap-10 md:gap-14">
+      <FormField
+        name="etapa_proyecto"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="w-md">
+            <FormControl>
+              <StepInput
+                {...field}
+                placeholder="Ingrese el número de etapa del proyecto."
+                type={"number"}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <ButtonNext {...props} disabled={!value} />
+    </div>
+  );
+};
+
+const TwentyFour = ({ form, ...props }) => {
+  const comisionVendedor = form.watch("comision_vendedor");
+  const porcentajeComisionVendedor = form.watch("porcentaje_comision_vendedor");
+
+  useEffect(() => {
+    if (!comisionVendedor) {
+      form.resetField("porcentaje_comision_vendedor");
+    }
+  }, [comisionVendedor]);
+
+  return (
+    <div className="flex flex-col items-center gap-10 md:gap-14">
+      <FormField
+        name="comision_vendedor"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="space-y-3">
+            <FormControl>
+              <RadioGroup
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                className="grid grid-cols-2 gap-x-20"
+              >
+                <FormItem>
+                  <RadioGroupItem
+                    value={true}
+                    id="yes"
+                    className="flex items-center justify-center py-6 px-14"
+                  >
+                    <Like className="text-invertiria-2" />
+                    <p className="text-sm font-medium">Si</p>
+                  </RadioGroupItem>
+                </FormItem>
+                <FormItem>
+                  <RadioGroupItem
+                    value={false}
+                    id="not"
+                    className="flex items-center justify-center py-6 px-14"
+                  >
+                    <Deslike className="text-invertiria-2" />
+                    <p className="text-sm font-medium">No</p>
+                  </RadioGroupItem>
+                </FormItem>
+              </RadioGroup>
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      {comisionVendedor && (
+        <FormField
+          name="porcentaje_comision_vendedor"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem className="w-md">
+              <FormControl>
+                <StepInput
+                  {...field}
+                  type={"number"}
+                  inputMode="numeric"
+                  placeholder="Ingresa el % de la comisión por venta: 30%"
+                  min={0}
+                  max={100}
+                  onChange={(e) => {
+                    let value = parseFloat(e.target.value);
+
+                    if (isNaN(value)) field.onChange("");
+
+                    // Validar que esté entre 0 y 100
+                    if (value > 100) value = 100;
+                    if (value < 0) value = 0;
+
+                    field.onChange(value);
+                  }}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+      )}
+      <ButtonNext
+        {...props}
+        disabled={
+          comisionVendedor === undefined ||
+          comisionVendedor === null ||
+          (comisionVendedor && !porcentajeComisionVendedor)
+        }
+      />
+    </div>
+  );
+};
+
+const TwentyFive = ({ form, ...props }) => {
+  const administracion = form.watch("administracion");
+  const valorAdministracion = form.watch("valor_administracion");
+  const tipoInmueble = form.watch("tipo_inmueble");
+  const titularidad = form.watch("titularidad");
+
+  const tiposInmuebles = [
+    tipoInmuebleConst.oficina,
+    tipoInmuebleConst.local,
+    tipoInmuebleConst.consultorio,
+    tipoInmuebleConst.coliving,
+    tipoInmuebleConst.bodega,
+  ];
+
+  useEffect(() => {
+    if (
+      tipoInmueble === tipoInmuebleConst.hotel ||
+      (tiposInmuebles.includes(tipoInmueble) &&
+        titularidad === titularidadConst.participacionFiduciaria)
+    ) {
+      return props.setStep(26);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!administracion) {
+      form.resetField("valor_administracion");
+    }
+  }, [administracion]);
+
+  return (
+    <div className="flex flex-col items-center gap-10 md:gap-14">
+      <FormField
+        name="administracion"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="space-y-3">
+            <FormControl>
+              <RadioGroup
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                className="grid grid-cols-2 gap-x-20"
+              >
+                <FormItem>
+                  <RadioGroupItem
+                    value={true}
+                    id="yes"
+                    className="flex items-center justify-center py-6 px-14"
+                  >
+                    <Like className="text-invertiria-2" />
+                    <p className="text-sm font-medium">Si</p>
+                  </RadioGroupItem>
+                </FormItem>
+                <FormItem>
+                  <RadioGroupItem
+                    value={false}
+                    id="not"
+                    className="flex items-center justify-center py-6 px-14"
+                  >
+                    <Deslike className="text-invertiria-2" />
+                    <p className="text-sm font-medium">No</p>
+                  </RadioGroupItem>
+                </FormItem>
+              </RadioGroup>
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      {administracion && (
+        <FormField
+          name="valor_administracion"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem className="w-md">
+              <FormControl>
+                <StepInput
+                  {...field}
+                  type={"text"}
+                  inputMode="numeric"
+                  placeholder="Ingresa el valor de la administración"
+                  value={field.value ? parsePrice(field.value) : ""}
+                  onChange={formatCurrencyInput(field)}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+      )}
+      <ButtonNext
+        {...props}
+        disabled={
+          administracion === undefined ||
+          administracion === null ||
+          (administracion && !valorAdministracion)
+        }
+      />
+    </div>
+  );
+};
+
+const TwentySix = ({ form, ...props }) => {
+  const value = form.watch("valor_predial");
+  const titularidad = form.watch("titularidad");
+
+  useEffect(() => {
+    if (titularidad === titularidadConst.participacionFiduciaria) {
+      return props.setStep(28);
+    }
+  }, []);
+
+  return (
+    <div className="flex flex-col items-center gap-10 md:gap-14">
+      <FormField
+        name="valor_predial"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="w-md">
+            <FormControl>
+              <StepInput
+                {...field}
+                type={"text"}
+                inputMode="numeric"
+                placeholder="Ingresa el valor predial"
+                value={field.value ? parsePrice(field.value) : ""}
+                onChange={formatCurrencyInput(field)}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <ButtonNext {...props} disabled={!value} />
+    </div>
+  );
+};
+
+const TwentySeven = ({ form, ...props }) => {
+  const mejora = form.watch("mejoras");
+  const valorMejoras = form.watch("valor_mejoras");
+
+  const titularidad = form.watch("titularidad");
+  const tipoInmueble = form.watch("tipo_inmueble");
+  const estadoInmueble = form.watch("estado_inmueble");
+
+  useEffect(() => {
+    if (
+      ([tipoInmuebleConst.hotel, tipoInmuebleConst.coliving].includes(
+        tipoInmueble
+      ) &&
+        estadoInmueble === "Usado" &&
+        titularidad === titularidadConst.matriculaInmobiliaria) ||
+      titularidad === titularidadConst.participacionFiduciaria
+    ) {
+      return props.setStep(28);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!mejora) {
+      form.resetField("valor_mejoras");
+    }
+  }, [mejora]);
+
+  return (
+    <div className="flex flex-col items-center gap-10 md:gap-14">
+      <FormField
+        name="mejoras"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="space-y-3">
+            <FormControl>
+              <RadioGroup
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                className="grid grid-cols-2 gap-x-20"
+              >
+                <FormItem>
+                  <RadioGroupItem
+                    value={true}
+                    id="yes"
+                    className="flex items-center justify-center py-6 px-14"
+                  >
+                    <Like className="text-invertiria-2" />
+                    <p className="text-sm font-medium">Si</p>
+                  </RadioGroupItem>
+                </FormItem>
+                <FormItem>
+                  <RadioGroupItem
+                    value={false}
+                    id="not"
+                    className="flex items-center justify-center py-6 px-14"
+                  >
+                    <Deslike className="text-invertiria-2" />
+                    <p className="text-sm font-medium">No</p>
+                  </RadioGroupItem>
+                </FormItem>
+              </RadioGroup>
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      {mejora && (
+        <FormField
+          name="valor_mejoras"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem className="w-md">
+              <FormControl>
+                <StepInput
+                  {...field}
+                  type={"text"}
+                  inputMode="numeric"
+                  placeholder="Ingresa el valor de las mejoras"
+                  value={field.value ? parsePrice(field.value) : ""}
+                  onChange={formatCurrencyInput(field)}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+      )}
+      <ButtonNext
+        {...props}
+        disabled={
+          mejora === undefined || mejora === null || (mejora && !valorMejoras)
+        }
+      />
+    </div>
+  );
+};
+
+const TwentyEight = ({ form, ...props }) => {
+  const licencia = form.watch("licencia_construccion");
+  const costosLicencias = form.watch("costos_licencias");
+
+  const tipoInmueble = form.watch("tipo_inmueble");
+  const modeloNegocio = form.watch("modelo_de_negocio");
+
+  const tiposInmuebles = [
+    tipoInmuebleConst.apartamento,
+    tipoInmuebleConst.casa,
+    tipoInmuebleConst.bodega,
+    tipoInmuebleConst.oficina,
+    tipoInmuebleConst.local,
+    tipoInmuebleConst.consultorio,
+    tipoInmuebleConst.lote,
+  ];
+
+  useEffect(() => {
+    if (
+      tiposInmuebles.includes(tipoInmueble) &&
+      modeloNegocio === modeloNegocioConst.flipping
+    )
+      return;
+
+    if (
+      [modeloNegocioConst.comprarVender, modeloNegocioConst.engorde].includes(
+        modeloNegocio
+      ) &&
+      tipoInmueble === tipoInmuebleConst.lote
+    )
+      return;
+
+    props.setStep(29);
+  }, []);
+
+  useEffect(() => {
+    if (!licencia) {
+      form.resetField("costos_licencias");
+    }
+  }, [licencia]);
+
+  return (
+    <div className="flex flex-col items-center gap-10 md:gap-14">
+      <FormField
+        name="licencia_construccion"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="space-y-3">
+            <FormControl>
+              <RadioGroup
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                className="grid grid-cols-2 gap-x-20"
+              >
+                <FormItem>
+                  <RadioGroupItem
+                    value={true}
+                    id="yes"
+                    className="flex items-center justify-center py-6 px-14"
+                  >
+                    <Like className="text-invertiria-2" />
+                    <p className="text-sm font-medium">Si</p>
+                  </RadioGroupItem>
+                </FormItem>
+                <FormItem>
+                  <RadioGroupItem
+                    value={false}
+                    id="not"
+                    className="flex items-center justify-center py-6 px-14"
+                  >
+                    <Deslike className="text-invertiria-2" />
+                    <p className="text-sm font-medium">No</p>
+                  </RadioGroupItem>
+                </FormItem>
+              </RadioGroup>
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      {licencia && (
+        <FormField
+          name="costos_licencias"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem className="w-md">
+              <FormControl>
+                <StepInput
+                  {...field}
+                  type={"text"}
+                  inputMode="numeric"
+                  placeholder="Ingresa el valor de la administración"
+                  value={field.value ? parsePrice(field.value) : ""}
+                  onChange={formatCurrencyInput(field)}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+      )}
+      <ButtonNext
+        {...props}
+        disabled={
+          licencia === undefined ||
+          licencia === null ||
+          (licencia && !costosLicencias)
+        }
+      />
+    </div>
+  );
+};
+
+const TwentyNine = ({ form, analysisInstance, ...props }) => {
+  const value = form.watch("renta");
+  const [options, setOptions] = useState([]);
+
+  const titularidad = form.watch("titularidad");
+  const modeloNegocio = form.watch("modelo_de_negocio");
+  const tipoInmueble = form.watch("tipo_inmueble");
+
+  const textOptions = ["Sin renta", "Renta tradicional", "Renta corta"];
+
+  const tiposInmuebles = [
+    tipoInmuebleConst.oficina,
+    tipoInmuebleConst.local,
+    tipoInmuebleConst.bodega,
+    tipoInmuebleConst.consultorio,
+    tipoInmuebleConst.lote,
+    tipoInmuebleConst.coliving,
+    tipoInmuebleConst.apartamento,
+    tipoInmuebleConst.casa,
+  ];
+
+  useEffect(() => {
+    if (
+      [
+        modeloNegocioConst.rentaCorta,
+        modeloNegocioConst.rentaTradicional,
+      ].includes(modeloNegocio)
+    ) {
+      const renta =
+        modeloNegocioConst.rentaTradicional === modeloNegocio ? 1 : 2;
+      form.setValue("renta", renta);
+      props.setStep(30);
+      return;
+    }
+
+    if (
+      tiposInmuebles.includes(tipoInmueble) &&
+      titularidad !== titularidadConst.participacionFiduciaria
+    ) {
+      setOptions(analysisInstance.getRentalTypes([0, 1]));
+      return;
+    }
+
+    if (tipoInmueble === tipoInmuebleConst.hotel) {
+      const options =
+        titularidad === titularidadConst.matriculaInmobiliaria ? [0, 2] : [2];
+      setOptions(analysisInstance.getRentalTypes(options));
+      return;
+    }
+
+    props.setStep(30);
+    return;
+  }, []);
+
+  return (
+    <div className="flex flex-col items-center gap-10 md:gap-14">
+      <FormField
+        name="renta"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="space-y-3">
+            <FormControl>
+              <RadioGroup
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                className={`grid grid-cols-${options.length} gap-x-10 `}
+              >
+                {options.map(({ id, value, icon: Icon }) => (
+                  <FormItem key={id}>
+                    <RadioGroupItem value={value} id={id}>
+                      <Icon className="text-invertiria-2" />
+                      <p className="mt-2 text-sm font-medium">
+                        {textOptions[value]}
+                      </p>
+                    </RadioGroupItem>
+                  </FormItem>
+                ))}
+              </RadioGroup>
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <ButtonNext {...props} disabled={!value} />
+    </div>
+  );
+};
+
+const Thirty = ({ form, ...props }) => {
+  const value = form.watch("canon_de_arrendamiento");
+  const modeloNegocio = form.watch("modelo_de_negocio");
+  const renta = form.watch("renta");
+
+  const precioCompra = form.watch("precio_de_compra");
+  const valorMejoras = form.watch("valor_mejoras");
+
+  const effectRan = useRef(false);
+
+  useEffect(() => {
+    if (modeloNegocio !== modeloNegocioConst.rentaTradicional && renta !== 1) {
+      return props.setStep(31);
+    }
+
+    effectRan.current = true;
+    return;
+  }, []);
+
+  useEffect(() => {
+    if (effectRan.current) {
+      const canonArrendamiento = (precioCompra + valorMejoras) * 0.005;
+
+      form.setValue("canon_de_arrendamiento", canonArrendamiento);
+    }
+  }, []);
+
+  return (
+    <div className="flex flex-col items-center gap-10 md:gap-14">
+      <FormField
+        name="canon_de_arrendamiento"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="w-md">
+            <FormControl>
+              <StepInput
+                {...field}
+                type={"text"}
+                inputMode="numeric"
+                placeholder="Ingresa el canon de arrendamiento"
+                value={field.value ? parsePrice(field.value) : ""}
+                onChange={formatCurrencyInput(field)}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <ButtonNext {...props} disabled={!value} />
+    </div>
+  );
+};
+
+const ThirtyOne = ({ form, ...props }) => {
+  const valorNoche = form.watch("valor_noche");
+  const tarifaMensual = form.watch("tarifa_mensual");
+  const ocupacionMedia = form.watch("ocupacion_media");
+
+  const modeloNegocio = form.watch("modelo_de_negocio");
+  const renta = form.watch("renta");
+
+  useEffect(() => {
+    if (modeloNegocio !== modeloNegocioConst.rentaCorta && renta !== 2) {
+      return props.setStep(33);
+    }
+  }, []);
+
+  return (
+    <div className="flex flex-col items-center gap-10 md:gap-14">
+      <FormField
+        name="valor_noche"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="w-md">
+            <FormControl>
+              <StepInput
+                {...field}
+                type={"text"}
+                inputMode="numeric"
+                placeholder="Ingresa el valor por noche"
+                value={field.value ? parsePrice(field.value) : ""}
+                onChange={formatCurrencyInput(field)}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <FormField
+        name="tarifa_mensual"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="w-md">
+            <FormControl>
+              <StepInput
+                {...field}
+                type={"text"}
+                inputMode="numeric"
+                placeholder="Ingresa el valor por noche"
+                value={field.value ? parsePrice(field.value) : ""}
+                onChange={formatCurrencyInput(field)}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <FormField
+        name="ocupacion_media"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="w-md">
+            <FormControl>
+              <StepInput
+                {...field}
+                type={"number"}
+                inputMode="numeric"
+                placeholder="Ingresa el % de la ocupación media"
+                min={0}
+                max={100}
+                onChange={(e) => {
+                  let value = parseFloat(e.target.value);
+
+                  if (isNaN(value)) field.onChange("");
+
+                  // Validar que esté entre 0 y 100
+                  if (value > 100) value = 100;
+                  if (value < 0) value = 0;
+
+                  field.onChange(value);
+                }}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <ButtonNext
+        {...props}
+        disabled={!valorNoche || !tarifaMensual || !ocupacionMedia}
+      />
+    </div>
+  );
+};
+
+const ThirtyTwo = ({ form, ...props }) => {
+  const operador = form.watch("operador");
+  const porcentajeDelOperador = form.watch("porcentaje_del_operador");
+  const tipoInmueble = form.watch("tipo_inmueble");
+
+  const tiposInmuebles = [
+    tipoInmuebleConst.casa,
+    tipoInmuebleConst.apartamento,
+    tipoInmuebleConst.hotel,
+  ];
+
+  useEffect(() => {
+    if (tiposInmuebles.includes(tipoInmueble)) {
+      form.setValue("porcentaje_del_operador", operador ? 40 : 25);
+    }
+  }, [operador]);
+
+  return (
+    <div className="flex flex-col items-center gap-10 md:gap-14">
+      <FormField
+        name="operador"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="space-y-3">
+            <FormControl>
+              <RadioGroup
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                className="grid grid-cols-2 gap-x-20"
+              >
+                <FormItem>
+                  <RadioGroupItem
+                    value={true}
+                    id="yes"
+                    className="flex items-center justify-center py-6 px-14"
+                  >
+                    <Like className="text-invertiria-2" />
+                    <p className="text-sm font-medium">Si</p>
+                  </RadioGroupItem>
+                </FormItem>
+                <FormItem>
+                  <RadioGroupItem
+                    value={false}
+                    id="not"
+                    className="flex items-center justify-center py-6 px-14"
+                  >
+                    <Deslike className="text-invertiria-2" />
+                    <p className="text-sm font-medium">No</p>
+                  </RadioGroupItem>
+                </FormItem>
+              </RadioGroup>
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <FormField
+        name="porcentaje_del_operador"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="w-md">
+            <FormControl>
+              <StepInput
+                {...field}
+                type={"number"}
+                inputMode="numeric"
+                placeholder="Ingresa el % de costos sobre los ingresos"
+                min={0}
+                max={100}
+                onChange={(e) => {
+                  let value = parseFloat(e.target.value);
+
+                  if (isNaN(value)) field.onChange("");
+
+                  // Validar que esté entre 0 y 100
+                  if (value > 100) value = 100;
+                  if (value < 0) value = 0;
+
+                  field.onChange(value);
+                }}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <ButtonNext
+        {...props}
+        disabled={
+          operador === undefined ||
+          operador === null ||
+          (operador && !porcentajeDelOperador)
+        }
+      />
+    </div>
+  );
+};
+
+const ThirtyThree = ({ form, ...props }) => {
+  const inmobiliaria = form.watch("inmobiliaria");
+  const porcentajeInmobiliaria = form.watch("porcentaje_inmobiliaria");
+
+  const modeloNegocio = form.watch("modelo_de_negocio");
+  const renta = form.watch("renta");
+
+  useEffect(() => {
+    if (modeloNegocio !== modeloNegocioConst.rentaTradicional && renta !== 1) {
+      return props.setStep(34);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!inmobiliaria) {
+      form.resetField("porcentaje_inmobiliaria");
+    }
+  }, [inmobiliaria]);
+
+  return (
+    <div className="flex flex-col items-center gap-10 md:gap-14">
+      <FormField
+        name="inmobiliaria"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="space-y-3">
+            <FormControl>
+              <RadioGroup
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                className="grid grid-cols-2 gap-x-20"
+              >
+                <FormItem>
+                  <RadioGroupItem
+                    value={true}
+                    id="yes"
+                    className="flex items-center justify-center py-6 px-14"
+                  >
+                    <Like className="text-invertiria-2" />
+                    <p className="text-sm font-medium">Si</p>
+                  </RadioGroupItem>
+                </FormItem>
+                <FormItem>
+                  <RadioGroupItem
+                    value={false}
+                    id="not"
+                    className="flex items-center justify-center py-6 px-14"
+                  >
+                    <Deslike className="text-invertiria-2" />
+                    <p className="text-sm font-medium">No</p>
+                  </RadioGroupItem>
+                </FormItem>
+              </RadioGroup>
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      {inmobiliaria && (
+        <FormField
+          name="porcentaje_inmobiliaria"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem className="w-md">
+              <FormControl>
+                <StepInput
+                  {...field}
+                  type={"number"}
+                  inputMode="numeric"
+                  placeholder="Ingresa el % de la inmobiliaria"
+                  min={0}
+                  max={100}
+                  onChange={(e) => {
+                    let value = parseFloat(e.target.value);
+
+                    if (isNaN(value)) field.onChange("");
+
+                    // Validar que esté entre 0 y 100
+                    if (value > 100) value = 100;
+                    if (value < 0) value = 0;
+
+                    field.onChange(value);
+                  }}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+      )}
+      <ButtonNext
+        {...props}
+        disabled={
+          inmobiliaria === undefined ||
+          inmobiliaria === null ||
+          (inmobiliaria && !porcentajeInmobiliaria)
+        }
+      />
+    </div>
+  );
+};
+
+const ThirtyFour = ({ form, ...props }) => {
+  const value = form.watch("precio_venta");
+  const vigencia = form.watch("vigencia");
+  const modeloNegocio = form.watch("modelo_de_negocio");
+
+  useEffect(() => {
+    if (!vigencia || modeloNegocio === modeloNegocioConst.flipping) return;
+
+    return props.setStep(35);
+  }, [vigencia]);
+
+  return (
+    <div className="flex flex-col items-center gap-10 md:gap-14">
+      <FormField
+        name="precio_venta"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="w-md">
+            <FormControl>
+              <StepInput
+                {...field}
+                type={"text"}
+                inputMode="numeric"
+                placeholder="Ingresa el precio de venta"
+                value={field.value ? parsePrice(field.value) : ""}
+                onChange={formatCurrencyInput(field)}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <ButtonNext {...props} disabled={!value} />
+    </div>
+  );
+};
+
+const ThirtyFive = ({ form, ...props }) => {
+  const value = form.watch("estrato");
+  const viviendaVis = form.watch("vivienda_vis");
+
+  useEffect(() => {
+    if (!viviendaVis) {
+      return props.setStep(36);
+    }
+  }, [viviendaVis]);
+
+  return (
+    <div className="flex flex-col items-center gap-10 md:gap-14">
+      <FormField
+        name="estrato"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="w-md">
+            <FormControl>
+              <StepInput
+                {...field}
+                type={"number"}
+                inputMode="numeric"
+                placeholder="Ingresa el estrato"
+                min={0}
+                max={100}
+                onChange={(e) => {
+                  let value = parseFloat(e.target.value);
+
+                  if (isNaN(value)) field.onChange("");
+
+                  // Validar que esté entre 0 y 100
+                  if (value > 100) value = 100;
+                  if (value < 0) value = 0;
+
+                  field.onChange(value);
+                }}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <ButtonNext {...props} disabled={!value} />
+    </div>
+  );
+};
+
+const ThirtySix = () => {
+  return (
+    <div className="flex flex-col items-center gap-10 md:gap-14">
+      <Button type="submit" variant="theme">
+        Enviar
+      </Button>
     </div>
   );
 };
@@ -2051,7 +3197,7 @@ const Steps = ({ stepIndex, setStep, setStepHistory, skippedStep, form }) => {
 
     case 13:
       StepActive = (
-        <Thirteen
+        <ThirTeen
           form={form}
           setStep={setStep}
           stepIndex={stepIndex}
@@ -2147,6 +3293,186 @@ const Steps = ({ stepIndex, setStep, setStepHistory, skippedStep, form }) => {
     case 21:
       StepActive = (
         <TwentyOne
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 22:
+      StepActive = (
+        <TwentyTwo
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 23:
+      StepActive = (
+        <TwentyThree
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 24:
+      StepActive = (
+        <TwentyFour
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 25:
+      StepActive = (
+        <TwentyFive
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 26:
+      StepActive = (
+        <TwentySix
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 27:
+      StepActive = (
+        <TwentySeven
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 28:
+      StepActive = (
+        <TwentyEight
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 29:
+      StepActive = (
+        <TwentyNine
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 30:
+      StepActive = (
+        <Thirty
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 31:
+      StepActive = (
+        <ThirtyOne
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 32:
+      StepActive = (
+        <ThirtyTwo
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 33:
+      StepActive = (
+        <ThirtyThree
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 34:
+      StepActive = (
+        <ThirtyFour
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 35:
+      StepActive = (
+        <ThirtyFive
+          form={form}
+          setStep={setStep}
+          stepIndex={stepIndex}
+          setStepHistory={setStepHistory}
+          analysisInstance={analysisInstance}
+        />
+      );
+      break;
+
+    case 36:
+      StepActive = (
+        <ThirtySix
           form={form}
           setStep={setStep}
           stepIndex={stepIndex}

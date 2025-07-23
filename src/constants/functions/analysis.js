@@ -3,6 +3,7 @@ import {
   Flipping,
   RentaCorta,
   RentaTradicional,
+  X,
 } from "../../components/design/Icons";
 import {
   titularidad as titularidadConst,
@@ -50,19 +51,9 @@ class Analysis {
       return;
 
     // Validar titularidad
-    if (!this.titularidad || this.tipoInmueble === tipoInmuebleConst.oficina) {
-      this.models.push(toInsert);
-    }
+    if (this.titularidad === titularidadConst.participacionFiduciaria) return;
 
-    // Validar tipo de inmueble
-    if (
-      this.titularidad === titularidadConst.matriculaInmobiliaria &&
-      [tipoInmuebleConst.local, tipoInmuebleConst.consultorio].includes(
-        this.tipoInmueble
-      )
-    ) {
-      this.models.push(toInsert);
-    }
+    this.models.push(toInsert);
   }
 
   #validateShortTermRental() {
@@ -89,32 +80,9 @@ class Analysis {
     };
 
     if (
-      this.tipoInmueble === tipoInmuebleConst.lote ||
-      this.tipoInmueble === tipoInmuebleConst.hotel
-    )
-      return;
-
-    if (
-      ![tipoInmuebleConst.oficina, tipoInmuebleConst.consultorio].includes(
+      [tipoInmuebleConst.lote, tipoInmuebleConst.hotel].includes(
         this.tipoInmueble
       )
-    ) {
-      this.models.push(toInsert);
-      return;
-    }
-
-    // Validar cuando es consultorio
-    if (
-      this.tipoInmueble === tipoInmuebleConst.consultorio &&
-      this.titularidad === titularidadConst.participacionFiduciaria
-    )
-      return;
-
-    // Validar cuando es oficina
-    if (
-      this.tipoInmueble === tipoInmuebleConst.oficina &&
-      this.estadoInmueble === "Usado" &&
-      this.titularidad === titularidadConst.matriculaInmobiliaria
     )
       return;
 
@@ -158,6 +126,7 @@ class Analysis {
     this.projectInformation = projectInformation;
     return this;
   }
+
   setProjectInformationModel(projectInformation) {
     this.projectInformationModel = projectInformation;
     return this;
@@ -169,11 +138,41 @@ class Analysis {
     return this.models;
   }
 
+  getRentalTypes(options) {
+    const types = [
+      {
+        id: "sin-renta",
+        value: 0,
+        icon: X,
+      },
+      {
+        id: "renta-tradicional",
+        value: 1,
+        icon: RentaTradicional,
+      },
+      {
+        id: "renta-corta",
+        value: 2,
+        icon: RentaCorta,
+      },
+    ];
+
+    const res = [];
+
+    for (const type of types) {
+      if (options.includes(type.value)) {
+        res.push(type);
+      }
+    }
+
+    return res;
+  }
+
   async getDataModeling(businessModel) {
     const { data, error } = await supabase
       .from("modelaciones")
       .select("*")
-      .eq("modelo_de_negocio", businessModel)
+      //.eq("modelo_de_negocio", businessModel) // Activar cuando se tengas todas las plantillas
       .is("modelacion_plantilla", true)
       .limit(1)
       .single();
