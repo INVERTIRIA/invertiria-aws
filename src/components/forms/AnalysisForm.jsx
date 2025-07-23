@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { Form } from "../ui/form";
 import { Steps } from "../../pages/analysis/components/Steps";
 import { useState } from "react";
-import { determineSkippedQuestions } from "../../constants/functions";
+import { delay, determineSkippedQuestions } from "../../constants/functions";
 import { supabase } from "../../supabase";
 import { useNavigate } from "react-router";
 
@@ -79,9 +79,7 @@ const AnalysisForm = ({ step, setStep, setIsSubmitting }) => {
   });
 
   const onSubmit = form.handleSubmit(async (values2) => {
-    //const camposOmitidos = determineSkippedQuestions(skippedQuestions);
-
-    setIsSubmitting(true); // Cambia el estado de isSubmitting a true
+    setIsSubmitting(true);
 
     const values = {
       usuario_id: "70bf12cf-83e3-4263-83aa-841000ccea7b",
@@ -139,64 +137,64 @@ const AnalysisForm = ({ step, setStep, setIsSubmitting }) => {
       inmobiliaria: false,
     };
 
-    Object.keys(values).forEach((key) => {
-      if (values[key] === "") {
-        values[key] = null;
-      }
+    // Limpiar valores vacíos
+    Object.entries(values).forEach(([key, value]) => {
+      if (value === "") values[key] = null;
     });
 
-    const res = await supabase
-      .from("modelaciones")
-      .insert(values)
-      .select("id")
-      .single();
+    try {
+      // Crear modelación
+      const { data: modelacion, error: insertError } = await supabase
+        .from("modelaciones")
+        .insert(values)
+        .select("id")
+        .single();
 
-    // Validar que se haya creado la modelacion
-    if (res.error || !res.data) {
-      return handleError(res.error);
-    }
+      if (insertError || !modelacion) throw insertError;
 
-    // Crear vectores temporales
-    const { data: timeVectors, error: timeVectorsError } =
-      await supabase.functions.invoke("createTimeVectors", {
-        body: { modelacion_id: res.data.id },
-      });
+      await delay(500); // Esperar medio segundo
 
-    if (timeVectorsError) {
-      return handleError(timeVectorsError);
-    }
-
-    // Crear flujos resultado
-    if (timeVectors.data.length > 0) {
-      const { data: flowsResult, error: flowsResultError } =
-        await supabase.functions.invoke("createFlowsResult", {
-          body: { modelacion_id: res.data.id },
+      // Crear vectores temporales
+      const { data: timeVectors, error: timeVectorsError } =
+        await supabase.functions.invoke("createTimeVectors", {
+          body: { modelacion_id: modelacion.id },
         });
 
-      if (flowsResultError) {
-        return handleError(flowsResultError);
-      }
+      if (timeVectorsError || !timeVectors?.data.length) throw timeVectorsError;
 
-      if (flowsResult) {
-        const { error: analysisError } = await supabase.functions.invoke(
-          "createAnalysis",
-          { body: { modelacion_id: res.data.id } }
-        );
+      await delay(500); // Esperar otro medio segundo
 
-        if (analysisError) {
-          return handleError(analysisError);
+      // Crear flujos resultado
+      const { error: flowsResultError } = await supabase.functions.invoke(
+        "createFlowsResult",
+        {
+          body: { modelacion_id: modelacion.id },
         }
+      );
 
-        return navigate(`/analysis/${res.data.id}`);
-      }
+      if (flowsResultError) throw flowsResultError;
+
+      await delay(500); // Esperar de nuevo
+
+      // Crear análisis
+      const { error: analysisError } = await supabase.functions.invoke(
+        "createAnalysis",
+        {
+          body: { modelacion_id: modelacion.id },
+        }
+      );
+
+      if (analysisError) throw analysisError;
+
+      navigate(`/analysis/${modelacion.id}`);
+    } catch (error) {
+      handleError(error);
     }
-
-    return handleError(timeVectorsError);
   });
 
   const handleError = (error) => {
-    console.log(error);
-    return navigate("/error");
+    console.error("Error:", error);
+    navigate("/error");
   };
 
   return (
@@ -217,11 +215,11 @@ const AnalysisForm = ({ step, setStep, setIsSubmitting }) => {
               skippedStep={skippedStep}
               setStepHistory={setStepHistory}
             />
-            {/* {step === 0 && (
+            {step === 0 && (
               <Button type="submit" variant="theme">
                 Enviar
               </Button>
-            )} */}
+            )}
           </form>
         </Form>
       </div>
