@@ -40,10 +40,10 @@ const CreateModelation = () => {
     //   createFlowsResult();
     //   loadedFlowsResult.current = true;
     // }
-    if (!loadedAnalysis.current) {
-      createAnalysis();
-      loadedAnalysis.current = true;
-    }
+    // if (!loadedAnalysis.current) {
+    //   createAnalysis();
+    //   loadedAnalysis.current = true;
+    // }
   }, []);
 
   return (

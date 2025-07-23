@@ -113,19 +113,68 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
 
   // Funcion para obtener zonas de 3 meses
   function mejoresTresMesesSeguidos(datos) {
-    datos = datos.map((item) => ({ mes: item[1], dato: item[2] }));
+    datos = datos.map((item) => ({ index: item[0], mes: item[1], dato: item[2] }));
     if (datos.length < 3) return [];
     let maxSuma = -Infinity;
     let mejorSecuencia = [];
     for (let i = 0; i <= datos.length - 3; i++) {
       const grupo = datos.slice(i, i + 3);
-      const sumaTir = grupo.reduce((sum, item) => sum + item.dato, 0);
-      if (sumaTir > maxSuma) {
-        maxSuma = sumaTir;
+      const suma = grupo.reduce((sum, item) => sum + item.dato, 0);
+      if (suma > maxSuma) {
+        maxSuma = suma;
         mejorSecuencia = grupo;
       }
     }
     return mejorSecuencia;
+  }
+
+  function CustomLengend() {
+    return (
+      <ul className="recharts-default-legend p-0 m-0 text-center">
+        <li className="inline-block mr-2.5">
+          <svg className="inline-block align-middle mr-1" width="14" height="14" viewBox="0 0 32 32" fill="none">
+            <path
+              strokeWidth="4"
+              stroke="#000000"
+              fill="none"
+              d="M0,16h10.666666666666666
+           A5.333333333333333,5.333333333333333,0,1,1,21.333333333333332,16
+           H32M21.333333333333332,16
+           A5.333333333333333,5.333333333333333,0,1,1,10.666666666666666,16"
+              className="recharts-legend-icon"
+            />
+          </svg>
+          <span className="text-black">TIR mensual</span>
+        </li>
+        <li className="inline-block mr-2.5">
+          <svg className="inline-block align-middle mr-1" width="14" height="14" viewBox="0 0 32 32" fill="none">
+            <path
+              strokeWidth="4"
+              stroke="#FB3D03"
+              fill="none"
+              d="M0,16h10.666666666666666
+           A5.333333333333333,5.333333333333333,0,1,1,21.333333333333332,16
+           H32M21.333333333333332,16
+           A5.333333333333333,5.333333333333333,0,1,1,10.666666666666666,16"
+              className="recharts-legend-icon"
+            />
+          </svg>
+          <span className="text-[#FB3D03]">TIR Anualizada</span>
+        </li>
+        <li className="inline-block mr-2.5">
+          <svg className="inline-block align-middle mr-1" width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <rect width="14" height="14" fill="green" fillOpacity={0.3} className="recharts-legend-icon" />
+          </svg>
+          <span className="text-[rgba(0,128,0,0.8)]">Zona mayor TIR</span>
+        </li>
+        <li className="inline-block mr-2.5">
+          <svg className="inline-block align-middle mr-1" width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <rect width="14" height="14" fill="DodgerBlue" fillOpacity={0.3} className="recharts-legend-icon" />
+          </svg>
+          <span className="text-[rgba(30,144,255,0.8)]">Zona mayor Utilidad</span>
+        </li>
+      </ul>
+    )
   }
 
   return (
@@ -205,7 +254,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
                   strokeWidth={2}
                   isFront={true}
                 />
-                <Legend wrapperStyle={{ top: -40, left: isMobile ? 10 : 80 }} />
+                <Legend wrapperStyle={{ top: -40, left: isMobile ? 10 : 80 }} content={<CustomLengend />} />
                 <Brush
                   dataKey="mes"
                   stroke="#FB3D03"
@@ -296,7 +345,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
                   strokeWidth={2}
                   isFront={true}
                 />
-                <Legend wrapperStyle={{ top: -40, left: isMobile ? 10 : 80 }} />
+                <Legend wrapperStyle={{ top: -40, left: isMobile ? 10 : 80 }} content={<CustomLengend />} />
               </ComposedChart>
             </ResponsiveContainer>
           </div>
@@ -369,7 +418,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
                   strokeWidth={2}
                   isFront={true}
                 />
-                <Legend wrapperStyle={{ top: -40, left: isMobile ? 10 : 80 }} />
+                <Legend wrapperStyle={{ top: -40, left: isMobile ? 10 : 80 }} content={<CustomLengend />} />
               </ComposedChart>
             </ResponsiveContainer>
           </div>
