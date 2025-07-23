@@ -114,7 +114,7 @@ const HomePage = () => {
             toma decisiones informadas y maximiza tu rentabilidad.
           </p>
           <div className="w-full flex flex-col md:flex-row gap-4 items-center justify-between max-w-2xl">
-            <Link className="w-full group bg-invertiria-2 border border-invertiria-2 py-2.5 px-5 rounded-[30px] flex justify-center items-center gap-2.5 hover:bg-white">
+            <Link to="/analysis/create" className="w-full group bg-invertiria-2 border border-invertiria-2 py-2.5 px-5 rounded-[30px] flex justify-center items-center gap-2.5 hover:bg-white">
               <span className="group-hover:text-invertiria-2 uppercase text-sm text-white">
                 Analiza tu Próxima Inversión
               </span>
