@@ -64,7 +64,7 @@ function AppRoutes() {
           <Route path="/" element={<HomePage />} />
           <Route path="/investment" element={<Investment />} />
           <Route path="/test" element={<Test />} />
-          <Route path="/analisis/:id" element={<Analisis />} />
+          <Route path="/analysis/:id" element={<Analisis />} />
           <Route path="/crear-modelacion" element={<CreateModelation />} />
           <Route path="/charts" element={<Analisis />} />
           <Route path="/inactive" element={<InactiveUserPage />} />
