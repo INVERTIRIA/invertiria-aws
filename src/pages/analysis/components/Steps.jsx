@@ -1764,7 +1764,7 @@ const TwentyOne = ({ form, ...props }) => {
   const fechaEntrega = form.watch("fecha_prevista_entrega");
   const estadoInmueble = form.watch("estado_inmueble");
 
-  const buttonRefs = useRef();
+  const buttonRefs = useRef({});
   const [openPopovers, setOpenPopovers] = useState({});
 
   const effectRan = useRef(false);
@@ -1783,12 +1783,6 @@ const TwentyOne = ({ form, ...props }) => {
     }
   }, [estadoInmueble]);
 
-  /* useEffect(() => {
-    if (buttonRef.current) {
-      setButtonWidth(buttonRef.current.offsetWidth);
-    }
-  }, []); */
-
   return (
     <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <FormField
@@ -1805,7 +1799,7 @@ const TwentyOne = ({ form, ...props }) => {
                 <FormControl>
                   <Button
                     ref={(el) => {
-                      if (el) buttonRefs.current.fecha_inicio_ventas = el;
+                      if (el) buttonRefs.current["fecha_inicio_ventas"] = el;
                     }}
                     variant={"outline"}
                     className={cn(
@@ -1825,7 +1819,7 @@ const TwentyOne = ({ form, ...props }) => {
               <PopoverContent
                 style={{
                   width:
-                    buttonRefs.current.fecha_inicio_ventas?.offsetWidth ||
+                    buttonRefs.current["fecha_inicio_ventas"]?.offsetWidth ||
                     "auto",
                 }}
                 className="p-0"
@@ -1865,7 +1859,7 @@ const TwentyOne = ({ form, ...props }) => {
                 <FormControl>
                   <Button
                     ref={(el) => {
-                      if (el) buttonRefs.current.fecha_prevista_entrega = el;
+                      if (el) buttonRefs.current["fecha_prevista_entrega"] = el;
                     }}
                     variant={"outline"}
                     className={cn(
@@ -1949,7 +1943,7 @@ const TwentyTwo = ({ form, ...props }) => {
                 <FormControl>
                   <Button
                     ref={(el) => {
-                      if (el) buttonRefs.current.fecha_compra = el;
+                      if (el) buttonRefs.current["fecha_compra"] = el;
                     }}
                     variant={"outline"}
                     className={cn(
@@ -1967,7 +1961,9 @@ const TwentyTwo = ({ form, ...props }) => {
                 </FormControl>
               </PopoverTrigger>
               <PopoverContent
-                style={{ width: buttonRefs.current.fecha_compra?.offsetWidth }}
+                style={{
+                  width: buttonRefs.current["fecha_compra"]?.offsetWidth,
+                }}
                 className="p-0"
                 align="start"
               >
@@ -2006,7 +2002,7 @@ const TwentyTwo = ({ form, ...props }) => {
                   <FormControl>
                     <Button
                       ref={(el) => {
-                        if (el) buttonRefs.current.fecha_prevista_venta = el;
+                        if (el) buttonRefs.current["fecha_prevista_venta"] = el;
                       }}
                       variant={"outline"}
                       className={cn(
@@ -2025,7 +2021,8 @@ const TwentyTwo = ({ form, ...props }) => {
                 </PopoverTrigger>
                 <PopoverContent
                   style={{
-                    width: buttonRefs.current.fecha_prevista_venta?.offsetWidth,
+                    width:
+                      buttonRefs.current["fecha_prevista_venta"]?.offsetWidth,
                   }}
                   className="p-0"
                   align="start"
