@@ -43,17 +43,17 @@ const Tips = ({ step }) => {
   }, [step]);
 
   return (
-    <div className="flex flex-col w-[25%]">
+    <div className="hidden lg:flex flex-col w-[25%]">
       <img
         src={tips[randomTip]?.img}
         alt=""
-        className="rounded-tl-2xl w-full h-[458px] object-cover"
+        className="rounded-tl-2xl w-full h-[388px] xl:h-[458px] object-cover"
         width={426}
         height={500}
       />
       <div className="bg-white w-full flex-1 rounded-bl-2xl ring-1 ring-gray-100 flex flex-col justify-center gap-2 p-4">
         <h2 className="font-semibold text-lg">{tips[randomTip]?.title}</h2>
-        <p className="text-sm text-gray-700">{tips[randomTip]?.description}</p>
+        <p className="text-xs text-gray-700">{tips[randomTip]?.description}</p>
       </div>
     </div>
   );

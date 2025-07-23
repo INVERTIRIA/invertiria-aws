@@ -75,7 +75,7 @@ function AppRoutes() {
           <Route path="/authorization" element={<AuthorizationPage />} />
           {/* Analysis */}
           <Route
-            path="/analysis"
+            path="/analysis/create"
             element={<AnalysisPage.CreateAnalysisPage />}
           />
           {/* User */}
