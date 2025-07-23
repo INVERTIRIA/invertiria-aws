@@ -1764,7 +1764,7 @@ const TwentyOne = ({ form, ...props }) => {
   const fechaEntrega = form.watch("fecha_prevista_entrega");
   const estadoInmueble = form.watch("estado_inmueble");
 
-  const buttonRefs = useRef();
+  const buttonRefs = useRef({});
   const [openPopovers, setOpenPopovers] = useState({});
 
   const effectRan = useRef(false);
@@ -1782,12 +1782,6 @@ const TwentyOne = ({ form, ...props }) => {
       effectRan.current = true;
     }
   }, [estadoInmueble]);
-
-  /* useEffect(() => {
-    if (buttonRef.current) {
-      setButtonWidth(buttonRef.current.offsetWidth);
-    }
-  }, []); */
 
   return (
     <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
