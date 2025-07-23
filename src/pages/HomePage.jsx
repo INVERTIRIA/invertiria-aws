@@ -8,31 +8,19 @@ const features = [
   {
     title: (
       <h2 className="sm:text-xl text-center">
-        Simulaciones rápidas y confiables
+        Años de experiencia en inversiones inmobiliarias
       </h2>
     ),
     svg: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="82"
-        height="81"
-        viewBox="0 0 82 81"
-        fill="none"
-      >
-        <path
-          d="M41 28.1465L9.58484 48.7177C6.86199 50.5007 5.50056 51.3922 5.02905 52.5227C4.61698 53.5107 4.61698 54.6242 5.02905 55.6122M41 28.1465L72.4152 48.7177C75.1381 50.5007 76.4995 51.3922 76.971 52.5227C77.3831 53.5107 77.3831 54.6242 76.971 55.6122M41 28.1465V2.22552M41 52.0735L9.58483 31.5023C6.86199 29.7193 5.50056 28.8278 5.02905 27.6973C4.61698 26.7093 4.61698 25.5958 5.02905 24.6078M41 52.0735L72.4152 31.5023C75.1381 29.7193 76.4995 28.8278 76.971 27.6973C77.3831 26.7093 77.3831 25.5958 76.971 24.6078M41 52.0735V77.9945M77.7032 55.9545L44.4518 77.7281C43.2024 78.5463 42.5777 78.9553 41.9046 79.1145C41.3096 79.2552 40.6904 79.2552 40.0955 79.1145C39.4224 78.9553 38.7977 78.5463 37.5483 77.7281L4.2969 55.9545C3.24392 55.265 2.71743 54.9203 2.33598 54.4604C1.99831 54.0533 1.74466 53.5825 1.58989 53.0754C1.41504 52.5026 1.41504 51.87 1.41504 50.6048V29.6152C1.41504 28.35 1.41504 27.7174 1.58989 27.1446C1.74466 26.6375 1.99831 26.1667 2.33598 25.7596C2.71743 25.2997 3.24392 24.955 4.2969 24.2655L37.5483 2.49186C38.7977 1.67374 39.4224 1.26467 40.0955 1.10551C40.6904 0.964828 41.3096 0.964828 41.9046 1.10551C42.5777 1.26467 43.2024 1.67374 44.4518 2.49186L77.7032 24.2655C78.7562 24.955 79.2827 25.2997 79.6641 25.7596C80.0018 26.1667 80.2554 26.6375 80.4102 27.1446C80.585 27.7174 80.585 28.35 80.585 29.6152V50.6048C80.585 51.87 80.585 52.5026 80.4102 53.0754C80.2554 53.5825 80.0018 54.0533 79.6641 54.4604C79.2827 54.9203 78.7562 55.265 77.7032 55.9545Z"
-          stroke="#D93F12"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+      <div className="h-[72px] flex justify-center items-center">
+        <span className="text-6xl font-semibold text-[#D93F12]">+15</span>
+      </div>
     ),
   },
   {
     title: (
       <h2 className="sm:text-xl text-center">
-        Análisis detallado <br /> al instante
+        Datos actualizados del mercado colombiano en tiempo real
       </h2>
     ),
     svg: (
@@ -63,7 +51,7 @@ const features = [
   {
     title: (
       <h2 className="sm:text-xl text-center">
-        Plataforma intuitiva <br /> y moderna
+        Metodología probada con casos reales de éxito
       </h2>
     ),
     svg: (
@@ -87,12 +75,12 @@ const features = [
   {
     title: (
       <h2 className="sm:text-xl text-center">
-        Rentabilidad <br /> Promedio
+        Análisis realizados exitosamente
       </h2>
     ),
     svg: (
       <div className="h-[72px] flex justify-center items-center">
-        <span className="text-6xl font-semibold text-[#D93F12]">+40%</span>
+        <span className="text-6xl font-semibold text-[#D93F12]">+500</span>
       </div>
     ),
   },
@@ -106,27 +94,31 @@ const HomePage = () => {
         className={"w-full flex gap-14 items-center my-20 xl:my-60 z-0"}
         classNameParent={"relative z-0"}
       >
-        <div className="lg:w-1/2 flex flex-col gap-10">
-          <h1 className="h1">Potencia tus Inversiones con</h1>
+        <div className="lg:w-1/2 flex flex-col gap-10 xl:-mt-25">
+          <h1 className="h1">Invierte en Bienes Raíces con Inteligencia Artificial</h1>
           <p className="sm:text-xl max-w-xl">
-            Con inteligencia artificial y análisis avanzados,{" "}
-            <br className="hidden sm:block" />
-            toma decisiones informadas y maximiza tu rentabilidad.
+            La plataforma que combina más de 17 años de experiencia inmobiliaria con algoritmos avanzados de IA para analizar, evaluar y optimizar tus inversiones en tiempo real.{" "}
+            {/* <br className="hidden sm:block" />
+            toma decisiones informadas y maximiza tu rentabilidad. */}
           </p>
           <div className="w-full flex flex-col md:flex-row gap-4 items-center justify-between max-w-2xl">
             <Link to="/analysis/create" className="w-full group bg-invertiria-2 border border-invertiria-2 py-2.5 px-5 rounded-[30px] flex justify-center items-center gap-2.5 hover:bg-white">
               <span className="group-hover:text-invertiria-2 uppercase text-sm text-white">
-                Analiza tu Próxima Inversión
+                Analizar mi Primera Inversión
               </span>
               <ArrowUpRightIcon
                 strokeWidth={1}
                 className="text-white size-6 group-hover:stroke-invertiria-2"
               />
             </Link>
-            <Link className="w-full border border-black py-3 px-5 rounded-[30px] flex justify-center items-center gap-2.5">
-              <span className="uppercase text-sm">
-                MIRA UNA INVERSION DE EJEMPLO
+            <Link className="w-full group bg-white border border-black py-2.5 px-5 rounded-[30px] flex justify-center items-center gap-2.5 hover:bg-invertiria-2 hover:border-invertiria-2">
+              <span className="group-hover:text-white uppercase text-sm">
+                Ver Demo Gratuito
               </span>
+              <ArrowUpRightIcon
+                strokeWidth={1}
+                className="text-black size-6 group-hover:stroke-white"
+              />
             </Link>
           </div>
         </div>
@@ -177,7 +169,7 @@ const HomePage = () => {
         >
           <div className="py-20 grid lg:grid-cols-2 gap-8 grid-cols-1">
             <div className="flex flex-col items-center justify-center text-center gap-10 bg-white/80 px-20 py-10 rounded-4xl">
-              <h2 className="h2">Redefiniendo el mundo inmobiliario</h2>
+              <h2 className="h2">Respaldado por Experiencia Real</h2>
               <p className="sm:text-xl max-w-2xl text-pretty">
                 Utilizamos tecnología avanzada para optimizar el mercado
                 inmobiliario y transformar tus decisiones financieras.
@@ -205,13 +197,12 @@ const HomePage = () => {
       >
         <div className="w-full flex flex-col items-center text-center gap-9">
           <h2 className="h2 !max-w-none">La nueva era de las inversiones</h2>
-          <p className="sm:text-3xl text-gray-700">
-            Reimaginamos las inversiones inmobiliarias con una visión fresca y
-            disruptiva.
+          <p className="sm:text-2xl text-gray-700">
+            Toma decisiones informadas con análisis financieros precisos, proyecciones de rentabilidad confiables y evaluaciones de riesgo personalizadas para tu perfil de inversionista.
           </p>
-          <p className="text-gray-600 sm:text-xl font-semibold">
-            Aquí no seguimos tendencias, las creamos.
-          </p>
+          {/* <p className="text-gray-600 sm:text-xl font-semibold">
+            Toma decisiones informadas con análisis financieros precisos, proyecciones de rentabilidad confiables y evaluaciones de riesgo personalizadas para tu perfil de inversionista.
+          </p> */}
         </div>
         <div className="flex flex-col md:flex-row items-center md:h-[400px] gap-8">
           <div className="w-full xl:w-80 h-full bg-zinc-100/50 border-4 border-orange-700/50 flex flex-col gap-4 rounded-4xl p-4">
@@ -220,22 +211,22 @@ const HomePage = () => {
               src="/assets/images/home/feature-1.png"
             />
             <h3 className="text-xl font-semibold max-w-3">
-              Proyecciones Inteligentes
+              Proyecciones Precisas
             </h3>
             <p className="text-sm">
-              Predice y optimiza resultados con IA y datos actualizados.
+              Visualiza flujos de caja detallados mes a mes y proyecciones de rentabilidad basadas en datos reales del mercado colombiano.
             </p>
           </div>
-          <div className="w-full xl:w-[459.07px] h-full bg-zinc-100/50 border-4 border-invertiria-2 flex flex-col gap-4 rounded-4xl p-4">
+          <div className="w-full xl:w-[400.07px] h-full bg-zinc-100/50 border-4 border-invertiria-2 flex flex-col gap-4 rounded-4xl p-4">
             <img
               className="w-full md:h-40 rounded-[30px]"
               src="/assets/images/home/feature-2.png"
             />
-            <h3 className="text-xl font-semibold">Toma de Decisiones Ágil</h3>
+            <h3 className="text-xl font-semibold">Análisis Inteligente</h3>
             <p className="text-sm">
-              Automatizamos procesos para invertir fácil y rápido.
+              Obtén TIR, ROI, VPN y otros indicadores clave calculados automáticamente con la precisión de un experto en segundos.
             </p>
-            <Link className="xl:w-fit group bg-invertiria-2 border border-invertiria-2 py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-white">
+            <Link to={"/analysis/create"} className="xl:w-fit group bg-invertiria-2 border border-invertiria-2 py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-white">
               <span className="group-hover:text-invertiria-2 uppercase text-sm text-white">
                 VER MÁS
               </span>
@@ -248,12 +239,21 @@ const HomePage = () => {
           <div className="w-full xl:w-80 h-full bg-zinc-100/50 border-4 border-orange-700/50 flex flex-col gap-4 rounded-4xl p-4">
             <img
               className="w-full h-40 rounded-[30px]"
+              src="/assets/images/home/feature-4.jpg"
+            />
+            <h3 className="text-xl font-semibold">Decisiones Rápidas</h3>
+            <p className="text-sm">
+              Compara múltiples opciones de inversión simultáneamente y identifica las mejores oportunidades para tu perfil.
+            </p>
+          </div>
+          <div className="w-full xl:w-80 h-full bg-zinc-100/50 border-4 border-orange-700/50 flex flex-col gap-4 rounded-4xl p-4">
+            <img
+              className="w-full h-40 rounded-[30px]"
               src="/assets/images/home/feature-3.png"
             />
-            <h3 className="text-xl font-semibold">Libre de Estafas</h3>
+            <h3 className="text-xl font-semibold">Gestión de Riesgos</h3>
             <p className="text-sm">
-              Te brindamos un entorno confiable para invertir, con herramientas
-              diseñadas para protegerte contra estafas y fraudes financieros.
+              Evalúa escenarios múltiples y factores de riesgo para cada tipo de inversión con análisis de sensibilidad.
             </p>
           </div>
         </div>
@@ -274,7 +274,7 @@ const HomePage = () => {
                 Invertir nunca{" "}
                 <span className="text-invertiria-2">fue tan Simple</span>
               </h2>
-              <Link className="w-full sm:w-1/2 lg:w-fit group bg-invertiria-2 border border-invertiria-2 py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-white">
+              <Link to={"/analysis/create"} className="w-full sm:w-1/2 lg:w-fit group bg-invertiria-2 border border-invertiria-2 py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-white">
                 <span className="group-hover:text-invertiria-2 uppercase text-sm text-white">
                   EMPIEZA AHORA
                 </span>
@@ -352,11 +352,10 @@ const HomePage = () => {
         <div className="md:px-10 xl:px-30 w-full grid lg:grid-cols-2 gap-10 md:gap-20 items-center">
           <div className="flex flex-col items-center md:items-start gap-8">
             <h2 className="h2 text-center max-w-none md:text-left lg:max-w-lg">
-              <span className="text-invertiria-2">Planes flexibles</span> para
-              cada tipo de Inversionista
+              <span className="text-invertiria-2">Elige el plan perfecto</span> para tu perfil de inversionista
             </h2>
             <p className="sm:text-2xl text-gray-700">
-              Elige el nivel ideal para ti
+              Todos los planes incluyen acceso completo a análisis de IA, proyecciones financieras y contenido educativo.
             </p>
             <Link className="w-full sm:w-1/2 lg:w-fit group bg-invertiria-2 border border-invertiria-2 py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-white">
               <span className="group-hover:text-invertiria-2 uppercase text-sm text-white">
@@ -375,7 +374,7 @@ const HomePage = () => {
                   Paquetes de tokens
                 </h4>
                 <p className="text-zinc-950 md:text-xl">
-                  compra un paquete de tokens a medida que lo necesites
+                  Compra un paquete de tokens a medida que lo necesites
                 </p>
               </div>
               <img
@@ -428,13 +427,13 @@ const HomePage = () => {
       >
         <div className="w-full px-8 xs:px-14 py-7 rounded-4xl flex items-center gap-4 bg-radial-[at_5%_90%] from-neutral-900 to-orange-700">
           <div className="w-full flex flex-col gap-8">
-            <h2 className="text-white h2 text-center max-w-none md:text-left lg:max-w-2xl">
-              Comienza a optimizar tus Inversiones hoy
+            <h2 className="text-white h2 text-center max-w-none md:text-left lg:max-w-3xl">
+              ¿Listo para tu primera inversión inteligente?
             </h2>
             <div className="flex flex-col md:flex-row items-center gap-4">
-              <Link className="w-full sm:w-1/2 lg:w-fit group bg-invertiria-2 border border-invertiria-2 py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-transparent">
+              <Link to="/analysis/create" className="w-full sm:w-1/2 lg:w-fit group bg-invertiria-2 border border-invertiria-2 py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-transparent">
                 <span className="group-hover:text-invertiria-2 uppercase text-sm text-white">
-                  PRUÉBALO GRATIS
+                  Comenzar Análisis Gratuito
                 </span>
                 <ArrowUpRightIcon
                   strokeWidth={1}
@@ -443,7 +442,7 @@ const HomePage = () => {
               </Link>
               <Link className="w-full sm:w-1/2 lg:w-fit group bg-transparent border border-white py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-invertiria-2 hover:border-invertiria-2">
                 <span className="uppercase text-sm text-white">
-                  CONSULTA CON UN EXPERTO
+                  Agendar Demo Personalizado
                 </span>
                 <ArrowUpRightIcon
                   strokeWidth={1}

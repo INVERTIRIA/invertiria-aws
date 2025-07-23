@@ -97,23 +97,23 @@ function Header() {
             <nav className="hidden lg:flex">
               <ul className="flex items-center gap-10 text-sm xl:text-base ">
                 <li>
-                  <Link className="text-black hover:text-invertiria-1">
-                    Personas
+                  <Link to={"/analysis/create"} className="text-black hover:text-invertiria-1">
+                    Crear análisis
                   </Link>
                 </li>
                 <li>
                   <Link className="text-black hover:text-invertiria-1">
-                    Compañías
+                    Quienes Somos
                   </Link>
                 </li>
                 <li>
                   <Link className="text-black hover:text-invertiria-1">
-                    Inversionistas
+                    Contacto
                   </Link>
                 </li>
                 <li>
                   <Link className="text-black hover:text-invertiria-1">
-                    Planes
+                    Precios
                   </Link>
                 </li>
               </ul>

@@ -42,7 +42,7 @@ const FaqAccordion = () => {
     {
       question: "¿Cómo se asegura la precisión?",
       answer:
-        "Nuestra calculadora utiliza algoritmos avanzados y datos actualizados para garantizar resultados precisos en cada cálculo.",
+        "Nuestro análisis utiliza algoritmos avanzados y datos actualizados para garantizar resultados precisos en cada cálculo.",
       bgColor: "bg-invertiria-2/50",
     },
     {
@@ -52,9 +52,9 @@ const FaqAccordion = () => {
       bgColor: "bg-invertiria-2/50",
     },
     {
-      question: "¿Puedo usar la calculadora sin registrarme?",
+      question: "¿Puedo crear un análisis sin registrarme?",
       answer:
-        "¡Sí! Nuestra calculadora está disponible sin necesidad de crear una cuenta. Queremos que explores su funcionalidad y veas el valor que aporta antes de decidir registrarte. Sin embargo, al registrarte obtendrás acceso a simulaciones más personalizadas y otras herramientas exclusivas.",
+        "¡Sí! Nuestro análsis está disponible sin necesidad de crear una cuenta. Queremos que explores su funcionalidad y veas el valor que aporta antes de decidir registrarte. Sin embargo, al registrarte obtendrás acceso a simulaciones más personalizadas y otras herramientas exclusivas.",
       bgColor: "bg-invertiria-2/50",
     },
   ];
