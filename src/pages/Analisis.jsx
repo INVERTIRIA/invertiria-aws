@@ -1,4 +1,4 @@
-import { Lightbulb, Info, Sparkles } from "lucide-react";
+import { Lightbulb, Info, Sparkles, Undo2 } from "lucide-react";
 import { Container } from "../components/design/Container";
 import { TiempoDeCompra } from "../components/charts/TiempoDeCompra";
 import { ValorDeCompra } from "../components/charts/ValorDeCompra";
@@ -17,7 +17,8 @@ import DashboardSkeleton from "../components/design/DashboardSkeleton";
 import { parsePrice } from "../constants/functions";
 import { useParams } from "react-router";
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router";
 
 const Analisis = () => {
   let { id } = useParams();
@@ -33,7 +34,6 @@ const Analisis = () => {
     const { data: modelation, error } = await supabase.from("modelaciones").select("*, ciudad:ciudades(nombre), pais:paises(nombre)").eq("id", id).single();
     if (error) console.log(error);
     setModelation(modelation);
-    console.log(modelation);
   };
 
   // Funcion obtener usuario
@@ -41,7 +41,6 @@ const Analisis = () => {
     const { data: user, error } = await supabase.from("usuarios").select().eq("id", modelation?.usuario_id).single();
     if (error) console.log(error);
     setUser(user);
-    console.log(user);
   };
 
   // Funcion obtener vectores temporales
@@ -49,7 +48,6 @@ const Analisis = () => {
     const { data: timeVectors, error } = await supabase.from("vectores_temporales").select().eq("modelacion_id", id).single();
     if (error) console.log(error);
     setTimeVectors(timeVectors);
-    console.log(timeVectors);
   };
 
   // Funcion obtener flujos resultado
@@ -57,7 +55,6 @@ const Analisis = () => {
     const { data: flowsResult, error } = await supabase.from("flujos_resultado").select().eq("modelacion_id", id).single();
     if (error) console.log(error);
     setFlowsResult(flowsResult);
-    console.log(flowsResult);
   };
 
   // Funcion obtener analisis de las graficas
@@ -65,7 +62,6 @@ const Analisis = () => {
     const { data: analysis, error } = await supabase.from("analisis_modelacion_ia").select().eq("modelacion_id", id).single();
     if (error) console.log(error);
     setAnalysis(analysis);
-    console.log(analysis);
   };
 
   // Funcion obtener varianza subzona
@@ -177,11 +173,17 @@ const Analisis = () => {
   const endeudamiento = timeVectors?.pagos_credito?.[0]?.[2];
 
   return (
-    <Container classNameParent={"my-20"} className="flex flex-col gap-20">
+    <Container classNameParent={"-my-15"} className="flex flex-col gap-20">
 
       {/* Informacion del analisis en popup */}
       <Dialog>
-        <div className="flex justify-end">
+        <div className="flex justify-between">
+          <Button variant="full_ghost" className="font-normal text-gray-600">
+            <Link to="/" className="flex items-center gap-2">
+              <Undo2 />
+              <span>Volver</span>
+            </Link>
+          </Button>
           <DialogTrigger asChild>
             <Button variant="full_ghost" className="font-normal text-gray-600">
               Información del análisis
@@ -253,7 +255,7 @@ const Analisis = () => {
       </Dialog>
 
       {/* Titulo */}
-      <div className="w-full flex flex-col items-center text-center gap-9 -mt-10">
+      <div className="w-full flex flex-col items-center text-center gap-9">
         <h2 className="h2 !max-w-none">Análisis de inversión</h2>
       </div>
       <h2 className="-mt-20 text-center text-2xl font-bold text-gray-500">
