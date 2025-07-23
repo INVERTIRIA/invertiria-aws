@@ -33,23 +33,19 @@ const CarouselReviews = ({ reviews = [] }) => {
                 <div className="flex items-center gap-2 justify-between">
                   <div className="flex flex-col items-start gap-1">
                     <p className="text-invertiria-2 md:text-xl">
-                      Libardo Valera
+                      María González
                     </p>
                     <span className="text-white text-xs font-light">
-                      Developer
+                      Inversionista en Bogotá 
                     </span>
                   </div>
                   <img
-                    className="w-14 h-14 rounded-[100px] outline-[5px] outline-Coquelicot-28%/30"
-                    src="https://placehold.co/60x60"
+                    className="w-14 h-14 rounded-[100px]"
+                    src="/assets/svg/user_not_found.svg"
                   />
                 </div>
                 <p className="text-justify font-light text-white">
-                  La plataforma me permitió diversificar mis inversiones como
-                  nunca antes. Me brindó información específica para explorar
-                  nuevas oportunidades, disminuyendo riesgos y maximizando mis
-                  retornos. Esta herramienta se ha convertido en una parte
-                  esencial de mi estrategia empresarial.
+                  "InverTIRía me permitió analizar mi primera inversión inmobiliaria con la confianza de tener todos los números claros. La TIR proyectada se cumplió exactamente como la plataforma lo calculó."
                 </p>
               </div>
             </div>
