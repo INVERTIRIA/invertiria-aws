@@ -21,15 +21,18 @@ function TiempoDeVenta({ timeVectors, flowsResult }) {
   // Obtener data
   const data = timeVectors?.valor_inmueble.map((item, index) => {
     let tir_mensual = 0;
+    let tir_anualizada = 0;
     for (let i = 0; i < flowsResult?.tir_mensual.length; i++) {
       if (flowsResult.tir_mensual[i][0] == index) {
         tir_mensual = flowsResult.tir_mensual[i][2];
+        tir_anualizada = flowsResult.tir_anualizada[i][2];
       }
     }
     return {
       mes: item[1],
       "Precio del inmueble": item[2],
       "TIR mensual": tir_mensual,
+      "TIR anualizada": tir_anualizada
     };
   });
 
@@ -90,7 +93,7 @@ function TiempoDeVenta({ timeVectors, flowsResult }) {
               if (name === "Precio del inmueble") {
                 return parsePrice(value);
               }
-              if (name === "TIR mensual") {
+              if (name === "TIR mensual" || name === "TIR anualizada") {
                 return value + "%";
               }
             }}
@@ -109,6 +112,15 @@ function TiempoDeVenta({ timeVectors, flowsResult }) {
             dataKey="TIR mensual"
             strokeWidth={1.5}
             stroke="#000000"
+            connectNulls
+            dot={false}
+            type="monotone"
+          />
+          <Line
+            yAxisId="right"
+            dataKey="TIR anualizada"
+            strokeWidth={1.5}
+            stroke="#16a300"
             connectNulls
             dot={false}
             type="monotone"
