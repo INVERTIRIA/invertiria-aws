@@ -75,7 +75,7 @@ function AppRoutes() {
           <Route path="/authorization" element={<AuthorizationPage />} />
           {/* Analysis */}
           <Route
-            path="/analysis"
+            path="/analysis/create"
             element={<AnalysisPage.CreateAnalysisPage />}
           />
           {/* User */}
@@ -149,6 +149,10 @@ function AppRoutes() {
               <Route
                 path="investors/:id"
                 element={<InternalAdvisorPages.InvestorDetailsPage />}
+              />
+              <Route
+                path="investors/:id/analysis"
+                element={<InternalAdvisorPages.InvestorAnalysisPage />}
               />
             </Route>
           </Route>

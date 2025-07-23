@@ -30,7 +30,7 @@ const InvestorDetailsPage = () => {
     const { error, data } = await supabase
       .from("asesorados")
       .select("id, usuario:usuario_id(*)")
-      .eq("id", id)
+      .eq("usuario_id", id)
       .single();
 
     if (error) {
