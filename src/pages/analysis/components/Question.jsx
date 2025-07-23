@@ -93,8 +93,8 @@ const questions = [
     description: "Información detalles del proyecto.",
   },
   {
-    title: "Fecha de venta",
-    description: "Ingrese la fecha prevista de venta.",
+    title: "Detalles de las fechas",
+    description: "Ingrese los detalles de las fechas.",
   },
   {
     title: "Etapa del proyecto",
