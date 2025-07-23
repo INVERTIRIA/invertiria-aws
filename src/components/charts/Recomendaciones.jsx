@@ -10,15 +10,18 @@ import {
   XAxis,
   YAxis,
   ReferenceLine,
+  ReferenceArea,
 } from "recharts";
 import { parsePrice } from "../../constants/functions";
 import { useState } from "react";
+import { useIsMobile } from "../../hooks/use-mobile";
 
 const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
 
+  const isMobile = useIsMobile();
+
   // Obtener data roi
   let mayorRoi = 0;
-  let mesMayorRoi = '';
   const dataROI = timeVectors?.valor_inmueble.map((item, index) => {
     let roi = 0;
     for (let i = 0; i < flowsResult?.roi.length; i++) {
@@ -28,7 +31,6 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
       // Maximo roi
       if (flowsResult.roi[i][2] > mayorRoi) {
         mayorRoi = flowsResult.roi[i][2];
-        mesMayorRoi = flowsResult.roi[i][1];
       }
     }
     let roi_anualizado = 0;
@@ -105,9 +107,79 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
     }, 200);
   };
 
+  // Obtener zonas de mayor tir y utilidad
+  let zonaMayorTir = mejoresTresMesesSeguidos(flowsResult.tir_mensual);
+  let zonaMayorUtilidad = mejoresTresMesesSeguidos(flowsResult.utilidad);
+
+  // Funcion para obtener zonas de 3 meses
+  function mejoresTresMesesSeguidos(datos) {
+    datos = datos.map((item) => ({ index: item[0], mes: item[1], dato: item[2] }));
+    if (datos.length < 3) return [];
+    let maxSuma = -Infinity;
+    let mejorSecuencia = [];
+    for (let i = 0; i <= datos.length - 3; i++) {
+      const grupo = datos.slice(i, i + 3);
+      const suma = grupo.reduce((sum, item) => sum + item.dato, 0);
+      if (suma > maxSuma) {
+        maxSuma = suma;
+        mejorSecuencia = grupo;
+      }
+    }
+    return mejorSecuencia;
+  }
+
+  function CustomLengend() {
+    return (
+      <ul className="recharts-default-legend p-0 m-0 text-center">
+        <li className="inline-block mr-2.5">
+          <svg className="inline-block align-middle mr-1" width="14" height="14" viewBox="0 0 32 32" fill="none">
+            <path
+              strokeWidth="4"
+              stroke="#000000"
+              fill="none"
+              d="M0,16h10.666666666666666
+           A5.333333333333333,5.333333333333333,0,1,1,21.333333333333332,16
+           H32M21.333333333333332,16
+           A5.333333333333333,5.333333333333333,0,1,1,10.666666666666666,16"
+              className="recharts-legend-icon"
+            />
+          </svg>
+          <span className="text-black">TIR mensual</span>
+        </li>
+        <li className="inline-block mr-2.5">
+          <svg className="inline-block align-middle mr-1" width="14" height="14" viewBox="0 0 32 32" fill="none">
+            <path
+              strokeWidth="4"
+              stroke="#FB3D03"
+              fill="none"
+              d="M0,16h10.666666666666666
+           A5.333333333333333,5.333333333333333,0,1,1,21.333333333333332,16
+           H32M21.333333333333332,16
+           A5.333333333333333,5.333333333333333,0,1,1,10.666666666666666,16"
+              className="recharts-legend-icon"
+            />
+          </svg>
+          <span className="text-[#FB3D03]">TIR Anualizada</span>
+        </li>
+        <li className="inline-block mr-2.5">
+          <svg className="inline-block align-middle mr-1" width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <rect width="14" height="14" fill="green" fillOpacity={0.3} className="recharts-legend-icon" />
+          </svg>
+          <span className="text-[rgba(0,128,0,0.8)]">Zona mayor TIR</span>
+        </li>
+        <li className="inline-block mr-2.5">
+          <svg className="inline-block align-middle mr-1" width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <rect width="14" height="14" fill="DodgerBlue" fillOpacity={0.3} className="recharts-legend-icon" />
+          </svg>
+          <span className="text-[rgba(30,144,255,0.8)]">Zona mayor Utilidad</span>
+        </li>
+      </ul>
+    )
+  }
+
   return (
     <div className="w-full flex flex-col md:flex-row gap-12">
-      <div className="flex flex-col gap-4 w-[70%]">
+      <div className="flex flex-col gap-4 w-[70%] max-sm:w-full">
         <div className="flex flex-col gap-20">
           <h2 className="text-2xl font-bold text-gray-500">
             Suma de ROI Anualizado y Suma de ROI por Mes
@@ -119,7 +191,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
               <ComposedChart
                 syncId="syncId2"
                 data={dataROI}
-                margin={{ top: 10, right: 60 }}
+                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 0, bottom: 0 }}
               >
                 <CartesianGrid className="opacity-50" vertical={false} />
                 <XAxis
@@ -131,14 +203,17 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
                 <YAxis
                   tickFormatter={(value) => value + "%"}
                   tickLine={false}
+                  tick={!isMobile}
                   axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
                 >
-                  <Label
-                    value="Porcentaje (%)"
-                    style={{ textAnchor: "middle" }}
-                    position="insideLeft"
-                    angle="-90"
-                  />
+                  {!isMobile && (
+                    <Label
+                      value="Porcentaje (%)"
+                      style={{ textAnchor: "middle" }}
+                      position="insideLeft"
+                      angle="-90"
+                    />
+                  )}
                 </YAxis>
                 <Tooltip
                   formatter={(value, name) => value + "%"}
@@ -159,12 +234,19 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
                   dot={false}
                   type="monotone"
                 />
-                <ReferenceLine x={mesMayorRoi}
-                  label={{ value: 'Mayor ROI', style: { fill: 'black' }, angle: -90, position: 'center' }}
-                  stroke="#FB3D03"
-                  strokeWidth={20}
-                  isFront={true}
-                  style={{ opacity: 0.95 }}
+                <ReferenceArea
+                  x1={zonaMayorTir[0].mes}
+                  x2={zonaMayorTir[2].mes}
+                  strokeOpacity={0}
+                  fill="green"
+                  fillOpacity={0.3}
+                />
+                <ReferenceArea
+                  x1={zonaMayorUtilidad[0].mes}
+                  x2={zonaMayorUtilidad[2].mes}
+                  strokeOpacity={0}
+                  fill="DodgerBlue"
+                  fillOpacity={0.3}
                 />
                 <ReferenceLine x={fechaVenta}
                   label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
@@ -172,13 +254,14 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
                   strokeWidth={2}
                   isFront={true}
                 />
-                <Legend wrapperStyle={{ top: -40 }} />
+                <Legend wrapperStyle={{ top: -40, left: isMobile ? 10 : 80 }} content={<CustomLengend />} />
                 <Brush
                   dataKey="mes"
                   stroke="#FB3D03"
                   startIndex={startIndexBrush}
                   endIndex={endIndexBrush}
                   height={30}
+                  tickFormatter={(value) => isMobile ? "" : value}
                   className="custom-brush"
                   onChange={handleBrushOnchange}
                 />
@@ -194,7 +277,10 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
             <ResponsiveContainer
               className={" flex aspect-video justify-center text-xs"}
             >
-              <ComposedChart data={dataTIR.slice(startIndexBrush, endIndexBrush + 1)} syncId="syncId2" margin={{ top: 10, right: 60 }}>
+              <ComposedChart data={dataTIR.slice(startIndexBrush, endIndexBrush + 1)}
+                syncId="syncId2"
+                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 0, bottom: 0 }}
+              >
                 <CartesianGrid
                   className="opacity-50"
                   vertical={false}
@@ -208,14 +294,17 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
                 <YAxis
                   tickFormatter={(value) => value + "%"}
                   tickLine={false}
+                  tick={!isMobile}
                   axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
                 >
-                  <Label
-                    value="Porcentaje (%)"
-                    style={{ textAnchor: "middle" }}
-                    position="insideLeft"
-                    angle="-90"
-                  />
+                  {!isMobile && (
+                    <Label
+                      value="Porcentaje (%)"
+                      style={{ textAnchor: "middle" }}
+                      position="insideLeft"
+                      angle="-90"
+                    />
+                  )}
                 </YAxis>
                 <Tooltip
                   formatter={(value, name) => value + "%"}
@@ -236,12 +325,19 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
                   dot={false}
                   type="monotone"
                 />
-                <ReferenceLine x={mesMayorTir}
-                  label={{ value: 'Mayor TIR', style: { fill: 'black' }, angle: -90, position: 'center' }}
-                  stroke="orange"
-                  strokeWidth={20}
-                  isFront={true}
-                  style={{ opacity: 0.95 }}
+                <ReferenceArea
+                  x1={zonaMayorTir[0].mes}
+                  x2={zonaMayorTir[2].mes}
+                  strokeOpacity={0}
+                  fill="green"
+                  fillOpacity={0.3}
+                />
+                <ReferenceArea
+                  x1={zonaMayorUtilidad[0].mes}
+                  x2={zonaMayorUtilidad[2].mes}
+                  strokeOpacity={0}
+                  fill="DodgerBlue"
+                  fillOpacity={0.3}
                 />
                 <ReferenceLine x={fechaVenta}
                   label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
@@ -249,7 +345,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
                   strokeWidth={2}
                   isFront={true}
                 />
-                <Legend wrapperStyle={{ top: -40 }} />
+                <Legend wrapperStyle={{ top: -40, left: isMobile ? 10 : 80 }} content={<CustomLengend />} />
               </ComposedChart>
             </ResponsiveContainer>
           </div>
@@ -264,7 +360,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
             >
               <ComposedChart
                 data={dataUtilidad.slice(startIndexBrush, endIndexBrush + 1)}
-                margin={{ top: 10, right: 60, left: 80, bottom: 0 }}
+                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 0, bottom: 0 }}
                 syncId="syncId2"
               >
                 <CartesianGrid className="opacity-50" vertical={false} />
@@ -278,15 +374,18 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
                   domain={["dataMin", "auto"]}
                   tickFormatter={(value) => parsePrice(value)}
                   tickLine={false}
+                  tick={!isMobile}
                   axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
                 >
-                  <Label
-                    value="Promedio utilidad"
-                    offset={-60}
-                    style={{ textAnchor: "middle" }}
-                    position="insideLeft"
-                    angle="-90"
-                  />
+                  {!isMobile && (
+                    <Label
+                      value="Promedio utilidad"
+                      offset={-60}
+                      style={{ textAnchor: "middle" }}
+                      position="insideLeft"
+                      angle="-90"
+                    />
+                  )}
                 </YAxis>
                 <Tooltip
                   formatter={(value, name) => parsePrice(value)}
@@ -299,12 +398,19 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
                   dot={false}
                   type="monotone"
                 />
-                <ReferenceLine x={mesMayorUtilidad}
-                  label={{ value: 'Mayor utilidad', style: { fill: 'black' }, angle: -90, position: 'center' }}
-                  stroke="#fcc705"
-                  strokeWidth={20}
-                  isFront={true}
-                  style={{ opacity: 0.95 }}
+                <ReferenceArea
+                  x1={zonaMayorTir[0].mes}
+                  x2={zonaMayorTir[2].mes}
+                  strokeOpacity={0}
+                  fill="green"
+                  fillOpacity={0.3}
+                />
+                <ReferenceArea
+                  x1={zonaMayorUtilidad[0].mes}
+                  x2={zonaMayorUtilidad[2].mes}
+                  strokeOpacity={0}
+                  fill="DodgerBlue"
+                  fillOpacity={0.3}
                 />
                 <ReferenceLine x={fechaVenta}
                   label={{ value: 'Venta', style: { fill: 'black' }, angle: -90, position: 'insideLeft', offset: -10 }}
@@ -312,7 +418,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
                   strokeWidth={2}
                   isFront={true}
                 />
-                <Legend wrapperStyle={{ top: -40 }} />
+                <Legend wrapperStyle={{ top: -40, left: isMobile ? 10 : 80 }} content={<CustomLengend />} />
               </ComposedChart>
             </ResponsiveContainer>
           </div>

@@ -170,6 +170,7 @@ const Analisis = () => {
   // Apalancamiento
   const cuota_inicial = modelation?.cuota_inicial || 0;
   const apalancamiento = Math.round(modelation.precio_de_compra / (modelation.precio_de_compra * cuota_inicial / 100));
+  const credito_hipotecario = Math.round(modelation.precio_de_compra - (modelation.precio_de_compra * cuota_inicial / 100))
 
   // Capacidad de endeudamiento
   const maxEndeudamiento = (user?.ingresos_mensuales - user?.gastos_mensuales) * 0.4;
@@ -253,17 +254,60 @@ const Analisis = () => {
 
       {/* Titulo */}
       <div className="w-full flex flex-col items-center text-center gap-9 -mt-10">
-        <h2 className="h2 !max-w-none max-sm:text-4xl">Análisis de inversión</h2>
+        <h2 className="h2 !max-w-none">Análisis de inversión</h2>
       </div>
       <h2 className="-mt-20 text-center text-2xl font-bold text-gray-500">
         {modelation.titulo_modelacion}
       </h2>
 
       {/* Titulo grafica */}
-      <h1 className="lg:text-4xl text-2xl font-bold">Tiempos del proyecto</h1>
-      <h2 className="-mt-20 lg:text-2xl text-xl font-bold text-gray-500">Linea de tiempo</h2>
+      <h1 className="lg:text-4xl text-3xl font-bold">Tiempos del proyecto</h1>
+      <h2 className="-mt-20 text-2xl font-bold text-gray-500">Linea de tiempo</h2>
 
       <LineaDeTiempo modelation={modelation} />
+
+      {/* Analisis */}
+      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
+        <p className="z-10 text-gray-800 text-sm font-medium leading-6">
+          {analysis.tiempos_del_proyecto.analisis_grafica[language]}
+        </p>
+        <div className="ml-auto flex gap-2 items-center">
+          <Sparkles size={16} className="text-invertiria-2" />
+          <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
+        </div>
+      </div>
+      {/* Conclusión */}
+      <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+        <div className="flex items-center gap-4">
+          <img
+            src="/assets/images/juan-ia.jpeg"
+            alt="Foto de Juan Londoño"
+            className="w-14 h-14 object-cover rounded-full border-2 border-white"
+          />
+          <div>
+            <p className="text-white text-base font-semibold">Juan Londoño</p>
+            <p className="text-white text-xs opacity-70">Asesor financiero</p>
+          </div>
+        </div>
+        <p className="text-white text-sm leading-relaxed">
+          {analysis.tiempos_del_proyecto.conclusion[language]}
+        </p>
+        {/* Consejo */}
+        <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+          <div className="flex items-center gap-2">
+            <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+            <span className="text-gray-800 font-semibold text-sm">Consejo</span>
+          </div>
+          <p className="text-sm text-gray-800 leading-relaxed">
+            {analysis.tiempos_del_proyecto.consejo[language]}
+          </p>
+        </div>
+        <div className="flex items-center gap-2 self-end mt-2">
+          <Sparkles size={16} className="text-white" />
+          <p className="text-xs text-white font-medium">Generado por IA</p>
+        </div>
+      </div>
+      <br />
 
       {/* Titulo */}
       <div className="w-full flex flex-col items-center text-center gap-9">
@@ -271,10 +315,10 @@ const Analisis = () => {
       </div>
 
       {/* Titulo grafica */}
-      <h1 className="text-4xl font-bold">Valor de compra</h1>
+      <h1 className="lg:text-4xl text-3xl font-bold">Valor de compra</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Precio de m²</h2>
 
-      <div className="flex xl:flex-row flex-col items-center xl:gap-30 gap-10">
+      <div className="flex xl:flex-row flex-col items-center xl:gap-30 gap-10 -mt-8">
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
@@ -315,7 +359,7 @@ const Analisis = () => {
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+      <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
@@ -350,7 +394,7 @@ const Analisis = () => {
       <div className="w-full h-0.5 bg-invertiria-2/35" />
 
       {/* Titulo grafica */}
-      <h1 className="text-4xl font-bold">Tiempo de compra</h1>
+      <h1 className="lg:text-4xl text-3xl font-bold">Tiempo de compra</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">
         Precio del inmueble
       </h2>
@@ -371,7 +415,7 @@ const Analisis = () => {
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+      <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
@@ -406,9 +450,9 @@ const Analisis = () => {
       <div className="w-full h-0.5 bg-invertiria-2/35" />
 
       {/* Titulo grafica */}
-      <h1 className="text-4xl font-bold">Recomendaciones</h1>
+      <h1 className="lg:text-4xl text-3xl font-bold">Recomendaciones</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">
-        Dinamica de valorización
+        Dinámica de valorización
       </h2>
 
       <div className="flex xl:flex-row flex-col items-center gap-10">
@@ -427,7 +471,7 @@ const Analisis = () => {
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+      <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
@@ -465,7 +509,7 @@ const Analisis = () => {
       </div>
 
       {/* Titulo grafica */}
-      <h1 className="text-4xl font-bold">Valor de venta</h1>
+      <h1 className="lg:text-4xl text-3xl font-bold">Valor de venta</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">
         Precio del inmueble
       </h2>
@@ -489,7 +533,7 @@ const Analisis = () => {
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+      <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
@@ -524,7 +568,7 @@ const Analisis = () => {
       <div className="w-full h-0.5 bg-invertiria-2/35" />
 
       {/* Titulo grafica */}
-      <h1 className="text-4xl font-bold">Tiempo de venta</h1>
+      <h1 className="lg:text-4xl text-3xl font-bold">Tiempo de venta</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">
         Valorización del inmueble
       </h2>
@@ -545,7 +589,7 @@ const Analisis = () => {
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+      <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
@@ -580,7 +624,7 @@ const Analisis = () => {
       <div className="w-full h-0.5 bg-invertiria-2/35" />
 
       {/* Titulo grafica */}
-      <h1 className="text-4xl font-bold">Indicadores de rentabilidad</h1>
+      <h1 className="lg:text-4xl text-3xl font-bold">Indicadores de rentabilidad</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">
         En tiempo de venta
       </h2>
@@ -590,7 +634,7 @@ const Analisis = () => {
         <div className="flex flex-col gap-10">
           <div className="flex items-center xl:gap-5 gap-0">
             {/* TIR */}
-            <div className="justify-items-center">
+            <div className="justify-items-center ml-3 -mr-3">
               <h3 className="text-lg font-bold">{mesVentaTir}%</h3>
               <IndicadorDeRentabilidad value={mesVentaTir} max={maxTir} min={minTir} />
               <h1 className="text-2xl font-bold">TIR</h1>
@@ -604,7 +648,7 @@ const Analisis = () => {
           </div>
           <div className="flex items-center xl:gap-5 gap-0">
             {/* ROI */}
-            <div className="justify-items-center">
+            <div className="justify-items-center ml-3 -mr-3">
               <h3 className="text-lg font-bold">{mesVentaRoi}%</h3>
               <IndicadorDeRentabilidad value={mesVentaRoi} max={maxRoi} min={minRoi} />
               <h1 className="text-2xl font-bold">ROI</h1>
@@ -630,7 +674,7 @@ const Analisis = () => {
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+      <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
@@ -667,16 +711,17 @@ const Analisis = () => {
       </div>
 
       {/* Titulo grafica */}
-      <h1 className="text-4xl font-bold">Apalancamiento</h1>
+      <h1 className="lg:text-4xl text-3xl font-bold">Apalancamiento</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Viabilidad</h2>
 
       {/* Grafica */}
-      <div className="flex xl:flex-row flex-col xl:gap-60 gap-10">
+      <div className="flex flex-col xl:flex-row items-center xl:gap-60 gap-10">
         {/* Apalancamiento */}
         <div className="justify-items-center">
           <h3 className="text-lg font-bold">{apalancamiento} veces tu capital</h3>
           <IndicadorDeRentabilidad value={apalancamiento} max={10} min={0} />
-          <h1 className="text-2xl font-bold">Apalancamiento</h1>
+          <h1 className="text-2xl font-bold mb-8">Apalancamiento</h1>
+          <h3 className="text-lg font-bold text-center">Crédito hipotecario {parsePrice(credito_hipotecario)}</h3>
         </div>
 
         {/* Analisis */}
@@ -691,7 +736,7 @@ const Analisis = () => {
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+      <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
@@ -726,7 +771,7 @@ const Analisis = () => {
       <div className="w-full h-0.5 bg-invertiria-2/35" />
 
       {/* Titulo grafica */}
-      <h1 className="text-4xl font-bold">Costo financiero</h1>
+      <h1 className="lg:text-4xl text-3xl font-bold">Costo financiero</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Pago mensual</h2>
 
       {/* Grafica */}
@@ -750,7 +795,7 @@ const Analisis = () => {
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+      <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
@@ -785,14 +830,14 @@ const Analisis = () => {
       <div className="w-full h-0.5 bg-invertiria-2/35" />
 
       {/* Titulo grafica */}
-      <h1 className="text-4xl font-bold">Capacidad de endeudamiento</h1>
+      <h1 className="lg:text-4xl text-3xl font-bold">Capacidad de endeudamiento</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Según perfil</h2>
 
       <div className="flex xl:flex-row flex-col items-center xl:gap-40 gap-10 xl:pl-30">
         {/* Grafica */}
-        <div className="">
+        <div className="-mt-20 xl:-mt-10">
           <Endeudamiento price={endeudamiento} minPrice={0} maxPrice={maxEndeudamiento} />
-          <h3 className="text-lg font-bold text-center">Capacidad de endeudamiento de {parsePrice(maxEndeudamiento)}</h3>
+          <h3 className="text-lg -mt-5 font-bold text-center">Capacidad de endeudamiento de {parsePrice(maxEndeudamiento)}</h3>
         </div>
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
@@ -806,7 +851,7 @@ const Analisis = () => {
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+      <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
@@ -843,7 +888,7 @@ const Analisis = () => {
       </div>
 
       {/* Titulo grafica */}
-      <h1 className="text-4xl font-bold">Flujo de caja mensual</h1>
+      <h1 className="lg:text-4xl text-3xl font-bold">Flujo de caja mensual</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">En mes de venta</h2>
 
       <div className="flex xl:flex-row flex-col items-center gap-10">
@@ -862,7 +907,7 @@ const Analisis = () => {
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+      <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
@@ -899,7 +944,7 @@ const Analisis = () => {
       </div>
 
       {/* Titulo grafica */}
-      <h1 className="text-4xl font-bold">Indicadores de rentabilidad</h1>
+      <h1 className="lg:text-4xl text-3xl font-bold">Indicadores de rentabilidad</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">KPIs</h2>
 
       {/* Grafica */}
@@ -916,7 +961,7 @@ const Analisis = () => {
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+      <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
@@ -953,7 +998,7 @@ const Analisis = () => {
       </div>
 
       {/* Titulo grafica */}
-      <h1 className="text-4xl font-bold">Recomendación</h1>
+      <h1 className="lg:text-4xl text-3xl font-bold">Recomendación</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">Tiempo de venta</h2>
 
       {/* Grafica */}
@@ -970,7 +1015,7 @@ const Analisis = () => {
         </div>
       </div>
       {/* Conclusión */}
-      <div className="w-full flex flex-col gap-6 p-6 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+      <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
           <img
             src="/assets/images/juan-ia.jpeg"
