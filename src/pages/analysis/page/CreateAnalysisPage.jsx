@@ -47,7 +47,7 @@ const CreateAnalysisPage = () => {
             }
           >
             {step === null ? (
-              <div className="w-full h-full flex items-center justify-center flex-col gap-8 text-center">
+              <div className="w-full h-full flex items-center justify-center flex-col gap-8 text-center p-6">
                 <div className="flex flex-col gap-2">
                   <h2 className="font-bold text-4xl">
                     ¡Comencemos tu análisis de inversión!
