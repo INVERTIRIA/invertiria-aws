@@ -644,12 +644,12 @@ const Nine = ({ form, ...props }) => {
   }, [vigencia]);
 
   return (
-    <div className="flex flex-col items-center gap-10 md:gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="precio_de_mercado"
         control={form.control}
         render={({ field }) => (
-          <FormItem className="w-md">
+          <FormItem className="w-full md:w-md">
             <FormControl>
               <StepInput
                 {...field}
@@ -682,12 +682,12 @@ const Ten = ({ form, ...props }) => {
   }, [estadoInmueble]);
 
   return (
-    <div className="flex flex-col items-center gap-10 md:gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="separacion"
         control={form.control}
         render={({ field }) => (
-          <FormItem className="w-md">
+          <FormItem className="w-full md:w-md">
             <FormControl>
               <StepInput
                 {...field}
@@ -720,15 +720,15 @@ const Eleven = ({ form, ...props }) => {
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                className="grid md:grid-cols-3 gap-x-5 lg:gap-x-20"
+                className="grid sm:grid-cols-3 gap-x-5 lg:gap-x-20"
               >
                 <FormItem>
                   <RadioGroupItem
                     value={1}
                     id="cuota1"
-                    className="flex items-center justify-center py-6 px-10"
+                    className="flex items-center justify-center py-6 !px-6"
                   >
-                    <PagosConstantes className="text-invertiria-2" />
+                    <PagosConstantes className="text-invertiria-2 size-11" />
                     <p className="text-sm font-medium max-w-32">
                       Pagos constantes mensuales
                     </p>
@@ -738,11 +738,11 @@ const Eleven = ({ form, ...props }) => {
                   <RadioGroupItem
                     value={2}
                     id="cuota2"
-                    className="flex items-center justify-center py-6 px-10"
+                    className="flex items-center justify-center py-6 !px-6"
                   >
-                    <PagosPersonalizados2 className="text-invertiria-2" />
+                    <PagosPersonalizados2 className="text-invertiria-2 size-11" />
                     <p className="text-sm font-medium max-w-44">
-                      Pagos constantes y Pagos personalizados
+                      Pagos constantes y personalizados
                     </p>
                   </RadioGroupItem>
                 </FormItem>
@@ -750,10 +750,9 @@ const Eleven = ({ form, ...props }) => {
                   <RadioGroupItem
                     value={3}
                     id="cuota3"
-                    className="flex items-center justify-center py-6 px-10"
+                    className="flex items-center justify-center py-6 !px-6"
                   >
-                    <PagosPersonalizados className="text-invertiria-2" />
-
+                    <PagosPersonalizados className="text-invertiria-2 size-11" />
                     <p className="text-sm font-medium max-w-32">
                       Pagos personalizados
                     </p>
@@ -776,9 +775,7 @@ const Twelve = ({ form, ...props }) => {
   const formaPago = form.watch("forma_pago_cuota_inicial");
 
   const [openPopovers, setOpenPopovers] = useState({});
-  const [buttonWidth, setButtonWidth] = useState(0);
-
-  const buttonRef = useRef(null);
+  const buttonRefs = useRef({});
   const effectRan = useRef(false);
 
   const togglePopover = (name) => {
@@ -795,19 +792,13 @@ const Twelve = ({ form, ...props }) => {
     }
   }, [formaPago]);
 
-  useEffect(() => {
-    if (buttonRef.current) {
-      setButtonWidth(buttonRef.current.offsetWidth);
-    }
-  }, []);
-
   return (
-    <div className="flex flex-col items-center gap-10 md:gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="cuota_inicial"
         control={form.control}
         render={({ field }) => (
-          <FormItem className="w-md">
+          <FormItem className="w-full md:w-md">
             <FormControl>
               <StepInput
                 {...field}
@@ -836,7 +827,7 @@ const Twelve = ({ form, ...props }) => {
         control={form.control}
         name="inicial_fecha_inicio_pago"
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="w-full md:w-md">
             <FormLabel>Fecha inicio couta inicial</FormLabel>
             <Popover
               open={!!openPopovers["inicial_fecha_inicio_pago"]}
@@ -845,10 +836,13 @@ const Twelve = ({ form, ...props }) => {
               <PopoverTrigger asChild>
                 <FormControl>
                   <Button
-                    ref={buttonRef}
+                    ref={(el) => {
+                      if (el)
+                        buttonRefs.current["inicial_fecha_inicio_pago"] = el;
+                    }}
                     variant={"outline"}
                     className={cn(
-                      "w-md pl-3 text-left font-normal text-base md:text-sm",
+                      "pl-3 text-left font-normal text-base md:text-sm",
                       !field.value && "text-muted-foreground"
                     )}
                   >
@@ -862,12 +856,16 @@ const Twelve = ({ form, ...props }) => {
                 </FormControl>
               </PopoverTrigger>
               <PopoverContent
-                style={{ width: buttonWidth }}
+                style={{
+                  width:
+                    buttonRefs.current["inicial_fecha_inicio_pago"]
+                      ?.offsetWidth || "auto",
+                }}
                 className="p-0"
                 align="start"
               >
                 <Calendar
-                  style={{ width: buttonWidth }}
+                  className="!w-full"
                   mode="single"
                   selected={field.value ? parseISO(field.value) : undefined}
                   //onSelect={field.onChange}
@@ -879,9 +877,6 @@ const Twelve = ({ form, ...props }) => {
 
                     togglePopover("inicial_fecha_inicio_pago");
                   }}
-                  /* disabled={(date) =>
-                    date > new Date() || date < new Date("1900-01-01")
-                  } */
                   locale={es}
                   initialFocus
                 />
@@ -894,7 +889,7 @@ const Twelve = ({ form, ...props }) => {
         control={form.control}
         name="inicial_fecha_fin_pago"
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="w-full md:w-md">
             <FormLabel>Fecha fin couta inicial</FormLabel>
             <Popover
               open={!!openPopovers["inicial_fecha_fin_pago"]}
@@ -903,10 +898,12 @@ const Twelve = ({ form, ...props }) => {
               <PopoverTrigger asChild>
                 <FormControl>
                   <Button
-                    ref={buttonRef}
+                    ref={(el) => {
+                      if (el) buttonRefs.current["inicial_fecha_fin_pago"] = el;
+                    }}
                     variant={"outline"}
                     className={cn(
-                      "w-md pl-3 text-left font-normal text-base md:text-sm",
+                      "pl-3 text-left font-normal text-base md:text-sm",
                       !field.value && "text-muted-foreground"
                     )}
                   >
@@ -920,15 +917,18 @@ const Twelve = ({ form, ...props }) => {
                 </FormControl>
               </PopoverTrigger>
               <PopoverContent
-                style={{ width: buttonWidth }}
+                style={{
+                  width:
+                    buttonRefs.current["inicial_fecha_fin_pago"]?.offsetWidth ||
+                    "auto",
+                }}
                 className="p-0"
                 align="start"
               >
                 <Calendar
-                  style={{ width: buttonWidth }}
+                  className="!w-full"
                   mode="single"
                   selected={field.value ? parseISO(field.value) : undefined}
-                  //onSelect={field.onChange}
                   onSelect={(date) => {
                     const formattedDate = date
                       ? format(date, "yyyy-MM-dd")
@@ -937,9 +937,6 @@ const Twelve = ({ form, ...props }) => {
 
                     togglePopover("inicial_fecha_fin_pago");
                   }}
-                  /* disabled={(date) =>
-                    date > new Date() || date < new Date("1900-01-01")
-                  } */
                   locale={es}
                   initialFocus
                 />
@@ -1034,12 +1031,12 @@ const ThirTeen = ({ form, ...props }) => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center gap-10 md:gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="pagos_personalizados"
         control={form.control}
         render={({ field }) => (
-          <FormItem className="w-md">
+          <FormItem className="w-full md:w-md">
             <FormControl>
               <StepInput
                 {...field}
@@ -1060,11 +1057,11 @@ const ThirTeen = ({ form, ...props }) => {
           </FormItem>
         )}
       />
-      <div className="flex flex-col items-center gap-4">
+      <div className="w-full lg:w-[85%] xl:w-2/3 flex flex-col items-center gap-6">
         {/* Fecha - Pagos */}
-        <div className="flex items-end gap-6">
+        <div className="w-full flex flex-col sm:flex-row items-end gap-6">
           {/* Fecha del pago personalizado */}
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-1 !w-full">
             <p className="text-sm font-medium">Fecha del pago personalizados</p>
             <Popover
               open={!!openPopovers["fecha_pago"]}
@@ -1075,7 +1072,7 @@ const ThirTeen = ({ form, ...props }) => {
                   ref={buttonRef}
                   variant={"outline"}
                   className={cn(
-                    "w-xs pl-3 text-left font-normal text-base md:text-sm",
+                    "pl-3 text-left font-normal text-base md:text-sm",
                     !fecha && "text-muted-foreground"
                   )}
                 >
@@ -1113,11 +1110,11 @@ const ThirTeen = ({ form, ...props }) => {
             </Popover>
           </div>
           {/* Valor del pago */}
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-1 !w-full">
             <p className="text-sm font-medium">Valor del pago</p>
             <Input
               placeholder="Ingresa el valor del pago"
-              className="bg-white w-xs"
+              className="bg-white"
               value={pagos ? parsePrice(pagos) : ""}
               onChange={(e) => {
                 const raw = unformatCurrency(e.target.value);
@@ -1128,6 +1125,7 @@ const ThirTeen = ({ form, ...props }) => {
             />
           </div>
           <Button
+            className="w-full sm:w-auto"
             type="button"
             onClick={handlerAddToList}
             disabled={
@@ -1142,11 +1140,11 @@ const ThirTeen = ({ form, ...props }) => {
           <ul className="flex flex-col gap-2">
             {valoresPagos.map((item, index) => (
               <li
-                className="py-3 px-3 rounded-md bg-gray-100 text-sm flex items-center gap-2 justify-between"
+                className="py-3 px-3 rounded-md bg-gray-100 text-sm flex items-center gap-3 justify-between"
                 key={index}
               >
                 <div className="flex items-center gap-3">
-                  <div className="flex items-center justify-center p-2 bg-black rounded-sm">
+                  <div className="hidden 2xs:flex items-center justify-center p-2 bg-black rounded-sm">
                     <span className="text-xs font-semibold leading-none text-white">
                       {index + 1}
                     </span>
@@ -1159,7 +1157,7 @@ const ThirTeen = ({ form, ...props }) => {
                   </span>
                   <Separator
                     orientation="vertical"
-                    className="!bg-gray-300 !h-8 mx-3"
+                    className="!bg-gray-300 !h-8"
                   />
                   <span className="text-xs font-semibold">
                     Valor: <br />
@@ -1228,15 +1226,15 @@ const FourTeen = ({ form, ...props }) => {
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                className="grid grid-cols-2 gap-x-20"
+                className="grid grid-cols-2 gap-x-5 xs:gap-x-20"
               >
                 <FormItem>
                   <RadioGroupItem
                     value={true}
                     id="yes"
-                    className="flex items-center justify-center py-6 px-14"
+                    className="flex items-center justify-center !py-5 !px-10"
                   >
-                    <Like className="text-invertiria-2" />
+                    <Like className="text-invertiria-2 size-11" />
                     <p className="text-sm font-medium">Si</p>
                   </RadioGroupItem>
                 </FormItem>
@@ -1244,9 +1242,9 @@ const FourTeen = ({ form, ...props }) => {
                   <RadioGroupItem
                     value={false}
                     id="not"
-                    className="flex items-center justify-center py-6 px-14"
+                    className="flex items-center justify-center !py-5 !px-10"
                   >
-                    <Deslike className="text-invertiria-2" />
+                    <Deslike className="text-invertiria-2 size-11" />
                     <p className="text-sm font-medium">No</p>
                   </RadioGroupItem>
                 </FormItem>
@@ -1267,10 +1265,9 @@ const FifTeen = ({ form, ...props }) => {
   const creditoHipotecario = form.watch("credito_hipotecario");
 
   const [openPopovers, setOpenPopovers] = useState({});
-  const [buttonWidth, setButtonWidth] = useState(0);
-
-  const buttonRef = useRef(null);
+  const buttonRefs = useRef({});
   const effectRan = useRef(false);
+  //const [buttonWidth, setButtonWidth] = useState(0);
 
   const togglePopover = (name) => {
     setOpenPopovers((prev) => ({
@@ -1286,19 +1283,19 @@ const FifTeen = ({ form, ...props }) => {
     }
   }, [creditoHipotecario]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (buttonRef.current) {
       setButtonWidth(buttonRef.current.offsetWidth);
     }
-  }, []);
+  }, []); */
 
   return (
-    <div className="flex flex-col items-center gap-10 md:gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="tasa_de_interes"
         control={form.control}
         render={({ field }) => (
-          <FormItem className="w-md">
+          <FormItem className="w-full md:w-md">
             <FormControl>
               <StepInput
                 {...field}
@@ -1327,7 +1324,7 @@ const FifTeen = ({ form, ...props }) => {
         control={form.control}
         name="credito_fecha_inicio_pago"
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="w-full md:w-md">
             <FormLabel>Fecha inicio de pago</FormLabel>
             <Popover
               open={!!openPopovers["credito_fecha_inicio_pago"]}
@@ -1336,10 +1333,13 @@ const FifTeen = ({ form, ...props }) => {
               <PopoverTrigger asChild>
                 <FormControl>
                   <Button
-                    ref={buttonRef}
+                    ref={(el) => {
+                      if (el)
+                        buttonRefs.current["credito_fecha_inicio_pago"] = el;
+                    }}
                     variant={"outline"}
                     className={cn(
-                      "w-md pl-3 text-left font-normal text-base md:text-sm",
+                      "pl-3 text-left font-normal text-base md:text-sm",
                       !field.value && "text-muted-foreground"
                     )}
                   >
@@ -1353,12 +1353,16 @@ const FifTeen = ({ form, ...props }) => {
                 </FormControl>
               </PopoverTrigger>
               <PopoverContent
-                style={{ width: buttonWidth }}
+                style={{
+                  width:
+                    buttonRefs.current["credito_fecha_inicio_pago"]
+                      ?.offsetWidth,
+                }}
                 className="p-0"
                 align="start"
               >
                 <Calendar
-                  style={{ width: buttonWidth }}
+                  className="!w-full"
                   mode="single"
                   selected={field.value ? parseISO(field.value) : undefined}
                   //onSelect={field.onChange}
@@ -1370,9 +1374,6 @@ const FifTeen = ({ form, ...props }) => {
 
                     togglePopover("credito_fecha_inicio_pago");
                   }}
-                  /* disabled={(date) =>
-                    date > new Date() || date < new Date("1900-01-01")
-                  } */
                   locale={es}
                   initialFocus
                 />
@@ -1385,7 +1386,7 @@ const FifTeen = ({ form, ...props }) => {
         control={form.control}
         name="credito_fecha_fin_pago"
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="w-full md:w-md">
             <FormLabel>Fecha fin de pago</FormLabel>
             <Popover
               open={!!openPopovers["credito_fecha_fin_pago"]}
@@ -1394,10 +1395,12 @@ const FifTeen = ({ form, ...props }) => {
               <PopoverTrigger asChild>
                 <FormControl>
                   <Button
-                    ref={buttonRef}
+                    ref={(el) => {
+                      if (el) buttonRefs.current["credito_fecha_fin_pago"] = el;
+                    }}
                     variant={"outline"}
                     className={cn(
-                      "w-md pl-3 text-left font-normal text-base md:text-sm",
+                      "pl-3 text-left font-normal text-base md:text-sm",
                       !field.value && "text-muted-foreground"
                     )}
                   >
@@ -1411,12 +1414,15 @@ const FifTeen = ({ form, ...props }) => {
                 </FormControl>
               </PopoverTrigger>
               <PopoverContent
-                style={{ width: buttonWidth }}
+                style={{
+                  width:
+                    buttonRefs.current["credito_fecha_fin_pago"]?.offsetWidth,
+                }}
                 className="p-0"
                 align="start"
               >
                 <Calendar
-                  style={{ width: buttonWidth }}
+                  className="!w-full"
                   mode="single"
                   selected={field.value ? parseISO(field.value) : undefined}
                   //onSelect={field.onChange}
@@ -1522,12 +1528,12 @@ const SevenTeen = ({ form, ...props }) => {
   }, [tipoInmueble]);
 
   return (
-    <div className="flex flex-col items-center gap-10 md:gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="area_inmueble"
         control={form.control}
         render={({ field }) => (
-          <FormItem className="w-md">
+          <FormItem className="w-full md:w-md">
             <FormControl>
               <StepInput
                 {...field}
@@ -1583,18 +1589,23 @@ const EighTeen = ({ form, ...props }) => {
   }, [tipoInmueble]);
 
   return (
-    <div className="flex flex-col items-center gap-10 md:gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="parqueaderos"
         control={form.control}
         render={({ field }) => (
-          <FormItem className="w-md">
+          <FormItem className="w-full md:w-md">
             <FormControl>
               <StepInput
                 {...field}
                 placeholder="Ingrese el número de parqueaderos."
                 type={"number"}
                 onChange={(e) => {
+                  if (e.target.value === "") {
+                    field.onChange("");
+                    return;
+                  }
+
                   let value = parseInt(e.target.value);
                   field.onChange(value);
                 }}
@@ -1603,12 +1614,7 @@ const EighTeen = ({ form, ...props }) => {
           </FormItem>
         )}
       />
-      <ButtonNext
-        {...props}
-        disabled={
-          value < 0 || value === null || value === undefined || isNaN(value)
-        }
-      />
+      <ButtonNext {...props} disabled={isNaN(value) || value === ""} />
     </div>
   );
 };
@@ -1653,15 +1659,15 @@ const NineTeen = ({ form, ...props }) => {
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                className="grid grid-cols-2 gap-x-20"
+                className="grid grid-cols-2 gap-x-5 xs:gap-x-20"
               >
                 <FormItem>
                   <RadioGroupItem
                     value={true}
                     id="yes"
-                    className="flex items-center justify-center py-6 px-14"
+                    className="flex items-center justify-center !py-5 !px-10"
                   >
-                    <Like className="text-invertiria-2" />
+                    <Like className="text-invertiria-2 size-11" />
                     <p className="text-sm font-medium">Si</p>
                   </RadioGroupItem>
                 </FormItem>
@@ -1669,9 +1675,9 @@ const NineTeen = ({ form, ...props }) => {
                   <RadioGroupItem
                     value={false}
                     id="not"
-                    className="flex items-center justify-center py-6 px-14"
+                    className="flex items-center justify-center !py-5 !px-10"
                   >
-                    <Deslike className="text-invertiria-2" />
+                    <Deslike className="text-invertiria-2 size-11" />
                     <p className="text-sm font-medium">No</p>
                   </RadioGroupItem>
                 </FormItem>
@@ -1721,15 +1727,15 @@ const Twenty = ({ form, ...props }) => {
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                className="grid grid-cols-2 gap-x-20"
+                className="grid grid-cols-2 gap-x-5 xs:gap-x-20"
               >
                 <FormItem>
                   <RadioGroupItem
                     value={true}
                     id="yes"
-                    className="flex items-center justify-center py-6 px-14"
+                    className="flex items-center justify-center !py-5 !px-10"
                   >
-                    <Like className="text-invertiria-2" />
+                    <Like className="text-invertiria-2 size-11" />
                     <p className="text-sm font-medium">Si</p>
                   </RadioGroupItem>
                 </FormItem>
@@ -1737,9 +1743,9 @@ const Twenty = ({ form, ...props }) => {
                   <RadioGroupItem
                     value={false}
                     id="not"
-                    className="flex items-center justify-center py-6 px-14"
+                    className="flex items-center justify-center !py-5 !px-10"
                   >
-                    <Deslike className="text-invertiria-2" />
+                    <Deslike className="text-invertiria-2 size-11" />
                     <p className="text-sm font-medium">No</p>
                   </RadioGroupItem>
                 </FormItem>
@@ -1758,10 +1764,9 @@ const TwentyOne = ({ form, ...props }) => {
   const fechaEntrega = form.watch("fecha_prevista_entrega");
   const estadoInmueble = form.watch("estado_inmueble");
 
+  const buttonRefs = useRef();
   const [openPopovers, setOpenPopovers] = useState({});
-  const [buttonWidth, setButtonWidth] = useState(0);
 
-  const buttonRef = useRef(null);
   const effectRan = useRef(false);
 
   const togglePopover = (name) => {
@@ -1778,19 +1783,19 @@ const TwentyOne = ({ form, ...props }) => {
     }
   }, [estadoInmueble]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (buttonRef.current) {
       setButtonWidth(buttonRef.current.offsetWidth);
     }
-  }, []);
+  }, []); */
 
   return (
-    <div className="flex flex-col items-center gap-10 md:gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <FormField
         control={form.control}
         name="fecha_inicio_ventas"
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="w-full md:w-md">
             <FormLabel>Fecha inicio ventas del proyecto</FormLabel>
             <Popover
               open={!!openPopovers["fecha_inicio_ventas"]}
@@ -1799,10 +1804,12 @@ const TwentyOne = ({ form, ...props }) => {
               <PopoverTrigger asChild>
                 <FormControl>
                   <Button
-                    ref={buttonRef}
+                    ref={(el) => {
+                      if (el) buttonRefs.current.fecha_inicio_ventas = el;
+                    }}
                     variant={"outline"}
                     className={cn(
-                      "w-md pl-3 text-left font-normal text-base md:text-sm",
+                      "pl-3 text-left font-normal text-base md:text-sm",
                       !field.value && "text-muted-foreground"
                     )}
                   >
@@ -1816,12 +1823,16 @@ const TwentyOne = ({ form, ...props }) => {
                 </FormControl>
               </PopoverTrigger>
               <PopoverContent
-                style={{ width: buttonWidth }}
+                style={{
+                  width:
+                    buttonRefs.current.fecha_inicio_ventas?.offsetWidth ||
+                    "auto",
+                }}
                 className="p-0"
                 align="start"
               >
                 <Calendar
-                  style={{ width: buttonWidth }}
+                  className="!w-full"
                   mode="single"
                   selected={field.value ? parseISO(field.value) : undefined}
                   onSelect={(date) => {
@@ -1844,7 +1855,7 @@ const TwentyOne = ({ form, ...props }) => {
         control={form.control}
         name="fecha_prevista_entrega"
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="w-full md:w-md">
             <FormLabel>Fecha entrega del inmueble</FormLabel>
             <Popover
               open={!!openPopovers["fecha_prevista_entrega"]}
@@ -1853,10 +1864,12 @@ const TwentyOne = ({ form, ...props }) => {
               <PopoverTrigger asChild>
                 <FormControl>
                   <Button
-                    ref={buttonRef}
+                    ref={(el) => {
+                      if (el) buttonRefs.current.fecha_prevista_entrega = el;
+                    }}
                     variant={"outline"}
                     className={cn(
-                      "w-md pl-3 text-left font-normal text-base md:text-sm",
+                      "pl-3 text-left font-normal text-base md:text-sm",
                       !field.value && "text-muted-foreground"
                     )}
                   >
@@ -1870,12 +1883,16 @@ const TwentyOne = ({ form, ...props }) => {
                 </FormControl>
               </PopoverTrigger>
               <PopoverContent
-                style={{ width: buttonWidth }}
+                style={{
+                  width:
+                    buttonRefs.current["fecha_prevista_entrega"]?.offsetWidth ||
+                    "auto",
+                }}
                 className="p-0"
                 align="start"
               >
                 <Calendar
-                  style={{ width: buttonWidth }}
+                  className="!w-full"
                   mode="single"
                   selected={field.value ? parseISO(field.value) : undefined}
                   //onSelect={field.onChange}
@@ -1907,9 +1924,7 @@ const TwentyTwo = ({ form, ...props }) => {
   const vigencia = form.watch("vigencia");
 
   const [openPopovers, setOpenPopovers] = useState({});
-  const [buttonWidth, setButtonWidth] = useState(0);
-
-  const buttonRef = useRef(null);
+  const buttonRefs = useRef({});
 
   const togglePopover = (name) => {
     setOpenPopovers((prev) => ({
@@ -1918,26 +1933,13 @@ const TwentyTwo = ({ form, ...props }) => {
     }));
   };
 
-  /* useEffect(() => {
-    if (!effectRan.current && !vigencia) {
-      props.setStep(23);
-      effectRan.current = true;
-    }
-  }, [vigencia]); */
-
-  useEffect(() => {
-    if (buttonRef.current) {
-      setButtonWidth(buttonRef.current.offsetWidth);
-    }
-  }, []);
-
   return (
-    <div className="flex flex-col items-center gap-10 md:gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <FormField
         control={form.control}
         name="fecha_compra"
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="w-full md:w-md">
             <FormLabel>Fecha de compra</FormLabel>
             <Popover
               open={!!openPopovers["fecha_compra"]}
@@ -1946,10 +1948,12 @@ const TwentyTwo = ({ form, ...props }) => {
               <PopoverTrigger asChild>
                 <FormControl>
                   <Button
-                    ref={buttonRef}
+                    ref={(el) => {
+                      if (el) buttonRefs.current.fecha_compra = el;
+                    }}
                     variant={"outline"}
                     className={cn(
-                      "w-md pl-3 text-left font-normal text-base md:text-sm",
+                      "pl-3 text-left font-normal text-base md:text-sm",
                       !field.value && "text-muted-foreground"
                     )}
                   >
@@ -1963,12 +1967,12 @@ const TwentyTwo = ({ form, ...props }) => {
                 </FormControl>
               </PopoverTrigger>
               <PopoverContent
-                style={{ width: buttonWidth }}
+                style={{ width: buttonRefs.current.fecha_compra?.offsetWidth }}
                 className="p-0"
                 align="start"
               >
                 <Calendar
-                  style={{ width: buttonWidth }}
+                  className="!w-full"
                   mode="single"
                   selected={field.value ? parseISO(field.value) : undefined}
                   onSelect={(date) => {
@@ -1992,7 +1996,7 @@ const TwentyTwo = ({ form, ...props }) => {
           control={form.control}
           name="fecha_prevista_venta"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="w-full md:w-md">
               <FormLabel>Fecha prevista venta</FormLabel>
               <Popover
                 open={!!openPopovers["fecha_prevista_venta"]}
@@ -2001,10 +2005,12 @@ const TwentyTwo = ({ form, ...props }) => {
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
-                      ref={buttonRef}
+                      ref={(el) => {
+                        if (el) buttonRefs.current.fecha_prevista_venta = el;
+                      }}
                       variant={"outline"}
                       className={cn(
-                        "w-md pl-3 text-left font-normal text-base md:text-sm",
+                        "pl-3 text-left font-normal text-base md:text-sm",
                         !field.value && "text-muted-foreground"
                       )}
                     >
@@ -2018,12 +2024,14 @@ const TwentyTwo = ({ form, ...props }) => {
                   </FormControl>
                 </PopoverTrigger>
                 <PopoverContent
-                  style={{ width: buttonWidth }}
+                  style={{
+                    width: buttonRefs.current.fecha_prevista_venta?.offsetWidth,
+                  }}
                   className="p-0"
                   align="start"
                 >
                   <Calendar
-                    style={{ width: buttonWidth }}
+                    className="!w-full"
                     mode="single"
                     selected={field.value ? parseISO(field.value) : undefined}
                     onSelect={(date) => {
@@ -2066,12 +2074,12 @@ const TwentyThree = ({ form, ...props }) => {
   }, [estadoInmueble]);
 
   return (
-    <div className="flex flex-col items-center gap-10 md:gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="etapa_proyecto"
         control={form.control}
         render={({ field }) => (
-          <FormItem className="w-md">
+          <FormItem className="w-full md:w-md">
             <FormControl>
               <StepInput
                 {...field}
@@ -2098,7 +2106,7 @@ const TwentyFour = ({ form, ...props }) => {
   }, [comisionVendedor]);
 
   return (
-    <div className="flex flex-col items-center gap-10 md:gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="comision_vendedor"
         control={form.control}
@@ -2108,15 +2116,15 @@ const TwentyFour = ({ form, ...props }) => {
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                className="grid grid-cols-2 gap-x-20"
+                className="grid grid-cols-2 gap-x-5 xs:gap-x-20"
               >
                 <FormItem>
                   <RadioGroupItem
                     value={true}
                     id="yes"
-                    className="flex items-center justify-center py-6 px-14"
+                    className="flex items-center justify-center !py-5 !px-10"
                   >
-                    <Like className="text-invertiria-2" />
+                    <Like className="text-invertiria-2 size-11" />
                     <p className="text-sm font-medium">Si</p>
                   </RadioGroupItem>
                 </FormItem>
@@ -2124,9 +2132,9 @@ const TwentyFour = ({ form, ...props }) => {
                   <RadioGroupItem
                     value={false}
                     id="not"
-                    className="flex items-center justify-center py-6 px-14"
+                    className="flex items-center justify-center !py-5 !px-10"
                   >
-                    <Deslike className="text-invertiria-2" />
+                    <Deslike className="text-invertiria-2 size-11" />
                     <p className="text-sm font-medium">No</p>
                   </RadioGroupItem>
                 </FormItem>
@@ -2140,7 +2148,7 @@ const TwentyFour = ({ form, ...props }) => {
           name="porcentaje_comision_vendedor"
           control={form.control}
           render={({ field }) => (
-            <FormItem className="w-md">
+            <FormItem className="w-full md:w-md">
               <FormControl>
                 <StepInput
                   {...field}
@@ -2209,7 +2217,7 @@ const TwentyFive = ({ form, ...props }) => {
   }, [administracion]);
 
   return (
-    <div className="flex flex-col items-center gap-10 md:gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="administracion"
         control={form.control}
@@ -2219,15 +2227,15 @@ const TwentyFive = ({ form, ...props }) => {
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                className="grid grid-cols-2 gap-x-20"
+                className="grid grid-cols-2 gap-x-5 xs:gap-x-20"
               >
                 <FormItem>
                   <RadioGroupItem
                     value={true}
                     id="yes"
-                    className="flex items-center justify-center py-6 px-14"
+                    className="flex items-center justify-center !py-5 !px-10"
                   >
-                    <Like className="text-invertiria-2" />
+                    <Like className="text-invertiria-2 size-11" />
                     <p className="text-sm font-medium">Si</p>
                   </RadioGroupItem>
                 </FormItem>
@@ -2235,9 +2243,9 @@ const TwentyFive = ({ form, ...props }) => {
                   <RadioGroupItem
                     value={false}
                     id="not"
-                    className="flex items-center justify-center py-6 px-14"
+                    className="flex items-center justify-center !py-5 !px-10"
                   >
-                    <Deslike className="text-invertiria-2" />
+                    <Deslike className="text-invertiria-2 size-11" />
                     <p className="text-sm font-medium">No</p>
                   </RadioGroupItem>
                 </FormItem>
@@ -2251,7 +2259,7 @@ const TwentyFive = ({ form, ...props }) => {
           name="valor_administracion"
           control={form.control}
           render={({ field }) => (
-            <FormItem className="w-md">
+            <FormItem className="w-full md:w-md">
               <FormControl>
                 <StepInput
                   {...field}
@@ -2289,12 +2297,12 @@ const TwentySix = ({ form, ...props }) => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center gap-10 md:gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="valor_predial"
         control={form.control}
         render={({ field }) => (
-          <FormItem className="w-md">
+          <FormItem className="w-full md:w-md">
             <FormControl>
               <StepInput
                 {...field}
@@ -2341,7 +2349,7 @@ const TwentySeven = ({ form, ...props }) => {
   }, [mejora]);
 
   return (
-    <div className="flex flex-col items-center gap-10 md:gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="mejoras"
         control={form.control}
@@ -2351,15 +2359,15 @@ const TwentySeven = ({ form, ...props }) => {
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                className="grid grid-cols-2 gap-x-20"
+                className="grid grid-cols-2 gap-x-5 xs:gap-x-20"
               >
                 <FormItem>
                   <RadioGroupItem
                     value={true}
                     id="yes"
-                    className="flex items-center justify-center py-6 px-14"
+                    className="flex items-center justify-center !py-5 !px-10"
                   >
-                    <Like className="text-invertiria-2" />
+                    <Like className="text-invertiria-2 size-11" />
                     <p className="text-sm font-medium">Si</p>
                   </RadioGroupItem>
                 </FormItem>
@@ -2367,9 +2375,9 @@ const TwentySeven = ({ form, ...props }) => {
                   <RadioGroupItem
                     value={false}
                     id="not"
-                    className="flex items-center justify-center py-6 px-14"
+                    className="flex items-center justify-center !py-5 !px-10"
                   >
-                    <Deslike className="text-invertiria-2" />
+                    <Deslike className="text-invertiria-2 size-11" />
                     <p className="text-sm font-medium">No</p>
                   </RadioGroupItem>
                 </FormItem>
@@ -2383,7 +2391,7 @@ const TwentySeven = ({ form, ...props }) => {
           name="valor_mejoras"
           control={form.control}
           render={({ field }) => (
-            <FormItem className="w-md">
+            <FormItem className="w-full md:w-md">
               <FormControl>
                 <StepInput
                   {...field}
@@ -2450,7 +2458,7 @@ const TwentyEight = ({ form, ...props }) => {
   }, [licencia]);
 
   return (
-    <div className="flex flex-col items-center gap-10 md:gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="licencia_construccion"
         control={form.control}
@@ -2460,15 +2468,15 @@ const TwentyEight = ({ form, ...props }) => {
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                className="grid grid-cols-2 gap-x-20"
+                className="grid grid-cols-2 gap-x-5 xs:gap-x-20"
               >
                 <FormItem>
                   <RadioGroupItem
                     value={true}
                     id="yes"
-                    className="flex items-center justify-center py-6 px-14"
+                    className="flex items-center justify-center !py-5 !px-10"
                   >
-                    <Like className="text-invertiria-2" />
+                    <Like className="text-invertiria-2 size-11" />
                     <p className="text-sm font-medium">Si</p>
                   </RadioGroupItem>
                 </FormItem>
@@ -2476,9 +2484,9 @@ const TwentyEight = ({ form, ...props }) => {
                   <RadioGroupItem
                     value={false}
                     id="not"
-                    className="flex items-center justify-center py-6 px-14"
+                    className="flex items-center justify-center !py-5 !px-10"
                   >
-                    <Deslike className="text-invertiria-2" />
+                    <Deslike className="text-invertiria-2 size-11" />
                     <p className="text-sm font-medium">No</p>
                   </RadioGroupItem>
                 </FormItem>
@@ -2492,7 +2500,7 @@ const TwentyEight = ({ form, ...props }) => {
           name="costos_licencias"
           control={form.control}
           render={({ field }) => (
-            <FormItem className="w-md">
+            <FormItem className="w-full md:w-md">
               <FormControl>
                 <StepInput
                   {...field}
@@ -2584,12 +2592,12 @@ const TwentyNine = ({ form, analysisInstance, ...props }) => {
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                className={`grid grid-cols-${options.length} gap-x-10 `}
+                className={`grid grid-cols-${options.length} gap-x-5 xs:gap-x-10 `}
               >
                 {options.map(({ id, value, icon: Icon }) => (
                   <FormItem key={id}>
                     <RadioGroupItem value={value} id={id}>
-                      <Icon className="text-invertiria-2" />
+                      <Icon className="text-invertiria-2 size-11" />
                       <p className="mt-2 text-sm font-medium">
                         {textOptions[value]}
                       </p>
@@ -2601,7 +2609,10 @@ const TwentyNine = ({ form, analysisInstance, ...props }) => {
           </FormItem>
         )}
       />
-      <ButtonNext {...props} disabled={!value} />
+      <ButtonNext
+        {...props}
+        disabled={value < 0 || value === "" || value === undefined}
+      />
     </div>
   );
 };
@@ -2634,12 +2645,12 @@ const Thirty = ({ form, ...props }) => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center gap-10 md:gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="canon_de_arrendamiento"
         control={form.control}
         render={({ field }) => (
-          <FormItem className="w-md">
+          <FormItem className="w-full md:w-md">
             <FormControl>
               <StepInput
                 {...field}
@@ -2673,12 +2684,12 @@ const ThirtyOne = ({ form, ...props }) => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center gap-10 md:gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="valor_noche"
         control={form.control}
         render={({ field }) => (
-          <FormItem className="w-md">
+          <FormItem className="w-full md:w-md">
             <FormControl>
               <StepInput
                 {...field}
@@ -2696,7 +2707,7 @@ const ThirtyOne = ({ form, ...props }) => {
         name="tarifa_mensual"
         control={form.control}
         render={({ field }) => (
-          <FormItem className="w-md">
+          <FormItem className="w-full md:w-md">
             <FormControl>
               <StepInput
                 {...field}
@@ -2714,7 +2725,7 @@ const ThirtyOne = ({ form, ...props }) => {
         name="ocupacion_media"
         control={form.control}
         render={({ field }) => (
-          <FormItem className="w-md">
+          <FormItem className="w-full md:w-md">
             <FormControl>
               <StepInput
                 {...field}
@@ -2765,7 +2776,7 @@ const ThirtyTwo = ({ form, ...props }) => {
   }, [operador]);
 
   return (
-    <div className="flex flex-col items-center gap-10 md:gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="operador"
         control={form.control}
@@ -2775,15 +2786,15 @@ const ThirtyTwo = ({ form, ...props }) => {
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                className="grid grid-cols-2 gap-x-20"
+                className="grid grid-cols-2 gap-x-5 xs:gap-x-20"
               >
                 <FormItem>
                   <RadioGroupItem
                     value={true}
                     id="yes"
-                    className="flex items-center justify-center py-6 px-14"
+                    className="flex items-center justify-center !py-5 !px-10"
                   >
-                    <Like className="text-invertiria-2" />
+                    <Like className="text-invertiria-2 size-11" />
                     <p className="text-sm font-medium">Si</p>
                   </RadioGroupItem>
                 </FormItem>
@@ -2791,9 +2802,9 @@ const ThirtyTwo = ({ form, ...props }) => {
                   <RadioGroupItem
                     value={false}
                     id="not"
-                    className="flex items-center justify-center py-6 px-14"
+                    className="flex items-center justify-center !py-5 !px-10"
                   >
-                    <Deslike className="text-invertiria-2" />
+                    <Deslike className="text-invertiria-2 size-11" />
                     <p className="text-sm font-medium">No</p>
                   </RadioGroupItem>
                 </FormItem>
@@ -2806,7 +2817,7 @@ const ThirtyTwo = ({ form, ...props }) => {
         name="porcentaje_del_operador"
         control={form.control}
         render={({ field }) => (
-          <FormItem className="w-md">
+          <FormItem className="w-full md:w-md">
             <FormControl>
               <StepInput
                 {...field}
@@ -2863,7 +2874,7 @@ const ThirtyThree = ({ form, ...props }) => {
   }, [inmobiliaria]);
 
   return (
-    <div className="flex flex-col items-center gap-10 md:gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="inmobiliaria"
         control={form.control}
@@ -2873,15 +2884,15 @@ const ThirtyThree = ({ form, ...props }) => {
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                className="grid grid-cols-2 gap-x-20"
+                className="grid grid-cols-2 gap-x-5 xs:gap-x-20"
               >
                 <FormItem>
                   <RadioGroupItem
                     value={true}
                     id="yes"
-                    className="flex items-center justify-center py-6 px-14"
+                    className="flex items-center justify-center !py-5 !px-10"
                   >
-                    <Like className="text-invertiria-2" />
+                    <Like className="text-invertiria-2 size-11" />
                     <p className="text-sm font-medium">Si</p>
                   </RadioGroupItem>
                 </FormItem>
@@ -2889,9 +2900,9 @@ const ThirtyThree = ({ form, ...props }) => {
                   <RadioGroupItem
                     value={false}
                     id="not"
-                    className="flex items-center justify-center py-6 px-14"
+                    className="flex items-center justify-center !py-5 !px-10"
                   >
-                    <Deslike className="text-invertiria-2" />
+                    <Deslike className="text-invertiria-2 size-11" />
                     <p className="text-sm font-medium">No</p>
                   </RadioGroupItem>
                 </FormItem>
@@ -2905,7 +2916,7 @@ const ThirtyThree = ({ form, ...props }) => {
           name="porcentaje_inmobiliaria"
           control={form.control}
           render={({ field }) => (
-            <FormItem className="w-md">
+            <FormItem className="w-full md:w-md">
               <FormControl>
                 <StepInput
                   {...field}
@@ -2955,12 +2966,12 @@ const ThirtyFour = ({ form, ...props }) => {
   }, [vigencia]);
 
   return (
-    <div className="flex flex-col items-center gap-10 md:gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="precio_venta"
         control={form.control}
         render={({ field }) => (
-          <FormItem className="w-md">
+          <FormItem className="w-full md:w-md">
             <FormControl>
               <StepInput
                 {...field}
@@ -2990,12 +3001,12 @@ const ThirtyFive = ({ form, ...props }) => {
   }, [viviendaVis]);
 
   return (
-    <div className="flex flex-col items-center gap-10 md:gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="estrato"
         control={form.control}
         render={({ field }) => (
-          <FormItem className="w-md">
+          <FormItem className="w-full md:w-md">
             <FormControl>
               <StepInput
                 {...field}
@@ -3027,7 +3038,7 @@ const ThirtyFive = ({ form, ...props }) => {
 
 const ThirtySix = () => {
   return (
-    <div className="flex flex-col items-center gap-10 md:gap-14">
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <Button type="submit" variant="theme">
         Enviar
       </Button>
