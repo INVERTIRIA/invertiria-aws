@@ -2051,7 +2051,7 @@ const TwentyTwo = ({ form, ...props }) => {
 
       <ButtonNext
         {...props}
-        disabled={!fechaVenta || (!fechaCompra && vigencia)}
+        disabled={vigencia ? !fechaCompra || !fechaVenta : !fechaCompra}
       />
     </div>
   );

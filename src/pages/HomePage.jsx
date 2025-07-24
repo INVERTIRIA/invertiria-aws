@@ -3,6 +3,13 @@ import { ArrowUpRightIcon } from "lucide-react";
 import { Container } from "../components/design/Container";
 import CarouselReviews from "../components/design/CarouselReviews";
 import FaqAccordion from "../components/FaqAccordion";
+import {
+  ComprarVender,
+  Engorde,
+  Flipping,
+  RentaCorta,
+  RentaTradicional,
+} from "../components/design/Icons";
 
 const features = [
   {
@@ -367,107 +374,77 @@ const HomePage = () => {
       <Container classNameParent={"mt-20 z-0"}>
         <div className="w-full h-0.5 bg-orange-500" />
       </Container>
-
       {/* Seccion Nueva Modelos de Negocio */}
-      {/* <Container
-        className={"flex flex-col gap-10 md:gap-20 items-center my-20 sm:my-40"}
+      <Container
+        classNameParent={"mt-20 py-10 sm:py-20"}
+        className={"flex flex-col gap-10 md:gap-20 items-center"}
       >
         <div className="w-full flex flex-col items-center text-center gap-9">
-          <h2 className="h2 !max-w-[800px]">Todos los Modelos de Inversión Inmobiliaria</h2>
+          <h2 className="h2 !max-w-[100%] sm:-mb-10 sm:mt-10 my-10">Todos los Modelos de Inversión Inmobiliaria</h2>
         </div>
-        <div className="flex flex-col md:flex-row items-center md:h-[400px] gap-8">
-          <div className="w-full xl:w-100 h-64 bg-neutral-900 flex flex-col gap-4 rounded-xl p-6 text-white pt-10">
-            <div className="bg-gray-200 rounded-full w-20 h-20 flex items-center justify-center">
-              <img
-                className="w-15 h-15 rounded-[30px]"
-                src="/assets/svg/chatbot.svg"
-              />
+        <div className="flex flex-col md:flex-row items-center justify-center md:h-[400px] gap-8 text-center max-sm:w-[66%]">
+          <div className="w-full xl:w-100 h-64 items-center justify-center bg-white border-1 border-invertiria-2 flex flex-col gap-4 rounded-2xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.20)]">
+            <div className="w-20 h-20 flex items-center justify-center">
+              <ComprarVender className="text-invertiria-2 size-16" />
             </div>
-            <h3 className="text-xl">
+            <h3 className="text-xl font-semibold">
               Comprar para Vender
             </h3>
-            <p className="text-sm">
+            <p className="text-sm text-gray-700">
               Optimización de márgenes y timing
             </p>
           </div>
-          <div className="w-full xl:w-100 h-64 bg-gray-200 flex flex-col gap-4 rounded-xl p-6 mt-15 pt-10">
-            <div className="bg-neutral-900 rounded-full w-20 h-20 flex items-center justify-center">
-              <img
-                className="w-15 h-15 rounded-[30px]"
-                src="/assets/svg/chatbot.svg"
-              />
+          <div className="w-full xl:w-100 h-64 items-center justify-center md:mt-10 bg-white border-1 border-invertiria-2 flex flex-col gap-4 rounded-2xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.20)]">
+            <div className="w-20 h-20 flex items-center justify-center">
+              <RentaTradicional className="text-invertiria-2 size-16" />
             </div>
-            <h3 className="text-xl">
-              Comprar para Vender
+            <h3 className="text-xl font-semibold ">
+              Renta Tradicional
             </h3>
-            <p className="text-sm">
-              Optimización de márgenes y timing
+            <p className="text-sm text-gray-700">
+              Evaluación de ingresos por arrendamiento
             </p>
           </div>
-          <div className="w-full xl:w-100 h-64 bg-neutral-900 flex flex-col gap-4 rounded-xl p-6 pt-10 text-white">
-            <div className="bg-gray-200 rounded-full w-20 h-20 flex items-center justify-center">
-              <img
-                className="w-15 h-15 rounded-[30px]"
-                src="/assets/svg/chatbot.svg"
-              />
+          <div className="w-full xl:w-100 h-64 items-center justify-center bg-white border-1 border-invertiria-2 flex flex-col gap-4 rounded-2xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.20)]">
+            <div className="w-20 h-20 flex items-center justify-center">
+              <RentaCorta className="text-invertiria-2 size-16" />
             </div>
-            <h3 className="text-xl">
-              Comprar para Vender
+            <h3 className="text-xl font-semibold">
+              Renta Corta/ Renta Turística 
             </h3>
-            <p className="text-sm">
-              Optimización de márgenes y timing
+            <p className="text-sm text-gray-700">
+              Análisis especializado para Airbnb y similares
             </p>
           </div>
         </div>
-        <div className="flex flex-col md:flex-row items-center md:h-[400px] gap-8 -mt-40">
-          <div className="w-full xl:w-100 h-64 bg-gray-200 flex flex-col gap-4 rounded-xl p-6 pt-10">
-            <div className="bg-neutral-900 rounded-full w-20 h-20 flex items-center justify-center">
-              <img
-                className="w-15 h-15 rounded-[30px]"
-                src="/assets/svg/chatbot.svg"
-              />
+        <div className="flex flex-col md:flex-row items-center justify-center md:h-[400px] gap-8 md:-mt-30 text-center xl:w-full w-[66%]">
+          <div className="w-full xl:w-100 h-64 items-center justify-center bg-white border-1 border-invertiria-2 flex flex-col gap-4 rounded-2xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.20)]">
+            <div className="w-20 h-20 flex items-center justify-center">
+              <Flipping className="text-invertiria-2 size-16" />
             </div>
-            <h3 className="text-xl">
-              Comprar para Vender
+            <h3 className="text-xl font-semibold">
+              Flipping
             </h3>
-            <p className="text-sm">
-              Optimización de márgenes y timing
+            <p className="text-sm text-gray-700">
+              Venta rápida y grandes ganancias
             </p>
           </div>
-          <div className="w-full xl:w-100 h-64 bg-neutral-900 flex flex-col gap-4 rounded-xl p-6 pt-10 text-white mt-15">
-            <div className="bg-gray-200 rounded-full w-20 h-20 flex items-center justify-center">
-              <img
-                className="w-15 h-15 rounded-[30px]"
-                src="/assets/svg/chatbot.svg"
-              />
+          <div className="w-full xl:w-100 h-64 items-center justify-center bg-white border-1 border-invertiria-2 flex flex-col gap-4 rounded-2xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.20)]">
+            <div className="w-20 h-20 flex items-center justify-center">
+              <Engorde className="text-invertiria-2 size-16" />
             </div>
-            <h3 className="text-xl">
-              Comprar para Vender
+            <h3 className="text-xl font-semibold">
+              Engorde
             </h3>
             <p className="text-sm">
-              Optimización de márgenes y timing
-            </p>
-          </div>
-          <div className="w-full xl:w-100 h-64 bg-gray-200 flex flex-col gap-4 rounded-xl p-6 pt-10">
-            <div className="bg-neutral-900 rounded-full w-20 h-20 flex items-center justify-center">
-              <img
-                className="w-15 h-15 rounded-[30px]"
-                src="/assets/svg/chatbot.svg"
-              />
-            </div>
-            <h3 className="text-xl">
-              Comprar para Vender
-            </h3>
-            <p className="text-sm">
-              Optimización de márgenes y timing
+              Potencial de crecimiento y rentabilidad
             </p>
           </div>
         </div>
       </Container>
       <Container classNameParent={"mt-20 z-0"}>
         <div className="w-full h-0.5 bg-orange-500" />
-      </Container> */}
-
+      </Container>
       {/* Seccion Quinta */}
       <Container
         className={"flex flex-col gap-10 md:gap-20 items-center my-20 sm:my-40"}

@@ -152,7 +152,7 @@ const AnalysisForm = ({ step, setStep, setIsSubmitting }) => {
 
       if (insertError || !modelacion) throw insertError;
 
-      await delay(500); // Esperar medio segundo
+      await delay(2000); // Esperar medio segundo
 
       // Crear vectores temporales
       const { data: timeVectors, error: timeVectorsError } =
@@ -162,7 +162,7 @@ const AnalysisForm = ({ step, setStep, setIsSubmitting }) => {
 
       if (timeVectorsError || !timeVectors?.data.length) throw timeVectorsError;
 
-      await delay(500); // Esperar otro medio segundo
+      await delay(2000); // Esperar otro medio segundo
 
       // Crear flujos resultado
       const { error: flowsResultError } = await supabase.functions.invoke(
@@ -174,7 +174,7 @@ const AnalysisForm = ({ step, setStep, setIsSubmitting }) => {
 
       if (flowsResultError) throw flowsResultError;
 
-      await delay(500); // Esperar de nuevo
+      await delay(2000); // Esperar de nuevo
 
       // Crear análisis
       const { error: analysisError } = await supabase.functions.invoke(
@@ -215,11 +215,11 @@ const AnalysisForm = ({ step, setStep, setIsSubmitting }) => {
               skippedStep={skippedStep}
               setStepHistory={setStepHistory}
             />
-            {step === 0 && (
+            {/* {step === 0 && (
               <Button type="submit" variant="theme">
                 Enviar
               </Button>
-            )}
+            )} */}
           </form>
         </Form>
       </div>
