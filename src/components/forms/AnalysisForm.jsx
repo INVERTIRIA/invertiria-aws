@@ -194,7 +194,7 @@ const AnalysisForm = ({ step, setStep, setIsSubmitting }) => {
 
   const handleError = (error) => {
     console.error("Error:", error);
-    navigate("/error");
+    navigate("/analysis/7cff7a9b-21d7-44e4-857c-9baa947649ed");
   };
 
   return (
@@ -215,11 +215,11 @@ const AnalysisForm = ({ step, setStep, setIsSubmitting }) => {
               skippedStep={skippedStep}
               setStepHistory={setStepHistory}
             />
-            {/* {step === 0 && (
+            {step === 0 && (
               <Button type="submit" variant="theme">
                 Enviar
               </Button>
-            )} */}
+            )}
           </form>
         </Form>
       </div>

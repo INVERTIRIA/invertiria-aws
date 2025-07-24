@@ -828,7 +828,7 @@ const Twelve = ({ form, ...props }) => {
         name="inicial_fecha_inicio_pago"
         render={({ field }) => (
           <FormItem className="w-full md:w-md">
-            <FormLabel>Fecha inicio couta inicial</FormLabel>
+            <FormLabel>Fecha inicio cuota inicial</FormLabel>
             <Popover
               open={!!openPopovers["inicial_fecha_inicio_pago"]}
               onOpenChange={() => togglePopover("inicial_fecha_inicio_pago")}
@@ -890,7 +890,7 @@ const Twelve = ({ form, ...props }) => {
         name="inicial_fecha_fin_pago"
         render={({ field }) => (
           <FormItem className="w-full md:w-md">
-            <FormLabel>Fecha fin couta inicial</FormLabel>
+            <FormLabel>Fecha fin cuota inicial</FormLabel>
             <Popover
               open={!!openPopovers["inicial_fecha_fin_pago"]}
               onOpenChange={() => togglePopover("inicial_fecha_fin_pago")}
