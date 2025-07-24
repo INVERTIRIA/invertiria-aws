@@ -82,7 +82,7 @@ const ButtonNext = ({ setStep, stepIndex, setStepHistory, disabled }) => {
         setStep((prev) => prev + 1);
       }}
     >
-      Siguente
+      Siguiente
       <ArrowRight />
     </Button>
   );

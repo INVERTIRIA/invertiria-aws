@@ -43,7 +43,7 @@ const CreateAnalysisPage = () => {
               "z-1 w-full h-full flex items-center justify-center"
             }
             className={
-              "w-full h-[80%] lg:h-[70%] bg-gray-50 rounded-2xl shadow-lg ring-1 ring-gray-100 flex flex-items-center overflow-hidden"
+              "w-full h-[80%] lg:h-[70%] xl:h-[78%] bg-gray-50 rounded-2xl shadow-lg ring-1 ring-gray-100 flex flex-items-center overflow-hidden"
             }
           >
             {step === null ? (
