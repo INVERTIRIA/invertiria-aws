@@ -94,8 +94,8 @@ const HomePage = () => {
         className={"w-full flex gap-14 items-center my-20 xl:my-60 z-0"}
         classNameParent={"relative z-0"}
       >
-        <div className="lg:w-1/2 flex flex-col gap-10 xl:-mt-25">
-          <h1 className="h1">
+        <div className="lg:w-1/2 flex flex-col gap-10 xl:-mt-10">
+          <h1 className="h2 lg:text-7xl font-bold">
             Invierte en Bienes Raíces con Inteligencia Artificial
           </h1>
           <p className="sm:text-xl max-w-xl">
@@ -367,6 +367,107 @@ const HomePage = () => {
       <Container classNameParent={"mt-20 z-0"}>
         <div className="w-full h-0.5 bg-orange-500" />
       </Container>
+
+      {/* Seccion Nueva Modelos de Negocio */}
+      {/* <Container
+        className={"flex flex-col gap-10 md:gap-20 items-center my-20 sm:my-40"}
+      >
+        <div className="w-full flex flex-col items-center text-center gap-9">
+          <h2 className="h2 !max-w-[800px]">Todos los Modelos de Inversión Inmobiliaria</h2>
+        </div>
+        <div className="flex flex-col md:flex-row items-center md:h-[400px] gap-8">
+          <div className="w-full xl:w-100 h-64 bg-neutral-900 flex flex-col gap-4 rounded-xl p-6 text-white pt-10">
+            <div className="bg-gray-200 rounded-full w-20 h-20 flex items-center justify-center">
+              <img
+                className="w-15 h-15 rounded-[30px]"
+                src="/assets/svg/chatbot.svg"
+              />
+            </div>
+            <h3 className="text-xl">
+              Comprar para Vender
+            </h3>
+            <p className="text-sm">
+              Optimización de márgenes y timing
+            </p>
+          </div>
+          <div className="w-full xl:w-100 h-64 bg-gray-200 flex flex-col gap-4 rounded-xl p-6 mt-15 pt-10">
+            <div className="bg-neutral-900 rounded-full w-20 h-20 flex items-center justify-center">
+              <img
+                className="w-15 h-15 rounded-[30px]"
+                src="/assets/svg/chatbot.svg"
+              />
+            </div>
+            <h3 className="text-xl">
+              Comprar para Vender
+            </h3>
+            <p className="text-sm">
+              Optimización de márgenes y timing
+            </p>
+          </div>
+          <div className="w-full xl:w-100 h-64 bg-neutral-900 flex flex-col gap-4 rounded-xl p-6 pt-10 text-white">
+            <div className="bg-gray-200 rounded-full w-20 h-20 flex items-center justify-center">
+              <img
+                className="w-15 h-15 rounded-[30px]"
+                src="/assets/svg/chatbot.svg"
+              />
+            </div>
+            <h3 className="text-xl">
+              Comprar para Vender
+            </h3>
+            <p className="text-sm">
+              Optimización de márgenes y timing
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-col md:flex-row items-center md:h-[400px] gap-8 -mt-40">
+          <div className="w-full xl:w-100 h-64 bg-gray-200 flex flex-col gap-4 rounded-xl p-6 pt-10">
+            <div className="bg-neutral-900 rounded-full w-20 h-20 flex items-center justify-center">
+              <img
+                className="w-15 h-15 rounded-[30px]"
+                src="/assets/svg/chatbot.svg"
+              />
+            </div>
+            <h3 className="text-xl">
+              Comprar para Vender
+            </h3>
+            <p className="text-sm">
+              Optimización de márgenes y timing
+            </p>
+          </div>
+          <div className="w-full xl:w-100 h-64 bg-neutral-900 flex flex-col gap-4 rounded-xl p-6 pt-10 text-white mt-15">
+            <div className="bg-gray-200 rounded-full w-20 h-20 flex items-center justify-center">
+              <img
+                className="w-15 h-15 rounded-[30px]"
+                src="/assets/svg/chatbot.svg"
+              />
+            </div>
+            <h3 className="text-xl">
+              Comprar para Vender
+            </h3>
+            <p className="text-sm">
+              Optimización de márgenes y timing
+            </p>
+          </div>
+          <div className="w-full xl:w-100 h-64 bg-gray-200 flex flex-col gap-4 rounded-xl p-6 pt-10">
+            <div className="bg-neutral-900 rounded-full w-20 h-20 flex items-center justify-center">
+              <img
+                className="w-15 h-15 rounded-[30px]"
+                src="/assets/svg/chatbot.svg"
+              />
+            </div>
+            <h3 className="text-xl">
+              Comprar para Vender
+            </h3>
+            <p className="text-sm">
+              Optimización de márgenes y timing
+            </p>
+          </div>
+        </div>
+      </Container>
+      <Container classNameParent={"mt-20 z-0"}>
+        <div className="w-full h-0.5 bg-orange-500" />
+      </Container> */}
+
       {/* Seccion Quinta */}
       <Container
         className={"flex flex-col gap-10 md:gap-20 items-center my-20 sm:my-40"}
