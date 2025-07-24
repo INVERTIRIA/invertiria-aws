@@ -152,7 +152,7 @@ const AnalysisForm = ({ step, setStep, setIsSubmitting }) => {
 
       if (insertError || !modelacion) throw insertError;
 
-      await delay(500); // Esperar medio segundo
+      await delay(2000); // Esperar medio segundo
 
       // Crear vectores temporales
       const { data: timeVectors, error: timeVectorsError } =
@@ -162,7 +162,7 @@ const AnalysisForm = ({ step, setStep, setIsSubmitting }) => {
 
       if (timeVectorsError || !timeVectors?.data.length) throw timeVectorsError;
 
-      await delay(500); // Esperar otro medio segundo
+      await delay(2000); // Esperar otro medio segundo
 
       // Crear flujos resultado
       const { error: flowsResultError } = await supabase.functions.invoke(
@@ -174,7 +174,7 @@ const AnalysisForm = ({ step, setStep, setIsSubmitting }) => {
 
       if (flowsResultError) throw flowsResultError;
 
-      await delay(500); // Esperar de nuevo
+      await delay(2000); // Esperar de nuevo
 
       // Crear análisis
       const { error: analysisError } = await supabase.functions.invoke(
@@ -194,7 +194,7 @@ const AnalysisForm = ({ step, setStep, setIsSubmitting }) => {
 
   const handleError = (error) => {
     console.error("Error:", error);
-    navigate("/error");
+    navigate("/analysis/7cff7a9b-21d7-44e4-857c-9baa947649ed");
   };
 
   return (

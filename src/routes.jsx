@@ -159,7 +159,8 @@ function AppRoutes() {
         </Routes>
       </main>
       {/* Chatbot Button */}
-      {!hideLayout && <ChatBotButton />}
+      {/* {!hideLayout && <ChatBotButton />} */}
+      <ChatBotButton />
 
       {!hideLayout && <Footer />}
     </div>
