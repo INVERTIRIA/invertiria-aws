@@ -128,7 +128,7 @@ function Map({ className, setValue, projectPosition = null, initialSearch }) {
         center={initialPosition}
         zoom={6}
         style={{
-          height: "300px",
+          height: "240px",
           width: "100%",
           borderRadius: "15px",
           zIndex: "0",
