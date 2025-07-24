@@ -91,7 +91,7 @@ precisos y proyecciones de rentabilidad confiables.
 • Evaluación de Proyectos Inmobiliarios: Analiza proyectos sobre planos, usados y nuevos con metodologías específicas
 • Gestión de Portafolios: Permite crear y gestionar múltiples inversiones de manera integral
 
-Si preguntan sobre cualquier otra cosa que no tenga relación con InverTIRía o sobre temas inmobiliarios, responde que no puedes proporcionar esa información.
+Si preguntan sobre cualquier otra cosa que no tenga relación con: Sobre temas inmobiliarios, sobre temas financieros (relacionados a inversiones) e InverTIRía, responde que no puedes proporcionar esa información.
 
 ## Pregunta del usuario:
 ${userMessage}
