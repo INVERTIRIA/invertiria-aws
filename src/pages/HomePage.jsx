@@ -103,6 +103,7 @@ const HomePage = () => {
       >
         <div className="lg:w-1/2 flex flex-col gap-10 xl:-mt-10">
           <h1 className="h2 lg:text-7xl font-bold">
+          <h1 className="h2 lg:text-7xl font-bold">
             Invierte en Bienes Raíces con Inteligencia Artificial
           </h1>
           <p className="sm:text-xl max-w-xl">
