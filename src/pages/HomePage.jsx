@@ -3,6 +3,13 @@ import { ArrowUpRightIcon } from "lucide-react";
 import { Container } from "../components/design/Container";
 import CarouselReviews from "../components/design/CarouselReviews";
 import FaqAccordion from "../components/FaqAccordion";
+import {
+  ComprarVender,
+  Engorde,
+  Flipping,
+  RentaCorta,
+  RentaTradicional,
+} from "../components/design/Icons";
 
 const features = [
   {
@@ -95,14 +102,21 @@ const HomePage = () => {
         classNameParent={"relative z-0"}
       >
         <div className="lg:w-1/2 flex flex-col gap-10 xl:-mt-10">
-          <h1 className="h2 lg:text-7xl font-bold">Invierte en Bienes Raíces con Inteligencia Artificial</h1>
+          <h1 className="h2 lg:text-7xl font-bold">
+            Invierte en Bienes Raíces con Inteligencia Artificial
+          </h1>
           <p className="sm:text-xl max-w-xl">
-            La plataforma que combina más de 17 años de experiencia inmobiliaria con algoritmos avanzados de IA para analizar, evaluar y optimizar tus inversiones en tiempo real.{" "}
+            La plataforma que combina más de 17 años de experiencia inmobiliaria
+            con algoritmos avanzados de IA para analizar, evaluar y optimizar
+            tus inversiones en tiempo real.{" "}
             {/* <br className="hidden sm:block" />
             toma decisiones informadas y maximiza tu rentabilidad. */}
           </p>
           <div className="w-full flex flex-col md:flex-row gap-4 items-center justify-between max-w-2xl">
-            <Link to="/analysis/create" className="w-full group bg-invertiria-2 border border-invertiria-2 py-2.5 px-5 rounded-[30px] flex justify-center items-center gap-2.5 hover:bg-white">
+            <Link
+              to="/analysis/create"
+              className="w-full group bg-invertiria-2 border border-invertiria-2 py-2.5 px-5 rounded-[30px] flex justify-center items-center gap-2.5 hover:bg-white"
+            >
               <span className="group-hover:text-invertiria-2 uppercase text-sm text-white">
                 Analizar mi Primera Inversión
               </span>
@@ -111,7 +125,10 @@ const HomePage = () => {
                 className="text-white size-6 group-hover:stroke-invertiria-2"
               />
             </Link>
-            <Link className="w-full group bg-white border border-black py-2.5 px-5 rounded-[30px] flex justify-center items-center gap-2.5 hover:bg-invertiria-2 hover:border-invertiria-2">
+            <Link
+              to="/analysis/7cff7a9b-21d7-44e4-857c-9baa947649ed"
+              className="w-full group bg-white border border-black py-2.5 px-5 rounded-[30px] flex justify-center items-center gap-2.5 hover:bg-invertiria-2 hover:border-invertiria-2"
+            >
               <span className="group-hover:text-white uppercase text-sm">
                 Ver Demo Gratuito
               </span>
@@ -198,7 +215,9 @@ const HomePage = () => {
         <div className="w-full flex flex-col items-center text-center gap-9">
           <h2 className="h2 !max-w-none">La nueva era de las inversiones</h2>
           <p className="sm:text-2xl text-gray-700">
-            Toma decisiones informadas con análisis financieros precisos, proyecciones de rentabilidad confiables y evaluaciones de riesgo personalizadas para tu perfil de inversionista.
+            Toma decisiones informadas con análisis financieros precisos,
+            proyecciones de rentabilidad confiables y evaluaciones de riesgo
+            personalizadas para tu perfil de inversionista.
           </p>
           {/* <p className="text-gray-600 sm:text-xl font-semibold">
             Toma decisiones informadas con análisis financieros precisos, proyecciones de rentabilidad confiables y evaluaciones de riesgo personalizadas para tu perfil de inversionista.
@@ -214,7 +233,8 @@ const HomePage = () => {
               Proyecciones Precisas
             </h3>
             <p className="text-sm">
-              Visualiza flujos de caja detallados mes a mes y proyecciones de rentabilidad basadas en datos reales del mercado colombiano.
+              Visualiza flujos de caja detallados mes a mes y proyecciones de
+              rentabilidad basadas en datos reales del mercado colombiano.
             </p>
           </div>
           <div className="w-full xl:w-[400.07px] h-full bg-zinc-100/50 border-4 border-invertiria-2 flex flex-col gap-4 rounded-4xl p-4">
@@ -224,9 +244,13 @@ const HomePage = () => {
             />
             <h3 className="text-xl font-semibold">Análisis Inteligente</h3>
             <p className="text-sm">
-              Obtén TIR, ROI, VPN y otros indicadores clave calculados automáticamente con la precisión de un experto en segundos.
+              Obtén TIR, ROI, VPN y otros indicadores clave calculados
+              automáticamente con la precisión de un experto en segundos.
             </p>
-            <Link to={"/analysis/create"} className="xl:w-fit group bg-invertiria-2 border border-invertiria-2 py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-white">
+            <Link
+              to={"/analysis/create"}
+              className="xl:w-fit group bg-invertiria-2 border border-invertiria-2 py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-white"
+            >
               <span className="group-hover:text-invertiria-2 uppercase text-sm text-white">
                 VER MÁS
               </span>
@@ -243,7 +267,8 @@ const HomePage = () => {
             />
             <h3 className="text-xl font-semibold">Decisiones Rápidas</h3>
             <p className="text-sm">
-              Compara múltiples opciones de inversión simultáneamente y identifica las mejores oportunidades para tu perfil.
+              Compara múltiples opciones de inversión simultáneamente y
+              identifica las mejores oportunidades para tu perfil.
             </p>
           </div>
           <div className="w-full xl:w-80 h-full bg-zinc-100/50 border-4 border-orange-700/50 flex flex-col gap-4 rounded-4xl p-4">
@@ -253,7 +278,8 @@ const HomePage = () => {
             />
             <h3 className="text-xl font-semibold">Gestión de Riesgos</h3>
             <p className="text-sm">
-              Evalúa escenarios múltiples y factores de riesgo para cada tipo de inversión con análisis de sensibilidad.
+              Evalúa escenarios múltiples y factores de riesgo para cada tipo de
+              inversión con análisis de sensibilidad.
             </p>
           </div>
         </div>
@@ -274,7 +300,10 @@ const HomePage = () => {
                 Invertir nunca{" "}
                 <span className="text-invertiria-2">fue tan Simple</span>
               </h2>
-              <Link to={"/analysis/create"} className="w-full sm:w-1/2 lg:w-fit group bg-invertiria-2 border border-invertiria-2 py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-white">
+              <Link
+                to={"/analysis/create"}
+                className="w-full sm:w-1/2 lg:w-fit group bg-invertiria-2 border border-invertiria-2 py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-white"
+              >
                 <span className="group-hover:text-invertiria-2 uppercase text-sm text-white">
                   EMPIEZA AHORA
                 </span>
@@ -345,115 +374,77 @@ const HomePage = () => {
       <Container classNameParent={"mt-20 z-0"}>
         <div className="w-full h-0.5 bg-orange-500" />
       </Container>
-
-
-
-
-
       {/* Seccion Nueva Modelos de Negocio */}
-      {/* <Container
-        className={"flex flex-col gap-10 md:gap-20 items-center my-20 sm:my-40"}
+      <Container
+        classNameParent={"mt-20 py-10 sm:py-20"}
+        className={"flex flex-col gap-10 md:gap-20 items-center"}
       >
         <div className="w-full flex flex-col items-center text-center gap-9">
-          <h2 className="h2 !max-w-[800px]">Todos los Modelos de Inversión Inmobiliaria</h2>
+          <h2 className="h2 !max-w-[100%] sm:-mb-10 sm:mt-10 my-10">Todos los Modelos de Inversión Inmobiliaria</h2>
         </div>
-        <div className="flex flex-col md:flex-row items-center md:h-[400px] gap-8">
-          <div className="w-full xl:w-100 h-64 bg-neutral-900 flex flex-col gap-4 rounded-xl p-6 text-white pt-10">
-            <div className="bg-gray-200 rounded-full w-20 h-20 flex items-center justify-center">
-              <img
-                className="w-15 h-15 rounded-[30px]"
-                src="/assets/svg/chatbot.svg"
-              />
+        <div className="flex flex-col md:flex-row items-center justify-center md:h-[400px] gap-8 text-center max-sm:w-[66%]">
+          <div className="w-full xl:w-100 h-64 items-center justify-center bg-white border-1 border-invertiria-2 flex flex-col gap-4 rounded-2xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.20)]">
+            <div className="w-20 h-20 flex items-center justify-center">
+              <ComprarVender className="text-invertiria-2 size-16" />
             </div>
-            <h3 className="text-xl">
+            <h3 className="text-xl font-semibold">
               Comprar para Vender
             </h3>
-            <p className="text-sm">
+            <p className="text-sm text-gray-700">
               Optimización de márgenes y timing
             </p>
           </div>
-          <div className="w-full xl:w-100 h-64 bg-gray-200 flex flex-col gap-4 rounded-xl p-6 mt-15 pt-10">
-            <div className="bg-neutral-900 rounded-full w-20 h-20 flex items-center justify-center">
-              <img
-                className="w-15 h-15 rounded-[30px]"
-                src="/assets/svg/chatbot.svg"
-              />
+          <div className="w-full xl:w-100 h-64 items-center justify-center md:mt-10 bg-white border-1 border-invertiria-2 flex flex-col gap-4 rounded-2xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.20)]">
+            <div className="w-20 h-20 flex items-center justify-center">
+              <RentaTradicional className="text-invertiria-2 size-16" />
             </div>
-            <h3 className="text-xl">
-              Comprar para Vender
+            <h3 className="text-xl font-semibold ">
+              Renta Tradicional
             </h3>
-            <p className="text-sm">
-              Optimización de márgenes y timing
+            <p className="text-sm text-gray-700">
+              Evaluación de ingresos por arrendamiento
             </p>
           </div>
-          <div className="w-full xl:w-100 h-64 bg-neutral-900 flex flex-col gap-4 rounded-xl p-6 pt-10 text-white">
-            <div className="bg-gray-200 rounded-full w-20 h-20 flex items-center justify-center">
-              <img
-                className="w-15 h-15 rounded-[30px]"
-                src="/assets/svg/chatbot.svg"
-              />
+          <div className="w-full xl:w-100 h-64 items-center justify-center bg-white border-1 border-invertiria-2 flex flex-col gap-4 rounded-2xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.20)]">
+            <div className="w-20 h-20 flex items-center justify-center">
+              <RentaCorta className="text-invertiria-2 size-16" />
             </div>
-            <h3 className="text-xl">
-              Comprar para Vender
+            <h3 className="text-xl font-semibold">
+              Renta Corta/ Renta Turística 
             </h3>
-            <p className="text-sm">
-              Optimización de márgenes y timing
+            <p className="text-sm text-gray-700">
+              Análisis especializado para Airbnb y similares
             </p>
           </div>
         </div>
-        <div className="flex flex-col md:flex-row items-center md:h-[400px] gap-8 -mt-40">
-          <div className="w-full xl:w-100 h-64 bg-gray-200 flex flex-col gap-4 rounded-xl p-6 pt-10">
-            <div className="bg-neutral-900 rounded-full w-20 h-20 flex items-center justify-center">
-              <img
-                className="w-15 h-15 rounded-[30px]"
-                src="/assets/svg/chatbot.svg"
-              />
+        <div className="flex flex-col md:flex-row items-center justify-center md:h-[400px] gap-8 md:-mt-30 text-center xl:w-full w-[66%]">
+          <div className="w-full xl:w-100 h-64 items-center justify-center bg-white border-1 border-invertiria-2 flex flex-col gap-4 rounded-2xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.20)]">
+            <div className="w-20 h-20 flex items-center justify-center">
+              <Flipping className="text-invertiria-2 size-16" />
             </div>
-            <h3 className="text-xl">
-              Comprar para Vender
+            <h3 className="text-xl font-semibold">
+              Flipping
             </h3>
-            <p className="text-sm">
-              Optimización de márgenes y timing
+            <p className="text-sm text-gray-700">
+              Venta rápida y grandes ganancias
             </p>
           </div>
-          <div className="w-full xl:w-100 h-64 bg-neutral-900 flex flex-col gap-4 rounded-xl p-6 pt-10 text-white mt-15">
-            <div className="bg-gray-200 rounded-full w-20 h-20 flex items-center justify-center">
-              <img
-                className="w-15 h-15 rounded-[30px]"
-                src="/assets/svg/chatbot.svg"
-              />
+          <div className="w-full xl:w-100 h-64 items-center justify-center bg-white border-1 border-invertiria-2 flex flex-col gap-4 rounded-2xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.20)]">
+            <div className="w-20 h-20 flex items-center justify-center">
+              <Engorde className="text-invertiria-2 size-16" />
             </div>
-            <h3 className="text-xl">
-              Comprar para Vender
+            <h3 className="text-xl font-semibold">
+              Engorde
             </h3>
             <p className="text-sm">
-              Optimización de márgenes y timing
-            </p>
-          </div>
-          <div className="w-full xl:w-100 h-64 bg-gray-200 flex flex-col gap-4 rounded-xl p-6 pt-10">
-            <div className="bg-neutral-900 rounded-full w-20 h-20 flex items-center justify-center">
-              <img
-                className="w-15 h-15 rounded-[30px]"
-                src="/assets/svg/chatbot.svg"
-              />
-            </div>
-            <h3 className="text-xl">
-              Comprar para Vender
-            </h3>
-            <p className="text-sm">
-              Optimización de márgenes y timing
+              Potencial de crecimiento y rentabilidad
             </p>
           </div>
         </div>
       </Container>
       <Container classNameParent={"mt-20 z-0"}>
         <div className="w-full h-0.5 bg-orange-500" />
-      </Container> */}
-
-
-
-
-
+      </Container>
       {/* Seccion Quinta */}
       <Container
         className={"flex flex-col gap-10 md:gap-20 items-center my-20 sm:my-40"}
@@ -461,10 +452,12 @@ const HomePage = () => {
         <div className="md:px-10 xl:px-30 w-full grid lg:grid-cols-2 gap-10 md:gap-20 items-center">
           <div className="flex flex-col items-center md:items-start gap-8">
             <h2 className="h2 text-center max-w-none md:text-left lg:max-w-lg">
-              <span className="text-invertiria-2">Elige el plan perfecto</span> para tu perfil de inversionista
+              <span className="text-invertiria-2">Elige el plan perfecto</span>{" "}
+              para tu perfil de inversionista
             </h2>
             <p className="sm:text-2xl text-gray-700">
-              Todos los planes incluyen acceso completo a análisis de IA, proyecciones financieras y contenido educativo.
+              Todos los planes incluyen acceso completo a análisis de IA,
+              proyecciones financieras y contenido educativo.
             </p>
             <Link className="w-full sm:w-1/2 lg:w-fit group bg-invertiria-2 border border-invertiria-2 py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-white">
               <span className="group-hover:text-invertiria-2 uppercase text-sm text-white">
@@ -540,7 +533,10 @@ const HomePage = () => {
               ¿Listo para tu primera inversión inteligente?
             </h2>
             <div className="flex flex-col md:flex-row items-center gap-4">
-              <Link to="/analysis/create" className="w-full sm:w-1/2 lg:w-fit group bg-invertiria-2 border border-invertiria-2 py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-transparent">
+              <Link
+                to="/analysis/create"
+                className="w-full sm:w-1/2 lg:w-fit group bg-invertiria-2 border border-invertiria-2 py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-transparent"
+              >
                 <span className="group-hover:text-invertiria-2 uppercase text-sm text-white">
                   Comenzar Análisis Gratuito
                 </span>
