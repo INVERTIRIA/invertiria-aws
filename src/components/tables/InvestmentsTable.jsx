@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
 import { cn } from "@/lib/utils";
 import {
   ArrowUpDown,
@@ -48,11 +47,12 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { Link } from "react-router";
+import { parsePrice } from "../../constants/functions";
 
 const FilterSection = ({ table, options }) => {
   const [selectedFilter, setSelectedFilter] = useState({
-    label: "Email",
-    field: "email",
+    label: "Nombre",
+    field: "titulo_modelacion",
   });
 
   return (
@@ -97,8 +97,8 @@ const FilterSection = ({ table, options }) => {
                     selectedFilter.label === currentValue
                   ) {
                     setSelectedFilter({
-                      label: "Email",
-                      field: "email",
+                      label: "Nombre",
+                      field: "titulo_modelacion",
                     });
                   } else {
                     setSelectedFilter(
@@ -125,8 +125,8 @@ const FilterSection = ({ table, options }) => {
             onSelect={() => {
               // Reinicia el filtro seleccionado
               setSelectedFilter({
-                label: "Email",
-                field: "email",
+                label: "Nombre",
+                field: "titulo_modelacion",
               });
 
               // Limpia el filtro en la tabla
@@ -141,9 +141,12 @@ const FilterSection = ({ table, options }) => {
   );
 };
 
-const InvestorsTable = ({ records }) => {
+const InvestmentsTable = ({
+  records,
+  additionalColumns = [],
+  additionalFilters = [],
+}) => {
   // Hooks table
-  const { user } = useAuth();
 
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
@@ -157,59 +160,82 @@ const InvestorsTable = ({ records }) => {
   // Columns
   const columns = [
     {
-      accessorFn: (row) => row.usuario.nombre,
-      id: "nombre",
+      accessorFn: (row) => row.titulo_modelacion,
+      id: "titulo_modelacion",
       header: "Nombre",
       cell: ({ row }) => (
         <div className="capitalize font-light">
-          {row.original.usuario.nombre}
+          {row.original.titulo_modelacion}
         </div>
       ),
     },
     {
-      accessorFn: (row) => row.usuario.apellidos,
-      id: "apellidos",
-      header: "Apellidos",
+      accessorFn: (row) => row.modelo_de_negocio,
+      id: "modelo_de_negocio",
+      header: "Modelo de negocio",
       cell: ({ row }) => (
         <div className="capitalize font-light">
-          {row.original.usuario.apellidos}
+          {row.original.modelo_de_negocio}
         </div>
       ),
     },
     {
-      accessorFn: (row) => row.usuario.email,
-      id: "email",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            className="!px-0"
-            onClick={() => {
-              console.log(column.getIsSorted());
-              column.toggleSorting(column.getIsSorted() === "asc");
-            }}
-          >
-            Email
-            <ArrowUpDown />
-          </Button>
-        );
-      },
+      accessorFn: (row) => row.vigencia,
+      id: "vigencia",
+      header: "Vigente",
       cell: ({ row }) => (
-        <div className="lowercase font-light">{row.original.usuario.email}</div>
+        <div className="w-fit flex font-light items-center gap-1 capitalize  px-2 py-1 ring ring-gray-300 rounded-md">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="8"
+            height="8"
+            viewBox="0 0 8 8"
+            fill="none"
+          >
+            <circle
+              cx="4"
+              cy="4"
+              r="3"
+              className={cn(
+                row.original.vigencia ? " fill-green-600" : " fill-red-600"
+              )}
+            />
+          </svg>
+          {row.original.vigencia ? "Sí" : "No"}
+        </div>
       ),
     },
     {
-      accessorKey: "telefono",
-      header: "Télefono",
+      accessorKey: "tipo_inmueble",
+      header: "Tipo de inmueble",
+      cell: ({ row }) => {
+        return <div className="font-light">{row.original.tipo_inmueble}</div>;
+      },
+    },
+    {
+      accessorFn: (row) => row.precio_de_compra,
+      id: "precio_de_compra",
+      header: "Precio de compra",
+      cell: ({ row }) => (
+        <div className="lowercase font-light">
+          {parsePrice(row.original.precio_de_compra)}
+        </div>
+      ),
+    },
+    {
+      accessorKey: "precio_de_mercado",
+      header: "Precio de mercado",
       cell: ({ row }) => {
         return (
-          <div className="font-light">{row.original.usuario.telefono}</div>
+          <div className="font-light">
+            {parsePrice(row.original.precio_de_mercado)}
+          </div>
         );
       },
     },
     {
-      accessorFn: (row) => row.usuario.activo,
-      id: "activo",
+      accessorFn: (row) => row.estado_inmueble,
+      id: "estado_inmueble",
       header: "Estado",
       cell: ({ row }) => (
         <div className="w-fit flex font-light items-center gap-1 capitalize  px-2 py-1 ring ring-gray-300 rounded-md">
@@ -225,38 +251,18 @@ const InvestorsTable = ({ records }) => {
               cy="4"
               r="3"
               className={cn(
-                row.original.usuario.activo
+                row.original.estado_inmueble === "Sobre planos"
                   ? " fill-green-600"
                   : " fill-red-600"
               )}
             />
           </svg>
-          {row.original.usuario.activo ? "Activo" : "Inactivo"}
+          {row.original.estado_inmueble}
         </div>
       ),
     },
     {
-      accessorKey: "fecha_de_nacimiento",
-      header: "Fecha de nacimiento",
-      cell: ({ row }) => {
-        return (
-          <div className="font-light">
-            {row.original.usuario.fecha_de_nacimiento}
-          </div>
-        );
-      },
-    },
-    {
-      accessorKey: "ciudad",
-      header: "Ciudad",
-      cell: ({ row }) => (
-        <div className="capitalize font-light">
-          {row.original.usuario.ciudad}
-        </div>
-      ),
-    },
-    {
-      accessorFn: (row) => row.usuario.created_at,
+      accessorFn: (row) => row.created_at,
       id: "created_at",
       header: ({ column }) => {
         return (
@@ -273,13 +279,14 @@ const InvestorsTable = ({ records }) => {
         );
       },
       cell: ({ row }) => {
-        const createdAt = new Date(
-          row.original.usuario.created_at
-        ).toLocaleString("es-GB", {
-          day: "2-digit",
-          month: "short", // Short month (Jan, Feb, Mar, etc.)
-          year: "numeric",
-        });
+        const createdAt = new Date(row.original.created_at).toLocaleString(
+          "es-GB",
+          {
+            day: "2-digit",
+            month: "short", // Short month (Jan, Feb, Mar, etc.)
+            year: "numeric",
+          }
+        );
 
         return <div className="font-light">{createdAt}</div>;
       },
@@ -288,18 +295,21 @@ const InvestorsTable = ({ records }) => {
       id: "actions",
       cell: ({ row }) => (
         <Link
-          to={`/${user?.user_metadata.role}/investors/${row.original.usuario.id}`}
+          to={`/analysis/${row.original.id}`}
           className={buttonVariants({
             variant: "ghost",
             className: "text-invertiria-2 hover:text-invertiria-2 flex",
           })}
         >
-          Ingresar
-          <span className="sr-only">Ingresar</span>
+          Ver
+          <span className="sr-only">Ver</span>
         </Link>
       ),
     },
   ];
+
+  // Add additional columns
+  if (additionalColumns.length > 0) columns.unshift(...additionalColumns);
 
   // Table
   const table = useReactTable({
@@ -323,23 +333,24 @@ const InvestorsTable = ({ records }) => {
     },
   });
 
-  // Functions
-
-  // Varibles
+  // Filter options
   const filterOptions = [
     {
-      field: "email",
-      label: "Email",
-    },
-    {
-      field: "nombre",
+      field: "titulo_modelacion",
       label: "Nombre",
     },
     {
-      field: "apellidos",
-      label: "Apellidos",
+      field: "modelo_de_negocio",
+      label: "Modelo de negocio",
+    },
+    {
+      field: "tipo_inmueble",
+      label: "Tipo de inmueble",
     },
   ];
+
+  // Add filter options
+  if (additionalFilters.length > 0) filterOptions.push(...additionalFilters);
 
   return (
     <div>
@@ -471,4 +482,4 @@ const InvestorsTable = ({ records }) => {
   );
 };
 
-export default InvestorsTable;
+export default InvestmentsTable;
