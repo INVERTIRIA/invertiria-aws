@@ -24,11 +24,11 @@ const InvestmentsPage = () => {
         tipo_inmueble,
         estado_inmueble,
         vigencia,        
-        created_at,        
+        created_at      
         `
       )
-      .eq("usuario_id", userInfo.id)
-      .order("created_at", { ascending: false });
+      .eq("usuario_id", userInfo.id);
+    //.order("created_at", { ascending: false });
 
     if (res.error) return;
 

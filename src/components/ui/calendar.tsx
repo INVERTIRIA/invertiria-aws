@@ -41,8 +41,8 @@ function Calendar({
         ...formatters,
       }} */
       formatters={{
-        formatMonthDropdown: (date) => {
-          return months[Number(date)]
+        formatMonthDropdown: (date) => {          
+          return months[Number(date.getMonth())]
         },
         ...formatters,
       }}      
