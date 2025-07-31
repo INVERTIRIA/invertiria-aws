@@ -2019,13 +2019,14 @@ const TwentyTwo = ({ form, ...props }) => {
               </PopoverTrigger>
               <PopoverContent
                 style={{
-                  width: buttonRefs.current["fecha_compra"]?.offsetWidth,
+                  width:
+                    buttonRefs.current["fecha_compra"]?.offsetWidth || "auto",
                 }}
-                className="p-0"
+                className="p-0 flex justify-center bg-transparent border-none shadow-none"
                 align="start"
               >
                 <Calendar
-                  className="!w-full"
+                  locale={es}
                   mode="single"
                   selected={field.value ? parseISO(field.value) : undefined}
                   onSelect={(date) => {
@@ -2036,8 +2037,10 @@ const TwentyTwo = ({ form, ...props }) => {
 
                     togglePopover("fecha_compra");
                   }}
-                  locale={es}
-                  initialFocus
+                  className="rounded-md border shadow-sm !bg-white"
+                  captionLayout="dropdown"
+                  fromYear={2000} // año mínimo que deseas mostrar
+                  toYear={2080}
                 />
               </PopoverContent>
             </Popover>
@@ -2079,6 +2082,33 @@ const TwentyTwo = ({ form, ...props }) => {
                 <PopoverContent
                   style={{
                     width:
+                      buttonRefs.current["fecha_prevista_venta"]?.offsetWidth ||
+                      "auto",
+                  }}
+                  className="p-0 flex justify-center bg-transparent border-none shadow-none"
+                  align="start"
+                >
+                  <Calendar
+                    locale={es}
+                    mode="single"
+                    selected={field.value ? parseISO(field.value) : undefined}
+                    onSelect={(date) => {
+                      const formattedDate = date
+                        ? format(date, "yyyy-MM-dd")
+                        : "";
+                      field.onChange(formattedDate); // Se almacena el string "yyyy-MM-dd"
+
+                      togglePopover("fecha_prevista_venta");
+                    }}
+                    className="rounded-md border shadow-sm !bg-white"
+                    captionLayout="dropdown"
+                    fromYear={2000} // año mínimo que deseas mostrar
+                    toYear={2080}
+                  />
+                </PopoverContent>
+                {/* <PopoverContent
+                  style={{
+                    width:
                       buttonRefs.current["fecha_prevista_venta"]?.offsetWidth,
                   }}
                   className="p-0"
@@ -2099,7 +2129,7 @@ const TwentyTwo = ({ form, ...props }) => {
                     locale={es}
                     initialFocus
                   />
-                </PopoverContent>
+                </PopoverContent> */}
               </Popover>
             </FormItem>
           )}
