@@ -2,6 +2,7 @@ import {
   BriefcaseBusiness,
   Building2,
   ChartColumnIncreasing,
+  HandHelping,
   House,
   UserPen,
   UsersRound,
@@ -59,6 +60,11 @@ export const routes = {
       title: "Mis inversiones",
       url: "/user/investments",
       icon: ChartColumnIncreasing,
+    },
+    {
+      title: "Mi asesor",
+      url: "/user/advisor",
+      icon: HandHelping,
     },
   ],
   admin: [
