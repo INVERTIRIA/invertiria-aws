@@ -559,7 +559,7 @@ const Seven = ({ form, analysisInstance, ...props }) => {
   useEffect(() => {
     if (value && !analysisInstance.projectInformation) {
       form.setValue("pais_id", 46);
-      form.setValue("ciudad_id", value.city);
+      form.setValue("ciudad_id", value.city_id);
       form.setValue("zona", value.zone);
       form.setValue("subzona", value.subzone);
 
