@@ -181,11 +181,11 @@ const AnalysisForm = ({ step, setStep, setIsSubmitting }) => {
               skippedStep={skippedStep}
               setStepHistory={setStepHistory}
             />
-            {step === 0 && (
+            {/* {step === 0 && (
               <Button type="submit" variant="theme">
                 Enviar
               </Button>
-            )}
+            )} */}
           </form>
         </Form>
       </div>

@@ -861,14 +861,13 @@ const Twelve = ({ form, ...props }) => {
                     buttonRefs.current["inicial_fecha_inicio_pago"]
                       ?.offsetWidth || "auto",
                 }}
-                className="p-0"
+                className="p-0 flex justify-center bg-transparent border-none shadow-none"
                 align="start"
               >
                 <Calendar
-                  className="!w-full"
+                  locale={es}
                   mode="single"
                   selected={field.value ? parseISO(field.value) : undefined}
-                  //onSelect={field.onChange}
                   onSelect={(date) => {
                     const formattedDate = date
                       ? format(date, "yyyy-MM-dd")
@@ -877,8 +876,10 @@ const Twelve = ({ form, ...props }) => {
 
                     togglePopover("inicial_fecha_inicio_pago");
                   }}
-                  locale={es}
-                  initialFocus
+                  className="rounded-md border shadow-sm !bg-white"
+                  captionLayout="dropdown"
+                  fromYear={2000} // año mínimo que deseas mostrar
+                  toYear={2080}
                 />
               </PopoverContent>
             </Popover>
@@ -922,11 +923,11 @@ const Twelve = ({ form, ...props }) => {
                     buttonRefs.current["inicial_fecha_fin_pago"]?.offsetWidth ||
                     "auto",
                 }}
-                className="p-0"
+                className="p-0 flex justify-center bg-transparent border-none shadow-none"
                 align="start"
               >
                 <Calendar
-                  className="!w-full"
+                  locale={es}
                   mode="single"
                   selected={field.value ? parseISO(field.value) : undefined}
                   onSelect={(date) => {
@@ -937,8 +938,10 @@ const Twelve = ({ form, ...props }) => {
 
                     togglePopover("inicial_fecha_fin_pago");
                   }}
-                  locale={es}
-                  initialFocus
+                  className="rounded-md border shadow-sm !bg-white"
+                  captionLayout="dropdown"
+                  fromYear={2000} // año mínimo que deseas mostrar
+                  toYear={2080}
                 />
               </PopoverContent>
             </Popover>
@@ -1086,25 +1089,25 @@ const ThirTeen = ({ form, ...props }) => {
               </PopoverTrigger>
               <PopoverContent
                 style={{ width: buttonWidth }}
-                className="p-0"
+                className="p-0 flex justify-center bg-transparent border-none shadow-none"
                 align="start"
               >
                 <Calendar
-                  style={{ width: buttonWidth }}
+                  locale={es}
                   mode="single"
                   selected={fecha ? parseISO(fecha) : undefined}
-                  //onSelect={field.onChange}
                   onSelect={(date) => {
                     const formattedDate = date
                       ? format(date, "yyyy-MM-dd")
                       : "";
-
                     setFecha(formattedDate); // Se almacena el string "yyyy-MM-dd"
 
                     togglePopover("fecha_pago");
                   }}
-                  locale={es}
-                  initialFocus
+                  className="rounded-md border shadow-sm !bg-white"
+                  captionLayout="dropdown"
+                  fromYear={2000} // año mínimo que deseas mostrar
+                  toYear={2080}
                 />
               </PopoverContent>
             </Popover>
@@ -1356,16 +1359,15 @@ const FifTeen = ({ form, ...props }) => {
                 style={{
                   width:
                     buttonRefs.current["credito_fecha_inicio_pago"]
-                      ?.offsetWidth,
+                      ?.offsetWidth || "auto",
                 }}
-                className="p-0"
+                className="p-0 flex justify-center bg-transparent border-none shadow-none"
                 align="start"
               >
                 <Calendar
-                  className="!w-full"
+                  locale={es}
                   mode="single"
                   selected={field.value ? parseISO(field.value) : undefined}
-                  //onSelect={field.onChange}
                   onSelect={(date) => {
                     const formattedDate = date
                       ? format(date, "yyyy-MM-dd")
@@ -1374,8 +1376,10 @@ const FifTeen = ({ form, ...props }) => {
 
                     togglePopover("credito_fecha_inicio_pago");
                   }}
-                  locale={es}
-                  initialFocus
+                  className="rounded-md border shadow-sm !bg-white"
+                  captionLayout="dropdown"
+                  fromYear={2000} // año mínimo que deseas mostrar
+                  toYear={2080}
                 />
               </PopoverContent>
             </Popover>
@@ -1416,16 +1420,16 @@ const FifTeen = ({ form, ...props }) => {
               <PopoverContent
                 style={{
                   width:
-                    buttonRefs.current["credito_fecha_fin_pago"]?.offsetWidth,
+                    buttonRefs.current["credito_fecha_fin_pago"]?.offsetWidth ||
+                    "auto",
                 }}
-                className="p-0"
+                className="p-0 flex justify-center bg-transparent border-none shadow-none"
                 align="start"
               >
                 <Calendar
-                  className="!w-full"
+                  locale={es}
                   mode="single"
                   selected={field.value ? parseISO(field.value) : undefined}
-                  //onSelect={field.onChange}
                   onSelect={(date) => {
                     const formattedDate = date
                       ? format(date, "yyyy-MM-dd")
@@ -1434,11 +1438,10 @@ const FifTeen = ({ form, ...props }) => {
 
                     togglePopover("credito_fecha_fin_pago");
                   }}
-                  /* disabled={(date) =>
-                    date > new Date() || date < new Date("1900-01-01")
-                  } */
-                  locale={es}
-                  initialFocus
+                  className="rounded-md border shadow-sm !bg-white"
+                  captionLayout="dropdown"
+                  fromYear={2000} // año mínimo que deseas mostrar
+                  toYear={2080}
                 />
               </PopoverContent>
             </Popover>
@@ -1822,6 +1825,33 @@ const TwentyOne = ({ form, ...props }) => {
                     buttonRefs.current["fecha_inicio_ventas"]?.offsetWidth ||
                     "auto",
                 }}
+                className="p-0 flex justify-center bg-transparent border-none shadow-none"
+                align="start"
+              >
+                <Calendar
+                  locale={es}
+                  mode="single"
+                  selected={field.value ? parseISO(field.value) : undefined}
+                  onSelect={(date) => {
+                    const formattedDate = date
+                      ? format(date, "yyyy-MM-dd")
+                      : "";
+                    field.onChange(formattedDate); // Se almacena el string "yyyy-MM-dd"
+
+                    togglePopover("fecha_inicio_ventas");
+                  }}
+                  className="rounded-md border shadow-sm !bg-white"
+                  captionLayout="dropdown"
+                  fromYear={2000} // año mínimo que deseas mostrar
+                  toYear={2080}
+                />
+              </PopoverContent>
+              {/* <PopoverContent
+                style={{
+                  width:
+                    buttonRefs.current["fecha_inicio_ventas"]?.offsetWidth ||
+                    "auto",
+                }}
                 className="p-0"
                 align="start"
               >
@@ -1840,7 +1870,7 @@ const TwentyOne = ({ form, ...props }) => {
                   locale={es}
                   initialFocus
                 />
-              </PopoverContent>
+              </PopoverContent> */}
             </Popover>
           </FormItem>
         )}
@@ -1882,6 +1912,33 @@ const TwentyOne = ({ form, ...props }) => {
                     buttonRefs.current["fecha_prevista_entrega"]?.offsetWidth ||
                     "auto",
                 }}
+                className="p-0 flex justify-center bg-transparent border-none shadow-none"
+                align="start"
+              >
+                <Calendar
+                  locale={es}
+                  mode="single"
+                  selected={field.value ? parseISO(field.value) : undefined}
+                  onSelect={(date) => {
+                    const formattedDate = date
+                      ? format(date, "yyyy-MM-dd")
+                      : "";
+                    field.onChange(formattedDate); // Se almacena el string "yyyy-MM-dd"
+
+                    togglePopover("fecha_prevista_entrega");
+                  }}
+                  className="rounded-md border shadow-sm !bg-white"
+                  captionLayout="dropdown"
+                  fromYear={2000} // año mínimo que deseas mostrar
+                  toYear={2080}
+                />
+              </PopoverContent>
+              {/* <PopoverContent
+                style={{
+                  width:
+                    buttonRefs.current["fecha_prevista_entrega"]?.offsetWidth ||
+                    "auto",
+                }}
                 className="p-0"
                 align="start"
               >
@@ -1901,7 +1958,7 @@ const TwentyOne = ({ form, ...props }) => {
                   locale={es}
                   initialFocus
                 />
-              </PopoverContent>
+              </PopoverContent> */}
             </Popover>
           </FormItem>
         )}
