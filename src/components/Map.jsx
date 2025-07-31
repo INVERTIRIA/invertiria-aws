@@ -20,6 +20,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { cn } from "@/lib/utils";
+import { supabase } from "../supabase";
 
 const myIcon = new Icon({
   iconUrl: "/assets/images/location-marker.svg",
@@ -201,7 +202,7 @@ function Map({ className, setValue, projectPosition = null, initialSearch }) {
   }
 
   // Funcion obtener los niveles de ubicación
-  function getLocationLevels(location) {
+  async function getLocationLevels(location) {
     let levels = {};
     levels.country = location.country;
     levels.city = location.city || location.state;
@@ -221,6 +222,15 @@ function Map({ className, setValue, projectPosition = null, initialSearch }) {
         levels.subzone = null;
         break;
     }
+
+    const ciudad_id = await supabase
+      .from("ciudades")
+      .select("id")
+      .eq("nombre", levels.city)
+      .single();
+
+    levels.city_id = ciudad_id.data.id || null;
+
     setLocationLevels(levels);
   }
 }
