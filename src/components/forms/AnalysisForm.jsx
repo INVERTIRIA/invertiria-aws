@@ -90,6 +90,7 @@ const AnalysisForm = ({ step, setStep, setIsSubmitting }) => {
       const info = await getInfo();
       additionalValues = {
         usuario_id: info.id,
+        created_by: info.id,
         perfil_inversionista: {
           ahorros_disponibles: info.ahorros_disponibles,
           experiencia: info.experiencia,
