@@ -28,6 +28,7 @@ function TiempoDeCompra({ timeVectors, fechaCompra }) {
     return {
       mes: item[1],
       Varianza: [(item[2] - varianza), (item[2] + varianza)],
+      VarianzaAmpliada: [(item[2] - varianza * 100), (item[2] + varianza * 100)],
       "Precio del inmueble": item[2],
       "Fecha de compra": fecha_de_compra
     };
@@ -67,9 +68,9 @@ function TiempoDeCompra({ timeVectors, fechaCompra }) {
             )}
           </YAxis>
           <Area
-            dataKey="Varianza"
+            dataKey="VarianzaAmpliada"
             stroke="none"
-            fill="#80b2ff"
+            fill="#a4c7fc"
             connectNulls
             dot={false}
             activeDot={true}
@@ -79,8 +80,10 @@ function TiempoDeCompra({ timeVectors, fechaCompra }) {
               if (name === "Precio del inmueble") {
                 return parsePrice(value);
               }
-              if (name === "Varianza") {
-                return "" + value.map((item) => parsePrice(item));;
+              if (name === "VarianzaAmpliada") {
+                const varianza = props.payload["Varianza"];
+                return `${parsePrice(varianza[0])} - ${parsePrice(varianza[1])}`;
+                // return "" + value.map((item) => parsePrice(item));;
               }
               if (name === "Fecha de compra") {
                 return props.payload.mes;
