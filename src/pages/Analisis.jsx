@@ -577,10 +577,12 @@ const Analisis = () => {
 
       <div className="flex xl:flex-row flex-col items-center gap-10">
         {/* Gráfica  */}
-        <TiempoDeVenta timeVectors={timeVectors} flowsResult={flowsResult} />
+        <div className="w-full xl:basis-2/3">
+          <TiempoDeVenta timeVectors={timeVectors} flowsResult={flowsResult} />
+        </div>
 
         {/* Analisis */}
-        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
+        <div className="w-full xl:basis-1/3 flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
           <p className="z-10 text-gray-800 text-sm font-medium leading-6">
             {analysis.tiempo_de_venta.analisis_grafica[language]}
           </p>
