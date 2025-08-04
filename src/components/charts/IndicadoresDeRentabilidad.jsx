@@ -192,13 +192,13 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
   }, [])
 
   return (
-    <div className="w-full flex flex-col md:flex-row gap-20">
-      <div className="flex flex-col gap-4 w-[70%] max-sm:w-full">
+    <div className="w-full flex flex-col lg:flex-row gap-20 items-center">
+      <div className="flex flex-col gap-4 lg:w-[70%] w-full">
         <div className="flex flex-col items-center gap-4 mb-10">
           <h2 className="text-2xl font-bold text-gray-500">
             Mes de venta seleccionado
           </h2>
-          <div className="w-full pl-14 pr-14 max-sm:pl-5 max-sm:pr-5">
+          <div className="w-full pl-24 pr-14 max-sm:pl-5 max-sm:pr-5">
             <Slider step={1} max={maxStep} defaultValue={[mesVenta]} onValueChange={handleKPI} />
           </div>
         </div>
@@ -213,7 +213,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
               <ComposedChart
                 syncId="syncId"
                 data={dataROI}
-                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 0, bottom: 0 }}
+                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 35, bottom: 0 }}
               >
                 <CartesianGrid className="opacity-50" vertical={false} />
                 <XAxis
@@ -298,7 +298,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
             >
               <ComposedChart data={dataTIR.slice(startIndexBrush, endIndexBrush + 1)}
                 syncId="syncId"
-                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 0, bottom: 0 }}
+                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 35, bottom: 0 }}
               >
                 <CartesianGrid
                   className="opacity-50"
@@ -376,7 +376,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
             >
               <ComposedChart
                 data={dataUtilidad.slice(startIndexBrush, endIndexBrush + 1)}
-                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 0, bottom: 0 }}
+                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 35, bottom: 0 }}
                 syncId="syncId"
               >
                 <CartesianGrid className="opacity-50" vertical={false} />
@@ -438,7 +438,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
         </div>
       </div>
       <div className="flex-1 flex flex-col gap-0 h-fit">
-        <div className="flex flex-col w-[85%] rounded-3xl ml-7 max-sm:-mt-10 ring-1 shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60 ring-gray-900/5 p-4">
+        <div className="flex flex-col w-[85%] rounded-3xl ml-7 max-sm:-mt-10 ring-1 shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60 ring-gray-900/5 p-8">
           <h2 className="text-lg font-bold text-white px-4 py-1 bg-invertiria-2 w-fit rounded-xl">
             KPIs
           </h2>
