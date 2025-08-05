@@ -532,10 +532,10 @@ const HomePage = () => {
             <h2 className="text-white h2 text-center max-w-none md:text-left lg:max-w-3xl">
               ¿Listo para tu primera inversión inteligente?
             </h2>
-            <div className="flex flex-col md:flex-row items-center gap-4">
+            <div className="flex flex-col xl:flex-row items-center md:items-start gap-4">
               <Link
                 to="/analysis/create"
-                className="w-full sm:w-1/2 lg:w-fit group bg-invertiria-2 border border-invertiria-2 py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-transparent"
+                className="w-full sm:w-2/3 lg:w-fit group bg-invertiria-2 border border-invertiria-2 py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-transparent"
               >
                 <span className="group-hover:text-invertiria-2 uppercase text-sm text-white">
                   Comenzar Análisis Gratuito
@@ -545,7 +545,7 @@ const HomePage = () => {
                   className="text-white size-6 group-hover:stroke-invertiria-2"
                 />
               </Link>
-              <Link className="w-full sm:w-1/2 lg:w-fit group bg-transparent border border-white py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-invertiria-2 hover:border-invertiria-2">
+              <Link className="w-full sm:w-2/3 lg:w-fit group bg-transparent border border-white py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-invertiria-2 hover:border-invertiria-2">
                 <span className="uppercase text-sm text-white">
                   Agendar Demo Personalizado
                 </span>

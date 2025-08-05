@@ -179,7 +179,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
 
   return (
     <div className="w-full flex flex-col lg:flex-row gap-12">
-      <div className="flex flex-col gap-4 lg:w-[70%] w-full">
+      <div className="flex flex-col gap-4 w-full xl:w-[70%] max-sm:w-full">
         <div className="flex flex-col gap-20">
           <h2 className="text-2xl font-bold text-gray-500">
             Suma de ROI Anualizado y Suma de ROI por Mes

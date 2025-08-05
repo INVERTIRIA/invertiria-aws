@@ -1,4 +1,4 @@
-import { Lightbulb, Info, Sparkles, Undo2 } from "lucide-react";
+import { Lightbulb, Sparkles, Undo2 } from "lucide-react";
 import { Container } from "../components/design/Container";
 import { TiempoDeCompra } from "../components/charts/TiempoDeCompra";
 import { ValorDeCompra } from "../components/charts/ValorDeCompra";
@@ -16,9 +16,9 @@ import { useEffect, useState } from "react";
 import DashboardSkeleton from "../components/design/DashboardSkeleton";
 import { parsePrice } from "../constants/functions";
 import { useParams } from "react-router";
-import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
+import InfoAnalysisAccordion from "../components/InfoAnalysisAccordion";
 
 const Analisis = () => {
   let { id } = useParams();
@@ -175,84 +175,14 @@ const Analisis = () => {
   return (
     <Container classNameParent={"-my-15"} className="flex flex-col gap-20">
 
-      {/* Informacion del analisis en popup */}
-      <Dialog>
-        <div className="flex justify-between">
-          <Button variant="full_ghost" className="font-normal text-gray-600">
-            <Link to="/" className="flex items-center gap-2">
-              <Undo2 />
-              <span>Volver</span>
-            </Link>
-          </Button>
-          <DialogTrigger asChild>
-            <Button variant="full_ghost" className="font-normal text-gray-600">
-              Información del análisis
-              <Info />
-            </Button>
-          </DialogTrigger>
-        </div>
-        <DialogContent className="w-[90%] xl:w-[35%] !max-w-none h-[70vh] p-8">
-          <DialogTitle className="mt-2 text-2xl">Información del análisis</DialogTitle>
-          <DialogDescription></DialogDescription>
-          <div className="mb-2 space-y-3 overflow-y-auto text-gray-800 text-sm font-medium leading-6">
-            <p><strong>Nombre del análisis:</strong> {modelation.titulo_modelacion}</p>
-            <p><strong>Vigencia de la inversión:</strong> {modelation.vigencia ? "Actual" : "Ya realizada"}</p>
-            <p><strong>Nombre del proyecto:</strong> {modelation.nombre_del_proyecto}</p>
-            <p><strong>País:</strong> {modelation.pais.nombre}</p>
-            <p><strong>Ciudad:</strong> {modelation.ciudad.nombre}</p>
-            <p><strong>Zona:</strong> {modelation.zona}</p>
-            <p><strong>Subzona:</strong> {modelation.subzona}</p>
-            <p><strong>Tipo de inmueble:</strong> {modelation.tipo_inmueble}</p>
-            <p><strong>Condición del inmueble:</strong> {modelation.estado_inmueble}</p>
-            <p><strong>Titularidad:</strong> {modelation.titularidad ? modelation.titularidad : "No aplica"}</p>
-            <p><strong>Modelo de negocio:</strong> {modelation.modelo_de_negocio}</p>
-            <p><strong>Moneda:</strong> {modelation.moneda}</p>
-            <p><strong>Precio de compra:</strong> {parsePrice(modelation.precio_de_compra)}</p>
-            <p><strong>Precio de mercado:</strong> {modelation.precio_de_mercado ? parsePrice(modelation.precio_de_mercado) : "No aplica"}</p>
-            <p><strong>Separación:</strong> {modelation.separacion ? parsePrice(modelation.separacion) : "No aplica"}</p>
-            <p><strong>Forma de pago cuota inicial:</strong> {modelation.forma_pago_cuota_inicial ? modelation.forma_pago_cuota_inicial : "No aplica"}</p>
-            <p><strong>Porcentaje de cuota inicial:</strong> {modelation.cuota_inicial ? modelation.cuota_inicial + "%" : "No aplica"}</p>
-            <p><strong>Fecha inicio cuota inicial:</strong> {modelation.inicial_fecha_inicio_pago ? modelation.inicial_fecha_inicio_pago.slice(0, 7) : "No aplica"}</p>
-            <p><strong>Fecha fin cuota inicial:</strong> {modelation.inicial_fecha_fin_pago ? modelation.inicial_fecha_fin_pago.slice(0, 7) : "No aplica"}</p>
-            <p><strong>Número de pagos personalizados:</strong> {modelation.pagos_personalizados ? modelation.pagos_personalizados : "No aplica"}</p>
-            <p><strong>Fecha de pagos personalizados:</strong> {modelation.fecha_pagos_personalizados ? modelation.fecha_pagos_personalizados : "No aplica"}</p>
-            <p><strong>Valor de pagos personalizados:</strong> {modelation.valor_pagos_personalizados ? modelation.valor_pagos_personalizados : "No aplica"}</p>
-            <p><strong>Crédito hipotecario:</strong> {modelation.credito_hipotecario ? "Si" : "No"}</p>
-            <p><strong>Tasa de interés efectiva anual:</strong> {modelation.tasa_de_interes ? modelation.tasa_de_interes + "%" : "No aplica"}</p>
-            <p><strong>Fecha inicio crédito:</strong> {modelation.credito_fecha_inicio_pago ? modelation.credito_fecha_inicio_pago.slice(0, 7) : "No aplica"}</p>
-            <p><strong>Fecha fin crédito:</strong> {modelation.credito_fecha_fin_pago ? modelation.credito_fecha_fin_pago.slice(0, 7) : "No aplica"}</p>
-            <p><strong>Edad de la propiedad:</strong> {modelation.edad_propiedad ? modelation.edad_propiedad + " años" : "No aplica"}</p>
-            <p><strong>Área del inmueble:</strong> {modelation.area_inmueble ? modelation.area_inmueble + "m²" : "No aplica"}</p>
-            <p><strong>Parqueaderos:</strong> {modelation.parqueaderos ? modelation.parqueaderos : "No aplica"}</p>
-            <p><strong>VIS:</strong> {modelation.vivienda_vis ? "Si" : "No"}</p>
-            <p><strong>Cesión de derechos:</strong> {modelation.cesion_de_derechos ? "Si" : "No"}</p>
-            <p><strong>Fecha inicio ventas:</strong> {modelation.fecha_inicio_ventas ? modelation.fecha_inicio_ventas.slice(0, 7) : "No aplica"}</p>
-            <p><strong>Fecha entrega del inmueble:</strong> {modelation.fecha_prevista_entrega ? modelation.fecha_prevista_entrega.slice(0, 7) : "No aplica"}</p>
-            <p><strong>Fecha de compra:</strong> {modelation.fecha_compra.slice(0, 7)}</p>
-            <p><strong>Fecha prevista de venta:</strong> {modelation.fecha_prevista_venta ? modelation.fecha_prevista_venta.slice(0, 7) : "No aplica"}</p>
-            <p><strong>Etapa del proyecto:</strong> {modelation.etapa_proyecto ? modelation.etapa_proyecto : "No aplica"}</p>
-            <p><strong>Comisión por venta:</strong> {modelation.comision_vendedor ? "Si" : "No"}</p>
-            <p><strong>Porcentaje de comisión:</strong> {modelation.porcentaje_comision_vendedor ? modelation.porcentaje_comision_vendedor + "%" : "No aplica"}</p>
-            <p><strong>Pago de administración:</strong> {modelation.administracion ? "Si" : "No"}</p>
-            <p><strong>Valor de administración:</strong> {modelation.valor_administracion ? parsePrice(modelation.valor_administracion) : "No aplica"}</p>
-            <p><strong>Valor de predial:</strong> {modelation.valor_predial ? parsePrice(modelation.valor_predial) : "No aplica"}</p>
-            <p><strong>Requiere mejoras:</strong> {modelation.mejoras ? "Si" : "No"}</p>
-            <p><strong>Valor de mejoras:</strong> {modelation.valor_mejoras ? parsePrice(modelation.valor_mejoras) : "No aplica"}</p>
-            <p><strong>Requiere licencia de construcción:</strong> {modelation.licencia_construccion ? "Si" : "No"}</p>
-            <p><strong>Valor licencia de construcción:</strong> {modelation.costos_licencias ? parsePrice(modelation.costos_licencias) : "No aplica"}</p>
-            <p><strong>Renta:</strong> {modelation.renta ? "Si" : "No"}</p>
-            <p><strong>Valor cánon de arrendamiento:</strong> {modelation.canon_de_arrendamiento ? parsePrice(modelation.canon_de_arrendamiento) : "No aplica"}</p>
-            <p><strong>Valor noche:</strong> {modelation.valor_noche ? parsePrice(modelation.valor_noche) : "No aplica"}</p>
-            <p><strong>Tarifa mensual:</strong> {modelation.tarifa_mensual ? parsePrice(modelation.tarifa_mensual) : "No aplica"}</p>
-            <p><strong>Porcentaje de ocupacion media:</strong> {modelation.ocupacion_media ? modelation.ocupacion_media + "%" : "No aplica"}</p>
-            <p><strong>Operador:</strong> {modelation.operador ? "Si" : "No"}</p>
-            <p><strong>Porcentaje de operador:</strong> {modelation.porcentaje_del_operador ? modelation.porcentaje_del_operador + "%" : "No aplica"}</p>
-            <p><strong>Inmobiliaria:</strong> {modelation.inmobiliaria ? "Si" : "No"}</p>
-            <p><strong>Porcentaje de inmobiliaria:</strong> {modelation.porcentaje_inmobiliaria ? modelation.porcentaje_inmobiliaria + "%" : "No aplica"}</p>
-            <p><strong>Precio de venta:</strong> {modelation.precio_venta ? parsePrice(modelation.precio_venta) : "No aplica"}</p>
-          </div>
-        </DialogContent>
-      </Dialog>
+      <div className="flex justify-between">
+        <Button variant="full_ghost" className="font-normal text-gray-600">
+          <Link to="/" className="flex items-center gap-2">
+            <Undo2 />
+            <span>Volver</span>
+          </Link>
+        </Button>
+      </div>
 
       {/* Titulo */}
       <div className="w-full flex flex-col items-center text-center gap-9">
@@ -261,6 +191,8 @@ const Analisis = () => {
       <h2 className="-mt-20 text-center text-2xl font-bold text-gray-500">
         {modelation.titulo_modelacion}
       </h2>
+
+      <InfoAnalysisAccordion modelation={modelation} />
 
       {/* Titulo grafica */}
       <h1 className="lg:text-4xl text-3xl font-bold">Tiempos del proyecto</h1>
@@ -334,7 +266,7 @@ const Analisis = () => {
 
         {/* Gráficas */}
         <div className="w-full flex flex-col gap-20 justify-center xl:pl-10 pl-2">
-          <div className="w-full flex items-center xl:gap-40 gap-25">
+          <div className="w-full flex items-center justify-center md:gap-40 gap-20 -ml-10">
             <ValorDeCompra
               price={modelation.area_inmueble ? modelation.precio_de_compra / modelation.area_inmueble : 0}
               minPrice={getVarianzaSubzona(true)}

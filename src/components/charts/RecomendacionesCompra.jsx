@@ -29,7 +29,7 @@ function RecomendacionesCompra({ timeVectors }) {
   });
 
   return (
-    <div className="w-[100%] h-[50vh] lg:w-[60%]">
+    <div className="w-full max-sm:w-full h-[50vh]">
       <ResponsiveContainer
         className={"flex aspect-video justify-center text-xs"}
       >
