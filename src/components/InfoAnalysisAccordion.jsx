@@ -123,12 +123,18 @@ const InfoAnalysisAccordion = ({ modelation }) => {
             <div className="text-gray-800 text-sm font-medium leading-6 mb-2 space-y-2">
               <p><strong>Separación:</strong> {modelation.separacion ? parsePrice(modelation.separacion) : "No aplica"}</p>
               <p><strong>Forma de pago cuota inicial:</strong> {modelation.forma_pago_cuota_inicial ? formaPagoCuotaInicial[modelation.forma_pago_cuota_inicial] || "No aplica" : "No aplica"}</p>
-              <p><strong>Porcentaje de cuota inicial:</strong> {modelation.cuota_inicial ? modelation.cuota_inicial + "%" : "No aplica"}</p>
-              <p><strong>Fecha inicio cuota inicial:</strong> {modelation.inicial_fecha_inicio_pago ? modelation.inicial_fecha_inicio_pago.slice(0, 7) : "No aplica"}</p>
-              <p><strong>Fecha fin cuota inicial:</strong> {modelation.inicial_fecha_fin_pago ? modelation.inicial_fecha_fin_pago.slice(0, 7) : "No aplica"}</p>
-              <p><strong>Número de pagos personalizados:</strong> {modelation.pagos_personalizados ? modelation.pagos_personalizados : "No aplica"}</p>
-              <p><strong>Fecha de pagos personalizados:</strong> {modelation.fecha_pagos_personalizados ? modelation.fecha_pagos_personalizados.join(', ') : "No aplica"}</p>
-              <p><strong>Valor de pagos personalizados:</strong> {modelation.valor_pagos_personalizados ? modelation.valor_pagos_personalizados.map(valor => parsePrice(valor)).join(', ') : "No aplica"}</p>
+              {modelation.cuota_inicial && <>
+                <p><strong>Porcentaje de cuota inicial:</strong> {modelation.cuota_inicial ? modelation.cuota_inicial + "%" : "No aplica"}</p>
+                <p><strong>Fecha inicio cuota inicial:</strong> {modelation.inicial_fecha_inicio_pago ? modelation.inicial_fecha_inicio_pago.slice(0, 7) : "No aplica"}</p>
+                <p><strong>Fecha fin cuota inicial:</strong> {modelation.inicial_fecha_fin_pago ? modelation.inicial_fecha_fin_pago.slice(0, 7) : "No aplica"}</p>
+              </>
+              }
+              {modelation.pagos_personalizados && <>
+                <p><strong>Número de pagos personalizados:</strong> {modelation.pagos_personalizados ? modelation.pagos_personalizados : "No aplica"}</p>
+                <p><strong>Fecha de pagos personalizados:</strong> {modelation.fecha_pagos_personalizados ? modelation.fecha_pagos_personalizados.join(', ') : "No aplica"}</p>
+                <p><strong>Valor de pagos personalizados:</strong> {modelation.valor_pagos_personalizados ? modelation.valor_pagos_personalizados.map(valor => parsePrice(valor)).join(', ') : "No aplica"}</p>
+              </>
+              }
             </div>
           </div>
           <div className="rounded-3xl p-10 bg-white border-2 border-gray-200">
@@ -169,12 +175,16 @@ const InfoAnalysisAccordion = ({ modelation }) => {
             </div>
             <div className="text-gray-800 text-sm font-medium leading-6 mb-2 space-y-2">
               <p><strong>Renta:</strong> {modelation.renta ? renta[modelation.renta] || "No" : "No"}</p>
-              <p><strong>Valor cánon de arrendamiento:</strong> {modelation.canon_de_arrendamiento ? parsePrice(modelation.canon_de_arrendamiento) : "No aplica"}</p>
-              <p><strong>Valor noche:</strong> {modelation.valor_noche ? parsePrice(modelation.valor_noche) : "No aplica"}</p>
-              <p><strong>Tarifa mensual:</strong> {modelation.tarifa_mensual ? parsePrice(modelation.tarifa_mensual) : "No aplica"}</p>
-              <p><strong>Porcentaje de ocupacion media:</strong> {modelation.ocupacion_media ? modelation.ocupacion_media + "%" : "No aplica"}</p>
-              <p><strong>Operador:</strong> {modelation.operador ? "Si" : "No"}</p>
-              <p><strong>Porcentaje de operador:</strong> {modelation.porcentaje_del_operador ? modelation.porcentaje_del_operador + "%" : "No aplica"}</p>
+              {modelation.canon_de_arrendamiento &&
+                <p><strong>Valor cánon de arrendamiento:</strong> {modelation.canon_de_arrendamiento ? parsePrice(modelation.canon_de_arrendamiento) : "No aplica"}</p>
+              }
+              {modelation.valor_noche && <>
+                <p><strong>Valor noche:</strong> {modelation.valor_noche ? parsePrice(modelation.valor_noche) : "No aplica"}</p>
+                <p><strong>Tarifa mensual:</strong> {modelation.tarifa_mensual ? parsePrice(modelation.tarifa_mensual) : "No aplica"}</p>
+                <p><strong>Porcentaje de ocupacion media:</strong> {modelation.ocupacion_media ? modelation.ocupacion_media + "%" : "No aplica"}</p>
+                <p><strong>Operador:</strong> {modelation.operador ? "Si" : "No"}</p>
+                <p><strong>Porcentaje de operador:</strong> {modelation.porcentaje_del_operador ? modelation.porcentaje_del_operador + "%" : "No aplica"}</p>
+              </>}
               <p><strong>Inmobiliaria:</strong> {modelation.inmobiliaria ? "Si" : "No"}</p>
               <p><strong>Porcentaje de inmobiliaria:</strong> {modelation.porcentaje_inmobiliaria ? modelation.porcentaje_inmobiliaria + "%" : "No aplica"}</p>
             </div>
@@ -187,14 +197,22 @@ const InfoAnalysisAccordion = ({ modelation }) => {
             <div className="text-gray-800 text-sm font-medium leading-6 mb-2 space-y-2">
               <p><strong>Cesión de derechos:</strong> {modelation.cesion_de_derechos ? "Si" : "No"}</p>
               <p><strong>Comisión por venta:</strong> {modelation.comision_vendedor ? "Si" : "No"}</p>
-              <p><strong>Porcentaje de comisión:</strong> {modelation.porcentaje_comision_vendedor ? modelation.porcentaje_comision_vendedor + "%" : "No aplica"}</p>
+              {modelation.comision_vendedor &&
+                <p><strong>Porcentaje de comisión:</strong> {modelation.porcentaje_comision_vendedor ? modelation.porcentaje_comision_vendedor + "%" : "No aplica"}</p>
+              }
               <p><strong>Pago de administración:</strong> {modelation.administracion ? "Si" : "No"}</p>
-              <p><strong>Valor de administración:</strong> {modelation.valor_administracion ? parsePrice(modelation.valor_administracion) : "No aplica"}</p>
+              {modelation.administracion &&
+                <p><strong>Valor de administración:</strong> {modelation.valor_administracion ? parsePrice(modelation.valor_administracion) : "No aplica"}</p>
+              }
               <p><strong>Valor de predial:</strong> {modelation.valor_predial ? parsePrice(modelation.valor_predial) : "No aplica"}</p>
               <p><strong>Requiere mejoras:</strong> {modelation.mejoras ? "Si" : "No"}</p>
-              <p><strong>Valor de mejoras:</strong> {modelation.valor_mejoras ? parsePrice(modelation.valor_mejoras) : "No aplica"}</p>
+              {modelation.mejoras &&
+                <p><strong>Valor de mejoras:</strong> {modelation.valor_mejoras ? parsePrice(modelation.valor_mejoras) : "No aplica"}</p>
+              }
               <p><strong>Requiere licencia de construcción:</strong> {modelation.licencia_construccion ? "Si" : "No"}</p>
-              <p><strong>Valor licencia de construcción:</strong> {modelation.costos_licencias ? parsePrice(modelation.costos_licencias) : "No aplica"}</p>
+              {modelation.licencia_construccion &&
+                <p><strong>Valor licencia de construcción:</strong> {modelation.costos_licencias ? parsePrice(modelation.costos_licencias) : "No aplica"}</p>
+              }
             </div>
           </div>
         </div>,

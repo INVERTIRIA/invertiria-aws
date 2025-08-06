@@ -26,6 +26,7 @@ const Analisis = () => {
   const [flowsResult, setFlowsResult] = useState(null);
   const [modelation, setModelation] = useState(null);
   const [analysis, setAnalysis] = useState(null);
+  const [promedios, setPromedios] = useState(null);
   const [user, setUser] = useState(null);
   const language = localStorage.getItem("language");
 
@@ -64,6 +65,13 @@ const Analisis = () => {
     setAnalysis(analysis);
   };
 
+  // Funcion obtener promedios ciudades y juan londoño
+  const getPromedios = async () => {
+    const { data: promedios, error } = await supabase.from("promedios").select().or(`nombre.eq.${modelation?.ciudad?.nombre},nombre.eq.Juan Londoño`);
+    if (error) console.log(error);
+    setPromedios(promedios);
+  }
+
   // Funcion obtener varianza subzona
   const getVarianzaSubzona = (min = false) => {
     const varianza = timeVectors?.valorizacion.filter((item) => item[1] == modelation?.fecha_compra.slice(0, 7))[0];
@@ -78,10 +86,13 @@ const Analisis = () => {
   }, []);
 
   useEffect(() => {
-    if (modelation) { getUser() }
+    if (modelation) { 
+      getUser()
+      getPromedios()
+    }
   }, [modelation]);
 
-  if (!modelation || !timeVectors || !flowsResult || !analysis || !user) {
+  if (!modelation || !timeVectors || !flowsResult || !analysis || !user || !promedios) {
     return (
       <Container classNameParent={"my-20"} className="flex flex-col gap-20">
         <DashboardSkeleton />
@@ -391,7 +402,7 @@ const Analisis = () => {
 
       <div className="flex xl:flex-row flex-col items-center gap-10">
         {/* Grafica */}
-        <RecomendacionesCompra timeVectors={timeVectors} />
+        <RecomendacionesCompra modelation={modelation} timeVectors={timeVectors} promedios={promedios} />
 
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">

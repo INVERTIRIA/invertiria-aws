@@ -14,19 +14,31 @@ import { parsePrice } from "../../constants/functions";
 import { useIsMobile } from "../../hooks/use-mobile";
 
 // Grafica
-function RecomendacionesCompra({ timeVectors }) {
+function RecomendacionesCompra({ modelation, timeVectors, promedios }) {
 
   const isMobile = useIsMobile();
 
+  const promediosCiudad = promedios.find((item) => item.nombre === modelation?.ciudad?.nombre);
+  const promediosJuanLondoño = promedios.find((item) => item.nombre === "Juan Londoño");
+  
   // Obtener data
   const data = timeVectors?.valor_inmueble.map((item, index) => {
     return {
       mes: item[1],
       "Precio del inmueble": item[2],
-      "Promedio ciudad": Math.round(item[2] - (item[2] * 0.7 / 100)), // Data quemada
-      "Promedio Juan Londoño": Math.round(item[2] - (item[2] * 1.5 / 100)) // Data quemada
+      "Promedio ciudad": item[2] + item[2] * promediosCiudad.matriz[index][1] * 100,
+      "Promedio Juan Londoño": item[2] + item[2] * promediosJuanLondoño.matriz[index][1] * 100
     };
   });
+
+  // const data = timeVectors?.valorizacion.map((item, index) => {
+  //   return {
+  //     mes: item[1],
+  //     "Precio del inmueble": item[4] * 100,
+  //     "Promedio ciudad": promediosCiudad.matriz[index][1] * 100,
+  //     "Promedio Juan Londoño": promediosJuanLondoño.matriz[index][1] * 100
+  //   };
+  // });
 
   return (
     <div className="w-full max-sm:w-full h-[50vh]">
@@ -63,6 +75,7 @@ function RecomendacionesCompra({ timeVectors }) {
           </YAxis>
           <Tooltip
             formatter={(value, name) => parsePrice(value)}
+            // formatter={(value, name) => value + "%"}
           />
           <Line
             dataKey="Precio del inmueble"
@@ -93,7 +106,7 @@ function RecomendacionesCompra({ timeVectors }) {
             dataKey="mes"
             stroke="#FB3D03"
             startIndex={0}
-            endIndex={120}
+            endIndex={240}
             height={30}
             tickFormatter={(value) => isMobile ? "" : value}
             className="custom-brush"

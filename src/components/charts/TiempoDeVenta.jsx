@@ -123,7 +123,7 @@ function TiempoDeVenta({ timeVectors, flowsResult }) {
               dataKey="mes"
               stroke="#FB3D03"
               startIndex={0}
-              endIndex={120}
+              endIndex={240}
               height={30}
               tickFormatter={(value) => isMobile ? "" : value}
               className="custom-brush"
