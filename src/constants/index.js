@@ -2,6 +2,7 @@ import {
   BriefcaseBusiness,
   Building2,
   ChartColumnIncreasing,
+  Database,
   HandHelping,
   House,
   UserPen,
@@ -97,6 +98,11 @@ export const routes = {
       title: "Global inversiones",
       url: "/admin/investments",
       icon: ChartColumnIncreasing,
+    },
+    {
+      title: "Carga de datos",
+      url: "/admin/import_data",
+      icon: Database,
     },
   ],
   assistant: [

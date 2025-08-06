@@ -172,6 +172,12 @@ const AnalysisForm = ({ step, setStep, setIsSubmitting }) => {
         {/* Form */}
         <Form {...form}>
           <form
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && step !== 35) {
+                // 35 = último paso
+                e.preventDefault();
+              }
+            }}
             onSubmit={onSubmit}
             className="w-full flex flex-col items-center gap-14"
           >

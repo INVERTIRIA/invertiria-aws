@@ -46,7 +46,9 @@ const InvestmentsPage = () => {
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
           <img
-            src={row.original.created_by.img_perfil || "/assets/svg/logo-2.svg"}
+            src={
+              row.original.created_by?.img_perfil || "/assets/svg/logo-2.svg"
+            }
             alt=""
             className="w-8 h-8 rounded-full bg-gray-100"
           />

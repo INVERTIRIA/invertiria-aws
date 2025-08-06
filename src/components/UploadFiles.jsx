@@ -6,6 +6,7 @@ import {
   useState,
 } from "react";
 import { Trash2, UploadCloud } from "lucide-react";
+import { formatFileSize } from "../constants/functions";
 
 const UploadFiles = forwardRef(
   (
@@ -96,7 +97,7 @@ const UploadFiles = forwardRef(
 
     return (
       <div
-        className={`w-full overflow-hidden border border-gray-300 rounded-2xl p-4 bg-white shadow-sm ${
+        className={`w-full overflow-hidden border border-gray-300 rounded-md p-4 bg-white shadow-sm ${
           isDragging ? "border-invertiria-2 bg-indigo-50" : ""
         }`}
         onDragOver={handleDragOver}
@@ -140,7 +141,7 @@ const UploadFiles = forwardRef(
                 {file.name}
               </p>
               <p className="text-gray-500 text-xs">
-                {(file.size / 1024 / 1024).toFixed(2)} MB
+                {formatFileSize(file.size)}
               </p>
               <div className="w-full bg-gray-200 rounded-full h-2 mt-1">
                 <div

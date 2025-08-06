@@ -9,10 +9,10 @@ import Skeleton from "../../../components/design/Skeleton";
 import PageTitle from "../../../components/design/PageTitle";
 import UserHeader from "../../../components/design/UserHeader";
 import InvestorForm from "../../../components/forms/InvestorForm";
-import { Button, buttonVariants } from "../../../components/ui/button";
+import { buttonVariants } from "../../../components/ui/button";
 
 // Iconos
-import { ArrowLeft, ChartColumnIncreasing } from "lucide-react";
+import { ChartColumnIncreasing, Undo2 } from "lucide-react";
 
 const InvestorDetailsPage = () => {
   /* HOOKS
@@ -58,34 +58,25 @@ const InvestorDetailsPage = () => {
       <PageTitle
         title={record.usuario.nombre + " " + record.usuario.apellidos}
       />
-      <div className="flex flex-col gap-4">
-        <UserHeader
-          userInfo={record.usuario}
-          changeEmail={false}
-          className="h-32 sm:h-40"
-        >
-          <div className="absolute top-0 left-0 w-full h-full p-4 lg:p-10">
-            <Link
-              to={`/${user.user_metadata.role}/investors`}
-              className={buttonVariants({
-                variant: "link",
-                className: "text-white !p-0",
-              })}
-            >
-              <ArrowLeft className="size-4" /> Regresar
-            </Link>
-          </div>
-        </UserHeader>
-        <Link
-          to={`/${user.user_metadata.role}/investors/${record.id}/analysis`}
-          className={buttonVariants({
-            variant: "theme",
-            className: "mx-auto sm:ml-4 lg:ml-14 w-fit",
-          })}
-        >
-          <ChartColumnIncreasing className="size-4" /> Ver análisis
-        </Link>
-      </div>
+      <UserHeader
+        userInfo={record.usuario}
+        changeEmail={false}
+        icon={ChartColumnIncreasing}
+        link={`/${user.user_metadata.role}/investors/${record.usuario.id}/analysis`}
+        buttonName="Ver análisis"
+      >
+        <div className="absolute top-0 left-0 w-full h-full p-4 lg:p-10">
+          <Link
+            to={`/${user.user_metadata.role}/investors`}
+            className={buttonVariants({
+              variant: "link",
+              className: "text-white !p-0",
+            })}
+          >
+            <Undo2 className="size-4" /> Regresar
+          </Link>
+        </div>
+      </UserHeader>
       <div className="mt-10 md:pb-10 lg:px-10 w-full flex flex-col gap-16">
         {/* Información de inversionista */}
         <div className="grid lg:grid-cols-3 gap-x-2 gap-y-6">
