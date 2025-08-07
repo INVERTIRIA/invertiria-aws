@@ -22,23 +22,29 @@ function RecomendacionesCompra({ modelation, timeVectors, promedios }) {
   const promediosJuanLondoño = promedios.find((item) => item.nombre === "Juan Londoño");
   
   // Obtener data
-  const data = timeVectors?.valor_inmueble.map((item, index) => {
-    return {
-      mes: item[1],
-      "Precio del inmueble": item[2],
-      "Promedio ciudad": item[2] + item[2] * promediosCiudad.matriz[index][1] * 100,
-      "Promedio Juan Londoño": item[2] + item[2] * promediosJuanLondoño.matriz[index][1] * 100
-    };
-  });
-
-  // const data = timeVectors?.valorizacion.map((item, index) => {
+  // const data = timeVectors?.valor_inmueble.map((item, index) => {
   //   return {
   //     mes: item[1],
-  //     "Precio del inmueble": item[4] * 100,
-  //     "Promedio ciudad": promediosCiudad.matriz[index][1] * 100,
-  //     "Promedio Juan Londoño": promediosJuanLondoño.matriz[index][1] * 100
+  //     "Precio del inmueble": item[2],
+  //     "Promedio ciudad": item[2] + item[2] * promediosCiudad.matriz[index][1] * 100,
+  //     "Promedio Juan Londoño": item[2] + item[2] * promediosJuanLondoño.matriz[index][1] * 100
   //   };
   // });
+
+  let precioInmueble = 0;
+  let promedioCiudad = 0;
+  let promedioJuanLondoño = 0;
+  const data = timeVectors?.valorizacion.map((item, index) => {
+    precioInmueble = precioInmueble + item[4] * 100;
+    promedioCiudad = promedioCiudad + promediosCiudad.matriz[index][1] * 100;
+    promedioJuanLondoño = promedioJuanLondoño + promediosJuanLondoño.matriz[index][1] * 100;
+    return {
+      mes: item[1],
+      "Precio del inmueble": precioInmueble,
+      "Promedio ciudad": promedioCiudad,
+      "Promedio Juan Londoño": promedioJuanLondoño
+    };
+  });
 
   return (
     <div className="w-full max-sm:w-full h-[50vh]">
@@ -47,7 +53,7 @@ function RecomendacionesCompra({ modelation, timeVectors, promedios }) {
       >
         <ComposedChart
           data={data}
-          margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 80, bottom: 0 }}
+          margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 20, bottom: 0 }}
         >
           <CartesianGrid className="opacity-50" vertical={false} />
           <XAxis
@@ -58,15 +64,17 @@ function RecomendacionesCompra({ modelation, timeVectors, promedios }) {
           />
           <YAxis
             domain={['dataMin', 'auto']}
-            tickFormatter={(value) => parsePrice(value)}
+            // tickFormatter={(value) => parsePrice(value)}
+            tickFormatter={(value) => value + "%"}
             tickLine={false}
             tick={!isMobile}
             axisLine={{ stroke: "#CCCCCC", strokeWidth: 1 }}
           >
             {!isMobile && (
               <Label
-                value="Valor proyectado"
-                offset={-60}
+                // value="Valor proyectado"
+                value="Porcentaje de valorización"
+                offset={0}
                 style={{ textAnchor: "middle" }}
                 position="insideLeft"
                 angle="-90"
@@ -74,8 +82,8 @@ function RecomendacionesCompra({ modelation, timeVectors, promedios }) {
             )}
           </YAxis>
           <Tooltip
-            formatter={(value, name) => parsePrice(value)}
-            // formatter={(value, name) => value + "%"}
+            // formatter={(value, name) => parsePrice(value)}
+            formatter={(value, name) => value.toString().slice(0, 5) + "%"}
           />
           <Line
             dataKey="Precio del inmueble"
