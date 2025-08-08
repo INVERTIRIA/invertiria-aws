@@ -7,6 +7,7 @@ import {
   House,
   UserPen,
   UsersRound,
+  Waypoints,
 } from "lucide-react";
 
 export const roles = {
@@ -61,6 +62,11 @@ export const routes = {
       title: "Mis inversiones",
       url: "/user/investments",
       icon: ChartColumnIncreasing,
+    },
+    {
+      title: "Inversiones compartidas",
+      url: "/user/shared_investments",
+      icon: Waypoints,
     },
     {
       title: "Mi asesor",

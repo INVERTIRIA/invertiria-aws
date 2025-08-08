@@ -87,6 +87,10 @@ function AppRoutes() {
                 path="investments"
                 element={<UserPages.InvestmentsPage />}
               />
+              <Route
+                path="shared_investments"
+                element={<UserPages.SharedInvestmentsPage />}
+              />
               <Route path="settings">
                 <Route
                   path="change-email"

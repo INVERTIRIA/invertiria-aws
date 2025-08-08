@@ -1,32 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PageTitle from "../../../components/design/PageTitle";
-import { supabase } from "../../../supabase";
 import InvestmentsTable from "../../../components/tables/InvestmentsTable";
+import { supabase } from "../../../supabase";
 
-const InvestmentsPage = () => {
+const SharedInvestmentsPage = () => {
   // Hooks
   const [records, setRecords] = useState([]);
   const effectRan = useRef(false);
 
   // Functions
   const fetchRecords = async () => {
-    const res = await supabase
-      .from("modelaciones")
-      .select(
-        `
-        id,
-        titulo_modelacion,
-        modelo_de_negocio,
-        precio_de_compra,
-        precio_de_mercado,
-        tipo_inmueble,
-        estado_inmueble,
-        vigencia,        
-        created_at,
-        created_by(nombre, apellidos, email, img_perfil)
-        `
-      )
-      .order("created_at", { ascending: false });
+    const res = await supabase.rpc("get_shared_investments");
 
     if (res.error) return;
 
@@ -41,7 +25,7 @@ const InvestmentsPage = () => {
         return `${nombre} ${apellidos} ${email}`;
       },
       id: "created_by",
-      header: "Creado por",
+      header: "Invitado por",
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
           <img
@@ -68,7 +52,7 @@ const InvestmentsPage = () => {
   const filters = [
     {
       field: "created_by",
-      label: "Creado por",
+      label: "Invitado por",
     },
   ];
 
@@ -82,13 +66,15 @@ const InvestmentsPage = () => {
 
   return (
     <>
-      <PageTitle title="Análisis de inversiones globales" />
+      <PageTitle title="Inversiones compartidas" />
       <div className="flex flex-col gap-y-6 md:flex-row md:items-center justify-between">
         <div className="flex flex-col gap-1">
           <div className="text-gray-900 font-medium text-2xl">
-            Análisis de inversiones globales
+            Inversiones compartidas
           </div>
-          <p className="text-sm text-gray-700">Administrar inversiones</p>
+          <p className="text-sm text-gray-700">
+            Listado de inversiones compartidas
+          </p>
         </div>
       </div>
       <InvestmentsTable
@@ -100,4 +86,4 @@ const InvestmentsPage = () => {
   );
 };
 
-export default InvestmentsPage;
+export default SharedInvestmentsPage;
