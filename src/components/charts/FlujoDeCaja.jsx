@@ -21,13 +21,26 @@ function FlujoDeCaja({ flowsResult, fechaVenta }) {
   const isMobile = useIsMobile();
 
   // Obtener data
-  const data = flowsResult?.flujo_de_caja.map((item, index) => {
-    const fecha_de_venta = item[1] == fechaVenta ? item[4] : null;
+  // const data = flowsResult?.flujo_de_caja.map((item, index) => {
+  //   const fecha_de_venta = item[1] == fechaVenta ? item[4] : null;
+  //   return {
+  //     mes: item[1],
+  //     "Ingresos": item[2],
+  //     "Egresos": -item[3],
+  //     "Flujo neto": item[4],
+  //     "Fecha de venta": fecha_de_venta
+  //   };
+  // });
+
+  let flujos_de_caja = flowsResult?.flujos_de_caja[flowsResult.flujos_de_caja.length - 1];
+  flujos_de_caja[2].pop()
+  console.log(flujos_de_caja);
+  
+  const data = flujos_de_caja[2].map((item, index) => {
+    const fecha_de_venta = index == fechaVenta ? index : null;
     return {
-      mes: item[1],
-      "Ingresos": item[2],
-      "Egresos": -item[3],
-      "Flujo neto": item[4],
+      mes: index,
+      "Egresos": item,
       "Fecha de venta": fecha_de_venta
     };
   });
@@ -100,7 +113,7 @@ function FlujoDeCaja({ flowsResult, fechaVenta }) {
             dataKey="mes"
             stroke="#FB3D03"
             startIndex={0}
-            endIndex={240}
+            endIndex={235}
             height={30}
             tickFormatter={(value) => isMobile ? "" : value}
             className="custom-brush"

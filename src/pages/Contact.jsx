@@ -2,6 +2,9 @@ import { Container } from "../components/design/Container";
 import { Mail, Send } from "lucide-react";
 import { Link } from "react-router";
 
+import 'react-international-phone/style.css';
+import { PhoneInput } from 'react-international-phone';
+
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -42,11 +45,11 @@ const Contact = () => {
       message: "Campo obligatorio.",
     }),
     email: z.string().email({
-      message: "Email no valido.",
+      message: "Email inválido.",
     }),
-    phonenumber: z.string({ required_error: "Campo obligatorio." })
-      .regex(/^\d{10}$/, { message: "Debe tener 10 dígitos." })
-      .transform((val) => Number(val)),
+    phonenumber: z.string()
+      .min(1, { message: "Campo obligatorio." })
+      .regex(/^\+\d{1,3}\d{6,14}$/, { message: "Teléfono inválido." }),
     city: z.string().min(2, {
       message: "Campo obligatorio.",
     }),
@@ -168,8 +171,23 @@ const Contact = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Teléfono</FormLabel>
-                        <FormControl>
-                          <Input placeholder="" {...field} />
+                        <FormControl >
+                          <PhoneInput
+                            defaultCountry="co"
+                            value={field.value}
+                            onChange={field.onChange}
+                            style={{
+                              "--react-international-phone-border-radius": "8px",
+                              "--react-international-phone-border-color": form.formState.errors.phonenumber ? "#e7000b" : "#e5e5e5",
+                              boxShadow: "0 1px 2px 0 rgba(0,0,0,0.05)",
+                            }}
+                            inputStyle={{
+                              width: "100%",
+                            }}
+                            countrySelectorStyleProps={{
+                              buttonStyle: { paddingLeft: "5px", paddingRight: "5px" },
+                            }}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
