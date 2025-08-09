@@ -15,7 +15,7 @@ const AccordionItem = ({
       <button
         className={cn(
           "flex w-full items-center justify-between p-4 text-left text-white transition-colors",
-          isOpen ? "bg-invertiria-2 rounded-t-md" : `${bgColor} rounded-md`
+          isOpen ? "bg-invertiria-2 rounded-t-xl" : `${bgColor} rounded-xl`
         )}
         onClick={() => toggle(index)}
       >
@@ -23,7 +23,7 @@ const AccordionItem = ({
         {isOpen ? <ChevronUp size={20} /> : <Plus size={20} />}
       </button>
       {isOpen && (
-        <div className="bg-[#222222] p-4 text-white rounded-b-md">
+        <div className="bg-[#222222] p-4 text-white rounded-b-xl">
           <p className="text-sm sm:text-base">{answer}</p>
         </div>
       )}

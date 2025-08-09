@@ -27,8 +27,11 @@ import AuthorizationPage from "./pages/AuthorizationPage";
 import InactiveUserPage from "./pages/InactiveUserPage";
 import ChatBotButton from "./components/design/ChatBotButton";
 import AnalysisPage from "./pages/analysis/index";
-import Analisis from "./pages/Analisis";
+import Analysis from "./pages/Analysis";
 import CreateModelation from "./pages/CreateModelation";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Pricing from "./pages/Pricing";
 
 // Rutas de la aplicacion
 function AppRoutes() {
@@ -64,15 +67,17 @@ function AppRoutes() {
           <Route path="/" element={<HomePage />} />
           <Route path="/investment" element={<Investment />} />
           <Route path="/test" element={<Test />} />
-          <Route path="/analysis/:id" element={<Analisis />} />
+          <Route path="/analysis/:id" element={<Analysis />} />
           <Route path="/crear-modelacion" element={<CreateModelation />} />
-          <Route path="/charts" element={<Analisis />} />
           <Route path="/inactive" element={<InactiveUserPage />} />
           <Route path="/import" element={<ImportMatrizModel />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/access-link" element={<AccessLinkPage />} />
           <Route path="/authorization" element={<AuthorizationPage />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/pricing" element={<Pricing />} />
           {/* Analysis */}
           <Route
             path="/analysis/create"

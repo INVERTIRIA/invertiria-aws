@@ -50,7 +50,7 @@ function ValorDeCompra({ price, minPrice, maxPrice, location }) {
             color: "black",
           }}
         >
-          <span className="text-[11px] max-sm:text-[10px] font-normal">Valor Compra m²</span>
+          <span className="text-[11px] max-sm:text-[10px] font-normal">Valor m²</span>
           <span className="leading-none max-sm:text-[10px]">{parsePrice(price)}</span>{" "}
         </div>
       </div>
