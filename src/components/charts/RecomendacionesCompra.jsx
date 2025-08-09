@@ -31,16 +31,16 @@ function RecomendacionesCompra({ modelation, timeVectors, promedios }) {
   //   };
   // });
 
-  let precioInmueble = 0;
+  let inmueble = 0;
   let promedioCiudad = 0;
   let promedioJuanLondoño = 0;
   const data = timeVectors?.valorizacion.map((item, index) => {
-    precioInmueble = precioInmueble + item[4] * 100;
+    inmueble = inmueble + item[4] * 100;
     promedioCiudad = promedioCiudad + promediosCiudad.matriz[index][1] * 100;
     promedioJuanLondoño = promedioJuanLondoño + promediosJuanLondoño.matriz[index][1] * 100;
     return {
       mes: item[1],
-      "Precio del inmueble": precioInmueble,
+      "Inmueble": inmueble,
       "Promedio ciudad": promedioCiudad,
       "Promedio Juan Londoño": promedioJuanLondoño
     };
@@ -86,7 +86,7 @@ function RecomendacionesCompra({ modelation, timeVectors, promedios }) {
             formatter={(value, name) => value.toString().slice(0, 5) + "%"}
           />
           <Line
-            dataKey="Precio del inmueble"
+            dataKey="Inmueble"
             strokeWidth={1.5}
             stroke="#FB3D03"
             connectNulls
