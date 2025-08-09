@@ -1623,7 +1623,8 @@ const EighTeen = ({ form, ...props }) => {
 };
 
 const NineTeen = ({ form, ...props }) => {
-  const value = form.watch("vivienda_vis");
+  const viviendaVis = form.watch("vivienda_vis");
+  const estrato = form.watch("estrato");
 
   const tipoInmueble = form.watch("tipo_inmueble");
   const estadoInmueble = form.watch("estado_inmueble");
@@ -1651,7 +1652,92 @@ const NineTeen = ({ form, ...props }) => {
     effectRan.current = true;
   }, [tipoInmueble]);
 
+  useEffect(() => {
+    if (!viviendaVis) {
+      form.resetField("estrato");
+    }
+  }, [viviendaVis]);
+
   return (
+    <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
+      <FormField
+        name="vivienda_vis"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem className="space-y-3">
+            <FormControl>
+              <RadioGroup
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                className="grid grid-cols-2 gap-x-5 xs:gap-x-20"
+              >
+                <FormItem>
+                  <RadioGroupItem
+                    value={true}
+                    id="yes"
+                    className="flex items-center justify-center !py-5 !px-10"
+                  >
+                    <Like className="text-invertiria-2 size-11" />
+                    <p className="text-sm font-medium">Si</p>
+                  </RadioGroupItem>
+                </FormItem>
+                <FormItem>
+                  <RadioGroupItem
+                    value={false}
+                    id="not"
+                    className="flex items-center justify-center !py-5 !px-10"
+                  >
+                    <Deslike className="text-invertiria-2 size-11" />
+                    <p className="text-sm font-medium">No</p>
+                  </RadioGroupItem>
+                </FormItem>
+              </RadioGroup>
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      {viviendaVis && (
+        <FormField
+          name="estrato"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem className="w-full md:w-md">
+              <FormControl>
+                <StepInput
+                  {...field}
+                  type={"number"}
+                  inputMode="numeric"
+                  placeholder="Ingresa el estrato"
+                  min={0}
+                  max={100}
+                  onChange={(e) => {
+                    let value = parseFloat(e.target.value) || "";
+                    if (isNaN(value)) field.onChange("");
+
+                    // Validar que esté entre 0 y 100
+                    if (value > 100) value = 100;
+                    if (value < 0) value = 0;
+
+                    field.onChange(value);
+                  }}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+      )}
+      <ButtonNext
+        {...props}
+        disabled={
+          viviendaVis === undefined ||
+          viviendaVis === null ||
+          (viviendaVis && !estrato)
+        }
+      />
+    </div>
+  );
+
+  /* return (
     <div className="flex flex-col items-center gap-10 md:gap-14">
       <FormField
         name="vivienda_vis"
@@ -1691,7 +1777,7 @@ const NineTeen = ({ form, ...props }) => {
       />
       <ButtonNext {...props} disabled={value === undefined || value === null} />
     </div>
-  );
+  ); */
 };
 
 const Twenty = ({ form, ...props }) => {
@@ -2392,7 +2478,7 @@ const TwentySix = ({ form, ...props }) => {
                 {...field}
                 type={"text"}
                 inputMode="numeric"
-                placeholder="Ingresa el valor predial"
+                placeholder="Ingresa el valor predial anual"
                 value={field.value ? parsePrice(field.value) : ""}
                 onChange={formatCurrencyInput(field)}
               />
@@ -2661,6 +2747,15 @@ const TwentyNine = ({ form, analysisInstance, ...props }) => {
       return;
     }
 
+    if (
+      tipoInmueble !== tipoInmuebleConst.hotel &&
+      titularidad === titularidadConst.participacionFiduciaria
+    ) {
+      form.setValue("renta", 1);
+      props.setStep(30);
+      return;
+    }
+
     props.setStep(30);
     return;
   }, []);
@@ -2704,10 +2799,15 @@ const TwentyNine = ({ form, analysisInstance, ...props }) => {
 const Thirty = ({ form, ...props }) => {
   const value = form.watch("canon_de_arrendamiento");
   const modeloNegocio = form.watch("modelo_de_negocio");
+  const titularidad = form.watch("titularidad");
   const renta = form.watch("renta");
 
   const precioCompra = form.watch("precio_de_compra");
   const valorMejoras = form.watch("valor_mejoras");
+
+  const [placeholder, setPlaceholder] = useState(
+    "Ingresa el canon de arrendamiento"
+  );
 
   const effectRan = useRef(false);
 
@@ -2722,7 +2822,17 @@ const Thirty = ({ form, ...props }) => {
 
   useEffect(() => {
     if (effectRan.current) {
-      const canonArrendamiento = (precioCompra + valorMejoras) * 0.005;
+      const factor =
+        titularidad === titularidadConst.participacionFiduciaria
+          ? 0.009
+          : 0.005;
+
+      setPlaceholder(
+        titularidad === titularidadConst.participacionFiduciaria
+          ? "Ingresa el valor neto"
+          : "Ingresa el canon de arrendamiento"
+      );
+      const canonArrendamiento = (precioCompra + valorMejoras) * factor;
 
       form.setValue("canon_de_arrendamiento", canonArrendamiento);
     }
@@ -2740,7 +2850,7 @@ const Thirty = ({ form, ...props }) => {
                 {...field}
                 type={"text"}
                 inputMode="numeric"
-                placeholder="Ingresa el canon de arrendamiento"
+                placeholder={placeholder}
                 value={field.value ? parsePrice(field.value) : ""}
                 onChange={formatCurrencyInput(field)}
               />
@@ -2797,7 +2907,7 @@ const ThirtyOne = ({ form, ...props }) => {
                 {...field}
                 type={"text"}
                 inputMode="numeric"
-                placeholder="Ingresa el valor por noche"
+                placeholder="Ingresa el valor mensual"
                 value={field.value ? parsePrice(field.value) : ""}
                 onChange={formatCurrencyInput(field)}
               />
@@ -2897,35 +3007,37 @@ const ThirtyTwo = ({ form, ...props }) => {
           </FormItem>
         )}
       />
-      <FormField
-        name="porcentaje_del_operador"
-        control={form.control}
-        render={({ field }) => (
-          <FormItem className="w-full md:w-md">
-            <FormControl>
-              <StepInput
-                {...field}
-                type={"number"}
-                inputMode="numeric"
-                placeholder="Ingresa el % de costos sobre los ingresos"
-                min={0}
-                max={100}
-                onChange={(e) => {
-                  let value = parseFloat(e.target.value);
+      {operador && (
+        <FormField
+          name="porcentaje_del_operador"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem className="w-full md:w-md">
+              <FormControl>
+                <StepInput
+                  {...field}
+                  type={"number"}
+                  inputMode="numeric"
+                  placeholder="Ingresa el % de costos sobre los ingresos"
+                  min={0}
+                  max={100}
+                  onChange={(e) => {
+                    let value = parseFloat(e.target.value);
 
-                  if (isNaN(value)) field.onChange("");
+                    if (isNaN(value)) field.onChange("");
 
-                  // Validar que esté entre 0 y 100
-                  if (value > 100) value = 100;
-                  if (value < 0) value = 0;
+                    // Validar que esté entre 0 y 100
+                    if (value > 100) value = 100;
+                    if (value < 0) value = 0;
 
-                  field.onChange(value);
-                }}
-              />
-            </FormControl>
-          </FormItem>
-        )}
-      />
+                    field.onChange(value);
+                  }}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+      )}
       <ButtonNext
         {...props}
         disabled={
@@ -3074,7 +3186,7 @@ const ThirtyFour = ({ form, ...props }) => {
   );
 };
 
-const ThirtyFive = ({ form, ...props }) => {
+/* const ThirtyFive = ({ form, ...props }) => {
   const value = form.watch("estrato");
   const viviendaVis = form.watch("vivienda_vis");
 
@@ -3118,9 +3230,9 @@ const ThirtyFive = ({ form, ...props }) => {
       <ButtonNext {...props} disabled={!value} />
     </div>
   );
-};
+}; */
 
-const ThirtySix = () => {
+const ThirtyFive = () => {
   return (
     <div className="w-[95%] flex flex-col items-center gap-10 md:gap-14">
       <Button type="submit" variant="theme">
@@ -3553,7 +3665,7 @@ const Steps = ({ stepIndex, setStep, setStepHistory, skippedStep, form }) => {
       );
       break;
 
-    case 35:
+    /* case 35:
       StepActive = (
         <ThirtyFive
           form={form}
@@ -3563,11 +3675,11 @@ const Steps = ({ stepIndex, setStep, setStepHistory, skippedStep, form }) => {
           analysisInstance={analysisInstance}
         />
       );
-      break;
+      break; */
 
-    case 36:
+    case 35:
       StepActive = (
-        <ThirtySix
+        <ThirtyFive
           form={form}
           setStep={setStep}
           stepIndex={stepIndex}

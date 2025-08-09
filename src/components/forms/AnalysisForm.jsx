@@ -168,10 +168,16 @@ const AnalysisForm = ({ step, setStep, setIsSubmitting }) => {
     <div className="flex-1 flex flex-col items-center p-6 lg:px-4 lg:py-2 min-h-0 overflow-y-auto">
       <div className="w-full pb-10 sm:pb-0 flex flex-col gap-10 md:gap-14 items-center justify-center flex-1 rounded-tr-2xl">
         {/* Pregunta */}
-        <Question stepIndex={step} />
+        <Question stepIndex={step} form={form} />
         {/* Form */}
         <Form {...form}>
           <form
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && step !== 35) {
+                // 35 = último paso
+                e.preventDefault();
+              }
+            }}
             onSubmit={onSubmit}
             className="w-full flex flex-col items-center gap-14"
           >

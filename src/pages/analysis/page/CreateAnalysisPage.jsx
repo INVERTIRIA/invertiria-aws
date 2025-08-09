@@ -91,7 +91,9 @@ const CreateAnalysisPage = () => {
             className="size-24"
           />
           <div className="flex flex-col items-center gap-2">
-            <h3 className="text-4xl font-bold">Preparando su análisis</h3>
+            <h3 className="text-4xl font-bold text-center">
+              Preparando su análisis
+            </h3>
             <p className="text-center text-gray-500 max-w-xs">
               Por favor, espere mientras se prepara su análisis.
             </p>

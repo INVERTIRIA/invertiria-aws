@@ -87,9 +87,14 @@ function AppRoutes() {
           <Route element={<ProtectedRoute roles={[roles.user]} />}>
             <Route path="/user" element={<DashboardLayout />}>
               <Route path="dashboard" element={<UserPages.DashboardPage />} />
+              <Route path="advisor" element={<UserPages.AdvisorPage />} />
               <Route
                 path="investments"
                 element={<UserPages.InvestmentsPage />}
+              />
+              <Route
+                path="shared_investments"
+                element={<UserPages.SharedInvestmentsPage />}
               />
               <Route path="settings">
                 <Route
@@ -105,6 +110,10 @@ function AppRoutes() {
               <Route path="dashboard" element={<UserPages.DashboardPage />} />
               <Route path="companies" element={<AdminPages.CompaniesPage />} />
               <Route path="advisors" element={<AdminPages.AdvisorsPage />} />
+              <Route
+                path="import_data"
+                element={<AdminPages.ImportDataPage />}
+              />
               <Route
                 path="investments"
                 element={<AdminPages.InvestmentsPage />}
