@@ -2,14 +2,29 @@ import React, { useEffect, useRef, useState } from "react";
 import PageTitle from "../../../components/design/PageTitle";
 import { supabase } from "../../../supabase";
 import InvestmentsTable from "../../../components/tables/InvestmentsTable";
+import { useAuth } from "../../../contexts/AuthContext";
+import { roles } from "../../../constants";
 
 const InvestmentsPage = () => {
+  const { user } = useAuth();
+
   // Hooks
   const [records, setRecords] = useState([]);
   const effectRan = useRef(false);
 
   // Functions
   const fetchRecords = async () => {
+    const role = user.user_metadata.role;
+
+    if (role !== roles.admin) {
+      const res = await supabase.rpc("get_advisor_investments");
+
+      if (res.error) return;
+
+      setRecords(res.data);
+      return;
+    }
+
     const res = await supabase
       .from("modelaciones")
       .select(

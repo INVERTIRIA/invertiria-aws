@@ -151,6 +151,10 @@ function AppRoutes() {
               <Route path="dashboard" element={<UserPages.DashboardPage />} />
               <Route path="advisors" element={<AdminPages.AdvisorsPage />} />
               <Route
+                path="investments"
+                element={<AdminPages.InvestmentsPage />}
+              />
+              <Route
                 path="advisors/:id"
                 element={<AdminPages.AdvisorDetailsPage />}
               />

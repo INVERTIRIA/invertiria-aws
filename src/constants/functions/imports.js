@@ -50,10 +50,6 @@ export const formatRecordsML = async (data) => {
 };
 
 export const formatRecordsPI = async (data) => {
-  /* console.log(data);
-
-  return false; */
-
   const ciudadIds = [
     {
       name: "Medellín",
@@ -70,8 +66,8 @@ export const formatRecordsPI = async (data) => {
   data.forEach((item) => {
     item.edad_propiedad = Number(item.edad_propiedad);
     item.etapa_proyecto = Number(item.etapa_proyecto);
-    item.vivienda_vis = Boolean(item.vivienda_vis);
-    item.licencia_construccion = Boolean(item.licencia_construccion);
+    item.vivienda_vis = item.vivienda_vis === "SI";
+    item.licencia_construccion = item.licencia_construccion === "SI";
   });
 
   for (const item of data) {
@@ -111,10 +107,6 @@ export const formatRecordsVR = async (data) => {
 
   const records = [];
 
-  /*  console.log(data);
-
-  return false; */
-
   for (const item of data) {
     const { ciudad, ...rest } = item;
     const ciudadId = ciudadIds.find((c) => c.name === ciudad)?.id;
@@ -131,10 +123,6 @@ export const formatRecordsVR = async (data) => {
     }
   }
 
-  /* console.log(records);
-
-  return false; */
-
   const { data: res, error } = await supabase
     .from("datos_referencia")
     .upsert(records, {
@@ -148,8 +136,57 @@ export const formatRecordsVR = async (data) => {
   return true;
 };
 
+export const formatRecordsPR = async (data) => {
+  const records = new Map();
+
+  data.forEach((item) => {
+    const key = item.nombre;
+
+    if (!records.has(key)) {
+      records.set(key, {
+        nombre: item.nombre,
+        matriz: [],
+      });
+    }
+
+    records
+      .get(key)
+      .matriz.push([
+        Number(item.mes_proyecto),
+        Number(item.precio_promedio_m2),
+        Number(item.varianza_precio_promedio_m2),
+        parseDecimal(item.valorizacion_promedio),
+        parseDecimal(item.varianza_valorizacion_promedio),
+      ]);
+  });
+
+  // Si necesitas convertirlo a un array
+  const result = Array.from(records.values());
+
+  const { data: res, error } = await supabase
+    .from("promedios")
+    .upsert(result, {
+      onConflict: "nombre",
+      ignoreDuplicates: false,
+    })
+    .select();
+
+  if (error || !res) throw new Error("Error al importar promedios");
+
+  return true;
+};
+
 export const getExpectedHeadersByType = (type) => {
   switch (type) {
+    case "promedios":
+      return [
+        "nombre",
+        "mes_proyecto",
+        "precio_promedio_m2",
+        "varianza_precio_promedio_m2",
+        "valorizacion_promedio",
+        "varianza_valorizacion_promedio",
+      ];
     case "matriz_modelo":
       return [
         "ciudad",

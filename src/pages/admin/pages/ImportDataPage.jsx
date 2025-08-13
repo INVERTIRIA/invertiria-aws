@@ -4,6 +4,7 @@ import PageTitle from "../../../components/design/PageTitle";
 import ImportDataForm from "../components/forms/ImportDataForm";
 import { supabase } from "../../../supabase";
 import ImportDataTable from "../../../components/tables/ImportDataTable";
+import ExportCsvFormat from "../components/ExportCsvFormat";
 
 const ImportDataPage = () => {
   // Hooks
@@ -34,17 +35,20 @@ const ImportDataPage = () => {
             Carga de datos
           </div>
           <p className="text-sm text-gray-700">
-            Importación de datos (Matriz ML, Proyectos Inmobiliarios, Valores de
-            referencia)
+            Importación de datos (Matriz ML, Proyectos Inmobiliarios, Datos de
+            referencia y Promedios)
           </p>
         </div>
-        <AddRecordModal
-          title="Importar datos"
-          description="Seleccione la ubicación del archivo"
-          buttonName="Importar datos"
-        >
-          <ImportDataForm onSuccess={fetchRecords} />
-        </AddRecordModal>
+        <div className="flex flex-col 2xs:flex-row items-center gap-2">
+          <ExportCsvFormat />
+          <AddRecordModal
+            title="Importar datos"
+            description="Seleccione la ubicación del archivo"
+            buttonName="Importar datos"
+          >
+            <ImportDataForm onSuccess={fetchRecords} />
+          </AddRecordModal>
+        </div>
       </div>
       <ImportDataTable records={records} />
     </>

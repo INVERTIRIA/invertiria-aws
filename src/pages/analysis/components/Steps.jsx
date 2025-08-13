@@ -1,7 +1,7 @@
 import { supabase } from "../../../supabase";
 import { cn } from "@/lib/utils";
 import { es } from "date-fns/locale";
-import { format, parseISO } from "date-fns";
+import { addMonths, format, parseISO } from "date-fns";
 
 // Hooks
 import { useEffect, useRef, useState } from "react";
@@ -1191,7 +1191,8 @@ const ThirTeen = ({ form, ...props }) => {
       <ButtonNext
         {...props}
         disabled={
-          !pagosPersonalizados || valoresPagos.length < pagosPersonalizados
+          pagosPersonalizados !== 0 &&
+          (!pagosPersonalizados || valoresPagos.length < pagosPersonalizados)
         }
       />
     </div>
@@ -2057,6 +2058,7 @@ const TwentyOne = ({ form, ...props }) => {
 const TwentyTwo = ({ form, ...props }) => {
   const fechaVenta = form.watch("fecha_prevista_venta");
   const fechaCompra = form.watch("fecha_compra");
+  const estadoInmueble = form.watch("estado_inmueble");
 
   const vigencia = form.watch("vigencia");
 
@@ -2120,6 +2122,15 @@ const TwentyTwo = ({ form, ...props }) => {
                       ? format(date, "yyyy-MM-dd")
                       : "";
                     field.onChange(formattedDate); // Se almacena el string "yyyy-MM-dd"
+
+                    // Validar si es usado
+                    if (estadoInmueble === "Usado") {
+                      const formattedDate2 = format(
+                        addMonths(date, 2),
+                        "yyyy-MM-dd"
+                      );
+                      form.setValue("fecha_prevista_entrega", formattedDate2);
+                    }
 
                     togglePopover("fecha_compra");
                   }}
