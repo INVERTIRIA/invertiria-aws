@@ -102,17 +102,17 @@ function Header() {
                   </Link>
                 </li>
                 <li>
-                  <Link className="text-black hover:text-invertiria-1">
+                  <Link to={"/about"} className="text-black hover:text-invertiria-1">
                     Quienes Somos
                   </Link>
                 </li>
                 <li>
-                  <Link className="text-black hover:text-invertiria-1">
+                  <Link to={"/contact"} className="text-black hover:text-invertiria-1">
                     Contacto
                   </Link>
                 </li>
                 <li>
-                  <Link className="text-black hover:text-invertiria-1">
+                  <Link to={"/pricing"} className="text-black hover:text-invertiria-1">
                     Precios
                   </Link>
                 </li>

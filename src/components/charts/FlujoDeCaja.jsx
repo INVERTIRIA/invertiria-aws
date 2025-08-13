@@ -26,20 +26,34 @@ function FlujoDeCaja({ flowsResult, fechaVenta }) {
     return {
       mes: item[1],
       "Ingresos": item[2],
-      "Egresos": item[3],
+      "Egresos": -item[3],
       "Flujo neto": item[4],
       "Fecha de venta": fecha_de_venta
     };
   });
 
+  // let flujos_de_caja = flowsResult?.flujos_de_caja[flowsResult.flujos_de_caja.length - 1];
+  // flujos_de_caja[2].pop()
+  // console.log(flujos_de_caja);
+  
+  // const data = flujos_de_caja[2].map((item, index) => {
+  //   const fecha_de_venta = index == fechaVenta ? index : null;
+  //   return {
+  //     mes: index,
+  //     "Egresos": item,
+  //     "Fecha de venta": fecha_de_venta
+  //   };
+  // });
+
   return (
-    <div className="w-[100%] h-[50vh] lg:w-[60%]">
+    <div className="w-full max-sm:w-full h-[50vh]">
       <ResponsiveContainer
         className={"flex aspect-video justify-center text-xs"}
       >
         <ComposedChart
           data={data}
           margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 80, bottom: 0 }}
+          stackOffset="sign"
         >
           <CartesianGrid className="opacity-50" vertical={false} />
           <XAxis
@@ -74,11 +88,11 @@ function FlujoDeCaja({ flowsResult, fechaVenta }) {
               }
             }}
           />
-          <Bar dataKey="Egresos" stackId="a" fill="#FB3D03" />
-          <Bar dataKey="Ingresos" stackId="a" fill="#fc8f00" />
+          <Bar dataKey="Egresos" stackId="b" fill="red" barSize='1%' />
+          <Bar dataKey="Ingresos" stackId="a" fill="LimeGreen" barSize='1%' />
           <Line
             dataKey="Flujo neto"
-            strokeWidth={1.5}
+            strokeWidth={1.7}
             stroke="#000000"
             connectNulls
             dot={false}
@@ -99,7 +113,7 @@ function FlujoDeCaja({ flowsResult, fechaVenta }) {
             dataKey="mes"
             stroke="#FB3D03"
             startIndex={0}
-            endIndex={60}
+            endIndex={240}
             height={30}
             tickFormatter={(value) => isMobile ? "" : value}
             className="custom-brush"

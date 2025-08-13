@@ -213,7 +213,7 @@ const HomePage = () => {
         className={"flex flex-col gap-10 md:gap-20 items-center my-20 sm:my-40"}
       >
         <div className="w-full flex flex-col items-center text-center gap-9">
-          <h2 className="h2 !max-w-none">La nueva era de las inversiones</h2>
+          <h2 className="h2 !max-w-none">La nueva era de las Inversiones</h2>
           <p className="sm:text-2xl text-gray-700">
             Toma decisiones informadas con análisis financieros precisos,
             proyecciones de rentabilidad confiables y evaluaciones de riesgo
@@ -223,8 +223,8 @@ const HomePage = () => {
             Toma decisiones informadas con análisis financieros precisos, proyecciones de rentabilidad confiables y evaluaciones de riesgo personalizadas para tu perfil de inversionista.
           </p> */}
         </div>
-        <div className="flex flex-col md:flex-row items-center md:h-[400px] gap-8">
-          <div className="w-full xl:w-80 h-full bg-zinc-100/50 border-4 border-orange-700/50 flex flex-col gap-4 rounded-4xl p-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 items-center gap-8">
+          <div className="max-w-85 xl:w-75 h-full mx-auto bg-zinc-100/50 border-4 border-orange-700/50 flex flex-col gap-4 rounded-4xl p-4">
             <img
               className="w-full md:h-40 rounded-[30px]"
               src="/assets/images/home/feature-1.png"
@@ -237,7 +237,7 @@ const HomePage = () => {
               rentabilidad basadas en datos reales del mercado colombiano.
             </p>
           </div>
-          <div className="w-full xl:w-[400.07px] h-full bg-zinc-100/50 border-4 border-invertiria-2 flex flex-col gap-4 rounded-4xl p-4">
+          <div className="max-w-85 xl:w-75 h-full mx-auto bg-zinc-100/50 border-4 border-invertiria-2 flex flex-col gap-4 rounded-4xl p-4">
             <img
               className="w-full md:h-40 rounded-[30px]"
               src="/assets/images/home/feature-2.png"
@@ -260,7 +260,7 @@ const HomePage = () => {
               />
             </Link>
           </div>
-          <div className="w-full xl:w-80 h-full bg-zinc-100/50 border-4 border-orange-700/50 flex flex-col gap-4 rounded-4xl p-4">
+          <div className="max-w-85 xl:w-75 h-full mx-auto bg-zinc-100/50 border-4 border-orange-700/50 flex flex-col gap-4 rounded-4xl p-4">
             <img
               className="w-full h-40 rounded-[30px]"
               src="/assets/images/home/feature-4.jpg"
@@ -271,7 +271,7 @@ const HomePage = () => {
               identifica las mejores oportunidades para tu perfil.
             </p>
           </div>
-          <div className="w-full xl:w-80 h-full bg-zinc-100/50 border-4 border-orange-700/50 flex flex-col gap-4 rounded-4xl p-4">
+          <div className="max-w-85 xl:w-75 h-full mx-auto bg-zinc-100/50 border-4 border-orange-700/50 flex flex-col gap-4 rounded-4xl p-4">
             <img
               className="w-full h-40 rounded-[30px]"
               src="/assets/images/home/feature-3.png"
@@ -382,10 +382,10 @@ const HomePage = () => {
         <div className="w-full flex flex-col items-center text-center gap-9">
           <h2 className="h2 !max-w-[100%] sm:-mb-10 sm:mt-10 my-10">Todos los Modelos de Inversión Inmobiliaria</h2>
         </div>
-        <div className="flex flex-col md:flex-row items-center justify-center md:h-[400px] gap-8 text-center max-sm:w-[66%]">
-          <div className="w-full xl:w-100 h-64 items-center justify-center bg-white border-1 border-invertiria-2 flex flex-col gap-4 rounded-2xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.20)]">
-            <div className="w-20 h-20 flex items-center justify-center">
-              <ComprarVender className="text-invertiria-2 size-16" />
+        <div className="flex flex-col md:flex-row items-center justify-center md:h-[400px] gap-8 text-center max-sm:w-[80%]">
+          <div className="w-full xl:w-100 lg:h-64 h-72 items-center justify-center bg-white border-2 border-invertiria-2/60 flex flex-col gap-4 rounded-3xl p-6 shadow-md shadow-gray-200 hover:scale-102 hover:shadow-2xl hover:shadow-invertiria-2/30 hover:border-invertiria-2 transition-all">
+            <div className="w-24 h-24 flex items-center justify-center bg-invertiria-2/10 rounded-full">
+              <ComprarVender className="text-invertiria-2 size-14" />
             </div>
             <h3 className="text-xl font-semibold">
               Comprar para Vender
@@ -394,9 +394,9 @@ const HomePage = () => {
               Optimización de márgenes y timing
             </p>
           </div>
-          <div className="w-full xl:w-100 h-64 items-center justify-center md:mt-10 bg-white border-1 border-invertiria-2 flex flex-col gap-4 rounded-2xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.20)]">
-            <div className="w-20 h-20 flex items-center justify-center">
-              <RentaTradicional className="text-invertiria-2 size-16" />
+          <div className="w-full xl:w-100 lg:h-64 h-72 items-center justify-center md:mt-10 bg-white border-2 border-invertiria-2/60 flex flex-col gap-4 rounded-3xl p-6 shadow-md shadow-gray-200 hover:scale-102 hover:shadow-2xl hover:shadow-invertiria-2/30 hover:border-invertiria-2 transition-all">
+            <div className="w-24 h-24 flex items-center justify-center bg-invertiria-2/10 rounded-full">
+              <RentaTradicional className="text-invertiria-2 size-14" />
             </div>
             <h3 className="text-xl font-semibold ">
               Renta Tradicional
@@ -405,22 +405,22 @@ const HomePage = () => {
               Evaluación de ingresos por arrendamiento
             </p>
           </div>
-          <div className="w-full xl:w-100 h-64 items-center justify-center bg-white border-1 border-invertiria-2 flex flex-col gap-4 rounded-2xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.20)]">
-            <div className="w-20 h-20 flex items-center justify-center">
-              <RentaCorta className="text-invertiria-2 size-16" />
+          <div className="w-full xl:w-100 lg:h-64 h-72 items-center justify-center bg-white border-2 border-invertiria-2/60 flex flex-col gap-4 rounded-3xl p-6 shadow-md shadow-gray-200 hover:scale-102 hover:shadow-2xl hover:shadow-invertiria-2/30 hover:border-invertiria-2 transition-all">
+            <div className="w-24 h-24 flex items-center justify-center bg-invertiria-2/10 rounded-full">
+              <RentaCorta className="text-invertiria-2 size-14" />
             </div>
             <h3 className="text-xl font-semibold">
-              Renta Corta/ Renta Turística 
+              Renta Corta/ Renta Turística
             </h3>
             <p className="text-sm text-gray-700">
               Análisis especializado para Airbnb y similares
             </p>
           </div>
         </div>
-        <div className="flex flex-col md:flex-row items-center justify-center md:h-[400px] gap-8 md:-mt-30 text-center xl:w-full w-[66%]">
-          <div className="w-full xl:w-100 h-64 items-center justify-center bg-white border-1 border-invertiria-2 flex flex-col gap-4 rounded-2xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.20)]">
-            <div className="w-20 h-20 flex items-center justify-center">
-              <Flipping className="text-invertiria-2 size-16" />
+        <div className="flex flex-col md:flex-row items-center justify-center md:h-[400px] gap-8 md:-mt-30 text-center xl:w-full md:w-[66%] w-[80%]">
+          <div className="w-full xl:w-100 lg:h-64 h-72 items-center justify-center bg-white border-2 border-invertiria-2/60 flex flex-col gap-4 rounded-3xl p-6 shadow-md shadow-gray-200 hover:scale-102 hover:shadow-2xl hover:shadow-invertiria-2/30 hover:border-invertiria-2 transition-all">
+            <div className="w-24 h-24 flex items-center justify-center bg-invertiria-2/10 rounded-full">
+              <Flipping className="text-invertiria-2 size-14" />
             </div>
             <h3 className="text-xl font-semibold">
               Flipping
@@ -429,14 +429,14 @@ const HomePage = () => {
               Venta rápida y grandes ganancias
             </p>
           </div>
-          <div className="w-full xl:w-100 h-64 items-center justify-center bg-white border-1 border-invertiria-2 flex flex-col gap-4 rounded-2xl p-6 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.20)]">
-            <div className="w-20 h-20 flex items-center justify-center">
-              <Engorde className="text-invertiria-2 size-16" />
+          <div className="w-full xl:w-100 lg:h-64 h-72 items-center justify-center bg-white border-2 border-invertiria-2/60 flex flex-col gap-4 rounded-3xl p-6 shadow-md shadow-gray-200 hover:scale-102 hover:shadow-2xl hover:shadow-invertiria-2/30 hover:border-invertiria-2 transition-all">
+            <div className="w-24 h-24 flex items-center justify-center bg-invertiria-2/10 rounded-full">
+              <Engorde className="text-invertiria-2 size-14" />
             </div>
             <h3 className="text-xl font-semibold">
               Engorde
             </h3>
-            <p className="text-sm">
+            <p className="text-sm text-gray-700">
               Potencial de crecimiento y rentabilidad
             </p>
           </div>
@@ -532,10 +532,10 @@ const HomePage = () => {
             <h2 className="text-white h2 text-center max-w-none md:text-left lg:max-w-3xl">
               ¿Listo para tu primera inversión inteligente?
             </h2>
-            <div className="flex flex-col md:flex-row items-center gap-4">
+            <div className="flex flex-col xl:flex-row items-center md:items-start gap-4">
               <Link
                 to="/analysis/create"
-                className="w-full sm:w-1/2 lg:w-fit group bg-invertiria-2 border border-invertiria-2 py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-transparent"
+                className="w-full sm:w-2/3 lg:w-fit group bg-invertiria-2 border border-invertiria-2 py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-transparent"
               >
                 <span className="group-hover:text-invertiria-2 uppercase text-sm text-white">
                   Comenzar Análisis Gratuito
@@ -545,7 +545,7 @@ const HomePage = () => {
                   className="text-white size-6 group-hover:stroke-invertiria-2"
                 />
               </Link>
-              <Link className="w-full sm:w-1/2 lg:w-fit group bg-transparent border border-white py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-invertiria-2 hover:border-invertiria-2">
+              <Link className="w-full sm:w-2/3 lg:w-fit group bg-transparent border border-white py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-invertiria-2 hover:border-invertiria-2">
                 <span className="uppercase text-sm text-white">
                   Agendar Demo Personalizado
                 </span>
