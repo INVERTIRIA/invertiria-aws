@@ -39,6 +39,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   formatRecordsML,
   formatRecordsPI,
+  formatRecordsPR,
   formatRecordsVR,
   getExpectedHeadersByType,
 } from "../../../../constants/functions/imports";
@@ -56,7 +57,8 @@ const ImportDataForm = ({ onOpenChange, onSuccess }) => {
   const options = [
     { value: "matriz_modelo", label: "Matriz Modelo" },
     { value: "proyectos_inmobiliarios", label: "Proyectos Inmobiliarios" },
-    { value: "datos_referencia", label: "Valores de Referencia" },
+    { value: "datos_referencia", label: "Datos de Referencia" },
+    { value: "promedios", label: "Promedios" },
   ];
 
   // Functions
@@ -104,11 +106,16 @@ const ImportDataForm = ({ onOpenChange, onSuccess }) => {
         complete: (result) => {
           try {
             const actualHeaders = result.meta.fields;
-
             const expectedHeaders = getExpectedHeadersByType(type);
 
+            // Columnas faltantes
             const missingHeaders = expectedHeaders.filter(
               (h) => !actualHeaders.includes(h)
+            );
+
+            // Columnas extra
+            const extraHeaders = actualHeaders.filter(
+              (h) => !expectedHeaders.includes(h)
             );
 
             if (missingHeaders.length > 0) {
@@ -116,6 +123,15 @@ const ImportDataForm = ({ onOpenChange, onSuccess }) => {
                 `Faltan las siguientes columnas: ${missingHeaders.join(", ")}`
               );
             }
+
+            if (extraHeaders.length > 0) {
+              return reject(
+                `El archivo contiene columnas no permitidas: ${extraHeaders.join(
+                  ", "
+                )}`
+              );
+            }
+
             const formattedData = handleFormatRecords(result.data, type);
             resolve(formattedData);
           } catch (error) {
@@ -137,6 +153,8 @@ const ImportDataForm = ({ onOpenChange, onSuccess }) => {
         return formatRecordsPI(data);
       case "datos_referencia":
         return formatRecordsVR(data);
+      case "promedios":
+        return formatRecordsPR(data);
       default:
         return [];
     }
@@ -190,7 +208,9 @@ const ImportDataForm = ({ onOpenChange, onSuccess }) => {
 
         return;
       } catch (error) {
-        setErrorToast(error);
+        const errorText =
+          error instanceof Error ? error.message : String(error);
+        setErrorToast(errorText);
         onOpenChange(false);
         return;
       }

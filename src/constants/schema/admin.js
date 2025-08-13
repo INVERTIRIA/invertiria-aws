@@ -55,7 +55,12 @@ export const companySchema = z.object({
 
 export const importDataSchema = z.object({
   tipo: z.enum(
-    ["matriz_modelo", "proyectos_inmobiliarios", "datos_referencia"],
+    [
+      "matriz_modelo",
+      "proyectos_inmobiliarios",
+      "datos_referencia",
+      "promedios",
+    ],
     {
       errorMap: () => ({
         message: "El tipo seleccionado no es válido.",

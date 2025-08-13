@@ -147,10 +147,6 @@ const questions = [
     description: "Ingrese el precio de venta del inmueble.",
   },
   {
-    title: "Estrato",
-    description: "Ingrese el estrato del inmueble.",
-  },
-  {
     title: "Enviar",
     description:
       "¿Estas listo para enviar la información para realizar el análisis?",

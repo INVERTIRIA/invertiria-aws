@@ -93,6 +93,8 @@ precisos y proyecciones de rentabilidad confiables.
 
 Si preguntan sobre cualquier otra cosa que no tenga relación con: Sobre temas inmobiliarios, sobre temas financieros (relacionados a inversiones) e InverTIRía, responde que no puedes proporcionar esa información.
 
+Responde de manera resumida y directa.
+
 ## Pregunta del usuario:
 ${userMessage}
 `;
@@ -104,9 +106,11 @@ ${userMessage}
         Authorization: `Bearer ${import.meta.env.VITE_OPENIA_KEY}`,
       },
       body: JSON.stringify({
-        model: "gpt-4o-mini",
+        model: "gpt-5-mini",
         messages: [{ role: "user", content: message }],
-        max_tokens: 600,
+        max_completion_tokens: 500,
+        verbosity: "low",
+        reasoning_effort: "minimal",
         temperature: 1,
       }),
     });
@@ -148,14 +152,14 @@ ${userMessage}
       {/* Chatbot Container */}
       <div
         className={`
-        relative bg-white rounded-2xl shadow-2xl border border-gray-200
+        relative bg-white rounded-3xl shadow-3xl 
         transition-all duration-500 ease-out transform
         ${isOpen ? "animate-in slide-in-from-bottom-8 fade-in-0" : ""}        
         w-80 sm:w-96
       `}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gradient-to-r from-invertiria-1/90 to-invertiria-2 text-white rounded-t-2xl">
+        <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gradient-to-r from-invertiria-1/90 to-invertiria-2 text-white rounded-t-3xl">
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
               <div className="w-4 h-4 bg-white rounded-full animate-pulse" />
@@ -191,7 +195,7 @@ ${userMessage}
                 >
                   <div
                     className={`
-                        max-w-[80%] p-3 rounded-2xl text-sm
+                        max-w-[80%] p-3 rounded-3xl text-sm
                         ${
                           message.isUser
                             ? "bg-gradient-to-r from-invertiria-1/90 to-invertiria-2 text-white rounded-br-sm"

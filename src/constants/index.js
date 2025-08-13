@@ -156,6 +156,11 @@ export const routes = {
       url: "/company/advisors",
       icon: BriefcaseBusiness,
     },
+    {
+      title: "Global inversiones",
+      url: "/company/investments",
+      icon: ChartColumnIncreasing,
+    },
   ],
   internal_advisor: [
     {

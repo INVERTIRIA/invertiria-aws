@@ -45,7 +45,7 @@ const AddRecordModal = ({
       <Drawer open={open} onOpenChange={setOpen}>
         <DrawerTrigger asChild>
           <Button className="w-full 2xs:w-auto font-light" variant="theme">
-            <Plus className="size-5" strokeWidth={1.5} /> Nuevo registro
+            <Plus className="size-5" strokeWidth={1.5} /> {buttonName}
           </Button>
         </DrawerTrigger>
         <DrawerContent className="flex max-h-[80vh] flex-col">
