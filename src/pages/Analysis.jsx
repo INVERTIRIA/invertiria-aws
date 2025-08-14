@@ -28,7 +28,6 @@ const Analisis = () => {
   const [modelation, setModelation] = useState(null);
   const [analysis, setAnalysis] = useState(null);
   const [promedios, setPromedios] = useState(null);
-  const [user, setUser] = useState(null);
   const language = localStorage.getItem("language");
 
   // Funcion obtener modelacion
@@ -36,13 +35,6 @@ const Analisis = () => {
     const { data: modelation, error } = await supabase.from("modelaciones").select("*, ciudad:ciudades(nombre), pais:paises(nombre)").eq("id", id).single();
     if (error) console.log(error);
     setModelation(modelation);
-  };
-
-  // Funcion obtener usuario
-  const getUser = async () => {
-    const { data: user, error } = await supabase.from("usuarios").select().eq("id", modelation?.usuario_id).single();
-    if (error) console.log(error);
-    setUser(user);
   };
 
   // Funcion obtener vectores temporales
@@ -88,12 +80,11 @@ const Analisis = () => {
 
   useEffect(() => {
     if (modelation) {
-      getUser()
       getPromedios()
     }
   }, [modelation]);
 
-  if (!modelation || !timeVectors || !flowsResult || !analysis || !user || !promedios) {
+  if (!modelation || !timeVectors || !flowsResult || !analysis || !promedios) {
     return (
       <Container classNameParent={"my-20"} className="flex flex-col gap-20">
         <DashboardSkeleton />
@@ -187,7 +178,7 @@ const Analisis = () => {
   let apalancamiento = Math.round(modelation.precio_de_compra / (modelation.precio_de_compra - credito_hipotecario));
 
   // Capacidad de endeudamiento
-  const maxEndeudamiento = (user?.ingresos_mensuales - user?.gastos_mensuales) * 0.4;
+  const maxEndeudamiento = (modelation?.perfil_inversionista?.ingresos_mensuales - modelation?.perfil_inversionista?.gastos_mensuales) * 0.4;
   const endeudamiento = timeVectors?.pagos_credito?.[0]?.[2];
 
   return (

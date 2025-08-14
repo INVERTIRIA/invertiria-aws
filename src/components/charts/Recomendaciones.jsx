@@ -191,7 +191,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
               <ComposedChart
                 syncId="syncId2"
                 data={dataROI}
-                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 35, bottom: 0 }}
+                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 45, bottom: 0 }}
               >
                 <CartesianGrid className="opacity-50" vertical={false} />
                 <XAxis
@@ -279,7 +279,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
             >
               <ComposedChart data={dataTIR.slice(startIndexBrush, endIndexBrush + 1)}
                 syncId="syncId2"
-                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 35, bottom: 0 }}
+                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 45, bottom: 0 }}
               >
                 <CartesianGrid
                   className="opacity-50"
@@ -360,7 +360,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
             >
               <ComposedChart
                 data={dataUtilidad.slice(startIndexBrush, endIndexBrush + 1)}
-                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 35, bottom: 0 }}
+                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 45, bottom: 0 }}
                 syncId="syncId2"
               >
                 <CartesianGrid className="opacity-50" vertical={false} />
