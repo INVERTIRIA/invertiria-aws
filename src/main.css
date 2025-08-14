@@ -213,3 +213,11 @@
   rx: 4;
   ry: 4;
 }
+
+.markdown-content p {
+  margin-bottom: 1em;
+}
+
+.strong-invertiria strong {
+  color: #FB3D03;
+}

@@ -1,4 +1,5 @@
-import { Lightbulb, Sparkles, Undo2 } from "lucide-react";
+import ReactMarkdown from 'react-markdown';
+import { Lightbulb, Sparkles, Undo2, Info } from "lucide-react";
 import { Container } from "../components/design/Container";
 import { TiempoDeCompra } from "../components/charts/TiempoDeCompra";
 import { ValorDeCompra } from "../components/charts/ValorDeCompra";
@@ -12,16 +13,16 @@ import { FlujoDeCaja } from "../components/charts/FlujoDeCaja";
 import IndicadoresDeRentabilidad from "../components/charts/IndicadoresDeRentabilidad";
 import Recomendaciones from "../components/charts/Recomendaciones";
 import { supabase } from "../supabase";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import DashboardSkeleton from "../components/design/DashboardSkeleton";
 import { parsePrice } from "../constants/functions";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router";
 import InfoAnalysisAccordion from "../components/InfoAnalysisAccordion";
 
 const Analisis = () => {
   let { id } = useParams();
+  const navigate = useNavigate();
   const [timeVectors, setTimeVectors] = useState(null);
   const [flowsResult, setFlowsResult] = useState(null);
   const [modelation, setModelation] = useState(null);
@@ -86,7 +87,7 @@ const Analisis = () => {
   }, []);
 
   useEffect(() => {
-    if (modelation) { 
+    if (modelation) {
       getUser()
       getPromedios()
     }
@@ -176,8 +177,14 @@ const Analisis = () => {
 
   // Apalancamiento
   const cuota_inicial = modelation?.cuota_inicial || 0;
-  const apalancamiento = Math.round(modelation.precio_de_compra / (modelation.precio_de_compra * cuota_inicial / 100));
-  const credito_hipotecario = Math.round(modelation.precio_de_compra - (modelation.precio_de_compra * cuota_inicial / 100))
+  let credito_hipotecario = Math.round(modelation.precio_de_compra - (modelation.precio_de_compra * cuota_inicial / 100))
+  // Si tiene pagos personalizados
+  if (modelation.pagos_personalizados) {
+    for (let i = 0; i < modelation.valor_pagos_personalizados.length; i++) {
+      credito_hipotecario = credito_hipotecario - modelation.valor_pagos_personalizados[i];
+    }
+  }
+  let apalancamiento = Math.round(modelation.precio_de_compra / (modelation.precio_de_compra - credito_hipotecario));
 
   // Capacidad de endeudamiento
   const maxEndeudamiento = (user?.ingresos_mensuales - user?.gastos_mensuales) * 0.4;
@@ -187,11 +194,9 @@ const Analisis = () => {
     <Container classNameParent={"-my-15"} className="flex flex-col gap-20">
 
       <div className="flex justify-between">
-        <Button variant="full_ghost" className="font-normal text-gray-600">
-          <Link to="/" className="flex items-center gap-2">
-            <Undo2 />
-            <span>Volver</span>
-          </Link>
+        <Button onClick={() => navigate(-1)} variant="full_ghost" className="flex items-center gap-2 font-normal text-gray-600">
+          <Undo2 />
+          <span>Volver</span>
         </Button>
       </div>
 
@@ -213,9 +218,11 @@ const Analisis = () => {
 
       {/* Analisis */}
       <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
-        <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-          {analysis.tiempos_del_proyecto.analisis_grafica[language]}
-        </p>
+        <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+          <ReactMarkdown>
+            {analysis.tiempos_del_proyecto.analisis_grafica[language]}
+          </ReactMarkdown>
+        </div>
         <div className="ml-auto flex gap-2 items-center">
           <Sparkles size={16} className="text-invertiria-2" />
           <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
@@ -234,18 +241,22 @@ const Analisis = () => {
             <p className="text-white text-xs opacity-70">Asesor financiero</p>
           </div>
         </div>
-        <p className="text-white text-sm leading-relaxed">
-          {analysis.tiempos_del_proyecto.conclusion[language]}
-        </p>
+        <div className="text-white text-sm leading-relaxed markdown-content">
+          <ReactMarkdown>
+            {analysis.tiempos_del_proyecto.conclusion[language]}
+          </ReactMarkdown>
+        </div>
         {/* Consejo */}
         <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
           <div className="flex items-center gap-2">
             <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
             <span className="text-gray-800 font-semibold text-sm">Consejo</span>
           </div>
-          <p className="text-sm text-gray-800 leading-relaxed">
-            {analysis.tiempos_del_proyecto.consejo[language]}
-          </p>
+          <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.tiempos_del_proyecto.consejo[language]}
+            </ReactMarkdown>
+          </div>
         </div>
         <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
@@ -266,9 +277,11 @@ const Analisis = () => {
       <div className="flex xl:flex-row flex-col items-center xl:gap-30 gap-10 -mt-8">
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
-          <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            {analysis.valor_de_compra.analisis_grafica_1[language]}
-          </p>
+          <div className="z-10 text-gray-800 text-sm font-medium leading-6 markwdown-content strong-invertiria">
+            <ReactMarkdown>
+              {analysis.valor_de_compra.analisis_grafica_1[language]}
+            </ReactMarkdown>
+          </div>
           <div className="ml-auto flex gap-2 items-center">
             <Sparkles size={16} className="text-invertiria-2" />
             <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
@@ -294,9 +307,11 @@ const Analisis = () => {
         </div>
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
-          <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            {analysis.valor_de_compra.analisis_grafica_2[language]}
-          </p>
+          <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+            <ReactMarkdown>
+              {analysis.valor_de_compra.analisis_grafica_2[language]}
+            </ReactMarkdown>
+          </div>
           <div className="ml-auto flex gap-2 items-center">
             <Sparkles size={16} className="text-invertiria-2" />
             <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
@@ -316,18 +331,22 @@ const Analisis = () => {
             <p className="text-white text-xs opacity-70">Asesor financiero</p>
           </div>
         </div>
-        <p className="text-white text-sm leading-relaxed">
-          {analysis.valor_de_compra.conclusion[language]}
-        </p>
+        <div className="text-white text-sm leading-relaxed markdown-content">
+          <ReactMarkdown>
+            {analysis.valor_de_compra.conclusion[language]}
+          </ReactMarkdown>
+        </div>
         {/* Consejo */}
         <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
           <div className="flex items-center gap-2">
             <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
             <span className="text-gray-800 font-semibold text-sm">Consejo</span>
           </div>
-          <p className="text-sm text-gray-800 leading-relaxed">
-            {analysis.valor_de_compra.consejo[language]}
-          </p>
+          <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.valor_de_compra.consejo[language]}
+            </ReactMarkdown>
+          </div>
         </div>
         <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
@@ -350,9 +369,11 @@ const Analisis = () => {
 
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
-          <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            {analysis.tiempo_de_compra.analisis_grafica[language]}
-          </p>
+          <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+            <ReactMarkdown>
+              {analysis.tiempo_de_compra.analisis_grafica[language]}
+            </ReactMarkdown>
+          </div>
           <div className="ml-auto flex gap-2 items-center">
             <Sparkles size={16} className="text-invertiria-2" />
             <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
@@ -372,18 +393,22 @@ const Analisis = () => {
             <p className="text-white text-xs opacity-70">Asesor financiero</p>
           </div>
         </div>
-        <p className="text-white text-sm leading-relaxed">
-          {analysis.tiempo_de_compra.conclusion[language]}
-        </p>
+        <div className="text-white text-sm leading-relaxed markdown-content">
+          <ReactMarkdown>
+            {analysis.tiempo_de_compra.conclusion[language]}
+          </ReactMarkdown>
+        </div>
         {/* Consejo */}
         <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
           <div className="flex items-center gap-2">
             <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
             <span className="text-gray-800 font-semibold text-sm">Consejo</span>
           </div>
-          <p className="text-sm text-gray-800 leading-relaxed">
-            {analysis.tiempo_de_compra.consejo[language]}
-          </p>
+          <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.tiempo_de_compra.consejo[language]}
+            </ReactMarkdown>
+          </div>
         </div>
         <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
@@ -406,9 +431,11 @@ const Analisis = () => {
 
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
-          <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            {analysis.recomendaciones_compra.analisis_grafica[language]}
-          </p>
+          <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+            <ReactMarkdown>
+              {analysis.recomendaciones_compra.analisis_grafica[language]}
+            </ReactMarkdown>
+          </div>
           <div className="ml-auto flex gap-2 items-center">
             <Sparkles size={16} className="text-invertiria-2" />
             <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
@@ -428,18 +455,22 @@ const Analisis = () => {
             <p className="text-white text-xs opacity-70">Asesor financiero</p>
           </div>
         </div>
-        <p className="text-white text-sm leading-relaxed">
-          {analysis.recomendaciones_compra.conclusion[language]}
-        </p>
+        <div className="text-white text-sm leading-relaxed markdown-content">
+          <ReactMarkdown>
+            {analysis.recomendaciones_compra.conclusion[language]}
+          </ReactMarkdown>
+        </div>
         {/* Consejo */}
         <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
           <div className="flex items-center gap-2">
             <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
             <span className="text-gray-800 font-semibold text-sm">Consejo</span>
           </div>
-          <p className="text-sm text-gray-800 leading-relaxed">
-            {analysis.recomendaciones_compra.consejo[language]}
-          </p>
+          <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.recomendaciones_compra.consejo[language]}
+            </ReactMarkdown>
+          </div>
         </div>
         <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
@@ -468,9 +499,11 @@ const Analisis = () => {
 
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
-          <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            {analysis.valor_de_venta.analisis_grafica[language]}
-          </p>
+          <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+            <ReactMarkdown>
+              {analysis.valor_de_venta.analisis_grafica[language]}
+            </ReactMarkdown>
+          </div>
           <div className="ml-auto flex gap-2 items-center">
             <Sparkles size={16} className="text-invertiria-2" />
             <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
@@ -490,18 +523,22 @@ const Analisis = () => {
             <p className="text-white text-xs opacity-70">Asesor financiero</p>
           </div>
         </div>
-        <p className="text-white text-sm leading-relaxed">
-          {analysis.valor_de_venta.conclusion[language]}
-        </p>
+        <div className="text-white text-sm leading-relaxed markdown-content">
+          <ReactMarkdown>
+            {analysis.valor_de_venta.conclusion[language]}
+          </ReactMarkdown>
+        </div>
         {/* Consejo */}
         <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
           <div className="flex items-center gap-2">
             <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
             <span className="text-gray-800 font-semibold text-sm">Consejo</span>
           </div>
-          <p className="text-sm text-gray-800 leading-relaxed">
-            {analysis.valor_de_venta.consejo[language]}
-          </p>
+          <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.valor_de_venta.consejo[language]}
+            </ReactMarkdown>
+          </div>
         </div>
         <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
@@ -518,23 +555,22 @@ const Analisis = () => {
         Valorización del inmueble
       </h2>
 
-      <div className="flex xl:flex-row flex-col items-center gap-10">
-        {/* Gráfica  */}
-        <div className="w-full xl:basis-2/3">
-          <TiempoDeVenta timeVectors={timeVectors} flowsResult={flowsResult} />
-        </div>
+      {/* Gráfica  */}
+      <TiempoDeVenta timeVectors={timeVectors} flowsResult={flowsResult} />
 
-        {/* Analisis */}
-        <div className="w-full xl:basis-1/3 flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
-          <p className="z-10 text-gray-800 text-sm font-medium leading-6">
+      {/* Analisis */}
+      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
+        <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+          <ReactMarkdown>
             {analysis.tiempo_de_venta.analisis_grafica[language]}
-          </p>
-          <div className="ml-auto flex gap-2 items-center">
-            <Sparkles size={16} className="text-invertiria-2" />
-            <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
-          </div>
+          </ReactMarkdown>
+        </div>
+        <div className="ml-auto flex gap-2 items-center">
+          <Sparkles size={16} className="text-invertiria-2" />
+          <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
         </div>
       </div>
+
       {/* Conclusión */}
       <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
@@ -548,18 +584,22 @@ const Analisis = () => {
             <p className="text-white text-xs opacity-70">Asesor financiero</p>
           </div>
         </div>
-        <p className="text-white text-sm leading-relaxed">
-          {analysis.tiempo_de_venta.conclusion[language]}
-        </p>
+        <div className="text-white text-sm leading-relaxed markdown-content">
+          <ReactMarkdown>
+            {analysis.tiempo_de_venta.conclusion[language]}
+          </ReactMarkdown>
+        </div>
         {/* Consejo */}
         <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
           <div className="flex items-center gap-2">
             <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
             <span className="text-gray-800 font-semibold text-sm">Consejo</span>
           </div>
-          <p className="text-sm text-gray-800 leading-relaxed">
-            {analysis.tiempo_de_venta.consejo[language]}
-          </p>
+          <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.tiempo_de_venta.consejo[language]}
+            </ReactMarkdown>
+          </div>
         </div>
         <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
@@ -611,9 +651,11 @@ const Analisis = () => {
 
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
-          <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            {analysis.indicadores_de_rentabilidad_venta.analisis_grafica[language]}
-          </p>
+          <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+            <ReactMarkdown>
+              {analysis.indicadores_de_rentabilidad_venta.analisis_grafica[language]}
+            </ReactMarkdown>
+          </div>
           <div className="ml-auto flex gap-2 items-center">
             <Sparkles size={16} className="text-invertiria-2" />
             <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
@@ -633,18 +675,22 @@ const Analisis = () => {
             <p className="text-white text-xs opacity-70">Asesor financiero</p>
           </div>
         </div>
-        <p className="text-white text-sm leading-relaxed">
-          {analysis.indicadores_de_rentabilidad_venta.conclusion[language]}
-        </p>
+        <div className="text-white text-sm leading-relaxed markdown-content">
+          <ReactMarkdown>
+            {analysis.indicadores_de_rentabilidad_venta.conclusion[language]}
+          </ReactMarkdown>
+        </div>
         {/* Consejo */}
         <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
           <div className="flex items-center gap-2">
             <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
             <span className="text-gray-800 font-semibold text-sm">Consejo</span>
           </div>
-          <p className="text-sm text-gray-800 leading-relaxed">
-            {analysis.indicadores_de_rentabilidad_venta.consejo[language]}
-          </p>
+          <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.indicadores_de_rentabilidad_venta.consejo[language]}
+            </ReactMarkdown>
+          </div>
         </div>
         <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
@@ -673,9 +719,11 @@ const Analisis = () => {
 
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
-          <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            {analysis.apalancamiento.analisis_grafica[language]}
-          </p>
+          <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+            <ReactMarkdown>
+              {analysis.apalancamiento.analisis_grafica[language]}
+            </ReactMarkdown>
+          </div>
           <div className="ml-auto flex gap-2 items-center">
             <Sparkles size={16} className="text-invertiria-2" />
             <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
@@ -695,18 +743,22 @@ const Analisis = () => {
             <p className="text-white text-xs opacity-70">Asesor financiero</p>
           </div>
         </div>
-        <p className="text-white text-sm leading-relaxed">
-          {analysis.apalancamiento.conclusion[language]}
-        </p>
+        <div className="text-white text-sm leading-relaxed markdwon-content">
+          <ReactMarkdown>
+            {analysis.apalancamiento.conclusion[language]}
+          </ReactMarkdown>
+        </div>
         {/* Consejo */}
         <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
           <div className="flex items-center gap-2">
             <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
             <span className="text-gray-800 font-semibold text-sm">Consejo</span>
           </div>
-          <p className="text-sm text-gray-800 leading-relaxed">
-            {analysis.apalancamiento.consejo[language]}
-          </p>
+          <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.apalancamiento.consejo[language]}
+            </ReactMarkdown>
+          </div>
         </div>
         <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
@@ -732,9 +784,11 @@ const Analisis = () => {
         </div>
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
-          <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            {analysis.costo_financiero.analisis_grafica[language]}
-          </p>
+          <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+            <ReactMarkdown>
+              {analysis.costo_financiero.analisis_grafica[language]}
+            </ReactMarkdown>
+          </div>
           <div className="ml-auto flex gap-2 items-center">
             <Sparkles size={16} className="text-invertiria-2" />
             <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
@@ -754,18 +808,22 @@ const Analisis = () => {
             <p className="text-white text-xs opacity-70">Asesor financiero</p>
           </div>
         </div>
-        <p className="text-white text-sm leading-relaxed">
-          {analysis.costo_financiero.conclusion[language]}
-        </p>
+        <div className="text-white text-sm leading-relaxed markdown-content">
+          <ReactMarkdown>
+            {analysis.costo_financiero.conclusion[language]}
+          </ReactMarkdown>
+        </div>
         {/* Consejo */}
         <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
           <div className="flex items-center gap-2">
             <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
             <span className="text-gray-800 font-semibold text-sm">Consejo</span>
           </div>
-          <p className="text-sm text-gray-800 leading-relaxed">
-            {analysis.costo_financiero.consejo[language]}
-          </p>
+          <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.costo_financiero.consejo[language]}
+            </ReactMarkdown>
+          </div>
         </div>
         <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
@@ -788,9 +846,11 @@ const Analisis = () => {
         </div>
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
-          <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            {analysis.capacidad_de_endeudamiento.analisis_grafica[language]}
-          </p>
+          <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+            <ReactMarkdown>
+              {analysis.capacidad_de_endeudamiento.analisis_grafica[language]}
+            </ReactMarkdown>
+          </div>
           <div className="ml-auto flex gap-2 items-center">
             <Sparkles size={16} className="text-invertiria-2" />
             <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
@@ -810,18 +870,22 @@ const Analisis = () => {
             <p className="text-white text-xs opacity-70">Asesor financiero</p>
           </div>
         </div>
-        <p className="text-white text-sm leading-relaxed">
-          {analysis.capacidad_de_endeudamiento.conclusion[language]}
-        </p>
+        <div className="text-white text-sm leading-relaxed markdown-content">
+          <ReactMarkdown>
+            {analysis.capacidad_de_endeudamiento.conclusion[language]}
+          </ReactMarkdown>
+        </div>
         {/* Consejo */}
         <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
           <div className="flex items-center gap-2">
             <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
             <span className="text-gray-800 font-semibold text-sm">Consejo</span>
           </div>
-          <p className="text-sm text-gray-800 leading-relaxed">
-            {analysis.capacidad_de_endeudamiento.consejo[language]}
-          </p>
+          <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.capacidad_de_endeudamiento.consejo[language]}
+            </ReactMarkdown>
+          </div>
         </div>
         <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
@@ -844,9 +908,11 @@ const Analisis = () => {
 
         {/* Analisis */}
         <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
-          <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-            {analysis.flujo_de_caja.analisis_grafica[language]}
-          </p>
+          <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+            <ReactMarkdown>
+              {analysis.flujo_de_caja.analisis_grafica[language]}
+            </ReactMarkdown>
+          </div>
           <div className="ml-auto flex gap-2 items-center">
             <Sparkles size={16} className="text-invertiria-2" />
             <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
@@ -866,18 +932,22 @@ const Analisis = () => {
             <p className="text-white text-xs opacity-70">Asesor financiero</p>
           </div>
         </div>
-        <p className="text-white text-sm leading-relaxed">
-          {analysis.flujo_de_caja.conclusion[language]}
-        </p>
+        <div className="text-white text-sm leading-relaxed markdown-content">
+          <ReactMarkdown>
+            {analysis.flujo_de_caja.conclusion[language]}
+          </ReactMarkdown>
+        </div>
         {/* Consejo */}
         <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
           <div className="flex items-center gap-2">
             <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
             <span className="text-gray-800 font-semibold text-sm">Consejo</span>
           </div>
-          <p className="text-sm text-gray-800 leading-relaxed">
-            {analysis.flujo_de_caja.consejo[language]}
-          </p>
+          <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.flujo_de_caja.consejo[language]}
+            </ReactMarkdown>
+          </div>
         </div>
         <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
@@ -899,9 +969,11 @@ const Analisis = () => {
 
       {/* Analisis */}
       <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
-        <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-          {analysis.indicadores_de_rentabilidad.analisis_grafica[language]}
-        </p>
+        <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+          <ReactMarkdown>
+            {analysis.indicadores_de_rentabilidad.analisis_grafica[language]}
+          </ReactMarkdown>
+        </div>
         <div className="ml-auto flex gap-2 items-center">
           <Sparkles size={16} className="text-invertiria-2" />
           <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
@@ -920,18 +992,22 @@ const Analisis = () => {
             <p className="text-white text-xs opacity-70">Asesor financiero</p>
           </div>
         </div>
-        <p className="text-white text-sm leading-relaxed">
-          {analysis.indicadores_de_rentabilidad.conclusion[language]}
-        </p>
+        <div className="text-white text-sm leading-relaxed markdown-content">
+          <ReactMarkdown>
+            {analysis.indicadores_de_rentabilidad.conclusion[language]}
+          </ReactMarkdown>
+        </div>
         {/* Consejo */}
         <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
           <div className="flex items-center gap-2">
             <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
             <span className="text-gray-800 font-semibold text-sm">Consejo</span>
           </div>
-          <p className="text-sm text-gray-800 leading-relaxed">
-            {analysis.indicadores_de_rentabilidad.consejo[language]}
-          </p>
+          <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.indicadores_de_rentabilidad.consejo[language]}
+            </ReactMarkdown>
+          </div>
         </div>
         <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
@@ -953,9 +1029,11 @@ const Analisis = () => {
 
       {/* Analisis */}
       <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
-        <p className="z-10 text-gray-800 text-sm font-medium leading-6">
-          {analysis.recomendacion.analisis_grafica[language]}
-        </p>
+        <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+          <ReactMarkdown>
+            {analysis.recomendacion.analisis_grafica[language]}
+          </ReactMarkdown>
+        </div>
         <div className="ml-auto flex gap-2 items-center">
           <Sparkles size={16} className="text-invertiria-2" />
           <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
@@ -974,23 +1052,43 @@ const Analisis = () => {
             <p className="text-white text-xs opacity-70">Asesor financiero</p>
           </div>
         </div>
-        <p className="text-white text-sm leading-relaxed">
-          {analysis.recomendacion.conclusion[language]}
-        </p>
+        <div className="text-white text-sm leading-relaxed markdown-content">
+          <ReactMarkdown>
+            {analysis.recomendacion.conclusion[language]}
+          </ReactMarkdown>
+        </div>
         {/* Consejo */}
         <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
           <div className="flex items-center gap-2">
             <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
             <span className="text-gray-800 font-semibold text-sm">Consejo</span>
           </div>
-          <p className="text-sm text-gray-800 leading-relaxed">
-            {analysis.recomendacion.consejo[language]}
-          </p>
+          <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.recomendacion.consejo[language]}
+            </ReactMarkdown>
+          </div>
         </div>
         <div className="flex items-center gap-2 self-end mt-2">
           <Sparkles size={16} className="text-white" />
           <p className="text-xs text-white font-medium">Generado por IA</p>
         </div>
+      </div>
+      {/* Disclaimer */}
+      <div className="w-full flex flex-col gap-4 p-8 relative rounded-3xl bg-red-50/40 border-2 border-red-500/90">
+        <div className="flex items-center gap-2">
+          <Info className="size-5 text-red-500" />
+          <span className="text-red-500 font-semibold text-sm">Ten en cuenta...</span>
+        </div>
+        <p className="text-gray-800 text-sm font-medium leading-6">
+          Si la inversión se realiza sobre planos, recomendamos verificar y validar cuidadosamente la identidad, trayectoria y reputación de la constructora. Esto incluye revisar su historial de proyectos, cumplimiento de plazos y calidad de las entregas, así como confirmar que cuente con todos los permisos y licencias necesarios para el desarrollo.
+        </p>
+        <p className="text-gray-800 text-sm font-medium leading-6">
+          En caso de tratarse de una propiedad usada, es igualmente importante realizar la misma verificación con el vendedor, asegurándose de que sea el legítimo propietario, que la documentación esté en regla y que no existan gravámenes o deudas sobre el inmueble.
+        </p>
+        <p className="text-gray-800 text-sm font-medium leading-6">
+          Estas acciones preventivas ayudan a minimizar riesgos y a garantizar una inversión segura.
+        </p>
       </div>
       <br />
     </Container>
