@@ -893,23 +893,22 @@ const Analisis = () => {
       <h1 className="lg:text-4xl text-3xl font-bold">Flujo de caja mensual</h1>
       <h2 className="-mt-20 text-2xl font-bold text-gray-500">En mes de venta</h2>
 
-      <div className="flex xl:flex-row flex-col items-center gap-10">
-        {/* Grafica */}
-        <FlujoDeCaja flowsResult={flowsResult} fechaVenta={fechaVenta} />
+      {/* Grafica */}
+      <FlujoDeCaja flowsResult={flowsResult} fechaVenta={fechaVenta} />
 
-        {/* Analisis */}
-        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
-          <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
-            <ReactMarkdown>
-              {analysis.flujo_de_caja.analisis_grafica[language]}
-            </ReactMarkdown>
-          </div>
-          <div className="ml-auto flex gap-2 items-center">
-            <Sparkles size={16} className="text-invertiria-2" />
-            <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
-          </div>
+      {/* Analisis */}
+      <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
+        <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+          <ReactMarkdown>
+            {analysis.flujo_de_caja.analisis_grafica[language]}
+          </ReactMarkdown>
+        </div>
+        <div className="ml-auto flex gap-2 items-center">
+          <Sparkles size={16} className="text-invertiria-2" />
+          <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
         </div>
       </div>
+
       {/* Conclusión */}
       <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
         <div className="flex items-center gap-4">
