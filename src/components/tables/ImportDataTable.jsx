@@ -9,6 +9,7 @@ import {
   ChevronsRight,
   CirclePlus,
   CloudDownload,
+  Download,
   Trash,
 } from "lucide-react";
 
@@ -54,7 +55,8 @@ import { supabase } from "../../supabase";
 const types = [
   { value: "matriz_modelo", label: "Matriz Modelo" },
   { value: "proyectos_inmobiliarios", label: "Proyectos Inmobiliarios" },
-  { value: "datos_referencia", label: "Valores de Referencia" },
+  { value: "datos_referencia", label: "Datos de Referencia" },
+  { value: "promedios", label: "Promedios" },
 ];
 
 const FilterSection = ({ table, options }) => {
@@ -240,13 +242,14 @@ const ImportDataTable = ({ records }) => {
     },
     {
       id: "actions",
+      header: "Descargar",
       cell: ({ row }) => (
         <Button
           variant="outline"
           onClick={() => downloadFile(row.original.path)}
           className="text-invertiria-2 hover:text-invertiria-2 flex"
         >
-          <CloudDownload />
+          <Download />
           <span className="sr-only">Descargar</span>
         </Button>
       ),

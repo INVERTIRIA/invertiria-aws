@@ -3,8 +3,6 @@ import { supabase } from "../../../supabase";
 import PageTitle from "../../../components/design/PageTitle";
 import UserHeader from "../../../components/design/UserHeader";
 import Skeleton from "../../../components/design/Skeleton";
-import countriesData from "../../../constants/paises.json";
-import { useAuth } from "../../../contexts/AuthContext";
 import { Label } from "../../../components/ui/label";
 import { Input } from "../../../components/ui/input";
 import { Button } from "../../../components/ui/button";
@@ -16,17 +14,8 @@ const AdvisorPage = () => {
   // Hooks
   const effectRan = useRef(false);
   const [record, setRecord] = useState(null);
-  const [cities, setCities] = useState([]);
-
-  const { createUserInstance } = useAuth();
-  const userIntance = createUserInstance({});
 
   // Functions
-  const getCities = async (countryId) => {
-    const res = await userIntance.getCities(countryId);
-    setCities(res.map((item) => ({ value: item.nombre, label: item.nombre })));
-  };
-
   const fetchRecord = async () => {
     const res = await supabase.rpc("get_advisor");
 
@@ -63,17 +52,9 @@ const AdvisorPage = () => {
 
   const personalFields2 = [
     {
-      name: "pais_id",
-      label: "País",
-      placeholder: "Seleccione su país",
-      options: countriesData,
-      onChange: getCities,
-    },
-    {
       name: "ciudad",
       label: "Ciudad",
       placeholder: "Seleccione su ciudad",
-      options: cities,
     },
     {
       name: "genero",
@@ -149,6 +130,17 @@ const AdvisorPage = () => {
                     </Button>
                   </div>
                   {/* Selects */}
+                  <div className="flex flex-col gap-2">
+                    <Label htmlFor="pais">País</Label>
+                    <Input
+                      className="bg-white"
+                      placeholder="Seleccione su país"
+                      type="text"
+                      id="pais"
+                      value={"Colombia"}
+                      readOnly
+                    />
+                  </div>
                   {personalFields2.map((item) => (
                     <div key={item.name} className="flex flex-col gap-2">
                       <Label htmlFor={item.name}>{item.label}</Label>
