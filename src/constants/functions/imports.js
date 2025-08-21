@@ -86,6 +86,9 @@ export const formatRecordsPI = async (data) => {
     }
   }
 
+  /* console.log(records);
+  return false; */
+
   const { data: res, error } = await supabase
     .from("proyectos_inmobiliarios")
     .upsert(records, {
@@ -113,7 +116,7 @@ export const formatRecordsVR = async (data) => {
 
     if (ciudad && ciudadId) {
       const numericRest = Object.fromEntries(
-        Object.entries(rest).map(([key, value]) => [key, Number(value)])
+        Object.entries(rest).map(([key, value]) => [key, parseDecimal(value)])
       );
 
       records.push({
