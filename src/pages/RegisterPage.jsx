@@ -17,7 +17,7 @@ const RegisterPage = () => {
   return (
     <>
       <PageTitle title="Register" />
-      <Container classNameParent={"my-20"}>
+      <Container classNameParent={"my-20 animate-fade-in"}>
         <RegisterUserForm />
       </Container>
     </>

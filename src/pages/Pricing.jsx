@@ -85,7 +85,7 @@ const Pricing = () => {
   return (
     <Container
       className={"w-full items-center z-0"}
-      classNameParent={"relative z-0"}
+      classNameParent={"relative z-0 animate-fade-in"}
     >
       <div className="mx-auto max-w-7xl pb-20">
 

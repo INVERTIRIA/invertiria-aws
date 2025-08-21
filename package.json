@@ -38,6 +38,7 @@
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "financial": "^0.2.4",
+    "framer-motion": "^12.23.12",
     "i18next": "^24.2.3",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.482.0",

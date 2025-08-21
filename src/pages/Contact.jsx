@@ -126,7 +126,7 @@ const Contact = () => {
   return (
     <Container
       className={"w-full items-center z-0"}
-      classNameParent={"relative z-0"}
+      classNameParent={"relative z-0 animate-fade-in"}
     >
       <div className="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2 pb-20">
         <div className="relative px-6 pt-25 sm:pt-15 lg:px-8 lg:py-48">
