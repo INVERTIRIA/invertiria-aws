@@ -1,6 +1,8 @@
 import { Container } from "../components/design/Container";
 import { Mail, Send } from "lucide-react";
 import { Link } from "react-router";
+import { supabase } from "../supabase";
+import { toast } from "sonner";
 
 import 'react-international-phone/style.css';
 import { PhoneInput } from 'react-international-phone';
@@ -28,11 +30,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-
-// Enviar el formulario
-function onSubmit(values) {
-  console.log(values);
-}
 
 const Contact = () => {
 
@@ -87,10 +84,49 @@ const Contact = () => {
     },
   })
 
+  // Enviar el formulario
+  function onSubmit(values) {
+    saveContactForm(values);
+    clearInputs();
+  }
+
+  // Funcion guardar formulario de contacto
+  const saveContactForm = async (values) => {
+    const { error } = await supabase
+      .from('formulario_contacto')
+      .insert(values)
+    if (error) {
+      toast.error("Error al enviar el formulario, por favor vuelve a intentarlo.");
+      console.log(error);
+    } else {
+      toast.success("Formulario enviado correctamente, pronto nos pondremos en contacto contigo.");
+    }
+  };
+
+  // Limpiar formulario
+  function clearInputs() {
+    form.reset({
+      name: "",
+      lastname: "",
+      email: "",
+      phonenumber: "",
+      city: "",
+      consultation: "",
+      message: "",
+      source: "",
+      communications: false,
+      terms: false,
+    }, {
+      keepErrors: false,
+      keepTouched: false,
+      keepDirty: false,
+    });
+  }
+
   return (
     <Container
       className={"w-full items-center z-0"}
-      classNameParent={"relative z-0"}
+      classNameParent={"relative z-0 animate-fade-in"}
     >
       <div className="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2 pb-20">
         <div className="relative px-6 pt-25 sm:pt-15 lg:px-8 lg:py-48">
@@ -214,7 +250,7 @@ const Contact = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Tipo de Consulta</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select onValueChange={field.onChange} value={field.value}>
                           <FormControl className="w-full" >
                             <SelectTrigger className="w-full max-w-full truncate">
                               <SelectValue placeholder="" className="truncate" />
@@ -252,7 +288,7 @@ const Contact = () => {
                   name="source"
                   render={({ field }) => (
                     <FormItem>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <Select onValueChange={field.onChange} value={field.value}>
                         <FormLabel>¿Cómo nos conociste?</FormLabel>
                         <FormControl className="w-full">
                           <SelectTrigger className="w-full max-w-full truncate">

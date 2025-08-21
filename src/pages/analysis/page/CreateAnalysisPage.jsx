@@ -21,7 +21,7 @@ const CreateAnalysisPage = () => {
     <>
       <PageTitle title="Create Analysis" />
       {!isSubmitting ? (
-        <div className="h-screen -mt-32 flex items-center justify-center relative overflow-hidden">
+        <div className="h-screen -mt-32 flex items-center justify-center relative overflow-hidden animate-fade-in">
           <Link to="/" className="absolute top-4 left-4 group z-10">
             <X
               className="size-6 text-gray-400 group-hover:text-gray-600"

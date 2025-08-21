@@ -10,7 +10,6 @@ import {
   ComposedChart,
   Brush,
 } from "recharts";
-import { parsePrice } from "../../constants/functions";
 import { useIsMobile } from "../../hooks/use-mobile";
 
 // Grafica
@@ -20,16 +19,6 @@ function RecomendacionesCompra({ modelation, timeVectors, promedios }) {
 
   const promediosCiudad = promedios.find((item) => item.nombre === modelation?.ciudad?.nombre);
   const promediosJuanLondoño = promedios.find((item) => item.nombre === "Juan Londoño");
-  
-  // Obtener data
-  // const data = timeVectors?.valor_inmueble.map((item, index) => {
-  //   return {
-  //     mes: item[1],
-  //     "Precio del inmueble": item[2],
-  //     "Promedio ciudad": item[2] + item[2] * promediosCiudad.matriz[index][1] * 100,
-  //     "Promedio Juan Londoño": item[2] + item[2] * promediosJuanLondoño.matriz[index][1] * 100
-  //   };
-  // });
 
   let inmueble = 0;
   let promedioCiudad = 0;
@@ -64,7 +53,6 @@ function RecomendacionesCompra({ modelation, timeVectors, promedios }) {
           />
           <YAxis
             domain={['dataMin', 'auto']}
-            // tickFormatter={(value) => parsePrice(value)}
             tickFormatter={(value) => value + "%"}
             tickLine={false}
             tick={!isMobile}
@@ -72,7 +60,6 @@ function RecomendacionesCompra({ modelation, timeVectors, promedios }) {
           >
             {!isMobile && (
               <Label
-                // value="Valor proyectado"
                 value="Porcentaje de valorización"
                 offset={0}
                 style={{ textAnchor: "middle" }}
@@ -82,7 +69,6 @@ function RecomendacionesCompra({ modelation, timeVectors, promedios }) {
             )}
           </YAxis>
           <Tooltip
-            // formatter={(value, name) => parsePrice(value)}
             formatter={(value, name) => value.toString().slice(0, 5) + "%"}
           />
           <Line

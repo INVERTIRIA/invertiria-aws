@@ -25,6 +25,8 @@ const buttonVariants = cva(
           "text-primary-foreground hover:text-invertiria-2",
         theme:
           "bg-invertiria-2 text-white ring ring-invertiria-2 shadow-xs hover:bg-transparent hover:text-invertiria-2",
+        theme_outline:
+          "text-invertiria-2 ring ring-invertiria-2 shadow-xs hover:bg-invertiria-2 hover:text-white",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
