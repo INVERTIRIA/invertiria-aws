@@ -13,7 +13,7 @@ function Test() {
 
   useEffect(() => {
     const handleGetLocation = async () => {
-      const location = await getLocationGoogleMap("4.897484", "-74.032896");
+      const location = await getLocationGoogleMap("6.154904", "-75.592508");
       //const location = await getLocation("4.897484", "-74.032896");
 
       console.log(location);
