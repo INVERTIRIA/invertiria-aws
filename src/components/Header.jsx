@@ -98,7 +98,7 @@ function Header() {
               <ul className="flex items-center gap-10 text-sm xl:text-base ">
                 <li>
                   <Link to={"/analysis/create"} className="text-black hover:text-invertiria-1">
-                    Crear análisis
+                    Crear Análisis
                   </Link>
                 </li>
                 <li>

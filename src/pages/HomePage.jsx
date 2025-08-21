@@ -459,7 +459,7 @@ const HomePage = () => {
               Todos los planes incluyen acceso completo a análisis de IA,
               proyecciones financieras y contenido educativo.
             </p>
-            <Link className="w-full sm:w-1/2 lg:w-fit group bg-invertiria-2 border border-invertiria-2 py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-white">
+            <Link to="/pricing" className="w-full sm:w-1/2 lg:w-fit group bg-invertiria-2 border border-invertiria-2 py-2 lg:px-14 rounded-[30px] flex justify-center items-center gap-1 hover:bg-white">
               <span className="group-hover:text-invertiria-2 uppercase text-sm text-white">
                 EMPIEZA AHORA
               </span>

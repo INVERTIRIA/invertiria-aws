@@ -29,31 +29,31 @@ const explore = [
     link: "/",
   },
   {
-    name: "Beneficios",
-    link: "/inversiones",
+    name: "Crear Análisis",
+    link: "/analysis/create",
   },
   {
-    name: "Nivel de Acceso",
-    link: "/inversiones",
+    name: "Precios",
+    link: "/pricing",
   },
   {
-    name: "Casos de Éxito",
-    link: "/inversiones",
+    name: "Quienes Somos",
+    link: "/about",
   },
 ];
 
 const help = [
   {
     name: "Preguntas Frecuentes",
-    link: "/inversiones",
+    link: "/",
   },
   {
     name: "Contacto",
-    link: "/inversiones",
+    link: "/contact",
   },
   {
     name: "Términos y Condiciones",
-    link: "/inversiones",
+    link: "/",
   },
 ];
 
