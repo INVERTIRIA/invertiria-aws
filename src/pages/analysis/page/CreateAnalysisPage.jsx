@@ -21,7 +21,7 @@ const CreateAnalysisPage = () => {
     <>
       <PageTitle title="Create Analysis" />
       {!isSubmitting ? (
-        <div className="h-screen -mt-32 flex items-center justify-center relative overflow-hidden">
+        <div className="h-screen -mt-32 flex items-center justify-center relative overflow-hidden animate-fade-in">
           <Link to="/" className="absolute top-4 left-4 group z-10">
             <X
               className="size-6 text-gray-400 group-hover:text-gray-600"
@@ -43,7 +43,7 @@ const CreateAnalysisPage = () => {
               "z-1 w-full h-full flex items-center justify-center"
             }
             className={
-              "w-full h-[80%] lg:h-[70%] xl:h-[78%] bg-gray-50 rounded-2xl shadow-lg ring-1 ring-gray-100 flex flex-items-center overflow-hidden"
+              "w-full h-[80%] lg:h-[70%] xl:h-[650px] bg-gray-50 rounded-2xl shadow-lg ring-1 ring-gray-100 flex flex-items-center overflow-hidden"
             }
           >
             {step === null ? (
@@ -91,7 +91,9 @@ const CreateAnalysisPage = () => {
             className="size-24"
           />
           <div className="flex flex-col items-center gap-2">
-            <h3 className="text-4xl font-bold">Preparando su análisis</h3>
+            <h3 className="text-4xl font-bold text-center">
+              Preparando su análisis
+            </h3>
             <p className="text-center text-gray-500 max-w-xs">
               Por favor, espere mientras se prepara su análisis.
             </p>

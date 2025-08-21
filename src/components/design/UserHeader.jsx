@@ -1,11 +1,21 @@
-import { Button } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 import { Mail } from "lucide-react";
 import { cn } from "../../lib/utils";
+import { Link } from "react-router";
 
-const UserHeader = ({ userInfo, changeEmail = true, className, children }) => {
+const UserHeader = ({
+  userInfo,
+  className,
+  children,
+  icon,
+  link,
+  buttonName,
+}) => {
+  const Icon = icon;
+
   return (
     <div className="flex flex-col gap-2">
-      <div className={cn("relative w-full h-40 sm:h-60", className)}>
+      <div className={cn("relative w-full h-32 sm:h-52", className)}>
         <img
           className="self-stretch h-full w-full object-cover relative rounded-xl"
           src="/assets/images/user-header.jpg"
@@ -23,7 +33,7 @@ const UserHeader = ({ userInfo, changeEmail = true, className, children }) => {
           <div className="w-40 h-40 p-1.5 left-0 top-0 absolute bg-white rounded-full outline-2 outline-black/10 inline-flex justify-center items-center">
             <img
               className="flex-1 self-stretch relative rounded-[200px] shadow-[0px_24px_48px_-12px_rgba(10,13,18,0.18)] border border-black/10 size-full object-cover"
-              src={userInfo.img_perfil || "/assets/svg/logo-2.svg"}
+              src={userInfo?.img_perfil || "/assets/svg/logo-2.svg"}
             />
           </div>
           {userInfo.is_verified && (
@@ -50,10 +60,16 @@ const UserHeader = ({ userInfo, changeEmail = true, className, children }) => {
               {userInfo.email || "inverteria@invertiria.com"}
             </p>
           </div>
-          {changeEmail && (
-            <Button variant={"theme"} className={"sm:ml-auto"}>
-              <Mail className="size-5" /> Cambiar email
-            </Button>
+          {link && (
+            <Link
+              to={link}
+              className={buttonVariants({
+                variant: "theme",
+                className: "sm:ml-auto",
+              })}
+            >
+              {Icon && <Icon className="size-5" />} {buttonName}
+            </Link>
           )}
         </div>
       </div>

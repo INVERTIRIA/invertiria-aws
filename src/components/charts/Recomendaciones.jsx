@@ -178,8 +178,8 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
   }
 
   return (
-    <div className="w-full flex flex-col md:flex-row gap-12">
-      <div className="flex flex-col gap-4 w-[70%] max-sm:w-full">
+    <div className="w-full flex flex-col lg:flex-row gap-12">
+      <div className="flex flex-col gap-4 w-full xl:w-[70%] max-sm:w-full">
         <div className="flex flex-col gap-20">
           <h2 className="text-2xl font-bold text-gray-500">
             Suma de ROI Anualizado y Suma de ROI por Mes
@@ -191,7 +191,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
               <ComposedChart
                 syncId="syncId2"
                 data={dataROI}
-                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 0, bottom: 0 }}
+                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 45, bottom: 0 }}
               >
                 <CartesianGrid className="opacity-50" vertical={false} />
                 <XAxis
@@ -279,7 +279,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
             >
               <ComposedChart data={dataTIR.slice(startIndexBrush, endIndexBrush + 1)}
                 syncId="syncId2"
-                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 0, bottom: 0 }}
+                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 45, bottom: 0 }}
               >
                 <CartesianGrid
                   className="opacity-50"
@@ -360,7 +360,7 @@ const Recomendaciones = ({ timeVectors, flowsResult, fechaVenta }) => {
             >
               <ComposedChart
                 data={dataUtilidad.slice(startIndexBrush, endIndexBrush + 1)}
-                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 0, bottom: 0 }}
+                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 45, bottom: 0 }}
                 syncId="syncId2"
               >
                 <CartesianGrid className="opacity-50" vertical={false} />

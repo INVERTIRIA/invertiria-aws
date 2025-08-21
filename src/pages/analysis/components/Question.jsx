@@ -1,3 +1,5 @@
+import { titularidad } from "../../../constants";
+
 const questions = [
   {
     title: "Vigencia",
@@ -145,17 +147,33 @@ const questions = [
     description: "Ingrese el precio de venta del inmueble.",
   },
   {
-    title: "Estrato",
-    description: "Ingrese el estrato del inmueble.",
-  },
-  {
     title: "Enviar",
     description:
       "¿Estas listo para enviar la información para realizar el análisis?",
   },
 ];
 
-const Question = ({ stepIndex }) => {
+const Question = ({ stepIndex, form }) => {
+  // Cambiar titulo para el step 30
+  if (stepIndex === 30) {
+    const titularidadForm = form.watch("titularidad");
+
+    return (
+      <div className="flex flex-col items-center text-center gap-1">
+        <h2 className="font-bold text-4xl">
+          {titularidadForm == titularidad.participacionFiduciaria
+            ? "Valor neto"
+            : questions[stepIndex]?.title}
+        </h2>
+        <p className="text-sm text-gray-700">
+          {titularidadForm == titularidad.participacionFiduciaria
+            ? "Ingrese el valor neto de la participacion fiduciaria"
+            : questions[stepIndex]?.description}
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col items-center text-center gap-1">
       <h2 className="font-bold text-4xl">{questions[stepIndex]?.title}</h2>

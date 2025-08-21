@@ -2,9 +2,12 @@ import {
   BriefcaseBusiness,
   Building2,
   ChartColumnIncreasing,
+  Database,
+  HandHelping,
   House,
   UserPen,
   UsersRound,
+  Waypoints,
 } from "lucide-react";
 
 export const roles = {
@@ -60,6 +63,16 @@ export const routes = {
       url: "/user/investments",
       icon: ChartColumnIncreasing,
     },
+    {
+      title: "Inversiones compartidas",
+      url: "/user/shared_investments",
+      icon: Waypoints,
+    },
+    {
+      title: "Mi asesor",
+      url: "/user/advisor",
+      icon: HandHelping,
+    },
   ],
   admin: [
     {
@@ -86,6 +99,16 @@ export const routes = {
       title: "Asesores",
       url: "/admin/advisors",
       icon: BriefcaseBusiness,
+    },
+    {
+      title: "Global inversiones",
+      url: "/admin/investments",
+      icon: ChartColumnIncreasing,
+    },
+    {
+      title: "Carga de datos",
+      url: "/admin/import_data",
+      icon: Database,
     },
   ],
   assistant: [
@@ -132,6 +155,11 @@ export const routes = {
       title: "Asesores",
       url: "/company/advisors",
       icon: BriefcaseBusiness,
+    },
+    {
+      title: "Global inversiones",
+      url: "/company/investments",
+      icon: ChartColumnIncreasing,
     },
   ],
   internal_advisor: [

@@ -341,11 +341,11 @@ const UserForm = ({ userInfo, setUserInfo }) => {
                       </PopoverTrigger>
                       <PopoverContent
                         style={{ width: buttonWidth }}
-                        className="p-0"
+                        className="p-0 flex justify-center bg-transparent border-none shadow-none"
                         align="start"
                       >
                         <Calendar
-                          style={{ width: buttonWidth }}
+                          className="rounded-md border shadow-sm !bg-white"
                           mode="single"
                           selected={
                             field.value ? parseISO(field.value) : undefined

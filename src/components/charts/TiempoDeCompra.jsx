@@ -27,14 +27,15 @@ function TiempoDeCompra({ timeVectors, fechaCompra }) {
     const fecha_de_compra = item[1] == fechaCompra ? item[2] : null;
     return {
       mes: item[1],
-      Varianza: [(item[2] - varianza), (item[2] + varianza)],
+      VarianzaReal: [(item[2] - varianza), (item[2] + varianza)],
+      Varianza: [(item[2] - varianza * 100), (item[2] + varianza * 100)],
       "Precio del inmueble": item[2],
       "Fecha de compra": fecha_de_compra
     };
   });
 
   return (
-    <div className="w-[100%] h-[50vh] lg:w-[60%]">
+    <div className="w-full max-sm:w-full h-[50vh]">
       <ResponsiveContainer
         className={"flex aspect-video justify-center text-xs"}
       >
@@ -69,7 +70,7 @@ function TiempoDeCompra({ timeVectors, fechaCompra }) {
           <Area
             dataKey="Varianza"
             stroke="none"
-            fill="#80b2ff"
+            fill="#a4c7fc"
             connectNulls
             dot={false}
             activeDot={true}
@@ -80,7 +81,9 @@ function TiempoDeCompra({ timeVectors, fechaCompra }) {
                 return parsePrice(value);
               }
               if (name === "Varianza") {
-                return "" + value.map((item) => parsePrice(item));;
+                const varianza = props.payload["VarianzaReal"];
+                return `${parsePrice(varianza[0])} - ${parsePrice(varianza[1])}`;
+                // return "" + value.map((item) => parsePrice(item));;
               }
               if (name === "Fecha de compra") {
                 return props.payload.mes;
@@ -110,7 +113,7 @@ function TiempoDeCompra({ timeVectors, fechaCompra }) {
             dataKey="mes"
             stroke="#FB3D03"
             startIndex={0}
-            endIndex={120}
+            endIndex={240}
             height={30}
             tickFormatter={(value) => isMobile ? "" : value}
             className="custom-brush"

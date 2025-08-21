@@ -118,14 +118,11 @@ export const AuthProvider = ({ children }) => {
     return data;
   };
 
-  const uploadFiles = async (fileName, fileData, bucketName, onStartUpload) => {
+  const uploadFiles = async (fileName, fileData, bucketName, onCallback) => {
     if (!fileData) {
       setErrorToast("No file selected");
       return;
     }
-
-    // Ejecutar el callback al iniciar la subida de la imagen
-    if (onStartUpload) onStartUpload(fileData.name, true);
 
     const res = await supabase.storage
       .from(bucketName)
@@ -135,15 +132,17 @@ export const AuthProvider = ({ children }) => {
       });
 
     if (res.error) {
+      //console.error(res.error);
       setErrorToast(res.error.message);
       return false;
     }
 
+    // Ejecutar el callback
+    if (onCallback) onCallback(res.data, false);
+
     const { data } = supabase.storage
       .from(bucketName)
       .getPublicUrl(res.data.path);
-
-    if (onStartUpload) onStartUpload(fileData.name, false);
 
     const updatedUrl = `${data.publicUrl}?t=${Date.now()}`;
     return updatedUrl;

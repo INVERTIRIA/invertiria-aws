@@ -1,5 +1,13 @@
 import { z } from "zod";
 
+const MAX_FILE_SIZE = {
+  img_perfil: 10000000,
+};
+const ACCEPTED_TYPES = [
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  "text/csv",
+];
+
 export const advisorSchema = z.object({
   first_name: z.string().min(1, { message: "El nombre es requerido" }),
   last_name: z.string().min(1, { message: "El apellido es requerido" }),
@@ -43,4 +51,28 @@ export const companySchema = z.object({
   genero: z.enum(["Masculino", "Femenino"], {
     required_error: "El género es requerido",
   }),
+});
+
+export const importDataSchema = z.object({
+  tipo: z.enum(
+    [
+      "matriz_modelo",
+      "proyectos_inmobiliarios",
+      "datos_referencia",
+      "promedios",
+    ],
+    {
+      errorMap: () => ({
+        message: "El tipo seleccionado no es válido.",
+      }),
+    }
+  ),
+  path: z
+    .any()
+    .refine((file) => file && file.size <= MAX_FILE_SIZE.img_perfil, {
+      message: "El tamaño máximo del archivo es 10MB.",
+    })
+    .refine((file) => file && ACCEPTED_TYPES.includes(file.type), {
+      message: "Sólo se admiten los formatos .csv.",
+    }),
 });

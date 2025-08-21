@@ -27,7 +27,12 @@ import { useIsMobile } from "../../hooks/use-mobile";
 
 import { Plus } from "lucide-react";
 
-const AddRecordModal = ({ children, title, description }) => {
+const AddRecordModal = ({
+  children,
+  title,
+  description,
+  buttonName = "Nuevo registro",
+}) => {
   const [open, setOpen] = useState(false);
   const isMobile = useIsMobile();
 
@@ -40,7 +45,7 @@ const AddRecordModal = ({ children, title, description }) => {
       <Drawer open={open} onOpenChange={setOpen}>
         <DrawerTrigger asChild>
           <Button className="w-full 2xs:w-auto font-light" variant="theme">
-            <Plus className="size-5" strokeWidth={1.5} /> Nuevo registro
+            <Plus className="size-5" strokeWidth={1.5} /> {buttonName}
           </Button>
         </DrawerTrigger>
         <DrawerContent className="flex max-h-[80vh] flex-col">
@@ -63,7 +68,7 @@ const AddRecordModal = ({ children, title, description }) => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="w-full 2xs:w-auto font-light" variant="theme">
-          <Plus className="size-5" strokeWidth={1.5} /> Nuevo registro
+          <Plus className="size-5" strokeWidth={1.5} /> {buttonName}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-xl">

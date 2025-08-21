@@ -1,0 +1,1216 @@
+import ReactMarkdown from 'react-markdown';
+import { Lightbulb, Sparkles, Undo2, Info } from "lucide-react";
+import { Container } from "../components/design/Container";
+import { TiempoDeCompra } from "../components/charts/TiempoDeCompra";
+import { ValorDeCompra } from "../components/charts/ValorDeCompra";
+import { RecomendacionesCompra } from "../components/charts/RecomendacionesCompra";
+import { TiempoDeVenta } from "../components/charts/TiempoDeVenta";
+import { IndicadorDeRentabilidad } from "../components/charts/IndicadorDeRentabilidad";
+import { ValorDeVenta } from "../components/charts/ValorDeVenta";
+import { LineaDeTiempo } from "../components/charts/LineaDeTiempo";
+import { Endeudamiento } from "../components/charts/Endeudamiento";
+import { FlujoDeCaja } from "../components/charts/FlujoDeCaja";
+import IndicadoresDeRentabilidad from "../components/charts/IndicadoresDeRentabilidad";
+import Recomendaciones from "../components/charts/Recomendaciones";
+import { supabase } from "../supabase";
+import React, { useEffect, useState } from "react";
+import DashboardSkeleton from "../components/design/DashboardSkeleton";
+import { parsePrice } from "../constants/functions";
+import { useParams, useNavigate } from "react-router";
+import { Button } from "@/components/ui/button";
+import InfoAnalysisAccordion from "../components/InfoAnalysisAccordion";
+import FadeIn from "../components/design/FadeIn";
+
+const Analisis = () => {
+  let { id } = useParams();
+  const navigate = useNavigate();
+  const [timeVectors, setTimeVectors] = useState(null);
+  const [flowsResult, setFlowsResult] = useState(null);
+  const [modelation, setModelation] = useState(null);
+  const [analysis, setAnalysis] = useState(null);
+  const [promedios, setPromedios] = useState(null);
+  const language = localStorage.getItem("language");
+
+  // Funcion obtener modelacion
+  const getModelation = async () => {
+    const { data: modelation, error } = await supabase.from("modelaciones").select("*, ciudad:ciudades(nombre), pais:paises(nombre)").eq("id", id).single();
+    if (error) console.log(error);
+    setModelation(modelation);
+  };
+
+  // Funcion obtener vectores temporales
+  const getTimeVectors = async () => {
+    const { data: timeVectors, error } = await supabase.from("vectores_temporales").select().eq("modelacion_id", id).single();
+    if (error) console.log(error);
+    setTimeVectors(timeVectors);
+  };
+
+  // Funcion obtener flujos resultado
+  const getFlowsResult = async () => {
+    const { data: flowsResult, error } = await supabase.from("flujos_resultado").select().eq("modelacion_id", id).single();
+    if (error) console.log(error);
+    setFlowsResult(flowsResult);
+  };
+
+  // Funcion obtener analisis de las graficas
+  const getAnalysis = async () => {
+    const { data: analysis, error } = await supabase.from("analisis_modelacion_ia").select().eq("modelacion_id", id).single();
+    if (error) console.log(error);
+    setAnalysis(analysis);
+  };
+
+  // Funcion obtener promedios ciudades y juan londoño
+  const getPromedios = async () => {
+    const { data: promedios, error } = await supabase.from("promedios").select().or(`nombre.eq.${modelation?.ciudad?.nombre},nombre.eq.Juan Londoño`);
+    if (error) console.log(error);
+    setPromedios(promedios);
+  }
+
+  // Funcion obtener varianza subzona
+  const getVarianzaSubzona = (min = false) => {
+    const varianza = timeVectors?.valorizacion.filter((item) => item[1] == modelation?.fecha_compra.slice(0, 7))[0];
+    return min ? varianza[2] - varianza[3] : varianza[2] + varianza[3];
+  }
+
+  useEffect(() => {
+    getModelation()
+    getTimeVectors()
+    getFlowsResult()
+    getAnalysis()
+  }, []);
+
+  useEffect(() => {
+    if (modelation) {
+      getPromedios()
+    }
+  }, [modelation]);
+
+  if (!modelation || !timeVectors || !flowsResult || !analysis || !promedios) {
+    return (
+      <Container classNameParent={"my-20"} className="flex flex-col gap-20">
+        <DashboardSkeleton />
+      </Container>)
+  }
+
+  // Fecha de venta
+  let fechaVenta = modelation.fecha_prevista_venta.slice(0, 7);
+
+  // Tir en ves de venta
+  let mesVentaTir = 0;
+  let maxTir = 0;
+  let minTir = 0;
+  for (let i = 0; i < flowsResult.tir_mensual.length; i++) {
+    if (flowsResult.tir_mensual[i][1] == fechaVenta) {
+      mesVentaTir = flowsResult.tir_mensual[i][2];
+    }
+    // Maximo tir
+    if (flowsResult.tir_mensual[i][2] > maxTir) {
+      maxTir = flowsResult.tir_mensual[i][2];
+    }
+    // Minimo tir
+    if (flowsResult.tir_mensual[i][2] < minTir) {
+      minTir = flowsResult.tir_mensual[i][2];
+    }
+  }
+
+  // Utilidad en ves de venta
+  let mesVentaUtilidad = 0;
+  let maxUtilidad = 0;
+  let minUtilidad = 0;
+  for (let i = 0; i < flowsResult.utilidad.length; i++) {
+    if (flowsResult.utilidad[i][1] == fechaVenta) {
+      mesVentaUtilidad = flowsResult.utilidad[i][2];
+    }
+    // Maximo utilidad
+    if (flowsResult.utilidad[i][2] > maxUtilidad) {
+      maxUtilidad = flowsResult.utilidad[i][2];
+    }
+    // Minimo utilidad
+    if (flowsResult.utilidad[i][2] < minUtilidad) {
+      minUtilidad = flowsResult.utilidad[i][2];
+    }
+  }
+
+  // Roi en ves de venta
+  let mesVentaRoi = 0;
+  let maxRoi = 0;
+  let minRoi = 0;
+  for (let i = 0; i < flowsResult.roi.length; i++) {
+    if (flowsResult.roi[i][1] == fechaVenta) {
+      mesVentaRoi = flowsResult.roi[i][2];
+    }
+    // Maximo roi
+    if (flowsResult.roi[i][2] > maxRoi) {
+      maxRoi = flowsResult.roi[i][2];
+    }
+    // Minimo roi
+    if (flowsResult.roi[i][2] < minRoi) {
+      minRoi = flowsResult.roi[i][2];
+    }
+  }
+
+  // Cap rate en ves de venta
+  let mesVentaCapRate = 0;
+  let maxCapRate = 0;
+  let minCapRate = 0;
+  for (let i = 0; i < flowsResult.cap_rate.length; i++) {
+    if (flowsResult.cap_rate[i][1] == fechaVenta) {
+      mesVentaCapRate = flowsResult.cap_rate[i][2];
+    }
+    // Maximo tir
+    if (flowsResult.cap_rate[i][2] > maxCapRate) {
+      maxCapRate = flowsResult.cap_rate[i][2];
+    }
+    // Minimo tir
+    if (flowsResult.cap_rate[i][2] < minCapRate) {
+      minCapRate = flowsResult.cap_rate[i][2];
+    }
+  }
+
+  // Apalancamiento
+  const cuota_inicial = modelation?.cuota_inicial || 0;
+  let credito_hipotecario = Math.round(modelation.precio_de_compra - (modelation.precio_de_compra * cuota_inicial / 100))
+  // Si tiene pagos personalizados
+  if (modelation.pagos_personalizados) {
+    for (let i = 0; i < modelation.valor_pagos_personalizados.length; i++) {
+      credito_hipotecario = credito_hipotecario - modelation.valor_pagos_personalizados[i];
+    }
+  }
+  let apalancamiento = Math.round(modelation.precio_de_compra / (modelation.precio_de_compra - credito_hipotecario));
+
+  // Capacidad de endeudamiento
+  const maxEndeudamiento = (modelation?.perfil_inversionista?.ingresos_mensuales - modelation?.perfil_inversionista?.gastos_mensuales) * 0.4;
+  const endeudamiento = timeVectors?.pagos_credito?.[0]?.[2];
+
+  return (
+    <Container classNameParent={"-my-15 animate-fade-in"} className="flex flex-col gap-20">
+
+      <div className="flex justify-between">
+        <Button onClick={() => navigate(-1)} variant="full_ghost" className="flex items-center gap-2 font-normal text-gray-600">
+          <Undo2 />
+          <span>Volver</span>
+        </Button>
+      </div>
+
+      {/* Titulo */}
+      <div className="w-full flex flex-col items-center text-center gap-9">
+        <h2 className="h2 !max-w-none">Análisis de inversión</h2>
+      </div>
+      <h2 className="-mt-20 text-center text-2xl font-bold text-gray-500">
+        {modelation.titulo_modelacion}
+      </h2>
+
+      <InfoAnalysisAccordion modelation={modelation} />
+
+      {/* Titulo grafica */}
+      <FadeIn>
+        <h1 className="lg:text-4xl text-3xl font-bold">Tiempos del proyecto</h1>
+      </FadeIn>
+      <FadeIn>
+        <h2 className="-mt-20 text-2xl font-bold text-gray-500">Linea de tiempo</h2>
+      </FadeIn>
+      <FadeIn>
+        <LineaDeTiempo modelation={modelation} />
+      </FadeIn>
+
+      {/* Analisis */}
+      <FadeIn>
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
+          <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+            <ReactMarkdown>
+              {analysis.tiempos_del_proyecto.analisis_grafica[language]}
+            </ReactMarkdown>
+          </div>
+          <div className="ml-auto flex gap-2 items-center">
+            <Sparkles size={16} className="text-invertiria-2" />
+            <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
+          </div>
+        </div>
+      </FadeIn>
+      {/* Conclusión */}
+      <FadeIn>
+        <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+          <div className="flex items-center gap-4">
+            <img
+              src="/assets/images/juan-ia.jpeg"
+              alt="Foto de Juan Londoño"
+              className="w-14 h-14 object-cover rounded-full border-2 border-white"
+            />
+            <div>
+              <p className="text-white text-base font-semibold">Juan Londoño</p>
+              <p className="text-white text-xs opacity-70">Asesor financiero</p>
+            </div>
+          </div>
+          <div className="text-white text-sm leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.tiempos_del_proyecto.conclusion[language]}
+            </ReactMarkdown>
+          </div>
+          {/* Consejo */}
+          <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+              <span className="text-gray-800 font-semibold text-sm">Consejo</span>
+            </div>
+            <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+              <ReactMarkdown>
+                {analysis.tiempos_del_proyecto.consejo[language]}
+              </ReactMarkdown>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 self-end mt-2">
+            <Sparkles size={16} className="text-white" />
+            <p className="text-xs text-white font-medium">Generado por IA</p>
+          </div>
+        </div>
+      </FadeIn>
+      <br />
+
+      {/* Titulo */}
+      <FadeIn>
+        <div className="w-full flex flex-col items-center text-center gap-9">
+          <h2 className="h2 !max-w-none">Análisis de la compra</h2>
+        </div>
+      </FadeIn>
+
+      {/* Titulo grafica */}
+      <FadeIn>
+        <h1 className="lg:text-4xl text-3xl font-bold">Valor de compra</h1>
+      </FadeIn>
+      <FadeIn>
+        <h2 className="-mt-20 text-2xl font-bold text-gray-500">Precio de m²</h2>
+      </FadeIn>
+
+      <FadeIn>
+        <div className="flex xl:flex-row flex-col items-center xl:gap-30 gap-10 -mt-8">
+          {/* Analisis */}
+          <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
+            <div className="z-10 text-gray-800 text-sm font-medium leading-6 markwdown-content strong-invertiria">
+              <ReactMarkdown>
+                {analysis.valor_de_compra.analisis_grafica_1[language]}
+              </ReactMarkdown>
+            </div>
+            <div className="ml-auto flex gap-2 items-center">
+              <Sparkles size={16} className="text-invertiria-2" />
+              <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
+            </div>
+          </div>
+
+          {/* Gráficas */}
+          <div className="w-full flex flex-col gap-20 justify-center xl:pl-10 pl-2">
+            <div className="w-full flex items-center justify-center md:gap-40 gap-20 -ml-10">
+              <ValorDeCompra
+                price={modelation.area_inmueble ? modelation.precio_de_compra / modelation.area_inmueble : 0}
+                minPrice={getVarianzaSubzona(true)}
+                maxPrice={getVarianzaSubzona(false)}
+                location={modelation.subzona}
+              />
+              <ValorDeCompra
+                price={modelation.area_inmueble ? modelation.precio_de_compra / modelation.area_inmueble : 0}
+                minPrice={4775632}
+                maxPrice={12518275}
+                location={modelation.ciudad.nombre}
+              />
+            </div>
+          </div>
+          {/* Analisis */}
+          <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
+            <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+              <ReactMarkdown>
+                {analysis.valor_de_compra.analisis_grafica_2[language]}
+              </ReactMarkdown>
+            </div>
+            <div className="ml-auto flex gap-2 items-center">
+              <Sparkles size={16} className="text-invertiria-2" />
+              <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
+            </div>
+          </div>
+        </div>
+      </FadeIn>
+      {/* Conclusión */}
+      <FadeIn>
+        <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+          <div className="flex items-center gap-4">
+            <img
+              src="/assets/images/juan-ia.jpeg"
+              alt="Foto de Juan Londoño"
+              className="w-14 h-14 object-cover rounded-full border-2 border-white"
+            />
+            <div>
+              <p className="text-white text-base font-semibold">Juan Londoño</p>
+              <p className="text-white text-xs opacity-70">Asesor financiero</p>
+            </div>
+          </div>
+          <div className="text-white text-sm leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.valor_de_compra.conclusion[language]}
+            </ReactMarkdown>
+          </div>
+          {/* Consejo */}
+          <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+              <span className="text-gray-800 font-semibold text-sm">Consejo</span>
+            </div>
+            <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+              <ReactMarkdown>
+                {analysis.valor_de_compra.consejo[language]}
+              </ReactMarkdown>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 self-end mt-2">
+            <Sparkles size={16} className="text-white" />
+            <p className="text-xs text-white font-medium">Generado por IA</p>
+          </div>
+        </div>
+      </FadeIn>
+
+      {/* Divisor */}
+      <div className="w-full h-0.5 bg-invertiria-2/35" />
+
+      {/* Titulo grafica */}
+      <FadeIn>
+        <h1 className="lg:text-4xl text-3xl font-bold">Tiempo de compra</h1>
+      </FadeIn>
+      <FadeIn>
+        <h2 className="-mt-20 text-2xl font-bold text-gray-500">
+          Precio del inmueble
+        </h2>
+      </FadeIn>
+
+      <FadeIn>
+        <div className="flex xl:flex-row flex-col items-center gap-10">
+          {/* Grafica */}
+          <TiempoDeCompra timeVectors={timeVectors} fechaCompra={modelation.fecha_compra.slice(0, 7)} />
+
+          {/* Analisis */}
+          <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
+            <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+              <ReactMarkdown>
+                {analysis.tiempo_de_compra.analisis_grafica[language]}
+              </ReactMarkdown>
+            </div>
+            <div className="ml-auto flex gap-2 items-center">
+              <Sparkles size={16} className="text-invertiria-2" />
+              <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
+            </div>
+          </div>
+        </div>
+      </FadeIn>
+      {/* Conclusión */}
+      <FadeIn>
+        <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+          <div className="flex items-center gap-4">
+            <img
+              src="/assets/images/juan-ia.jpeg"
+              alt="Foto de Juan Londoño"
+              className="w-14 h-14 object-cover rounded-full border-2 border-white"
+            />
+            <div>
+              <p className="text-white text-base font-semibold">Juan Londoño</p>
+              <p className="text-white text-xs opacity-70">Asesor financiero</p>
+            </div>
+          </div>
+          <div className="text-white text-sm leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.tiempo_de_compra.conclusion[language]}
+            </ReactMarkdown>
+          </div>
+          {/* Consejo */}
+          <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+              <span className="text-gray-800 font-semibold text-sm">Consejo</span>
+            </div>
+            <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+              <ReactMarkdown>
+                {analysis.tiempo_de_compra.consejo[language]}
+              </ReactMarkdown>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 self-end mt-2">
+            <Sparkles size={16} className="text-white" />
+            <p className="text-xs text-white font-medium">Generado por IA</p>
+          </div>
+        </div>
+      </FadeIn>
+
+      {/* Divisor */}
+      <div className="w-full h-0.5 bg-invertiria-2/35" />
+
+      {/* Titulo grafica */}
+      <FadeIn>
+        <h1 className="lg:text-4xl text-3xl font-bold">Recomendaciones</h1>
+      </FadeIn>
+      <FadeIn>
+        <h2 className="-mt-20 text-2xl font-bold text-gray-500">
+          Dinámica de valorización
+        </h2>
+      </FadeIn>
+
+      <FadeIn>
+        <div className="flex xl:flex-row flex-col items-center gap-10">
+          {/* Grafica */}
+          <RecomendacionesCompra modelation={modelation} timeVectors={timeVectors} promedios={promedios} />
+
+          {/* Analisis */}
+          <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
+            <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+              <ReactMarkdown>
+                {analysis.recomendaciones_compra.analisis_grafica[language]}
+              </ReactMarkdown>
+            </div>
+            <div className="ml-auto flex gap-2 items-center">
+              <Sparkles size={16} className="text-invertiria-2" />
+              <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
+            </div>
+          </div>
+        </div>
+      </FadeIn>
+      {/* Conclusión */}
+      <FadeIn>
+        <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+          <div className="flex items-center gap-4">
+            <img
+              src="/assets/images/juan-ia.jpeg"
+              alt="Foto de Juan Londoño"
+              className="w-14 h-14 object-cover rounded-full border-2 border-white"
+            />
+            <div>
+              <p className="text-white text-base font-semibold">Juan Londoño</p>
+              <p className="text-white text-xs opacity-70">Asesor financiero</p>
+            </div>
+          </div>
+          <div className="text-white text-sm leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.recomendaciones_compra.conclusion[language]}
+            </ReactMarkdown>
+          </div>
+          {/* Consejo */}
+          <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+              <span className="text-gray-800 font-semibold text-sm">Consejo</span>
+            </div>
+            <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+              <ReactMarkdown>
+                {analysis.recomendaciones_compra.consejo[language]}
+              </ReactMarkdown>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 self-end mt-2">
+            <Sparkles size={16} className="text-white" />
+            <p className="text-xs text-white font-medium">Generado por IA</p>
+          </div>
+        </div>
+      </FadeIn>
+      <br />
+
+      {/* Titulo */}
+      <FadeIn>
+        <div className="w-full flex flex-col items-center text-center gap-9">
+          <h2 className="h2 !max-w-none">Análisis de la venta</h2>
+        </div>
+      </FadeIn>
+
+      {/* Titulo grafica */}
+      <FadeIn>
+        <h1 className="lg:text-4xl text-3xl font-bold">Valor de venta</h1>
+      </FadeIn>
+      <FadeIn>
+        <h2 className="-mt-20 text-2xl font-bold text-gray-500">
+          Precio del inmueble
+        </h2>
+      </FadeIn>
+
+      <FadeIn>
+        <div className="w-full flex xl:flex-row flex-col gap-10 xl:gap-80 items-center -mt-10">
+
+          {/* Gráfica  */}
+          <div className="xl:ml-0 -ml-30">
+            <ValorDeVenta timeVectors={timeVectors} fechaVenta={fechaVenta} />
+          </div>
+
+          {/* Analisis */}
+          <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
+            <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+              <ReactMarkdown>
+                {analysis.valor_de_venta.analisis_grafica[language]}
+              </ReactMarkdown>
+            </div>
+            <div className="ml-auto flex gap-2 items-center">
+              <Sparkles size={16} className="text-invertiria-2" />
+              <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
+            </div>
+          </div>
+        </div>
+      </FadeIn>
+      {/* Conclusión */}
+      <FadeIn>
+        <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+          <div className="flex items-center gap-4">
+            <img
+              src="/assets/images/juan-ia.jpeg"
+              alt="Foto de Juan Londoño"
+              className="w-14 h-14 object-cover rounded-full border-2 border-white"
+            />
+            <div>
+              <p className="text-white text-base font-semibold">Juan Londoño</p>
+              <p className="text-white text-xs opacity-70">Asesor financiero</p>
+            </div>
+          </div>
+          <div className="text-white text-sm leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.valor_de_venta.conclusion[language]}
+            </ReactMarkdown>
+          </div>
+          {/* Consejo */}
+          <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+              <span className="text-gray-800 font-semibold text-sm">Consejo</span>
+            </div>
+            <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+              <ReactMarkdown>
+                {analysis.valor_de_venta.consejo[language]}
+              </ReactMarkdown>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 self-end mt-2">
+            <Sparkles size={16} className="text-white" />
+            <p className="text-xs text-white font-medium">Generado por IA</p>
+          </div>
+        </div>
+      </FadeIn>
+
+      {/* Divisor */}
+      <div className="w-full h-0.5 bg-invertiria-2/35" />
+
+      {/* Titulo grafica */}
+      <FadeIn>
+        <h1 className="lg:text-4xl text-3xl font-bold">Tiempo de venta</h1>
+      </FadeIn>
+      <FadeIn>
+        <h2 className="-mt-20 text-2xl font-bold text-gray-500">
+          Valorización del inmueble
+        </h2>
+      </FadeIn>
+
+      {/* Gráfica  */}
+      <FadeIn>
+        <TiempoDeVenta timeVectors={timeVectors} flowsResult={flowsResult} />
+      </FadeIn>
+
+      {/* Analisis */}
+      <FadeIn>
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
+          <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+            <ReactMarkdown>
+              {analysis.tiempo_de_venta.analisis_grafica[language]}
+            </ReactMarkdown>
+          </div>
+          <div className="ml-auto flex gap-2 items-center">
+            <Sparkles size={16} className="text-invertiria-2" />
+            <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
+          </div>
+        </div>
+      </FadeIn>
+
+      {/* Conclusión */}
+      <FadeIn>
+        <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+          <div className="flex items-center gap-4">
+            <img
+              src="/assets/images/juan-ia.jpeg"
+              alt="Foto de Juan Londoño"
+              className="w-14 h-14 object-cover rounded-full border-2 border-white"
+            />
+            <div>
+              <p className="text-white text-base font-semibold">Juan Londoño</p>
+              <p className="text-white text-xs opacity-70">Asesor financiero</p>
+            </div>
+          </div>
+          <div className="text-white text-sm leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.tiempo_de_venta.conclusion[language]}
+            </ReactMarkdown>
+          </div>
+          {/* Consejo */}
+          <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+              <span className="text-gray-800 font-semibold text-sm">Consejo</span>
+            </div>
+            <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+              <ReactMarkdown>
+                {analysis.tiempo_de_venta.consejo[language]}
+              </ReactMarkdown>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 self-end mt-2">
+            <Sparkles size={16} className="text-white" />
+            <p className="text-xs text-white font-medium">Generado por IA</p>
+          </div>
+        </div>
+      </FadeIn>
+
+      {/* Divisor */}
+      <div className="w-full h-0.5 bg-invertiria-2/35" />
+
+      {/* Titulo grafica */}
+      <FadeIn>
+        <h1 className="lg:text-4xl text-3xl font-bold">Indicadores de rentabilidad</h1>
+      </FadeIn>
+      <FadeIn>
+        <h2 className="-mt-20 text-2xl font-bold text-gray-500">
+          En tiempo de venta
+        </h2>
+      </FadeIn>
+
+      <FadeIn>
+        <div className="flex flex-col xl:flex-row items-center xl:gap-40 gap-10">
+          {/* Graficas */}
+          <div className="flex flex-col gap-10">
+            <div className="flex items-center xl:gap-5 gap-0">
+              {/* TIR */}
+              <div className="justify-items-center ml-3 -mr-3">
+                <h3 className="text-lg font-bold">{mesVentaTir}%</h3>
+                <IndicadorDeRentabilidad value={mesVentaTir} max={maxTir} min={minTir} />
+                <h1 className="text-2xl font-bold">TIR</h1>
+              </div>
+              {/* Utilidad */}
+              <div className="justify-items-center">
+                <h3 className="text-lg font-bold">{parsePrice(mesVentaUtilidad)}</h3>
+                <IndicadorDeRentabilidad value={mesVentaUtilidad} max={maxUtilidad} min={minUtilidad} />
+                <h1 className="text-2xl font-bold">Utilidad</h1>
+              </div>
+            </div>
+            <div className="flex items-center xl:gap-5 gap-0">
+              {/* ROI */}
+              <div className="justify-items-center ml-3 -mr-3">
+                <h3 className="text-lg font-bold">{mesVentaRoi}%</h3>
+                <IndicadorDeRentabilidad value={mesVentaRoi} max={maxRoi} min={minRoi} />
+                <h1 className="text-2xl font-bold">ROI</h1>
+              </div>
+              {/* Cap Rate */}
+              <div className="justify-items-center">
+                <h3 className="text-lg font-bold">{mesVentaCapRate}%</h3>
+                <IndicadorDeRentabilidad value={mesVentaCapRate} max={maxCapRate} min={minCapRate} />
+                <h1 className="text-2xl font-bold">Cap Rate</h1>
+              </div>
+            </div>
+          </div>
+
+          {/* Analisis */}
+          <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
+            <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+              <ReactMarkdown>
+                {analysis.indicadores_de_rentabilidad_venta.analisis_grafica[language]}
+              </ReactMarkdown>
+            </div>
+            <div className="ml-auto flex gap-2 items-center">
+              <Sparkles size={16} className="text-invertiria-2" />
+              <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
+            </div>
+          </div>
+        </div>
+      </FadeIn>
+      {/* Conclusión */}
+      <FadeIn>
+        <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+          <div className="flex items-center gap-4">
+            <img
+              src="/assets/images/juan-ia.jpeg"
+              alt="Foto de Juan Londoño"
+              className="w-14 h-14 object-cover rounded-full border-2 border-white"
+            />
+            <div>
+              <p className="text-white text-base font-semibold">Juan Londoño</p>
+              <p className="text-white text-xs opacity-70">Asesor financiero</p>
+            </div>
+          </div>
+          <div className="text-white text-sm leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.indicadores_de_rentabilidad_venta.conclusion[language]}
+            </ReactMarkdown>
+          </div>
+          {/* Consejo */}
+          <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+              <span className="text-gray-800 font-semibold text-sm">Consejo</span>
+            </div>
+            <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+              <ReactMarkdown>
+                {analysis.indicadores_de_rentabilidad_venta.consejo[language]}
+              </ReactMarkdown>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 self-end mt-2">
+            <Sparkles size={16} className="text-white" />
+            <p className="text-xs text-white font-medium">Generado por IA</p>
+          </div>
+        </div>
+      </FadeIn>
+
+      {/* Titulo */}
+      <FadeIn>
+        <div className="w-full flex flex-col items-center text-center gap-9">
+          <h2 className="h2 !max-w-none">Financiamiento</h2>
+        </div>
+      </FadeIn>
+
+      {/* Titulo grafica */}
+      <FadeIn>
+        <h1 className="lg:text-4xl text-3xl font-bold">Apalancamiento</h1>
+      </FadeIn>
+      <FadeIn>
+        <h2 className="-mt-20 text-2xl font-bold text-gray-500">Viabilidad</h2>
+      </FadeIn>
+
+      {/* Grafica */}
+      <FadeIn>
+        <div className="flex flex-col xl:flex-row items-center xl:gap-60 gap-10">
+          {/* Apalancamiento */}
+          <div className="justify-items-center">
+            <h3 className="text-lg font-bold">{apalancamiento} veces tu capital</h3>
+            <IndicadorDeRentabilidad value={apalancamiento} max={10} min={0} />
+            <h1 className="text-2xl font-bold mb-8">Apalancamiento</h1>
+            <h3 className="text-lg font-bold text-center">Crédito hipotecario {parsePrice(credito_hipotecario)}</h3>
+          </div>
+
+          {/* Analisis */}
+          <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
+            <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+              <ReactMarkdown>
+                {analysis.apalancamiento.analisis_grafica[language]}
+              </ReactMarkdown>
+            </div>
+            <div className="ml-auto flex gap-2 items-center">
+              <Sparkles size={16} className="text-invertiria-2" />
+              <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
+            </div>
+          </div>
+        </div>
+      </FadeIn>
+      {/* Conclusión */}
+      <FadeIn>
+        <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+          <div className="flex items-center gap-4">
+            <img
+              src="/assets/images/juan-ia.jpeg"
+              alt="Foto de Juan Londoño"
+              className="w-14 h-14 object-cover rounded-full border-2 border-white"
+            />
+            <div>
+              <p className="text-white text-base font-semibold">Juan Londoño</p>
+              <p className="text-white text-xs opacity-70">Asesor financiero</p>
+            </div>
+          </div>
+          <div className="text-white text-sm leading-relaxed markdwon-content">
+            <ReactMarkdown>
+              {analysis.apalancamiento.conclusion[language]}
+            </ReactMarkdown>
+          </div>
+          {/* Consejo */}
+          <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+              <span className="text-gray-800 font-semibold text-sm">Consejo</span>
+            </div>
+            <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+              <ReactMarkdown>
+                {analysis.apalancamiento.consejo[language]}
+              </ReactMarkdown>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 self-end mt-2">
+            <Sparkles size={16} className="text-white" />
+            <p className="text-xs text-white font-medium">Generado por IA</p>
+          </div>
+        </div>
+      </FadeIn>
+
+      {/* Divisor */}
+      <div className="w-full h-0.5 bg-invertiria-2/35" />
+
+      {/* Titulo grafica */}
+      <FadeIn>
+        <h1 className="lg:text-4xl text-3xl font-bold">Costo financiero</h1>
+      </FadeIn>
+      <FadeIn>
+        <h2 className="-mt-20 text-2xl font-bold text-gray-500">Pago mensual</h2>
+      </FadeIn>
+
+      {/* Grafica */}
+      <FadeIn>
+        <div className="flex flex-col xl:flex-row items-center xl:gap-60 gap-10">
+          {/* Costo financiero */}
+          <div className="justify-items-center">
+            <h3 className="text-lg font-bold">{modelation?.tasa_de_interes}% efectivo anual</h3>
+            <IndicadorDeRentabilidad value={modelation?.tasa_de_interes} max={30} min={0} colorInverted={true} />
+            <h1 className="text-2xl font-bold mb-8">Tasa de interés</h1>
+            <h3 className="text-lg font-bold text-center">Pago mensual de {parsePrice(timeVectors?.pagos_credito?.[0]?.[2])}</h3>
+          </div>
+          {/* Analisis */}
+          <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
+            <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+              <ReactMarkdown>
+                {analysis.costo_financiero.analisis_grafica[language]}
+              </ReactMarkdown>
+            </div>
+            <div className="ml-auto flex gap-2 items-center">
+              <Sparkles size={16} className="text-invertiria-2" />
+              <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
+            </div>
+          </div>
+        </div>
+      </FadeIn>
+      {/* Conclusión */}
+      <FadeIn>
+        <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+          <div className="flex items-center gap-4">
+            <img
+              src="/assets/images/juan-ia.jpeg"
+              alt="Foto de Juan Londoño"
+              className="w-14 h-14 object-cover rounded-full border-2 border-white"
+            />
+            <div>
+              <p className="text-white text-base font-semibold">Juan Londoño</p>
+              <p className="text-white text-xs opacity-70">Asesor financiero</p>
+            </div>
+          </div>
+          <div className="text-white text-sm leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.costo_financiero.conclusion[language]}
+            </ReactMarkdown>
+          </div>
+          {/* Consejo */}
+          <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+              <span className="text-gray-800 font-semibold text-sm">Consejo</span>
+            </div>
+            <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+              <ReactMarkdown>
+                {analysis.costo_financiero.consejo[language]}
+              </ReactMarkdown>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 self-end mt-2">
+            <Sparkles size={16} className="text-white" />
+            <p className="text-xs text-white font-medium">Generado por IA</p>
+          </div>
+        </div>
+      </FadeIn>
+
+      {/* Divisor */}
+      <div className="w-full h-0.5 bg-invertiria-2/35" />
+
+      {/* Titulo grafica */}
+      <FadeIn>
+        <h1 className="lg:text-4xl text-3xl font-bold">Capacidad de endeudamiento</h1>
+      </FadeIn>
+      <FadeIn>
+        <h2 className="-mt-20 text-2xl font-bold text-gray-500">Según perfil</h2>
+      </FadeIn>
+
+      <FadeIn>
+        <div className="flex xl:flex-row flex-col items-center xl:gap-40 gap-10 xl:pl-30">
+          {/* Grafica */}
+          <div className="-mt-20 xl:-mt-10">
+            <Endeudamiento price={endeudamiento} minPrice={0} maxPrice={maxEndeudamiento} />
+            <h3 className="text-lg -mt-5 font-bold text-center">Capacidad de endeudamiento de {parsePrice(maxEndeudamiento)}</h3>
+          </div>
+          {/* Analisis */}
+          <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
+            <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+              <ReactMarkdown>
+                {analysis.capacidad_de_endeudamiento.analisis_grafica[language]}
+              </ReactMarkdown>
+            </div>
+            <div className="ml-auto flex gap-2 items-center">
+              <Sparkles size={16} className="text-invertiria-2" />
+              <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
+            </div>
+          </div>
+        </div>
+      </FadeIn>
+      {/* Conclusión */}
+      <FadeIn>
+        <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+          <div className="flex items-center gap-4">
+            <img
+              src="/assets/images/juan-ia.jpeg"
+              alt="Foto de Juan Londoño"
+              className="w-14 h-14 object-cover rounded-full border-2 border-white"
+            />
+            <div>
+              <p className="text-white text-base font-semibold">Juan Londoño</p>
+              <p className="text-white text-xs opacity-70">Asesor financiero</p>
+            </div>
+          </div>
+          <div className="text-white text-sm leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.capacidad_de_endeudamiento.conclusion[language]}
+            </ReactMarkdown>
+          </div>
+          {/* Consejo */}
+          <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+              <span className="text-gray-800 font-semibold text-sm">Consejo</span>
+            </div>
+            <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+              <ReactMarkdown>
+                {analysis.capacidad_de_endeudamiento.consejo[language]}
+              </ReactMarkdown>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 self-end mt-2">
+            <Sparkles size={16} className="text-white" />
+            <p className="text-xs text-white font-medium">Generado por IA</p>
+          </div>
+        </div>
+      </FadeIn>
+
+      {/* Titulo */}
+      <FadeIn>
+        <div className="w-full flex flex-col items-center text-center gap-9">
+          <h2 className="h2 !max-w-none">Flujo de caja</h2>
+        </div>
+      </FadeIn>
+
+      {/* Titulo grafica */}
+      <FadeIn>
+        <h1 className="lg:text-4xl text-3xl font-bold">Flujo de caja mensual</h1>
+      </FadeIn>
+      <FadeIn>
+        <h2 className="-mt-20 text-2xl font-bold text-gray-500">En mes de venta</h2>
+      </FadeIn>
+
+      {/* Grafica */}
+      <FadeIn>
+        <FlujoDeCaja flowsResult={flowsResult} fechaVenta={fechaVenta} />
+      </FadeIn>
+
+      {/* Analisis */}
+      <FadeIn>
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
+          <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+            <ReactMarkdown>
+              {analysis.flujo_de_caja.analisis_grafica[language]}
+            </ReactMarkdown>
+          </div>
+          <div className="ml-auto flex gap-2 items-center">
+            <Sparkles size={16} className="text-invertiria-2" />
+            <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
+          </div>
+        </div>
+      </FadeIn>
+
+      {/* Conclusión */}
+      <FadeIn>
+        <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+          <div className="flex items-center gap-4">
+            <img
+              src="/assets/images/juan-ia.jpeg"
+              alt="Foto de Juan Londoño"
+              className="w-14 h-14 object-cover rounded-full border-2 border-white"
+            />
+            <div>
+              <p className="text-white text-base font-semibold">Juan Londoño</p>
+              <p className="text-white text-xs opacity-70">Asesor financiero</p>
+            </div>
+          </div>
+          <div className="text-white text-sm leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.flujo_de_caja.conclusion[language]}
+            </ReactMarkdown>
+          </div>
+          {/* Consejo */}
+          <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+              <span className="text-gray-800 font-semibold text-sm">Consejo</span>
+            </div>
+            <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+              <ReactMarkdown>
+                {analysis.flujo_de_caja.consejo[language]}
+              </ReactMarkdown>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 self-end mt-2">
+            <Sparkles size={16} className="text-white" />
+            <p className="text-xs text-white font-medium">Generado por IA</p>
+          </div>
+        </div>
+      </FadeIn>
+
+      {/* Titulo */}
+      <FadeIn>
+        <div className="w-full flex flex-col items-center text-center gap-9">
+          <h2 className="h2 !max-w-none">Rentabilidad</h2>
+        </div>
+      </FadeIn>
+
+      {/* Titulo grafica */}
+      <FadeIn>
+        <h1 className="lg:text-4xl text-3xl font-bold">Indicadores de rentabilidad</h1>
+      </FadeIn>
+      <FadeIn>
+        <h2 className="-mt-20 text-2xl font-bold text-gray-500">KPIs</h2>
+      </FadeIn>
+
+      {/* Grafica */}
+      <FadeIn>
+        <IndicadoresDeRentabilidad timeVectors={timeVectors} flowsResult={flowsResult} fechaVenta={fechaVenta} />
+      </FadeIn>
+
+      {/* Analisis */}
+      <FadeIn>
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
+          <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+            <ReactMarkdown>
+              {analysis.indicadores_de_rentabilidad.analisis_grafica[language]}
+            </ReactMarkdown>
+          </div>
+          <div className="ml-auto flex gap-2 items-center">
+            <Sparkles size={16} className="text-invertiria-2" />
+            <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
+          </div>
+        </div>
+      </FadeIn>
+      {/* Conclusión */}
+      <FadeIn>
+        <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+          <div className="flex items-center gap-4">
+            <img
+              src="/assets/images/juan-ia.jpeg"
+              alt="Foto de Juan Londoño"
+              className="w-14 h-14 object-cover rounded-full border-2 border-white"
+            />
+            <div>
+              <p className="text-white text-base font-semibold">Juan Londoño</p>
+              <p className="text-white text-xs opacity-70">Asesor financiero</p>
+            </div>
+          </div>
+          <div className="text-white text-sm leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.indicadores_de_rentabilidad.conclusion[language]}
+            </ReactMarkdown>
+          </div>
+          {/* Consejo */}
+          <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+              <span className="text-gray-800 font-semibold text-sm">Consejo</span>
+            </div>
+            <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+              <ReactMarkdown>
+                {analysis.indicadores_de_rentabilidad.consejo[language]}
+              </ReactMarkdown>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 self-end mt-2">
+            <Sparkles size={16} className="text-white" />
+            <p className="text-xs text-white font-medium">Generado por IA</p>
+          </div>
+        </div>
+      </FadeIn>
+
+      {/* Titulo */}
+      <FadeIn>
+        <div className="w-full flex flex-col items-center text-center gap-9">
+          <h2 className="h2 !max-w-none">Recomendaciones</h2>
+        </div>
+      </FadeIn>
+
+      {/* Titulo grafica */}
+      <FadeIn>
+        <h1 className="lg:text-4xl text-3xl font-bold">Recomendación</h1>
+      </FadeIn>
+      <FadeIn>
+        <h2 className="-mt-20 text-2xl font-bold text-gray-500">Tiempo de venta</h2>
+      </FadeIn>
+
+      {/* Grafica */}
+      <FadeIn>
+        <Recomendaciones timeVectors={timeVectors} flowsResult={flowsResult} fechaVenta={fechaVenta} />
+      </FadeIn>
+
+      {/* Analisis */}
+      <FadeIn>
+        <div className="w-full flex flex-col gap-4 p-6 relative rounded-3xl shadow-lg shadow-invertiria-2/20 border-2 border-invertiria-2/60">
+          <div className="z-10 text-gray-800 text-sm font-medium leading-6 markdown-content strong-invertiria">
+            <ReactMarkdown>
+              {analysis.recomendacion.analisis_grafica[language]}
+            </ReactMarkdown>
+          </div>
+          <div className="ml-auto flex gap-2 items-center">
+            <Sparkles size={16} className="text-invertiria-2" />
+            <p className="text-xs font-medium text-invertiria-2">Generado por IA</p>
+          </div>
+        </div>
+      </FadeIn>
+      {/* Conclusión */}
+      <FadeIn>
+        <div className="w-full flex flex-col gap-6 p-6 max-sm:-mt-5 rounded-3xl bg-gradient-to-br from-invertiria-1 to-invertiria-2 shadow-xl shadow-invertiria-2/20 relative">
+          <div className="flex items-center gap-4">
+            <img
+              src="/assets/images/juan-ia.jpeg"
+              alt="Foto de Juan Londoño"
+              className="w-14 h-14 object-cover rounded-full border-2 border-white"
+            />
+            <div>
+              <p className="text-white text-base font-semibold">Juan Londoño</p>
+              <p className="text-white text-xs opacity-70">Asesor financiero</p>
+            </div>
+          </div>
+          <div className="text-white text-sm leading-relaxed markdown-content">
+            <ReactMarkdown>
+              {analysis.recomendacion.conclusion[language]}
+            </ReactMarkdown>
+          </div>
+          {/* Consejo */}
+          <div className="bg-white/90 p-5 rounded-2xl shadow-inner flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <Lightbulb className="size-5 text-yellow-500 fill-yellow-200" />
+              <span className="text-gray-800 font-semibold text-sm">Consejo</span>
+            </div>
+            <div className="text-sm text-gray-800 leading-relaxed markdown-content">
+              <ReactMarkdown>
+                {analysis.recomendacion.consejo[language]}
+              </ReactMarkdown>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 self-end mt-2">
+            <Sparkles size={16} className="text-white" />
+            <p className="text-xs text-white font-medium">Generado por IA</p>
+          </div>
+        </div>
+      </FadeIn>
+      {/* Disclaimer */}
+      <FadeIn>
+        <div className="w-full flex flex-col gap-4 p-8 relative rounded-3xl bg-red-50/40 border-2 border-red-500/90">
+          <div className="flex items-center gap-2">
+            <Info className="size-5 text-red-500" />
+            <span className="text-red-500 font-semibold text-sm">Ten en cuenta...</span>
+          </div>
+          <p className="text-gray-800 text-sm font-medium leading-6">
+            Si la inversión se realiza sobre planos, recomendamos verificar y validar cuidadosamente la identidad, trayectoria y reputación de la constructora. Esto incluye revisar su historial de proyectos, cumplimiento de plazos y calidad de las entregas, así como confirmar que cuente con todos los permisos y licencias necesarios para el desarrollo.
+          </p>
+          <p className="text-gray-800 text-sm font-medium leading-6">
+            En caso de tratarse de una propiedad usada, es igualmente importante realizar la misma verificación con el vendedor, asegurándose de que sea el legítimo propietario, que la documentación esté en regla y que no existan gravámenes o deudas sobre el inmueble.
+          </p>
+          <p className="text-gray-800 text-sm font-medium leading-6">
+            Estas acciones preventivas ayudan a minimizar riesgos y a garantizar una inversión segura.
+          </p>
+        </div>
+      </FadeIn>
+      <br />
+    </Container>
+  );
+};
+
+export default Analisis;

@@ -8,12 +8,15 @@ import { useState } from "react";
 import { delay, determineSkippedQuestions } from "../../constants/functions";
 import { supabase } from "../../supabase";
 import { useNavigate } from "react-router";
+import { useAuth } from "../../contexts/AuthContext";
 
 const AnalysisForm = ({ step, setStep, setIsSubmitting }) => {
   const [skippedQuestions, setSkippedQuestions] = useState([]); //Array con los steps que se han saltado
   const [skippedStep, setSkippedStep] = useState(0); // Step que se ha saltado
   const [stepHistory, setStepHistory] = useState([]);
   const navigate = useNavigate();
+
+  const { isAuthenticated, getInfo } = useAuth();
 
   // Functions
   const handleChangeStep = (action) => {
@@ -78,64 +81,28 @@ const AnalysisForm = ({ step, setStep, setIsSubmitting }) => {
     },
   });
 
-  const onSubmit = form.handleSubmit(async (values2) => {
+  const onSubmit = form.handleSubmit(async (values) => {
     setIsSubmitting(true);
+    let additionalValues = {};
+    // Validar usuario activo
 
-    const values = {
-      usuario_id: "70bf12cf-83e3-4263-83aa-841000ccea7b",
-      titulo_modelacion: "Nombre de la inversion",
-      nombre_del_proyecto: "Palmanova",
-      pais_id: 46,
-      ciudad_id: 2,
-      zona: "Centro",
-      subzona: "Poblado",
-      fecha_inicio_ventas: "2025-06-01",
-      fecha_prevista_entrega: "2028-07-01",
-      vivienda_vis: false,
-      licencia_construccion: false,
-      edad_propiedad: 0,
-      etapa_proyecto: 1,
-      precio_de_compra: 300000000,
-      precio_de_mercado: 320000000,
-      separacion: 2000000,
-      cuota_inicial: 30,
-      pagos_personalizados: null,
-      fecha_pagos_personalizados: [],
-      valor_pagos_personalizados: [],
-      tasa_de_interes: 10,
-      area_inmueble: 50,
-      parqueaderos: 1,
-      porcentaje_comision_vendedor: 3,
-      valor_administracion: 240000,
-      valor_predial: 1800000,
-      valor_mejoras: null,
-      costos_licencias: null,
-      canon_de_arrendamiento: 1950000,
-      valor_noche: null,
-      tarifa_mensual: null,
-      ocupacion_media: null,
-      porcentaje_del_operador: null,
-      porcentaje_inmobiliaria: null,
-      precio_venta: null,
-      fecha_compra: "2025-07-01",
-      vigencia: true,
-      tipo_inmueble: "Apto.",
-      estado_inmueble: "Sobre planos",
-      modelo_de_negocio: "Comprar para vender",
-      forma_pago_cuota_inicial: 1,
-      inicial_fecha_inicio_pago: "2025-08-01",
-      inicial_fecha_fin_pago: "2028-06-01",
-      credito_hipotecario: true,
-      credito_fecha_inicio_pago: "2028-08-01",
-      credito_fecha_fin_pago: "2048-08-01",
-      cesion_de_derechos: true,
-      fecha_prevista_venta: "2029-08-01",
-      comision_vendedor: true,
-      administracion: true,
-      mejoras: false,
-      renta: 1,
-      inmobiliaria: false,
-    };
+    if (isAuthenticated) {
+      const info = await getInfo();
+      additionalValues = {
+        usuario_id: info.id,
+        created_by: info.id,
+        perfil_inversionista: {
+          ahorros_disponibles: info.ahorros_disponibles,
+          experiencia: info.experiencia,
+          flujo_de_recursos: info.flujo_de_recursos,
+          gastos_mensuales: info.gastos_mensuales,
+          ingresos_mensuales: info.ingresos_mensuales,
+          objetivo: info.objetivo,
+          plazo_de_inversion: info.plazo_de_inversion,
+          perfil: info.perfil,
+        },
+      };
+    }
 
     // Limpiar valores vacíos
     Object.entries(values).forEach(([key, value]) => {
@@ -146,7 +113,7 @@ const AnalysisForm = ({ step, setStep, setIsSubmitting }) => {
       // Crear modelación
       const { data: modelacion, error: insertError } = await supabase
         .from("modelaciones")
-        .insert(values)
+        .insert({ ...values, ...additionalValues })
         .select("id")
         .single();
 
@@ -194,17 +161,23 @@ const AnalysisForm = ({ step, setStep, setIsSubmitting }) => {
 
   const handleError = (error) => {
     console.error("Error:", error);
-    navigate("/analysis/7cff7a9b-21d7-44e4-857c-9baa947649ed");
+    navigate("/analysis/error");
   };
 
   return (
     <div className="flex-1 flex flex-col items-center p-6 lg:px-4 lg:py-2 min-h-0 overflow-y-auto">
       <div className="w-full pb-10 sm:pb-0 flex flex-col gap-10 md:gap-14 items-center justify-center flex-1 rounded-tr-2xl">
         {/* Pregunta */}
-        <Question stepIndex={step} />
+        <Question stepIndex={step} form={form} />
         {/* Form */}
         <Form {...form}>
           <form
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && step !== 35) {
+                // 35 = último paso
+                e.preventDefault();
+              }
+            }}
             onSubmit={onSubmit}
             className="w-full flex flex-col items-center gap-14"
           >
@@ -215,7 +188,7 @@ const AnalysisForm = ({ step, setStep, setIsSubmitting }) => {
               skippedStep={skippedStep}
               setStepHistory={setStepHistory}
             />
-            {/* {step === 0 && (
+            {/* {step > 0 && (
               <Button type="submit" variant="theme">
                 Enviar
               </Button>

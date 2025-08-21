@@ -395,11 +395,7 @@ const InvestorsTable = ({ records }) => {
         </Table>
       </div>
       <div className="mt-4 flex items-center justify-between px-4">
-        <div className="text-muted-foreground hidden flex-1 text-sm lg:flex">
-          {table.getFilteredSelectedRowModel().rows.length} de{" "}
-          {table.getFilteredRowModel().rows.length} fila(s) seleccionadas.
-        </div>
-        <div className="flex w-full items-center gap-8 lg:w-fit">
+        <div className="ml-auto flex w-full items-center gap-8 lg:w-fit">
           <div className="hidden items-center gap-2 lg:flex">
             <Label htmlFor="rows-per-page" className="text-sm font-medium">
               Filas por página

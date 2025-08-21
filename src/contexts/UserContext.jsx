@@ -1,10 +1,10 @@
 import { roles } from "../constants";
 import { supabase } from "../supabase";
+import { BaseModel } from "./BaseModel";
 
-export class User {
+export class User extends BaseModel {
   constructor(data = {}, setErrorToast) {
-    this.data = data;
-    this.setErrorToast = setErrorToast;
+    super(data, setErrorToast);
   }
 
   async create(captchaToken) {
@@ -83,5 +83,16 @@ export class User {
     }
 
     return res.data;
+  }
+
+  async shareAnalysis(email, modelacionId) {
+    const res = await supabase.functions.invoke("shareAnalysis", {
+      body: {
+        email,
+        modelacionId,
+      },
+    });
+
+    return this.handleSupabaseFunctionResponse(res);
   }
 }
