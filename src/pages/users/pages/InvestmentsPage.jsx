@@ -32,7 +32,7 @@ const InvestmentsPage = () => {
         return `${nombre} ${apellidos} ${email}`;
       },
       id: "created_by",
-      header: "Invitado por",
+      header: "Creado por",
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
           <img
