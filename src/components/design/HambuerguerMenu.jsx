@@ -42,26 +42,26 @@ const HamburgerMenu = () => {
             <nav className="">
               <ul className="flex flex-col gap-8 text-sm xl:text-base">
                 <li>
-                  <Link className="flex items-center justify-between text-black hover:text-invertiria-1">
-                    Personas
+                  <Link to="/analysis/create" className="flex items-center justify-between text-black hover:text-invertiria-1">
+                    Crear Análsis
                     <ChevronRight className="size-5" />
                   </Link>
                 </li>
                 <li>
-                  <Link className="flex items-center justify-between text-black hover:text-invertiria-1">
-                    Compañías
+                  <Link to="/about" className="flex items-center justify-between text-black hover:text-invertiria-1">
+                    Quienes Somos
                     <ChevronRight className="size-5" />
                   </Link>
                 </li>
                 <li>
-                  <Link className="flex items-center justify-between text-black hover:text-invertiria-1">
-                    Inversionistas
+                  <Link to="/contact" className="flex items-center justify-between text-black hover:text-invertiria-1">
+                    Contacto
                     <ChevronRight className="size-5" />
                   </Link>
                 </li>
                 <li>
-                  <Link className="flex items-center justify-between text-black hover:text-invertiria-1">
-                    Planes
+                  <Link to="/pricing" className="flex items-center justify-between text-black hover:text-invertiria-1">
+                    Precios
                     <ChevronRight className="size-5" />
                   </Link>
                 </li>
@@ -84,12 +84,12 @@ const HamburgerMenu = () => {
                         <ChevronRight className="size-5" />
                       </Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link className="text-sm flex items-center justify-between text-black hover:text-invertiria-1">
                         Mis inversiones
                         <ChevronRight className="size-5" />
                       </Link>
-                    </li>
+                    </li> */}
                     <li>
                       <Button
                         className="w-full bg-invertiria-2 font-normal"

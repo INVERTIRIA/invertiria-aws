@@ -198,7 +198,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
           <h2 className="text-2xl font-bold text-gray-500">
             Mes de venta seleccionado
           </h2>
-          <div className="w-full pl-24 pr-14 max-sm:pl-5 max-sm:pr-5">
+          <div className="w-full pl-25 pr-14 max-sm:pl-5 max-sm:pr-5">
             <Slider step={1} max={maxStep} defaultValue={[mesVenta]} onValueChange={handleKPI} />
           </div>
         </div>
@@ -213,7 +213,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
               <ComposedChart
                 syncId="syncId"
                 data={dataROI}
-                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 35, bottom: 0 }}
+                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 45, bottom: 0 }}
               >
                 <CartesianGrid className="opacity-50" vertical={false} />
                 <XAxis
@@ -298,7 +298,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
             >
               <ComposedChart data={dataTIR.slice(startIndexBrush, endIndexBrush + 1)}
                 syncId="syncId"
-                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 35, bottom: 0 }}
+                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 45, bottom: 0 }}
               >
                 <CartesianGrid
                   className="opacity-50"
@@ -376,7 +376,7 @@ const IndicadoresDeRentabilidad = ({ timeVectors, flowsResult, fechaVenta }) => 
             >
               <ComposedChart
                 data={dataUtilidad.slice(startIndexBrush, endIndexBrush + 1)}
-                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 35, bottom: 0 }}
+                margin={{ top: 0, right: isMobile ? 40 : 60, left: isMobile ? -35 : 45, bottom: 0 }}
                 syncId="syncId"
               >
                 <CartesianGrid className="opacity-50" vertical={false} />

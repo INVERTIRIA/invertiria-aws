@@ -37,7 +37,7 @@ function TiempoDeVenta({ timeVectors, flowsResult }) {
   });
 
   return (
-    <div className="flex flex-col gap-15 w-full max-sm:w-full">
+    <div className="flex flex-col gap-15 w-full xl:w-[70%] max-sm:w-full">
       <div className="h-[30vh] w-full">
         <ResponsiveContainer
           className={"flex aspect-video justify-center text-xs"}

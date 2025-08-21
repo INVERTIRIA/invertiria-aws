@@ -11,7 +11,7 @@ function ValorDeCompra({ price, minPrice, maxPrice, location }) {
 
   return (
     <div className="flex flex-col gap-1 items-center">
-      <p className="mb-8 font-semibold text-xl">{location}</p>
+      <p className="mb-8 font-bold text-lg">{location}</p>
       <span className="text-sm font-semibold">{parsePrice(maxPrice)}</span>
       <div
         style={{
